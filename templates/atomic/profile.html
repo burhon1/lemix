@@ -1,0 +1,44 @@
+{% load static %}
+<li class="nav-author">
+    <div class="dropdown-custom">
+        <a href="javascript:;" class="nav-item-toggle"><img src="{% static 'img/author-nav.jpg' %}" alt="" class="rounded-circle"></a>
+        <div class="dropdown-wrapper">
+            <div class="nav-author__info">
+                <div class="author-img">
+                    <img src="{% static 'img/author-nav.jpg' %}" alt="" class="rounded-circle">
+                </div>
+                <div>
+                    <h6>Abdullah Bin Talha</h6>
+                    <span>UI Designer</span>
+                </div>
+            </div>
+            <div class="nav-author__options">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span data-feather="user"></span> Profile</a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span data-feather="settings"></span> Settings</a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span data-feather="key"></span> Billing</a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span data-feather="users"></span> Activity</a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span data-feather="bell"></span> Help</a>
+                    </li>
+                </ul>
+                <a href="{% url 'user:logout' %}" class="nav-author__signout">
+                    <span data-feather="log-out"></span> Sign Out</a>
+            </div>
+        </div>
+        <!-- ends: .dropdown-wrapper -->
+    </div>
+</li>

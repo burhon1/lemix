@@ -1,0 +1,51 @@
+{% load  static %}
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>InTech Academy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    {% include 'atomic/injectcss.html' %}
+
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon.png' %}">
+</head>
+
+<body class="layout-light side-menu overlayScroll">
+    <div class="mobile-search">
+        <form class="search-form">
+            <span data-feather="search"></span>
+            <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
+        </form>
+    </div>
+
+    <div class="mobile-author-actions"></div>
+    {% include 'atomic/header.html' %}
+    <main class="main-content">
+        {% include 'atomic/sidebar.html' %}
+        <div class="contents">
+            {% block content %}
+            {% endblock %}
+        </div>
+        {% include 'atomic/footer.html' %}
+    </main>
+    <div id="overlayer">
+        <span class="loader-overlay">
+            <div class="atbd-spin-dots spin-lg">
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+            </div>
+        </span>
+    </div>
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
+    {% include 'atomic/injectjs.html' %}
+</body>
+
+</html>

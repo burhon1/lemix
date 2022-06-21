@@ -35,7 +35,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.phone
 
 # Leadni qayerdan kelib tushganlar ro'yxati turadi
-class LeadWhere(models):
+class LeadWhere(models.Model):
     icon = models.CharField(max_length=50,null=True,blank=True)
     title = models.CharField(max_length=100)
     
