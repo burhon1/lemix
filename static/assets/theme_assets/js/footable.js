@@ -24,11 +24,11 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		this._super(instance);
 		// props for the first dropdown
 		this.statuses = ['Web Developer','Senior Manager','UX/UI Desogner','Content Writer','Graphic Designer','Marketer','Project Manager','UI Designer','Business Development'];
-		this.statusDefault = 'All';
+		this.statusDefault = 'Davomiyligi';
 		this.$status = null;
 		// props for the second dropdown
 		this.jobTitles = ['Active','deactivate','Blocked'];
-		this.jobTitleDefault = 'All';
+		this.jobTitleDefault = 'Status';
 		this.$jobTitle = null;
 	},
 	$create: function(){
@@ -36,7 +36,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		var self = this;
 		// create the status form group and dropdown
 		var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position my-md-25 my-15 mr-sm-20 mr-0 '})
-			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: 'position'}))
+			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: 'Davomiyligi'}))
 			.prependTo(self.$form);
 
 		self.$status = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
@@ -52,7 +52,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 
 		// create the job title form group and dropdown
 		var $job_title_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
-			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: 'Status'}))
+			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: 'Statusi'}))
 			.prependTo(self.$form);
 
 		self.$jobTitle = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
