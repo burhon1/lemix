@@ -7,3 +7,7 @@ def test2_view(request):
 
 def groups_list_view(request):
     return render(request,'education/groups_list.html')  
+
+def courses_list_view(request):
+    return render(request,'education/courses_list.html')  
+   
