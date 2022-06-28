@@ -36,7 +36,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		var self = this;
 		// create the status form group and dropdown
 		var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position my-md-25 my-15 mr-sm-20 mr-0 '})
-			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: 'Davomiyligi'}))
+			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 			.prependTo(self.$form);
 
 		self.$status = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
@@ -52,7 +52,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 
 		// create the job title form group and dropdown
 		var $job_title_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
-			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: 'Statusi'}))
+			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 			.prependTo(self.$form);
 
 		self.$jobTitle = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
