@@ -11,3 +11,5 @@ def groups_list_view(request):
 def courses_list_view(request):
     return render(request,'education/courses_list.html')  
    
+def course_detail_view(request,id):
+    return render(request,'education/course_detail.html') 

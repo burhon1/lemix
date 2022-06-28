@@ -1,0 +1,765 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="social-dash-wrap">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-main">
+                    <h4 class="text-capitalize breadcrumb-title">Matemetika</h4>
+                </div>
+
+            </div>
+            <!-- Profile Acoount End -->
+        </div>
+        <div class="row">
+            <div class="col-xxl-3 col-lg-3 col-sm-3">
+                <!-- Profile Acoount -->
+                <div class="card mb-25">
+                    <div class="card-body text-center p-0">
+                        <div class="ps-tab p-20 pb-25">
+                            <div class="nav flex-column text-left" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <a class="nav-link">
+                                    <strong>Davomiyligi : </strong> 6 oy</a>
+                                <a class="nav-link">
+                                    <strong>Narxi : </strong> 450 000</a>
+                                <a class="nav-link">
+                                    <strong>Izoh : </strong> Qandaydir izoh</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-center p-0">
+                        <div class="ps-tab p-20 pb-25">
+                            <div class="nav flex-column text-left" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <a class="nav-link">
+                                    <strong>Guruhlar:</strong>4</a>
+                                <a class="nav-link">
+                                    <strong>O'qituvchilar:</strong>6</a>
+                                <a class="nav-link">
+                                    <strong>O'quvchilar:</strong>54</a>
+                                <a class="nav-link">
+                                    <strong>To'langan:</strong>1 500 000 </a>
+                                <a class="nav-link">
+                                    <strong>Qarzdorlik:</strong>1 500 000</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-9 col-lg-9 col-sm-9">
+                <div class="knowledgebase-details knowledgebase-details--row m-0 pt-4 pb-4">
+                    <div class="row pl-5 pr-5">
+                        <div class="cus-8 col-md-12 ">
+                            <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="plugins-tab" data-toggle="pill" 
+                                    href="#plugins" role="tab" aria-controls="plugins" aria-selected="true">Online darslar</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="themes-tab" data-toggle="pill"
+                                    href="#themes" role="tab" aria-controls="themes" aria-selected="false">Imtihonlar</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="extensions-tab" data-toggle="pill" 
+                                    href="#extensions" role="tab" aria-controls="extensions" aria-selected="false">Guruhlar</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="extensions1-tab" data-toggle="pill" 
+                                    href="#extensions1" role="tab" aria-controls="extensions1" aria-selected="false">Darajalar</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="extensions2-tab" data-toggle="pill" 
+                                    href="#extensions2" role="tab" aria-controls="extensions2" aria-selected="false">O'qituvchilar</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="extensions3-tab" data-toggle="pill" 
+                                    href="#extensions3" role="tab" aria-controls="extensions3" aria-selected="false">Kurs jadvali</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cus-8 col-md-12 mt-4">
+                            <div class="tab-content" id="knowledgebaseContent">
+                                <div class="tab-pane fade show active" id="plugins" role="tabpanel" aria-labelledby="plugins-tab">
+                                    <div class="card card-default card-md mb-4">
+                                        <div class="card-body">
+                                            <div class="atbd-empty text-center">
+                                                <div class="atbd-empty__image">
+        
+                                                    <img src="{% static 'img/3.svg' %}" alt="Admin Empty">
+        
+                                                </div>
+                                                <div class="atbd-empty__text">
+        
+                                                    <p>Materiallar hali yuklanmagan</p>
+                                                    <div class="atbd-empty__action">
+                                                        <button class="btn btn-primary btn-sm btn-squared">Qo'shish</button>
+                                                    </div>
+        
+                                                </div>
+                                            </div>
+        
+        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-breadcrumb">
+                        
+                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
+                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                                                            <div class="d-flex align-items-center add-contact__title justify-content-center mr-sm-25">
+                                                                <h4 class="text-capitalize fw-500 breadcrumb-title">Imtihonlar</h4>
+                                                                <span class="sub-title ml-sm-25 pl-sm-25"></span>
+                                                            </div>
+                        
+                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                                                <span data-feather="search"></span>
+                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
+                                                            </form>
+                        
+                                                        </div>
+                                                        <div class="action-btn">
+                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
+                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
+                                                            </a>
+                        
+                                                            <!-- Modal -->
+                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content radius-xl">
+                                                                        <div class="modal-header">
+                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span data-feather="x"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="add-new-contact">
+                                                                                <form action="/">
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Email Address:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Phone Number:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Position:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Company Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
+                                                                                    </div>
+                        
+                                                                                    <div class="button-group d-flex pt-20">
+                        
+                        
+                        
+                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
+                                                                                        </button>
+                        
+                        
+                        
+                        
+                        
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Modal -->
+                        
+                        
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-list-wrap mb-25">
+                                                    <div class="contact-list bg-white radius-xl w-100">
+                                                        <div class="table-responsive">
+                        
+                                                            <table class="table mb-0 table-borderless table-rounded">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <div class="d-flex align-items-center pl-5">
+                                                                                    <span>Nomi</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="c-email">
+                                                                            <span>Qo'shilgan vaqt</span>
+                                                                        </th>
+                                                                        <th class="c-company">
+                                                                            <span>Muddati</span>
+                                                                        </th>
+                                                                        <th class="c-position">
+                                                                            <span class="">Status</span>
+                                                                        </th>
+                                                                        <th class="c-position">
+                                                                            <span class="">Savollar</span>
+                                                                        </th>
+                                                                        <th class="c-phone">
+                                                                            <span class="">Ishtirokchilar</span>
+                                                                        </th>
+                                                                        <th class="c-action pr-5">
+                                                                            <span class="float-right">Natija</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                        
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="contact-item d-flex align-items-center">
+                                                                                <div class="contact-personal-info d-flex">
+                                                                                    <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a>
+                                                                                    <div class="contact_title">
+                                                                                        <h6>
+                                                                                            <a>Test-1</a>
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                </div>
+                        
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">12.06.2022</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="com-name">26.06.2022 10:00-12:00</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content d-inline-block">
+                                                                                <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="position">200</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">58   80%</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">80%</span>
+                                                                        </td>
+                                                                    </tr>                        
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ends: col-12 -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="extensions" role="tabpanel" aria-labelledby="extensions-tab">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-breadcrumb">
+                        
+                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
+                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                                                            <div class="d-flex align-items-center add-contact__title justify-content-center mr-sm-25">
+                                                                <h4 class="text-capitalize fw-500 breadcrumb-title">Guruhlar</h4>
+                                                                <span class="sub-title ml-sm-25 pl-sm-25"></span>
+                                                            </div>
+                        
+                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                                                <span data-feather="search"></span>
+                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
+                                                            </form>
+                        
+                                                        </div>
+                                                        <div class="action-btn">
+                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
+                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
+                                                            </a>
+                        
+                                                            <!-- Modal -->
+                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content radius-xl">
+                                                                        <div class="modal-header">
+                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span data-feather="x"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="add-new-contact">
+                                                                                <form action="/">
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Email Address:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Phone Number:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Position:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Company Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
+                                                                                    </div>
+                        
+                                                                                    <div class="button-group d-flex pt-20">
+                        
+                        
+                        
+                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
+                                                                                        </button>
+                        
+                        
+                        
+                        
+                        
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Modal -->
+                        
+                        
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-list-wrap mb-25">
+                                                    <div class="contact-list bg-white radius-xl w-100">
+                                                        <div class="table-responsive">
+                        
+                                                            <table class="table mb-0 table-borderless table-rounded">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <div class="d-flex align-items-center pl-5">
+                                                                                    <span>Guruh nomi</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="c-email">
+                                                                            <span>Kurs turi</span>
+                                                                        </th>
+                                                                        <th class="c-company">
+                                                                            <span>O'qituvchisi</span>
+                                                                        </th>
+                                                                        <th class="c-position">
+                                                                            <span class="">Kunlari</span>
+                                                                        </th>
+                                                                        <th class="c-position">
+                                                                            <span class="">Muddati</span>
+                                                                        </th>
+                                                                        <th class="c-phone">
+                                                                            <span class="">Dars xonasi</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                        
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="contact-item d-flex align-items-center">
+                                                                                <div class="contact-personal-info d-flex">
+                                                                                    <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a>
+                                                                                    <div class="contact_title">
+                                                                                        <h6>
+                                                                                            <a>Guruh-1</a>
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                </div>
+                        
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">Matematika fani</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="com-name">Jo'rayev Xurshid</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="position">Dush/Chor/Juma 10:00-13:00</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">6 oy</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">1-xona</span>
+                                                                        </td>
+                                                                    </tr>                        
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ends: col-12 -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="extensions1" role="tabpanel" aria-labelledby="extensions1-tab">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-breadcrumb">
+                        
+                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
+                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                                                            <div class="d-flex align-items-center add-contact__title justify-content-center mr-sm-25">
+                                                                <h4 class="text-capitalize fw-500 breadcrumb-title">Kurs Darajasi</h4>
+                                                                <span class="sub-title ml-sm-25 pl-sm-25"></span>
+                                                            </div>
+                        
+                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                                                <span data-feather="search"></span>
+                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
+                                                            </form>
+                        
+                                                        </div>
+                                                        <div class="action-btn">
+                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
+                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
+                                                            </a>
+                        
+                                                            <!-- Modal -->
+                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content radius-xl">
+                                                                        <div class="modal-header">
+                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span data-feather="x"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="add-new-contact">
+                                                                                <form action="/">
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Email Address:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Phone Number:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Position:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Company Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
+                                                                                    </div>
+                        
+                                                                                    <div class="button-group d-flex pt-20">
+                        
+                        
+                        
+                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
+                                                                                        </button>
+                        
+                        
+                        
+                        
+                        
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Modal -->
+                        
+                        
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-list-wrap mb-25">
+                                                    <div class="contact-list bg-white radius-xl w-100">
+                                                        <div class="table-responsive">
+                        
+                                                            <table class="table mb-0 table-borderless table-rounded">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <div class="d-flex align-items-center pl-5">
+                                                                                    <span>Kurs nomi</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="c-email">
+                                                                            <span>Oylik To'lovi</span>
+                                                                        </th>
+                                                                        <th class="c-company">
+                                                                            <span>Izoh</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                        
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="contact-item d-flex align-items-center">
+                                                                                <div class="contact-personal-info d-flex">
+                                                                                    <div class="contact_title">
+                                                                                        <h6>
+                                                                                            <a>Guruh-1</a>
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                </div>
+                        
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">250 000</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="com-name">Kursda 15 yoshga o'quvchilar o'qiydi</span>
+                                                                        </td>
+                                                                    </tr>   
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="contact-item d-flex align-items-center">
+                                                                                <div class="contact-personal-info d-flex">
+                                                                                    <div class="contact_title">
+                                                                                        <h6>
+                                                                                            <a>Guruh-2</a>
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                </div>
+                        
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">350 000</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="com-name">Kurs OTMga kiruvchilar uchun</span>
+                                                                        </td>
+                                                                    </tr>                                 
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ends: col-12 -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="extensions2" role="tabpanel" aria-labelledby="extensions2-tab">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-breadcrumb">
+                        
+                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
+                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                                                            <div class="d-flex align-items-center add-contact__title justify-content-center mr-sm-25">
+                                                                <h4 class="text-capitalize fw-500 breadcrumb-title">O'qituvchilar</h4>
+                                                                <span class="sub-title ml-sm-25 pl-sm-25"></span>
+                                                            </div>
+                        
+                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                                                <span data-feather="search"></span>
+                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
+                                                            </form>
+                        
+                                                        </div>
+                                                        <div class="action-btn">
+                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
+                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
+                                                            </a>
+                        
+                                                            <!-- Modal -->
+                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content radius-xl">
+                                                                        <div class="modal-header">
+                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span data-feather="x"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="add-new-contact">
+                                                                                <form action="/">
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Email Address:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Phone Number:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Position:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
+                                                                                    </div>
+                                                                                    <div class="form-group mb-20">
+                                                                                        <label>Company Name:</label>
+                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
+                                                                                    </div>
+                        
+                                                                                    <div class="button-group d-flex pt-20">
+                        
+                        
+                        
+                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
+                                                                                        </button>
+                        
+                        
+                        
+                        
+                        
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Modal -->
+                        
+                        
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-list-wrap mb-25">
+                                                    <div class="contact-list bg-white radius-xl w-100">
+                                                        <div class="table-responsive">
+                        
+                                                            <table class="table mb-0 table-borderless table-rounded">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <div class="d-flex align-items-center pl-5">
+                                                                                    <span>F.I.O</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="c-email">
+                                                                            <span>Telefon raqam</span>
+                                                                        </th>
+                                                                        <th class="c-company">
+                                                                            <span>Guruhlari</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                        
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="contact-item d-flex align-items-center">
+                                                                                <div class="contact-personal-info d-flex">
+                                                                                    <div class="contact_title">
+                                                                                        <h6>
+                                                                                            <a>Burhon Baqoyev</a>
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                </div>
+                        
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="email">99 999 87 65</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="com-name">Guruh-1</span>
+                                                                        </td>
+                                                                    </tr>                               
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ends: col-12 -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="extensions3" role="tabpanel" aria-labelledby="extensions3-tab">
+                                    <div class="card card-default card-md mb-4">
+                                        <div class="card-body">
+                                            <div class="atbd-empty text-center">
+                                                <div class="atbd-empty__image">
+        
+                                                    <img src="{% static 'img/3.svg' %}" alt="Admin Empty">
+        
+                                                </div>
+                                                <div class="atbd-empty__text">
+        
+                                                    <p>Materiallar hali yuklanmagan</p>
+                                                    <div class="atbd-empty__action">
+                                                        <button class="btn btn-primary btn-sm btn-squared">Qo'shish</button>
+                                                    </div>
+        
+                                                </div>
+                                            </div>
+        
+        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
