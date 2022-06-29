@@ -13,3 +13,6 @@ def courses_list_view(request):
    
 def course_detail_view(request,id):
     return render(request,'education/course_detail.html') 
+
+def teacher_detail_view(request,id):
+    return render(request,'education/teacher_detail.html')    
