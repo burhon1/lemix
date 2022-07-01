@@ -1,0 +1,459 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="breadcrumb-main">
+                <h4 class="text-capitalize breadcrumb-title">Ma'lumotlar</h4>
+            </div>
+
+        </div>
+        <div class="col-xxl-3 col-lg-3 col-sm-3">
+            <!-- Profile Acoount -->
+            <div class="card mb-25">
+                <div class="card-body text-center p-0">
+
+                    <div class="account-profile border-bottom pt-25 px-25 pb-0 flex-column d-flex align-items-center ">
+                        <div class="ap-img mb-20 pro_img_wrapper">
+                            <input id="file-upload" type="file" name="fileUpload" class="d-none">
+                            <label for="file-upload">
+                                <!-- Profile picture image-->
+                                <img class="ap-img__main rounded-circle wh-120" src="{% static 'img/profile.png' %}"
+                                    alt="profile">
+                                <span class="cross" id="remove_pro_pic">
+                                    <span data-feather="camera"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="ps-tab p-20 pb-25">
+                        <div class="nav flex-column text-left" id="v-pills-tab" role="tablist"
+                            aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                                role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                F.I.O </a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                                role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                Telefon raqam:</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
+                                role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                Tug'ilgan kun:</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
+                                role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                                Manzil:</a>
+                            <a class="nav-link" id="v-pills-notification-tab" data-toggle="pill"
+                                href="#v-pills-notification" role="tab" aria-controls="v-pills-notification"
+                                aria-selected="false">
+                                Izoh:</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Profile Acoount End -->
+        </div>
+        <div class="col-xxl-9 col-lg-9 col-sm-9">
+            <div class="knowledgebase-details knowledgebase-details--row m-0 pt-4 pb-4">
+                <div class="row pl-5 pr-5">
+                    <div class="cus-8 col-md-12 ">
+                        <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="plugins-tab" data-toggle="pill" href="#plugins"
+                                    role="tab" aria-controls="plugins" aria-selected="true">Guruhlar</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes" role="tab"
+                                    aria-controls="themes" aria-selected="false">Davomat</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes1" role="tab"
+                                    aria-controls="themes" aria-selected="false">Ish haqi</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="extensions-tab" data-toggle="pill" href="#extensions" role="tab"
+                                    aria-controls="extensions" aria-selected="false">Jadval</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="extensions1-tab" data-toggle="pill" href="#extensions1"
+                                    role="tab" aria-controls="extensions1" aria-selected="false">Tarix</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="cus-8 col-md-12 mt-4 p-0 ">
+                <div class="tab-content" id="knowledgebaseContent">
+                    <div class="tab-pane fade show active" id="plugins" role="tabpanel" aria-labelledby="plugins-tab">
+                        <div class="container-fluid  p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="d-flex align-items-center pl-5">
+                                                                    <span>Guruh nomi</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Kurs turi</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>O'qituvchisi</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span class="">Kunlari</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span class="">Muddati</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span class="">Dars xonasi</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <a href="#"
+                                                                            class="profile-image rounded-circle d-block m-0 wh-38"
+                                                                            style="background-image:url('img/tm6.png'); background-size: cover;"></a>
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>Guruh-1</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">Matematika fani</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">Jo'rayev Xurshid</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="position">Dush/Chor/Juma 10:00-13:00</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">6 oy</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">1-xona</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
+                        <div class="container-fluid p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="d-flex align-items-center pl-5">
+                                                                    <span>Sana</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Holat</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>Vaqt</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span class="">Izoh</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>30.06.2022</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="userDatatable-content d-inline-block">
+                                                                    <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">09:50</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">20 daqiqa kechikdi</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="themes1" role="tabpanel" aria-labelledby="themes-tab">
+                        <div class="container-fluid p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="d-flex align-items-center pl-5">
+                                                                    <span>Nomi</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Sana</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>Summa</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span class="">To'lov turi</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span class="">Izoh</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <a href="#"
+                                                                            class="profile-image rounded-circle d-block m-0 wh-38"
+                                                                            style="background-image:url('img/tm6.png'); background-size: cover;"></a>
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>Test-1</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">12.06.2022</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">250000</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="position">Karta </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">1-guruh uchun</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="extensions" role="tabpanel" aria-labelledby="extensions-tab">
+                        <div class="container-fluid p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="d-flex align-items-center pl-5">
+                                                                    <span>Guruh nomi</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Kurs turi</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>O'qituvchisi</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span class="">Kunlari</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span class="">Muddati</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span class="">Dars xonasi</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <a href="#"
+                                                                            class="profile-image rounded-circle d-block m-0 wh-38"
+                                                                            style="background-image:url('img/tm6.png'); background-size: cover;"></a>
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>Guruh-1</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">Matematika fani</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">Jo'rayev Xurshid</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="position">Dush/Chor/Juma 10:00-13:00</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">6 oy</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">1-xona</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="extensions1" role="tabpanel" aria-labelledby="extensions1-tab">
+                        <div class="container-fluid  p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="d-flex align-items-center pl-5">
+                                                                    <span>Kurs nomi</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Oylik To'lovi</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>Izoh</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>Guruh-1</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">250 000</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">Kursda 15 yoshga o'quvchilar
+                                                                    o'qiydi</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>Guruh-2</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">350 000</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">Kurs OTMga kiruvchilar
+                                                                    uchun</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
