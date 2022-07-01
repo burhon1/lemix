@@ -8,5 +8,10 @@ urlpatterns = [
     path('test/',test2_view,name='test'),
     path('groups/list/',groups_list_view,name='test'),
     path('courses/list/',courses_list_view,name='course'),
-    
+    path('course/<int:id>/detail/',course_detail_view,name='course_detail'),
+    path('teacher/add/',techear_add_view,name='courseadd'),
+    path('guruhlar/',guruhlar_view,name='guruhlar'),
+    path('roomslist/',roomslist_view,name='roomslist'),
+    path('employees/',employees_view,name='employees'),
 ]
+
