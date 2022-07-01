@@ -9,14 +9,14 @@ urlpatterns = [
     path('groups/list/',groups_list_view,name='groups-list'),
     path('courses/list/',courses_list_view,name='courses-list'),
     path('course/<int:id>/detail/',course_detail_view,name='course_detail'),
-<<<<<<< HEAD
+
     path('teacher/<int:id>/detail/',teacher_detail_view,name='teacher_detail'),
     path('employe/<int:id>/detail/',employe_detail_view,name='employe_detail'),
-=======
+
     path('teacher/add/',techear_add_view,name='courseadd'),
     path('guruhlar/',guruhlar_view,name='guruhlar'),
     path('roomslist/',roomslist_view,name='roomslist'),
     path('employees/',employees_view,name='employees'),
->>>>>>> 6a796d0ab23f145efcbb6790741c911bdd95251b
+
 ]
 
