@@ -15,4 +15,7 @@ def course_detail_view(request,id):
     return render(request,'education/course_detail.html') 
 
 def teacher_detail_view(request,id):
-    return render(request,'education/teacher_detail.html')    
+    return render(request,'education/teacher_detail.html') 
+
+def employe_detail_view(request,id):
+    return render(request,'education/employe_detail.html')   
