@@ -1,39 +1,39 @@
 <aside class="sidebar">
     <div class="sidebar__menu-group">
-        <ul class="sidebar_nav">
+        <ul class="sidebar_nav mt-2">
             <li>
                 <a href="changelog.html" class="">
-                    <span data-feather="activity" class="nav-icon"></span>
+                    <span data-feather="grid" class="nav-icon"></span>
                     <span class="menu-text">Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="changelog.html" class="">
-                    <span data-feather="activity" class="nav-icon"></span>
+                    <span data-feather="inbox" class="nav-icon"></span>
                     <span class="menu-text">Lidlar</span>
                 </a>
             </li>
             <li>
-                <a href="changelog.html" class="">
-                    <span data-feather="activity" class="nav-icon"></span>
+                <a href="{% url 'education:groups-list' %}" class="">
+                    <span data-feather="layers" class="nav-icon"></span>
                     <span class="menu-text">Guruhlar</span>
                 </a>
             </li>
             <li>
                 <a href="changelog.html" class="">
-                    <span data-feather="activity" class="nav-icon"></span>
+                    <span data-feather="users" class="nav-icon"></span>
                     <span class="menu-text">O’quvchilar</span>
                 </a>
             </li>
             <li class="has-child">
                 <a href="#" class="">
-                    <span data-feather="home" class="nav-icon"></span>
+                    <span data-feather="book-open" class="nav-icon"></span>
                     <span class="menu-text">Ta’lim</span>
                     <span class="toggle-icon"></span>
                 </a>
                 <ul>
                     <li>
-                        <a class="" href="index.html">Kurslar</a>
+                        <a class="" href="{% url 'education:courses-list' %}">Kurslar</a>
                     </li>
                     <li>
                         <a class="" href="business.html">O’qituvchilar</a>
@@ -48,7 +48,7 @@
             </li>  
             <li class="has-child">
                 <a href="#" class="">
-                    <span data-feather="home" class="nav-icon"></span>
+                    <span data-feather="refresh-cw" class="nav-icon"></span>
                     <span class="menu-text">Moliya</span>
                     <span class="toggle-icon"></span>
                 </a>
@@ -66,7 +66,7 @@
             </li> 
             <li class="has-child">
                 <a href="#" class="">
-                    <span data-feather="home" class="nav-icon"></span>
+                    <span data-feather="pie-chart" class="nav-icon"></span>
                     <span class="menu-text">Hisobotlar</span>
                     <span class="toggle-icon"></span>
                 </a>
@@ -90,7 +90,7 @@
             </li>
             <li class="has-child">
                 <a href="#" class="">
-                    <span data-feather="home" class="nav-icon"></span>
+                    <span data-feather="settings" class="nav-icon"></span>
                     <span class="menu-text">Sozlamalar</span>
                     <span class="toggle-icon"></span>
                 </a>
@@ -111,7 +111,7 @@
             </li>
             <li>
                 <a href="changelog.html" class="">
-                    <span data-feather="activity" class="nav-icon"></span>
+                    <span data-feather="message-circle" class="nav-icon"></span>
                     <span class="menu-text">Chat</span>
                 </a>
             </li>        
