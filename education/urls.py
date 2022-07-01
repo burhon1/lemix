@@ -13,7 +13,7 @@ urlpatterns = [
     path('teacher/<int:id>/detail/',teacher_detail_view,name='teacher_detail'),
     path('employe/<int:id>/detail/',employe_detail_view,name='employe_detail'),
 
-    path('teacher/add/',techear_add_view,name='courseadd'),
+    path('teacher/add/',teacher_add_view,name='courseadd'),
     path('guruhlar/',guruhlar_view,name='guruhlar'),
     path('roomslist/',roomslist_view,name='roomslist'),
     path('employees/',employees_view,name='employees'),
