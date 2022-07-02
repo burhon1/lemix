@@ -9,9 +9,14 @@
                 
                 <div class="action-btn">
                     
-                    <button class="btn btn-primary btn-default btn-squared " data-toggle="modal" data-target="#modal-basic"><span data-feather="plus"></span>
-                    Xodim qo'shish
-                    </button>
+                
+
+                    <button
+          class="btn btn-primary btn-default btn-squared drawer-trigger"
+          data-drawer="account"
+        >
+          Xodimlar qo'shish
+        </button>
                 </div>
         </div>
     </div>
@@ -42,22 +47,28 @@
                                                         <span class="userDatatable-title">id</span>
                                                     </th>
                                                     <th>
-                                                        <span class="userDatatable-title">Xonalar</span>
+                                                        <span class="userDatatable-title">FIO</span>
                                                     </th>
 
                                                     <th>
-                                                        <span class="userDatatable-title">Xona sig'imi</span>
+                                                        <span class="userDatatable-title">Telefon</span>
                                                     </th>
                                                     <th>
-                                                        <span class="userDatatable-title">Xodim</span>
+                                                        <span class="userDatatable-title">Roli</span>
                                                     </th>
 
                                                   
                                                     <th>
-                                                        <span class="userDatatable-title ">Status</span>
+                                                        <span class="userDatatable-title ">Tug'ilgan kuni</span>
                                                     </th>
+
                                                     <th>
-                                                        <span class="userDatatable-title ">...</span>
+                                                        <span class="userDatatable-title ">Manzili</span>
+                                                    </th>
+
+                                                 
+                                                    <th>
+                                                        <span class="userDatatable-title ">Amallar</span>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -220,102 +231,117 @@
                     </div>
                 </div>
             </div>
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-header">
 
-                <h6 class="modal-title"> + qo’shish</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span data-feather="x"></span></button>
-            </div>
-            <div class="modal-body">
-                <form action="#">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="a1" class="il-gray fs-14 fw-500 align-center">Ism</label>
-                                <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="a1" class="il-gray fs-14 fw-500 align-center">Familiya</label>
-                                <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Telefon</label>
-                                <input type=" number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="998 *** ** **">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugilgan kun</label>
-                                <input type="date" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
-                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                <option value="">Erkak</option>
-                                <option value="">Ayol</option>
-                            </select>
-                       
-                    </div>
+
+
+
+<div class="drawer-basic-wrap">
+    <div class="atbd-drawer drawer-account d-none">
+      <div
+        class="atbd-drawer__header d-flex aling-items-center justify-content-between"
+      >
+        <h6 class="drawer-title"></h6>
+        <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+      </div>
+      <!-- ends: .atbd-drawer__header -->
+      <div class="atbd-drawer__body">
+        <div class="drawer-content">
+          <div class="drawer-account-form form-basic">
+            <form action="#">
+              
+              
+                
+               
+               
+
+
+                  <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Manzili</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
+                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Ism</label>
+                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
                         </div>
                     </div>
-                  
-                    <div class="col-md-12">
-                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Rol</label>
-                        <div class="checkbox-group d-flex">
-
-                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                                <input class="checkbox" type="checkbox" id="check-grp-4">
-                                <label for="check-grp-4">
-                                    <span class="checkbox-text">Apple</span>
-                                </label>
-                            </div>
-
-                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                                <input class="checkbox" type="checkbox" id="check-grp-5">
-                                <label for="check-grp-5">
-                                    <span class="checkbox-text">Peer</span>
-                                </label>
-                            </div>
-
-                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                                <input class="checkbox" type="checkbox" id="check-grp-6">
-                                <label for="check-grp-6">
-                                    <span class="checkbox-text">sda</span>
-                                </label>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                    </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Rasm</label>
-                            <input type="image" class="form-control ih-medium ip-light radius-xs b-light px-15" style="border:#fff ;" id="a2" placeholder="">
+                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Familiya</label>
+                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
-            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Telefon</label>
+                            <input type=" number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="998 *** ** **">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugilgan kun</label>
+                            <input type="date" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                        <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                            <option value="">Erkak</option>
+                            <option value="">Ayol</option>
+                        </select>
+                   
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Manzili</label>
+                        <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
+                    </div>
+                </div>
+              
+                <div class="col-md-6">
+                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Rol</label>
+                    <div class="checkbox-group d-flex">
+
+                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                            <input class="checkbox" type="checkbox" id="check-grp-4">
+                            <label for="check-grp-4">
+                                <span class="checkbox-text">Apple</span>
+                            </label>
+                        </div>
+
+                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                            <input class="checkbox" type="checkbox" id="check-grp-5">
+                            <label for="check-grp-5">
+                                <span class="checkbox-text">Peer</span>
+                            </label>
+                        </div>
+
+                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                            <input class="checkbox" type="checkbox" id="check-grp-6">
+                            <label for="check-grp-6">
+                                <span class="checkbox-text">sda</span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                </div>
+             
+              
+             
+               
+              </div>
+           
+          </div>
         </div>
+      </div>
+      <!-- ends: .atbd-drawer__body -->
     </div>
+    <!-- ends: .atbd-drawer -->
 </div>
+<div class="overlay-dark"></div>
+<div class="overlay-dark-l2"></div>
+
+
 
 <ul class="atbd-pagination d-flex">
     <li class="atbd-pagination__item">
@@ -334,6 +360,5 @@
         </div>
     </li>
 </ul>
-
 
 {% endblock %}
