@@ -1,3 +1,4 @@
+
 from django.urls import path
 
 from education.views import *
@@ -19,4 +20,3 @@ urlpatterns = [
     path('employees/',employees_view,name='employees'),
 
 ]
-
