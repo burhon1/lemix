@@ -32,3 +32,6 @@ def roomslist_view(request):
 def employees_view(request):
     return render(request,'education/employees.html') 
 
+def group_detail_view(request):
+    return render(request,'education/group_detail.html') 
+
