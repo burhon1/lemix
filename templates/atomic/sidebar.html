@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'education:teachers' %}" class="">
+                <a href="{% url 'education:guruhlar' %}" class="">
                     <span data-feather="layers" class="nav-icon"></span>
                     <span class="menu-text">Guruhlar</span>
                 </a>
@@ -36,7 +36,7 @@
                         <a class="" href="{% url 'education:courses-list' %}">Kurslar</a>
                     </li>
                     <li>
-                        <a class="" href="business.html">O’qituvchilar</a>
+                        <a class="" href="{% url 'education:teachers' %}">O’qituvchilar</a>
                     </li>
                     <li>
                         <a class="" href="performance.html">Imtihonlar</a>
@@ -96,7 +96,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a class="" href="index.html">Xonalar</a>
+                        <a class="" href="{% url 'education:roomslist' %}">Xonalar</a>
                     </li>
                     <li>
                         <a class="" href="business.html">Rollar</a>
