@@ -295,61 +295,75 @@
                     </div>
                     <div class="tab-pane fade" id="extensions" role="tabpanel" aria-labelledby="extensions-tab">
                         <div class="container-fluid p-0 ">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="e-info-modal modal fade" id="e-info-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm e-info-dialog modal-dialog-centered" id="c-event" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header e-info-header bg-primary">
-                                                    <h6 class="modal-title e-info-title">Project Update</h6>
-                                                    <div class="e-info-action">
-                                                        <button class="btn-icon">
-                                                            <span data-feather="edit"></span></button>
-                                                        <button class="btn-icon">
-                                                            <span data-feather="mail"></span></button>
-                                                        <button class="btn-icon">
-                                                            <span data-feather="trash-2"></span></button>
-                                                        <button type="button" class="btn-icon btn-close" data-dismiss="modal" aria-label="Close">
-                                                            <span data-feather="x"></span></button>
-                                                    </div>
+                            <div class="row calendar-grid justify-content-center">
+                                <div class="col-xxl-3 col-xl-5 col-md-6 col-sm-8">
+                                    <div class="atbd-calendar-left">
+                                        <button class="btn btn-secondary btn-lg btn-create-event" data-toggle="modal" data-target="#c-event-modal">
+                                            <span data-feather="plus"></span>Create New Event</button>
+                                        <div class="card card-md mb-4">
+                                            <div class="card-body px-10">
+                                                <div class="date-picker">
+                                                    <div class="date-picker__calendar"></div>
+                                                    <!-- ends: .date-picker__calendar -->
                                                 </div>
-                                                <div class="modal-body">
-                                                    <ul class="e-info-list">
-                                                        <li>
-                                                            <span data-feather="calendar"></span>
-                                                            <span class="list-line">
-                                                                <span class="list-label">Date :</span>
-                                                                <span class="list-meta"> Thursday, January 23</span>
-                                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="card card-md mb-4">
+                                            <div class="card-body">
+                                                <div class="draggable-events" id="draggable-events">
+                                                    <div class="draggable-events__top d-flex justify-content-between">
+                                                        <h6>My Calendars</h6>
+                                                        <a href="#">
+                                                            <span data-feather="plus"></span></a>
+                                                    </div>
+                                                    <ul class="draggable-event-list">
+                                                        <li class="draggable-event-list__single d-flex align-items-center" data-class="primary">
+                                                            <span class="badge-dot badge-primary"></span>
+                                                            <span class="event-text">Family Events</span>
                                                         </li>
-                                                        <li>
-                                                            <span data-feather="clock"></span>
-                                                            <span class="list-line">
-                                                                <span class="list-label">Time :</span>
-                                                                <span class="list-meta"> 23⋅5:00 – 6:00 am</span>
-                                                            </span>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center" data-class="secondary">
+                                                            <span class="badge-dot badge-secondary"></span>
+                                                            <span class="event-text">Product Launch</span>
                                                         </li>
-                                                        <li>
-                                                            <span data-feather="align-left"></span>
-                                                            <span class="list-line">
-                                                                <span class="list-text"> Lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam consetetur sadipscing elitr sed diam</span>
-                                                            </span>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center" data-class="success">
+                                                            <span class="badge-dot badge-success"></span>
+                                                            <span class="event-text">Team Meeting</span>
                                                         </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center" data-class="primary">
+                                                            <span class="badge-dot badge-primary"></span>
+                                                            <span class="event-text">UI/UX Tasks</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center" data-class="warning">
+                                                            <span class="badge-dot badge-warning"></span>
+                                                            <span class="event-text">Project Update</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- ends: .card -->
                                     </div>
                                 </div>
-                                <!-- ends: col-12 -->
+                                <!-- ends: .col-lg-3 -->
+                                <div class="col-xxl-9 col-xl-7">
+                                    <div class="card card-default card-md mb-4">
+                                        <div class="card-body">
+                                            <div id='full-calendar'></div>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .card -->
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="extensions1" role="tabpanel" aria-labelledby="extensions1-tab">
                         <div class="container-fluid  p-0 ">
                             <div class="row">
-                                <div class="col-12">
-
                                     <div class="card mb-25">
                                         <div class="card-body pt-0 pb-0">
                                             <div class="drag-drop-wrap">
