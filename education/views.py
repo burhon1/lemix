@@ -5,8 +5,8 @@ from django.shortcuts import render
 def test2_view(request):
     return render(request,'education/test.html')    
 
-def groups_list_view(request):
-    return render(request,'education/groups_list.html')  
+def teachers_view(request):
+    return render(request,'education/teachers.html')  
 
 def courses_list_view(request):
     return render(request,'education/courses_list.html')  

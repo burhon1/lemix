@@ -7,7 +7,7 @@ app_name = 'education'
 
 urlpatterns = [
     path('test/',test2_view,name='test'),
-    path('groups/list/',groups_list_view,name='groups-list'),
+    path('teachers/',teachers_view,name='teachers'),
     path('courses/list/',courses_list_view,name='courses-list'),
     path('course/<int:id>/detail/',course_detail_view,name='course_detail'),
 
