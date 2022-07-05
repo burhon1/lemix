@@ -32,7 +32,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		this.$course = null;
 		//teacher
 		this.teachers = ['Aziz','Burhon','Jonibek'];
-		this.teacherDefault = 'Oqituvchi';
+		this.teacherDefault = "O'qituvchi";
 		this.$teacher = null;
 		//day
 		this.days = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
