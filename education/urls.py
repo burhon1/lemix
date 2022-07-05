@@ -16,8 +16,8 @@ urlpatterns = [
     path('group/<int:id>/detail/',group_detail_view,name='group_detail'),
 
     path('teacher/add/',teacher_add_view,name='courseadd'),
-    path('groupslist/',groupslist_view,name='groupslist'),
-    path('roomslist/',roomslist_view,name='roomslist'),
-    path('employees/',employees_view,name='employees'),
+    path('groups/list/',groupslist_view,name='groups-list'),
+    path('rooms/list/',roomslist_view,name='rooms-list'),
+    path('employees/list/',employees_view,name='employees-list'),
 
 ]
