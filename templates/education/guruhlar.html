@@ -131,6 +131,27 @@
                                                
                                             </tbody>
                                         </table>
+                                        <ul class="atbd-pagination d-flex">
+                                            <li class="atbd-pagination__item">
+                                                <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                                                <a href="#" class="atbd-pagination__link active"><span class="page-number">1</span></a>
+                                                <a href="#" class="atbd-pagination__link "><span class="page-number">2</span></a>
+                                                <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
+                                                <a href="#" class="atbd-pagination__link pagination-control"><span class="page-number">...</span></a>
+                                              
+                                                <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                                                <a href="#" class="atbd-pagination__option">
+                                                </a>
+                                            </li>
+                                            <li class="atbd-pagination__item">
+                                                
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        
+                                            </li>
+                                           
+                                          </ul>
                                     </div>
                                 </div>
 
@@ -139,7 +160,7 @@
                     </div>
                 </div>
 </div>
-            <!--   oqituvchi qoshish-->>
+            <!--   oqituvchi qoshish-->
 
 
 
@@ -172,33 +193,54 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
+                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">Matematika</option>
+                                <option value="">Robotatexnika</option>
+                                <option value="">Web dasturlash</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
-                            <input type=" text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
+                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">tayyorlanmoqda</option>
+                                <option value="">ishga tayyor</option>
+                                <option value="">ishga tushgan</option>
+                                <option value="">To'xtab turipdi</option>
+                                <option value="">Tugatdi</option>
+                                <option value="">Arxivchi</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">Burhon Baqoyev</option>
+                                <option value="">Aziz Saidmurodov</option>
+                                <option value="">Shaxzod Erkinov</option>
+                               
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Yordamchi o'qituvchi</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">Burhon Baqoyev</option>
+                                <option value="">Aziz Saidmurodov</option>
+                                <option value="">Shaxzod Erkinov</option>
+                          
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Kunlar</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="Du/Chor/Ju">
                         </div>
                     </div>
 
@@ -206,14 +248,18 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Vaqt</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Turi</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">Standart</option>
+                                <option value="">Individual</option>
+                              
+                            </select>
                         </div>
                     </div>
 
@@ -221,41 +267,59 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Formati</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">Oflayn</option>
+                                <option value="">Onlayn</option>
+                       
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">1-xona</option>
+                                <option value="">2-xona</option>
+                                <option value="">3-xona</option>
+                                <option value="">4-xona</option>
+                                <option value="">5-xona</option>
+                                <option value="">6-xona</option>
+                                <option value="">7-xona</option>
+                                <option value="">8-xona</option>
+                                <option value="">9-xona</option>
+                                <option value="">10-xona</option>
+                                <option value="">11-xona</option>
+                                <option value="">12-xona</option>
+                            </select>
                         </div>
                     </div>
 
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">O'quvchi</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
-                        </div>
-                    </div>
+                 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">To'lov formati</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <option value="">Darsbay</option>
+                                <option value="">Oylik</option>
+                                <option value="">Yillik</option>
+                                <option value="">Modulli</option>
+                              
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars boshlanish vaqti</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <input type="time" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugash vaqti</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
+                            <input type="time" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
                         </div>
                     </div>
 
@@ -266,7 +330,7 @@
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
 
-                       
+                 
 
                
               </div>
@@ -285,20 +349,6 @@
 
 
 
-<ul class="atbd-pagination d-flex">
-    <li class="atbd-pagination__item">
-        <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
-        <a href="#" class="atbd-pagination__link active"><span class="page-number">1</span></a>
-        <a href="#" class="atbd-pagination__link "><span class="page-number">2</span></a>
-        <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
-        
-      
-        <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
-        <a href="#" class="atbd-pagination__option">
-        </a>
-    </li>
-   
-</ul>
 
 
 {% endblock %}
