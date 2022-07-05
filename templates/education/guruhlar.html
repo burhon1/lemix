@@ -1,0 +1,457 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
+            <h4 class="text-capitalize breadcrumb-title">Guruhlar-3ta </h4>
+            <div class="action-btn">
+                <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
+                    Guruh qo'shish
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mb-1">
+
+            <div class="card px-20 ">
+                <div class="card-body p-1">
+                    <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-group">
+                        <div class="table-responsive">
+                            <div id="filter-form-container"></div>
+                            <table class="table mb-0 table-borderless adv-table-group" data-sorting="true"
+                                data-filter-container="#filter-form-container" data-paging-current="1"
+                                data-paging-position="right" data-paging-size="10">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th>
+                                            <span class="userDatatable-title">#</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Nomi</span>
+                                        </th>
+                                        <th data-type="html" data-name='position'>
+                                            <span class="userDatatable-title">Kurs</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">O'qituvchi</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title ">Kunlari</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title ">Dars vaqtlari</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title ">O'quvchilar</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title ">Narx</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title ">Amallar</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">01</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="#" class="text-dark fw-500">
+                                                        <h6> Matematikab1</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                Matematika
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                Aziz
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                Du/Se/Chor
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                10:10-12:00
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                20
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                550 000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                ...
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span
+                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">02</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="#" class="text-dark fw-500">
+                                                        <h6> Matematikab1</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                Matematika
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                B.Baqoyev
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                Du/Se/Chor
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                10:10-12:00
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                15
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                350 000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                ...
+                                            </div>
+                                        </td>
+
+                                        <tr>
+                                            <td>
+                                                <div class="userDatatable-content">03</div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="#" class="text-dark fw-500">
+                                                            <h6>Robotatexnik</h6>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    IT
+                                                </div>
+                                            </td>
+    
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    Shaxzod
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    Du/Se/Chor
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    10:10-12:00
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    15
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    450 000
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    ...
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span
+                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                      
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ul class="atbd-pagination d-flex my-3">
+                                <li class="atbd-pagination__item">
+                                    <a href="#" class="atbd-pagination__link pagination-control"><span
+                                            class="la la-angle-left"></span></a>
+                                    <a href="#" class="atbd-pagination__link active"><span
+                                            class="page-number">1</span></a>
+                                    <a href="#" class="atbd-pagination__link "><span class="page-number">2</span></a>
+                                    <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
+
+
+                                    <a href="#" class="atbd-pagination__link pagination-control"><span
+                                            class="la la-angle-right"></span></a>
+                                    <a href="#" class="atbd-pagination__option">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   oqituvchi qoshish-->
+
+
+
+
+
+<div class="drawer-basic-wrap">
+    <div class="atbd-drawer drawer-account d-none" style="overflow-y: scroll !important;">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h3 class="drawer-title">Yangi guruh qo'shish</h3>
+            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+        </div>
+        <dir>
+            <!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+
+
+
+
+                                <div class="row ">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                            <input type="text"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
+                                                placeholder="Nomi">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">Matematika</option>
+                                                <option value="">Robotatexnika</option>
+                                                <option value="">Web dasturlash</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">tayyorlanmoqda</option>
+                                                <option value="">ishga tayyor</option>
+                                                <option value="">ishga tushgan</option>
+                                                <option value="">To'xtab turipdi</option>
+                                                <option value="">Tugatdi</option>
+                                                <option value="">Arxivchi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">Burhon Baqoyev</option>
+                                                <option value="">Aziz Saidmurodov</option>
+                                                <option value="">Shaxzod Erkinov</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Yordamchi
+                                                o'qituvchi</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">Burhon Baqoyev</option>
+                                                <option value="">Aziz Saidmurodov</option>
+                                                <option value="">Shaxzod Erkinov</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">1-xona</option>
+                                                <option value="">2-xona</option>
+                                                <option value="">3-xona</option>
+                                                <option value="">4-xona</option>
+                                                <option value="">5-xona</option>
+                                                <option value="">6-xona</option>
+                                                <option value="">7-xona</option>
+                                                <option value="">8-xona</option>
+                                                <option value="">9-xona</option>
+                                                <option value="">10-xona</option>
+                                                <option value="">11-xona</option>
+                                                <option value="">12-xona</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="card  card-md-4 mb-30">
+
+                                            <div class="card-body p-0">
+                                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Kunlar</label>
+                                                <div class="atbd-select ">
+
+                                                    <select name="select-search" id="select-search"
+                                                        class="form-control form-group" multiple="multiple">
+                                                        <option value="01">Du</option>
+                                                        <option value="02">Se</option>
+                                                        <option value="03">Chor</option>
+                                                        <option value="04">Pay</option>
+                                                        <option value="05">Ju</option>
+                                                        <option value="05">Sha</option>
+                                                        <option value="05">Yak</option>
+                                                    </select>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">To'lov
+                                                formati</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">Darsbay</option>
+                                                <option value="">Oylik</option>
+                                                <option value="">Yillik</option>
+                                                <option value="">Modulli</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars boshlanish
+                                                vaqti</label>
+                                            <input type="time"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                                placeholder="soni">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugash
+                                                vaqti</label>
+                                            <input type="time"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                                placeholder="soni">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlTextarea1"
+                                            class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                        <textarea class="form-control form-row" id="exampleFormControlTextarea1"
+                                            rows="2"></textarea>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm  "
+                                            style="margin-top:20px ;">Saqlash</button>
+
+                                    </div>
+
+
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ends: .atbd-drawer__body -->
+    </div>
+    <!-- ends: .atbd-drawer -->
+</div>
+<div class="overlay-dark"></div>
+<div class="overlay-dark-l2"></div>
+
+
+
+
+
+
+
+{% endblock %}

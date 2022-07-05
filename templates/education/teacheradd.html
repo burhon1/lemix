@@ -1,0 +1,56 @@
+{% extends 'atomic/theme.html' %} 
+{% load static %}
+{% block content %}
+  <input type="text">
+     
+<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+                <h6 class="modal-title">Kurs qo’shish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
+                            </div>
+                        </div>
+                        <div class="col-md-12">                         <label for="a2" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
+                                <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="Davomiyligi">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
+                                <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="Dars davomiyligi">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Narx</label>
+                                <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="Narx">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-element-textarea">
+                                <label for="exampleFormControlTextarea1" class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

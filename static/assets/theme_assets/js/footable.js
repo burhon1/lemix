@@ -1,5 +1,5 @@
 $(function() {
-    $('.adv-table').footable({
+    $('.adv-table-group').footable({
       filtering: {
         enabled: true
       },
@@ -24,18 +24,26 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		this._super(instance);
 		// props for the first dropdown
 		this.statuses = ['Web Developer','Senior Manager','UX/UI Desogner','Content Writer','Graphic Designer','Marketer','Project Manager','UI Designer','Business Development'];
-		this.statusDefault = 'Davomiyligi';
+		this.statusDefault = 'Status';
 		this.$status = null;
-		// props for the second dropdown
-		this.jobTitles = ['Active','deactivate','Blocked'];
-		this.jobTitleDefault = 'Status';
-		this.$jobTitle = null;
+		// courses
+		this.courses = ['IT','English','Math'];
+		this.courseDefault = 'Kurslar';
+		this.$course = null;
+		//teacher
+		this.teachers = ['Aziz','Burhon','Jonibek'];
+		this.teacherDefault = "O'qituvchi";
+		this.$teacher = null;
+		//day
+		this.days = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
+		this.dayDefault = 'kunlar';
+		this.$day = null;
 	},
 	$create: function(){
 		this._super();
 		var self = this;
 		// create the status form group and dropdown
-		var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position my-md-25 my-15 mr-sm-20 mr-0 '})
+		var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position '})
 			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 			.prependTo(self.$form);
 
@@ -49,32 +57,49 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		});
 
 
-
-		// create the job title form group and dropdown
-		var $job_title_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
+		// courses
+		var $course_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
 			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 			.prependTo(self.$form);
 
-		self.$jobTitle = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-			.on('change', {self: self}, self._onJobTitleDropdownChanged)
-			.append($('<option/>', {text: self.jobTitleDefault}))
-			.appendTo($job_title_form_grp);
+		self.$course = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onCourseDropdownChanged)
+			.append($('<option/>', {text: self.courseDefault}))
+			.appendTo($course_form_grp);
 
-		$.each(self.jobTitles, function(i, jobTitle){
-			self.$jobTitle.append($('<option/>').text(jobTitle));
+		$.each(self.courses, function(i, status){
+			self.$course.append($('<option/>').text(status));
+		});
+		
+		//teacher 
+		var $teacher_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
+		.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
+		.prependTo(self.$form);
+
+	self.$teacher = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+		.on('change', {self: self}, self._onTeacherDropdownChanged)
+		.append($('<option/>', {text: self.teacherDefault}))
+		.appendTo($teacher_form_grp);
+
+	$.each(self.teachers, function(i, status){
+		self.$teacher.append($('<option/>').text(status));
+	});
+
+			//day
+			var $day_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
+			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
+			.prependTo(self.$form);
+	
+		self.$day = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onDayDropdownChanged)
+			.append($('<option/>', {text: self.dayDefault}))
+			.appendTo($day_form_grp);
+	
+		$.each(self.days, function(i, status){
+			self.$day.append($('<option/>').text(status));
 		});
 	},
 	_onStatusDropdownChanged: function(e){
-		var self = e.data.self,
-			selected = $(this).val();
-		if (selected !== self.statusDefault){
-			self.addFilter('position', selected, ['position']);
-		} else {
-			self.removeFilter('position');
-		}
-		self.filter();
-	},
-	_onJobTitleDropdownChanged: function(e){
 		var self = e.data.self,
 			selected = $(this).val();
 		if (selected !== self.jobTitleDefault){
@@ -84,6 +109,41 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		}
 		self.filter();
 	},
+
+	_onCourseDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.courseDefault){
+			self.addFilter('course', selected, ['course']);
+		} else {
+			self.removeFilter('course');
+		}
+		self.filter();
+	},
+
+	_onTeacherDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.teacherDefault){
+			self.addFilter('teacher', selected, ['teacher']);
+		} else {
+			self.removeFilter('teacher');
+		}
+		self.filter();
+	},
+
+	_onDayDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.dayDefault){
+			self.addFilter('day', selected, ['day']);
+		} else {
+			self.removeFilter('day');
+		}
+		self.filter();
+	},
+
+	
 	draw: function(){
 		this._super();
 		// handle the status filter if one is supplied
@@ -94,18 +154,34 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 			this.$status.val(this.statusDefault);
 		}
 
-		// handle the jobTitle filter if one is supplied
-		var jobTitle = this.find('status');
-		if (jobTitle instanceof FooTable.Filter){
-			this.$jobTitle.val(jobTitle.query.val());
+		// handle the course filter if one is supplied
+		var course = this.find('course');
+		if (course instanceof FooTable.Filter){
+			this.$course.val(status.query.val());
 		} else {
-			this.$jobTitle.val(this.jobTitleDefault);
+			this.$course.val(this.courseDefault);
 		}
+
+		 // handle the teacher filter if one is supplied
+				var teacher = this.find('teacher');
+				if (teacher instanceof FooTable.Filter){
+					this.$teacher.val(status.query.val());
+				} else {
+					this.$teacher.val(this.teacherDefault);
+				}
+	
+		 // handle the day filter if one is supplied
+		 var day = this.find('day');
+		 if (day instanceof FooTable.Filter){
+			 this.$day.val(status.query.val());
+		 } else {
+			 this.$day.val(this.dayDefault);
+		 }
 	}
 });
 
 $(function() {
-    $('.adv-table1').footable({
+    $('.adv-table-course-detail').footable({
       filtering: {
         enabled: true
       },
@@ -120,28 +196,28 @@ $(function() {
               "enabled": true
           },
       components: {
-          filtering: FooTable.MyFiltering
+          filtering: FooTable.CourseDetail
       },
     }); 
   });
   
-FooTable.MyFiltering = FooTable.Filtering.extend({
+FooTable.CourseDetail = FooTable.Filtering.extend({
 	construct: function(instance){
 		this._super(instance);
 		// props for the first dropdown
 		this.statuses = ['Web Developer','Senior Manager','UX/UI Desogner','Content Writer','Graphic Designer','Marketer','Project Manager','UI Designer','Business Development'];
-		this.statusDefault = 'Davomiyligi';
+		this.statusDefault = 'Barchasi';
 		this.$status = null;
-		// props for the second dropdown
-		this.jobTitles = ['Active','deactivate','Blocked'];
-		this.jobTitleDefault = 'Status';
-		this.$jobTitle = null;
+		// courses
+		this.courses = ['10:10 12:00','English','Math'];
+		this.courseDefault = 'Vaqt';
+		this.$course = null;
 	},
 	$create: function(){
 		this._super();
 		var self = this;
 		// create the status form group and dropdown
-		var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position my-md-25 my-15 mr-sm-20 mr-0 '})
+		var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position '})
 			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 			.prependTo(self.$form);
 
@@ -155,32 +231,25 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		});
 
 
-
-		// create the job title form group and dropdown
-		var $job_title_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
+		// courses
+		var $course_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
 			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 			.prependTo(self.$form);
 
-		self.$jobTitle = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-			.on('change', {self: self}, self._onJobTitleDropdownChanged)
-			.append($('<option/>', {text: self.jobTitleDefault}))
-			.appendTo($job_title_form_grp);
+		self.$course = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onCourseDropdownChanged)
+			.append($('<option/>', {text: self.courseDefault}))
+			.appendTo($course_form_grp);
 
-		$.each(self.jobTitles, function(i, jobTitle){
-			self.$jobTitle.append($('<option/>').text(jobTitle));
+		$.each(self.courses, function(i, status){
+			self.$course.append($('<option/>').text(status));
 		});
+	
+
+			//day
+
 	},
 	_onStatusDropdownChanged: function(e){
-		var self = e.data.self,
-			selected = $(this).val();
-		if (selected !== self.statusDefault){
-			self.addFilter('position', selected, ['position']);
-		} else {
-			self.removeFilter('position');
-		}
-		self.filter();
-	},
-	_onJobTitleDropdownChanged: function(e){
 		var self = e.data.self,
 			selected = $(this).val();
 		if (selected !== self.jobTitleDefault){
@@ -190,6 +259,31 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		}
 		self.filter();
 	},
+
+	_onCourseDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.courseDefault){
+			self.addFilter('course', selected, ['course']);
+		} else {
+			self.removeFilter('course');
+		}
+		self.filter();
+	},
+
+	_onTeacherDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.teacherDefault){
+			self.addFilter('teacher', selected, ['teacher']);
+		} else {
+			self.removeFilter('teacher');
+		}
+		self.filter();
+	},
+
+	
+	
 	draw: function(){
 		this._super();
 		// handle the status filter if one is supplied
@@ -200,12 +294,23 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 			this.$status.val(this.statusDefault);
 		}
 
-		// handle the jobTitle filter if one is supplied
-		var jobTitle = this.find('status');
-		if (jobTitle instanceof FooTable.Filter){
-			this.$jobTitle.val(jobTitle.query.val());
+		// handle the course filter if one is supplied
+		var course = this.find('course');
+		if (course instanceof FooTable.Filter){
+			this.$course.val(status.query.val());
 		} else {
-			this.$jobTitle.val(this.jobTitleDefault);
+			this.$course.val(this.courseDefault);
 		}
+
+		 // handle the teacher filter if one is supplied
+				var teacher = this.find('teacher');
+				if (teacher instanceof FooTable.Filter){
+					this.$teacher.val(status.query.val());
+				} else {
+					this.$teacher.val(this.teacherDefault);
+				}
+	
+		 // handle the day filter if one is supplied
+		
 	}
 });
