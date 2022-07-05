@@ -30,6 +30,14 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		this.courses = ['IT','English','Math'];
 		this.courseDefault = 'Kurslar';
 		this.$course = null;
+		//teacher
+		this.teachers = ['Aziz','Burhon','Jonibek'];
+		this.teacherDefault = 'Oqituvchi';
+		this.$teacher = null;
+		//day
+		this.days = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
+		this.dayDefault = 'kunlar';
+		this.$day = null;
 	},
 	$create: function(){
 		this._super();
@@ -62,6 +70,34 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		$.each(self.courses, function(i, status){
 			self.$course.append($('<option/>').text(status));
 		});
+		
+		//teacher 
+		var $teacher_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
+		.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
+		.prependTo(self.$form);
+
+	self.$teacher = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+		.on('change', {self: self}, self._onTeacherDropdownChanged)
+		.append($('<option/>', {text: self.teacherDefault}))
+		.appendTo($teacher_form_grp);
+
+	$.each(self.teachers, function(i, status){
+		self.$teacher.append($('<option/>').text(status));
+	});
+
+			//day
+			var $day_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
+			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
+			.prependTo(self.$form);
+	
+		self.$day = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onDayDropdownChanged)
+			.append($('<option/>', {text: self.dayDefault}))
+			.appendTo($day_form_grp);
+	
+		$.each(self.days, function(i, status){
+			self.$day.append($('<option/>').text(status));
+		});
 	},
 	_onStatusDropdownChanged: function(e){
 		var self = e.data.self,
@@ -73,6 +109,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		}
 		self.filter();
 	},
+
 	_onCourseDropdownChanged: function(e){
 		var self = e.data.self,
 			selected = $(this).val();
@@ -83,6 +120,30 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		}
 		self.filter();
 	},
+
+	_onTeacherDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.teacherDefault){
+			self.addFilter('teacher', selected, ['teacher']);
+		} else {
+			self.removeFilter('teacher');
+		}
+		self.filter();
+	},
+
+	_onDayDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.dayDefault){
+			self.addFilter('day', selected, ['day']);
+		} else {
+			self.removeFilter('day');
+		}
+		self.filter();
+	},
+
+	
 	draw: function(){
 		this._super();
 		// handle the status filter if one is supplied
@@ -100,5 +161,21 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		} else {
 			this.$course.val(this.courseDefault);
 		}
+
+		 // handle the teacher filter if one is supplied
+				var teacher = this.find('teacher');
+				if (teacher instanceof FooTable.Filter){
+					this.$teacher.val(status.query.val());
+				} else {
+					this.$teacher.val(this.teacherDefault);
+				}
+	
+		 // handle the day filter if one is supplied
+		 var day = this.find('day');
+		 if (day instanceof FooTable.Filter){
+			 this.$day.val(status.query.val());
+		 } else {
+			 this.$day.val(this.dayDefault);
+		 }
 	}
 });
