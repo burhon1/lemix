@@ -23,7 +23,7 @@ def employe_detail_view(request,id):
 def teacher_add_view(request):
     return render(request,'education/teacheradd.html')     
 
-def guruhlar_view(request):
+def groupslist_view(request):
     return render(request,'education/guruhlar.html')  
 
 def roomslist_view(request):
