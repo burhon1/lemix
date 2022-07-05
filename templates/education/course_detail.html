@@ -119,162 +119,237 @@
                                 <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-breadcrumb">
-                        
-                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
-                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">                    
-                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                                                <span data-feather="search"></span>
-                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
-                                                            </form>
-                        
-                                                        </div>
-                                                        <div class="action-btn">
-                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
-                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
-                                                            </a>
-                        
-                                                            <!-- Modal -->
-                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content radius-xl">
-                                                                        <div class="modal-header">
-                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span data-feather="x"></span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="add-new-contact">
-                                                                                <form action="/">
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Email Address:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Phone Number:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Position:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Company Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
-                                                                                    </div>
-                        
-                                                                                    <div class="button-group d-flex pt-20">
-                        
-                        
-                        
-                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
-                                                                                        </button>
-                        
-                        
-                        
-                        
-                        
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Modal -->
-                        
-                        
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>
-                                            </div>
-                                        </div>
-                        
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-list-wrap mb-25 p-0 ">
-                                                    <div class="contact-list bg-white radius-xl w-100">
-                                                        <div class="table-responsive">
-                        
-                                                            <table class="table mb-0 table-borderless table-rounded">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <div class="d-flex align-items-center pl-5">
-                                                                                    <span>Nomi</span>
-                                                                            </div>
-                                                                        </th>
-                                                                        <th class="c-email">
-                                                                            <span>Qo'shilgan vaqt</span>
-                                                                        </th>
-                                                                        <th class="c-company">
-                                                                            <span>Muddati</span>
-                                                                        </th>
-                                                                        <th class="c-position">
-                                                                            <span class="">Status</span>
-                                                                        </th>
-                                                                        <th class="c-position">
-                                                                            <span class="">Savollar</span>
-                                                                        </th>
-                                                                        <th class="c-phone">
-                                                                            <span class="">Ishtirokchilar</span>
-                                                                        </th>
-                                                                        <th class="c-action pr-5">
-                                                                            <span class="float-right">Natija</span>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                        
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="contact-item d-flex align-items-center">
-                                                                                <div class="contact-personal-info d-flex">
-                                                                                    <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a>
-                                                                                    <div class="contact_title">
-                                                                                        <h6>
-                                                                                            <a>Test-1</a>
-                                                                                        </h6>
+                                            <div class="col-12 mb-1">
+                                    
+                                                <div class="card px-20 ">
+                                                    <div class="card-body p-1">
+                                                        <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-detail">
+                                                            <div class="table-responsive">
+                                                                <div id="filter-form-container"></div>
+                                                                <table class="table mb-0 table-borderless adv-table-course-detail" data-sorting="true"
+                                                                    data-filter-container="#filter-form-container" data-paging-current="1"
+                                                                    data-paging-position="right" data-paging-size="10">
+                                                                    <thead>
+                                                                        <tr class="userDatatable-header">
+                                                                            <th>
+                                                                                <span class="userDatatable-title">#</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title">Nomi</span>
+                                                                            </th>
+                                                                            <th data-type="html" data-name='position'>
+                                                                                <span class="userDatatable-title">Kurs</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title">O'qituvchi</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title ">Kunlari</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title ">Dars vaqtlari</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title ">O'quvchilar</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title ">Narx</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title ">Amallar</span>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">01</div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="d-flex">
+                                                                                    <div class="userDatatable-inline-title">
+                                                                                        <a href="#" class="text-dark fw-500">
+                                                                                            <h6> Matematikab1</h6>
+                                                                                        </a>
                                                                                     </div>
                                                                                 </div>
-                        
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">12.06.2022</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="com-name">26.06.2022 10:00-12:00</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="userDatatable-content d-inline-block">
-                                                                                <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="position">200</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">58   80%</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">80%</span>
-                                                                        </td>
-                                                                    </tr>                        
-                                                                </tbody>
-                                                            </table>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    Matematika
+                                                                                </div>
+                                                                            </td>
+                                    
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    Aziz
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    Du/Se/Chor
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    10:10-12:00
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    20
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    550 000
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    ...
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content d-inline-block">
+                                                                                    <span
+                                                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">02</div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="d-flex">
+                                                                                    <div class="userDatatable-inline-title">
+                                                                                        <a href="#" class="text-dark fw-500">
+                                                                                            <h6> Matematikab1</h6>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    Matematika
+                                                                                </div>
+                                                                            </td>
+                                    
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    B.Baqoyev
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    Du/Se/Chor
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    10:10-12:00
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    15
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    350 000
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    ...
+                                                                                </div>
+                                                                            </td>
+                                    
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">03</div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="d-flex">
+                                                                                        <div class="userDatatable-inline-title">
+                                                                                            <a href="#" class="text-dark fw-500">
+                                                                                                <h6>Robotatexnik</h6>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        IT
+                                                                                    </div>
+                                                                                </td>
+                                        
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        Shaxzod
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        Du/Se/Chor
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        10:10-12:00
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        15
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        450 000
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content">
+                                                                                        ...
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="userDatatable-content d-inline-block">
+                                                                                        <span
+                                                                                            class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                    
+                                                                          
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <ul class="atbd-pagination d-flex my-3">
+                                                                    <li class="atbd-pagination__item">
+                                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
+                                                                                class="la la-angle-left"></span></a>
+                                                                        <a href="#" class="atbd-pagination__link active"><span
+                                                                                class="page-number">1</span></a>
+                                                                        <a href="#" class="atbd-pagination__link "><span class="page-number">2</span></a>
+                                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
+                                    
+                                    
+                                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
+                                                                                class="la la-angle-right"></span></a>
+                                                                        <a href="#" class="atbd-pagination__option">
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
+                                    
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- ends: col-12 -->
                                         </div>
                                     </div>
                                 </div>
