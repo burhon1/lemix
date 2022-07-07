@@ -19,5 +19,6 @@ urlpatterns = [
     path('groups/list/',groupslist_view,name='groups-list'),
     path('rooms/list/',roomslist_view,name='rooms-list'),
     path('employees/list/',employees_view,name='employees-list'),
-
+    
+    path('students/list/',students_list_view,name='students-list'),
 ]

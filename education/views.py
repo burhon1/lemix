@@ -35,3 +35,5 @@ def employees_view(request):
 def group_detail_view(request):
     return render(request,'education/group_detail.html') 
 
+def students_list_view(request):
+    return render(request,'education/students_list.html') 
