@@ -29,9 +29,9 @@
                                             <div class="col-12">
                                                 <div class="version-list d-flex justify-content-between">
                                                     <div class="version-list__single d-flex mr-5">
-                                                     
-                                                        <ul class="version-success">
-                                                            <li>Aktivlar-103ta</li>
+                                                        <div></div>
+                                                        <ul >
+                                                            Aktivlar-103ta
                                                         </ul>
                                                         <ul class=" version-warning mr-2 ">
                                                             <li>Ketganlar-30ta</li>
@@ -52,8 +52,8 @@
                                                             <i class="la la-download"></i> Import </button>
                                                         </ul>
                                                        
-                                                        <ul>  <button class="btn btn-sm btn-default btn-primary dropdown-toggle mb-1" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                Arxiv </button>
+                                                        <ul class="subMenu mr-2">  <button class="btn btn-sm btn-default btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="la la-download"></i> Arxiv </button>
                                                         </ul>
                                                     </div>
                                                     
@@ -771,14 +771,14 @@
       <div
         class="atbd-drawer__header d-flex aling-items-center justify-content-between"
       >
-        <h6 class="drawer-title"></h6>
+        <h3 class="drawer-title">O'quvchi qo'shish</h3>
         <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
       </div>
-      <!-- ends: .atbd-drawer__header -->
+      <!-- ends: .atbd-drawer__header --> 
       <div class="atbd-drawer__body">
-        <div class="drawer-content">
+        <div class="drawer-content"> 
           <div class="drawer-account-form form-basic">
-           
+            
               
 
               
@@ -786,7 +786,7 @@
               <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="a1" class="il-gray fs-14 fw-500 align-center">Ism</label>
+                        <label for="a1" class="il-gray fs-14 fw-500 align-center" style="border-color:black">Ism</label>
                         <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="">
                     </div>
                 </div>
@@ -798,7 +798,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Otasini ismi</label>
+                        <label for="a2" class="il-gray fs-20 fw-500 align-center">Otasini ismi</label>
                         <input type=" Text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
                     </div>
                 </div>
@@ -812,15 +812,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="a2" class="il-gray fs-14 fw-500 align-center">Turi</label>
-                        <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="asistent">
+                        <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
+                            <option value="">Asistent</option>
+                            <option value="">oqituvchi</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Tug'ilgan kuni </label>
-                        <input type="date" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
-                    </div>
-                </div>
+            
                 <div class="col-md-6">
                     <label for="a2" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
                     <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15">
@@ -829,20 +827,85 @@
                     </select>
                
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Manzili</label>
-                    <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
-                </div>
+       
+
+            <div class="col-md-12 mb-10 m-1" >
+                <label for="exampleFormControlTextarea1"
+                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                <textarea class="form-control form-row" id="exampleFormControlTextarea1"
+                    rows="2"></textarea>
             </div>
+
+                  <!--           dssddff       -->
+            <div class="checkbox-group d-flex mb-10 m-3">
+
+                <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                    <input class="checkbox" type="checkbox" id="check-grp-1">
+                    <label for="check-grp-1">
+                        <span class="checkbox-text">CEO</span>
+                    </label>
+                </div>
+
+                <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                    <input class="checkbox" type="checkbox" id="check-grp-2">
+                    <label for="check-grp-2">
+                        <span class="checkbox-text">Director</span>
+                    </label>
+                </div>
+
+                <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                    <input class="checkbox" type="checkbox" id="check-grp-3">
+                    <label for="check-grp-3">
+                        <span class="checkbox-text">Administrator</span>
+                    </label>
+                </div>
+
+                <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                    <input class="checkbox" type="checkbox" id="check-grp-4">
+                    <label for="check-grp-4">
+                        <span class="checkbox-text">Limited administrator</span>
+                    </label>
+                </div>
+
+                <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                    <input class="checkbox" type="checkbox" id="check-grp-5">
+                    <label for="check-grp-5">
+                        <span class="checkbox-text">Teacher</span>
+                    </label>
+                </div>
+
+                <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                    <input class="checkbox" type="checkbox" id="check-grp-6">
+                    <label for="check-grp-6">
+                        <span class="checkbox-text">Marketer</span>
+                    </label>
+                </div>
+
+         
+
+            </div>
+
+
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary btn-sm mb-10">Guruhga qo'shish</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary btn-sm mb-10">Parol qo'shish</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary btn-sm mb-10">Topshiriq qo'shish</button>
+            </div>
+        <!--           dssddff       -->
+
+
             <div class="col-md-12">
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm mb-10">Saqlash</button>
            
             </div>
           
             
 
-                </div>
+              
 
 
             </div>

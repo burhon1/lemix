@@ -37,3 +37,6 @@ def group_detail_view(request):
 
 def students_list_view(request):
     return render(request,'education/students_list.html') 
+
+def parents_list_view(request):
+    return render(request,'education/parents_list.html')
