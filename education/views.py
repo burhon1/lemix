@@ -40,3 +40,6 @@ def students_list_view(request):
 
 def parents_list_view(request):
     return render(request,'education/parents_list.html')
+
+def expenses_list_view(request):
+    return render(request,'education/expenses.html')
