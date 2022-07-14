@@ -21,4 +21,6 @@ urlpatterns = [
     path('employees/list/',employees_view,name='employees-list'),
     
     path('students/list/',students_list_view,name='students-list'),
+    path('parents/list/',parents_list_view,name='parents-list'),
+     path('expenses/list/',expenses_list_view,name='expenses-list'),
 ]
