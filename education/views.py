@@ -20,6 +20,9 @@ def teacher_detail_view(request,id):
 def group_detail_view(request,id):
     return render(request,'education/group_detail.html') 
 
+def student_detail_view(request,id):
+    return render(request,'education/student_detail.html') 
+
 def employe_detail_view(request,id):
     return render(request,'education/employe_detail.html') 
     
