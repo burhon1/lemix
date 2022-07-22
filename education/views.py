@@ -25,6 +25,9 @@ def student_detail_view(request,id):
 
 def employe_detail_view(request,id):
     return render(request,'education/employe_detail.html') 
+
+def parents_detail_view(request,id):
+    return render(request,'education/parents_detail.html')     
     
 def teacher_add_view(request):
     return render(request,'education/teacheradd.html')     
