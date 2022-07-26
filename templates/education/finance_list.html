@@ -1,0 +1,240 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="social-dash-wrap">
+        <div class="row">
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 mt-25">
+                <div class="bg-white radius-xl pt-25 px-25">
+                    <div>
+                        <div>
+                            <h2>5 200 000</h2>
+                        </div>
+                        <div style="margin-left: 0; padding-bottom: 10px; margin-top:15px">
+                            <a>Barcha to'lovlar</a>
+                            <a>(01.06.2022-01.07.2022)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 mt-25">
+                <div class="bg-white radius-xl pt-25 px-25">
+                    <div>
+                        <div>
+                            <h2> 600 000</h2>
+                        </div>
+                        <div style="margin-left: 0; padding-bottom: 10px; margin-top:15px">
+                            <a>Qaytarilgan</a>
+                            <a>(01.06.2022-01.07.2022)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 mt-25">
+                <div class="bg-white radius-xl pt-25 px-25">
+                    <div>
+                        <div>
+                            <h2>4 600 000</h2>
+                        </div>
+                        <div style="margin-left: 0; padding-bottom: 10px; margin-top:15px">
+                            <a>Sof foyda</a>
+                            <a>(01.06.2022-01.07.2022)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                <div class="card-body pl-0 pt-3 pr-0">
+                    <div class="bg-white radius-xl ml-0 p-2">
+                        <div>
+                            <a style="margin-left:5px;">To'lov kategoriyalari</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2 mt-2">
+                                <div style="padding-left:5px;">
+                                    <h2>1 250 000</h2>
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <a>Sof foyda</a>
+                                </div>
+                            </div>
+                            <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2 mt-2">
+                                <div>
+                                    <h2>1 250 000</h2>
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <a>Plastik</a>
+                                </div>
+                            </div>
+                            <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2 mt-2">
+                                <div>
+                                    <h2>1 250 000</h2>
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <a>Terminal</a>
+                                </div>
+                            </div>
+                            <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2 mt-2">
+                                <div>
+                                    <h2>1 250 000</h2>
+                                </div>
+                                <div style="margin-top:10px;">
+                                    <a>Bank</a>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4">
+                                <div>
+                                    <div style="display:flex;">
+                                        <div class="drawer-btn ml-5 mr-5 mt-1" style="width:100%;">
+                                            <button class="btn btn-outline-success btn-default btn-squared drawer-trigger" data-drawer="price"
+                                            style="width: 100%;padding:0;">+Kirim</button>
+                                        </div>
+                                        <div class="drawer-btn ml-5 mr-5 mt-1" style="width:100%;">
+                                            <button class="btn btn-outline-dark btn-default btn-squared drawer-trigger" data-drawer=""
+                                            style="width: 100%;padding:0;">-Chiqim</button>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex;">
+                                        <div class="drawer-btn ml-5 mr-5 mt-1" style="width:100%;">
+                                            <button class="btn btn-outline-warning btn-default btn-squared drawer-trigger" data-drawer="basic"
+                                            style="width: 100%;padding:0;">Vaucher</button>
+                                        </div>                                        
+                                    </div>
+                                </div>                               
+                            </div>
+                        </div>
+                
+                    </div>
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                            <div class="card-body pl-0 pt-3 pr-0 m-2">
+                                <div
+                                    class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-detail">
+                                    <div class="table-responsive p-3">
+                                     
+                                        <div id="filter-form-container"></div>
+                                        
+                                        <table class="table mb-0 ml-1 table-borderless adv-table-course-detail"
+                                            data-sorting="true"
+                                            data-filter-container="#filter-form-container"
+                                            data-paging-current="1" data-paging-position="right"
+                                            data-paging-size="5">
+                                            <thead>
+                                                <tr class="userDatatable-header">
+                                                    <th>
+                                                        <span class="userDatatable-title">#</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="userDatatable-title">F.I.O</span>
+                                                    </th>
+                                                    <th data-type="html" data-name='position'>
+                                                        <span class="userDatatable-title">Sana</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="userDatatable-title">To'lov turi</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="userDatatable-title ">Summa</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="userDatatable-title ">Tranzaksiya</span>
+                                                    </th>
+                                                    <th>
+                                                        <span
+                                                            class="userDatatable-title ">Izoh</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="userDatatable-title ">Xodim</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            1
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="userDatatable-inline-title">
+                                                                <a href="#" class="text-dark fw-500">
+                                                                    <h6>Burhon</h6>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            10.07.2022
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            Cash
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                           250 000
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            Kirim
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            Kurs uchun
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <p>Shaxzod</p>
+                                                            <p>12.05.2022</p> 
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ul class="atbd-pagination d-flex my-3">
+                                            <li class="atbd-pagination__item">
+                                                <a href="#"
+                                                    class="atbd-pagination__link pagination-control"><span
+                                                        class="la la-angle-left"></span></a>
+                                                <a href="#" class="atbd-pagination__link active"><span
+                                                        class="page-number">1</span></a>
+                                                <a href="#" class="atbd-pagination__link "><span
+                                                        class="page-number">2</span></a>
+                                                <a href="#" class="atbd-pagination__link"><span
+                                                        class="page-number">3</span></a>
+
+
+                                                <a href="#"
+                                                    class="atbd-pagination__link pagination-control"><span
+                                                        class="la la-angle-right"></span></a>
+                                                <a href="#" class="atbd-pagination__option">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

@@ -20,6 +20,7 @@ urlpatterns = [
 
     path('teacher/add/',teacher_add_view,name='courseadd'),
     path('groups/list/',groupslist_view,name='groups-list'),
+    path('finance/list/',finance_list_view,name='finance-list'),
     path('rooms/list/',roomslist_view,name='rooms-list'),
     path('employees/list/',employees_view,name='employees-list'),
     
