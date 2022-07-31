@@ -1,0 +1,101 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-default mb-4 mt-3 p-3">
+                <div class="d-flex align-items-end">
+                    <a style="font-size:40px;margin-right:10px;">Qarzdorlar</a>
+                    <a style="margin-bottom:0;" class="mb-2">Miqdori-8</a>
+                </div>
+                <div style="background-color: rgb(248, 248, 248);">
+                    <a style="font-size:35px;margin-right:10px;
+                    padding-left: 10px;border-left: 3px blue solid;">Jami:-4 000 000</a>
+                    
+                    <a href="#" class="edit"style="float:right;padding:10px;">
+                        <span data-feather="database"></span></a>
+                </div>
+                <table style="margin-top:25px;" class="border-radius">
+                    <thead>
+                        <tr class="userDatatable-header">
+                            <th>
+                                <span class="userDatatable-title">FIO</span>
+                            </th>
+
+                            <th>
+                                <span class="userDatatable-title">Telefon</span>
+                            </th>
+                            <th>
+                                <span class="userDatatable-title">Qarz</span>
+                            </th>
+                            <th>
+                                <span class="userDatatable-title ">Guruh</span>
+                            </th>
+                            <th>
+                                <span class="userDatatable-title ">Izoh</span>
+                            </th>
+                            <th>
+                                <span class="userDatatable-title ">Bog'lanildi</span>
+                            </th>    
+                            <th>
+                                <span class="userDatatable-title ">Harakatlar</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr style=" border-radius: 40px; padding: 15px; ">
+                            <td>
+                                <div class="userDatatable-content" style="padding-left:5px;">
+                                    Burhon Baqoyev
+                                </div>
+                            </td>
+                            <td>
+                                <div class="userDatatable-content">
+                                    +998 (94) 273 27 08
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="userDatatable-content">
+                                    -500 000 UZS
+                                </div>
+                            </td>
+                            <td>
+                                <div class="userDatatable-content">
+                                    <a style="padding:5px;
+                                    background-color:rgb(190, 190, 190);">G-I-M</a>
+                                    <a>IT Star</a>
+                                    <a>(Burhon Baqoyev-15:00)02.01.2022</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="userDatatable-content">
+                                    
+                                </div>
+                            </td>
+                            <td>
+                                <div class="userDatatable-content">
+                                    <a href="#" class="edit">
+                                        <span data-feather="user-check"></span></a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="userDatatable-content">
+                                    <a href="#" class="edit">
+                                        <span data-feather="flag"></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

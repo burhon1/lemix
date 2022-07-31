@@ -52,3 +52,6 @@ def finance_list_view(request):
 
 def expenses_list_view(request):
     return render(request,'education/expenses.html')
+
+def debt_list_view(request):
+    return render(request,'education/debt_list.html') 
