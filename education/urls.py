@@ -19,7 +19,7 @@ urlpatterns = [
     path('debt/<int:id>/groups/',debt_groups_view,name='debt_groups'),
     path('debt/<int:id>/course/',debt_course_view,name='debt_course'),
 
-
+    path('message/settings/',message_settings_view,name='message-settings'),
     path('teacher/add/',teacher_add_view,name='courseadd'),
     path('groups/list/',groupslist_view,name='groups-list'),
     path('finance/list/',finance_list_view,name='finance-list'),

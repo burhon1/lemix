@@ -61,3 +61,7 @@ def debt_groups_view(request,id):
 
 def debt_course_view(request,id):
     return render(request,'education/debt_course.html')
+
+def message_settings_view(request):
+    return render(request,'education/message_settings.html') 
+

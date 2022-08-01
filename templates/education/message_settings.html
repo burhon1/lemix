@@ -1,0 +1,244 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="social-dash-wrap">
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                <div class="mb-3 mt-3 ml-1 ">
+                    <h1>AUTO SMS</h1>
+                </div>
+                <div class="knowledgebase-details knowledgebase-details--row m-0 pt-4 pb-4">
+                    <div class="col-lg-12 col-md-12 col-xxl-12 ">
+                        <div class="col-lg-12 col-md-12 col-xxl-12 ">
+                            <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="plugins-tab" data-toggle="pill" href="#plugins"
+                                        role="tab" aria-controls="plugins" aria-selected="true">Auto smslar<a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes" role="tab"
+                                        aria-controls="themes" aria-selected="false">Shablonlar</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="themes1-tab" data-toggle="pill" href="#themes1" role="tab"
+                                        aria-controls="themes1" aria-selected="false">Hisobotlar</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xxl-12 ">
+                            <div class="tab-content" id="knowledgebaseContent">
+                                <div class="tab-pane fade show active" id="plugins" role="tabpanel"
+                                    aria-labelledby="plugins-tab">
+                                    <div class="row">
+                                        <div class="col-4 col-lg-4 col-md-4 col-xxl-4">
+                                            <div class="mt-2">
+                                                <h4>SMS turi</h4>
+                                            </div>
+                                            <div>
+                                                <div class="card-body" style="display:flex;justify-content: space-between;
+                                                padding: 0; margin-top:20px;">
+                                                    <div>To'lov amalga oshirildi</div>
+                                                    <div class="custom-control custom-switch switch-primary switch-md ">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="switch-s1" checked>
+                                                        <label class="custom-control-label" for="switch-s1"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="display:flex;justify-content: space-between;
+                                                padding: 0; margin-top:30px;">
+                                                    <div>Talaba guruhga qo'shildi</div>
+                                                    <div class="custom-control custom-switch switch-primary switch-md ">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="switch-s1" checked>
+                                                        <label class="custom-control-label" for="switch-s1"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="display:flex;justify-content: space-between;
+                                                padding: 0; margin-top:30px;">
+                                                    <div>Talabaning tug'ilgan kuni</div>
+                                                    <div class="custom-control custom-switch switch-primary switch-md ">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="switch-s1" checked>
+                                                        <label class="custom-control-label" for="switch-s1"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 col-lg-8 col-md-8 col-xxl-8">
+                                            <div class="mt-2 mb-3">
+                                                <h4>SMS matn : Talaba tug'ilgan kuni</h4>
+                                            </div>
+                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 ">
+                                                <textarea name="message"
+                                                    style="display:block; margin:0; width: 100%;border-color: rgb(95, 95, 221);border-radius:10px;height: 300px;"></textarea>
+                                            </div>
+                                            <div class="mt-2 mb-3">
+                                                <h4>Yuborilgan sms misoli:</h4>
+                                            </div>
+                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 ">
+                                                <textarea name="message"
+                                                    style="display:block; margin:0; width: 100%;border-color: rgb(95, 95, 221);border-radius:10px;height: 300px;"></textarea>
+                                            </div>
+                                            <div class="mt-2">
+                                                <button class="btn-primary"
+                                                    style="float:right;border-radius: 5px;">Saqlash</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes1-tab">
+                                    <div class="row">
+                                        <div class="col-4 col-lg-4 col-md-4 col-xxl-4">
+                                            <div class="mt-2">
+                                                <h4>Shablonlar - 4ta</h4>
+                                            </div>
+                                            <div style="margin-top: 30px;">
+                                                <h6># Shablon nomi</h6>
+                                            </div>
+                                            <div class="card-body" style="padding: 0; margin-top:20px;">
+                                                    <a>1 .</a>
+                                                    <a> Qarzdorlik bo'yicha</a>
+                                                </div>
+                                        </div>
+                                        <div class="col-8 col-lg-8 col-md-8 col-xxl-8">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-wrap justify-content-sm-end justify-content-center">
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-basic">Shablon qo'shish</button>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class=" mb-3">
+                                                <h4>SMS matni:</h4>
+                                            </div>
+                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 ">
+                                                <textarea name="message"
+                                                    style="display:block; margin:0; width: 100%;border-color: rgb(95, 95, 221);border-radius:10px;height: 300px;"></textarea>
+                                            </div>
+                                            <div class="mt-2 mb-3">
+                                                <h4>Yuborilgan sms misoli:</h4>
+                                            </div>
+                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 ">
+                                                <textarea name="message"
+                                                    style="display:block; margin:0; width: 100%;border-color: rgb(95, 95, 221);border-radius:10px;height: 300px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="themes1" role="tabpanel" aria-labelledby="extensions-tab">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-12 col-md-12 col-xxl-12 ">
+                                            <table style="width:100%;">
+                                                <thead>
+                                                    <tr class="userDatatable-header">
+                                                        <th>
+                                                            <span class="userDatatable-title">#</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Nomi</span>
+                                                        </th>
+        
+                                                        <th>
+                                                            <span class="userDatatable-title">Kimga</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Turi</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Vaqti</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Soni</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Narxi</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Holati</span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+        
+                                                    <tr>
+                                                        <td style="padding-left:20px;">
+                                                            <span class="userDatatable-title">1</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="userDatatable-title">Davomat</span>
+                                                        </td>
+        
+                                                        <td>
+                                                            <span class="userDatatable-title">Burhon Baqoyev(CEO)</span>
+                            
+                                                        </td>
+                                                        <td>
+                                                            <span class="userDatatable-title">Shablon</span>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <span class="userDatatable-title">12.12.2020(14:14)</span>
+                                                            
+                                                        </td>
+                                                        <td style="padding-left:20px;">
+                                                            <span class="userDatatable-title">1ta</span>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <span class="userDatatable-title">50 000</span>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            
+                                                            <span class="badge badge-round badge-success badge-lg">
+                                                                Yuborilgan
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content modal-bg-white p-2 ">
+                    <div class="modal-header">
+
+
+
+                        <h6 class="modal-title">SMS shablon qo'shish</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span data-feather="x"></span></button>
+                    </div>
+
+                    <div style="margin:5%; margin-bottom: 0;">
+                        <h6>Shablon nomi</h6>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-md-12 col-xxl-12 m-4 mt-0 ">
+                        <textarea name="message"
+                            style="display:block; margin:0; width: 90%;border-color: rgb(95, 95, 221);border-radius:10px;height: 200px;"></textarea>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                        
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
