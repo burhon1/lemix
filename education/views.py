@@ -55,3 +55,6 @@ def expenses_list_view(request):
 
 def debt_list_view(request):
     return render(request,'education/debt_list.html') 
+
+def debt_groups_view(request,id):
+    return render(request,'education/debt_groups.html')
