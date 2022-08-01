@@ -132,8 +132,8 @@
                                         </div>
                                         <div class="col-8 col-lg-8 col-md-8 col-xxl-8">
                                             <div class="card-body">
-                                                <div class="d-flex flex-wrap justify-content-sm-end justify-content-center">
-                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-basic">Shablon qo'shish</button>
+                                                <div class="drawer-btn" style="float:right;">
+                                                    <button class="btn btn-primary btn-default btn-squared drawer-trigger" data-drawer="basic">Shablon qo'shish</button>
                                                 </div>
                                             </div>
                                             
@@ -252,37 +252,29 @@
                 </div>
             </div>
         </div>
-        <div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
-            <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content modal-bg-white p-2 ">
-                    <div class="modal-header">
-
-
-
-                        <h6 class="modal-title">SMS shablon qo'shish</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span data-feather="x"></span></button>
+        <div class="drawer-basic-wrap">
+            <div class="atbd-drawer drawer-basic d-none">
+                <div class="atbd-drawer__header">
+                    <h6 class="drawer-title">Shablon qo'shish</h6>
+                </div><!-- ends: .atbd-drawer__header -->
+                <div class="atbd-drawer__body">
+                    <div class="drawer-content mt-2">
+                        <input type="text" placeholder="Shablon nomi"
+                        style="border:1px rgb(65, 65, 172) solid; border-radius:5px;" >
                     </div>
-
-                    <div style="margin:5%; margin-bottom: 0;">
-                        <h6>Shablon nomi</h6>
-                    </div>
-
-                    <div class="col-12 col-lg-12 col-md-12 col-xxl-12 m-4 mt-0 ">
+                    <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 mt-2 ">
                         <textarea name="message"
-                            style="display:block; margin:0; width: 90%;border-color: rgb(95, 95, 221);border-radius:10px;height: 200px;"></textarea>
+                            style="display:block; margin:0; width: 100%;
+                            border-color: rgb(95, 95, 221);border-radius:10px;
+                            height: 300px;background-color: rgba(212, 213, 214, 0.73);"
+                            placeholder="SMSning matni" ></textarea>
                     </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
-                        
+                    <div class="mt-2">
+                        <button style="float:right;border: 1px rgb(14, 172, 230) solid;border-radius: 5px;" class="btn-primary"
+                        >Saqlash</button>
                     </div>
-                </div>
+                </div><!-- ends: .atbd-drawer__body -->
             </div>
-
-
         </div>
     </div>
 </div>
