@@ -1,7 +1,9 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'main.css' %}">
+{% endblock %}
 {% block content %}
-
 <div class="container-fluid">
     <div class="social-dash-wrap">
         <div class="row">
@@ -37,8 +39,9 @@
                                                 <h4>SMS turi</h4>
                                             </div>
                                             <div>
-                                                <div class="card-body" style="display:flex;justify-content: space-between;
-                                                padding: 10px; margin-top:10px;border: 0.5px blue solid; border-radius: 5px;">
+                                                <div class="card-body card-hover"
+                                                    style="display:flex;justify-content: space-between;
+                                                padding: 10px; margin-top:10px;border: 0.5px rgb(148, 148, 151) solid; border-radius: 5px;">
                                                     <div>To'lov amalga oshirildi</div>
                                                     <div class="custom-control custom-switch switch-primary switch-md ">
                                                         <input type="checkbox" class="custom-control-input"
@@ -46,22 +49,24 @@
                                                         <label class="custom-control-label" for="switch-s1"></label>
                                                     </div>
                                                 </div>
-                                                <div class="card-body" style="display:flex;justify-content: space-between;
-                                                padding: 10px; margin-top:10px;border: 0.5px blue solid; border-radius: 5px;">
+                                                <div class="card-body card-hover"
+                                                    style="display:flex;justify-content: space-between;
+                                                padding: 10px; margin-top:10px;border: 0.5px rgb(148, 148, 151) solid; border-radius: 5px;">
                                                     <div>Talaba guruhga qo'shildi</div>
                                                     <div class="custom-control custom-switch switch-primary switch-md ">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="switch-s1" checked>
-                                                        <label class="custom-control-label" for="switch-s1"></label>
+                                                            id="switch-s2" checked>
+                                                        <label class="custom-control-label" for="switch-s2"></label>
                                                     </div>
                                                 </div>
-                                                <div class="card-body" style="display:flex;justify-content: space-between;
-                                                padding: 10px; margin-top:10px;border: 0.5px blue solid; border-radius: 5px;">
+                                                <div class="card-body card-hover"
+                                                    style="display:flex;justify-content: space-between;
+                                                padding: 10px; margin-top:10px;border: 0.5px rgb(148, 148, 151) solid; border-radius: 5px;">
                                                     <div>Talabaning tug'ilgan kuni</div>
                                                     <div class="custom-control custom-switch switch-primary switch-md ">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="switch-s1" checked>
-                                                        <label class="custom-control-label" for="switch-s1"></label>
+                                                            id="switch-s3" checked>
+                                                        <label class="custom-control-label" for="switch-s3"></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -71,24 +76,34 @@
                                                 <h4>SMS matn : Talaba tug'ilgan kuni</h4>
                                             </div>
                                             <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 pb-2 "
-                                            style="border-bottom:1px rgb(132, 132, 132) solid;" >
-                                                <textarea name="message"
-                                                    style="display:block; margin:0; width: 100%;
-                                                    border-color: rgb(95, 95, 221);border-radius:10px;
-                                                    height: 300px;background-color: rgba(245, 246, 247, 0.868);"></textarea>
+                                                style="border-bottom:1px rgb(132, 132, 132) solid;">
+                                                <div class="form-group form-element-textarea" style="height: 150px;">
+                                                    <label for="exampleFormControlTextarea1"
+                                                        class="il-gray fs-14 fw-500 align-center">
+
+                                                    </label>
+                                                    <textarea class="form-control"
+                                                        style="height:100%;background-color: rgb(243, 246, 250);"
+                                                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
                                             </div>
                                             <div class="mt-2 mb-3">
                                                 <h4>Yuborilgan sms misoli:</h4>
                                             </div>
-                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 ">
-                                                <textarea name="message"
-                                                    style="display:block; margin:0; width: 100%;
-                                                    border-color: rgb(95, 95, 221);border-radius:10px;
-                                                    height: 300px;background-color: rgba(212, 213, 214, 0.73);"></textarea>
-                                            </div>
-                                            <div class="mt-2">
-                                                <button class="btn-primary"
-                                                    style="float:right;border-radius: 5px;">Saqlash</button>
+                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 pb-2">
+                                                <div class="form-group form-element-textarea" style="height: 150px;">
+                                                    <label for="exampleFormControlTextarea1"
+                                                        class="il-gray fs-14 fw-500 align-center">
+
+                                                    </label>
+                                                    <textarea class="form-control"
+                                                        style="height:100%;background-color: rgb(238, 238, 238);"
+                                                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <button class="btn-primary"
+                                                        style="float:right;border-radius: 5px;">Saqlash</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -96,72 +111,115 @@
                                 <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes1-tab">
                                     <div class="row">
                                         <div class="col-4 col-lg-4 col-md-4 col-xxl-4 ">
-                                            <div class="mt-3">
+                                            <div class="mt-2">
                                                 <h4>Shablonlar - 4ta</h4>
                                             </div>
-                                            <div class="table4 bg-white mb-30">
-                                                <div class="table-responsive">
-                                                    <table class="table mt-3">
-                                                        <thead>
-                                                            <tr class="userDatatable-header">
-                                                                <th>
-                                                                    <span class="userDatatable-title">#</span>
-                                                                </th>
-                                                                <th>
-                                                                    <h6>Shablon nomi</h6>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>            
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="userDatatable-content">
-                                                                        1.
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="userDatatable-content">
-                                                                       Qarzdorlik bo'yicha
-                                                                    </div>
-                                                                </td>
-                                                            </tr>          
-                                                        </tbody>
-                                                    </table>
+                                            <div class="card-body p-0 " style="width:100%;margin-top:10px;">
+                                                <div
+                                                    style="padding:10px;border:1px  rgb(148, 148, 151) solid;border-radius: 5px; width: 100%;">
+                                                    <a>1 . Qarzdorlik bo'yicha</a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-0 " style="width:100%;margin-top:10px;">
+                                                <div
+                                                    style="padding:10px;border:1px  rgb(148, 148, 151) solid;border-radius: 5px; width: 100%;">
+                                                    <a>2 . Davomat bo'yicha</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-8 col-lg-8 col-md-8 col-xxl-8">
                                             <div class="card-body">
                                                 <div class="drawer-btn" style="float:right;">
-                                                    <button class="btn btn-primary btn-default btn-squared drawer-trigger" data-drawer="basic">Shablon qo'shish</button>
+                                                    <button
+                                                        class="btn btn-primary btn-default btn-squared drawer-trigger"
+                                                        data-drawer="basic">Shablon qo'shish</button>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class=" mb-3">
                                                 <h4>SMS matni:</h4>
                                             </div>
                                             <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 pb-2 "
-                                            style="border-bottom:1px rgb(132, 132, 132) solid;" >
-                                                <textarea name="message"
-                                                    style="display:block; margin:0; width: 100%;
-                                                    border-color: rgb(95, 95, 221);border-radius:10px;
-                                                    height: 300px;background-color: rgba(245, 246, 247, 0.868);"></textarea>
+                                                style="border-bottom:1px rgb(132, 132, 132) solid;">
+                                                <div class="form-group form-element-textarea" style="height: 150px;">
+                                                    <label for="exampleFormControlTextarea1"
+                                                        class="il-gray fs-14 fw-500 align-center">
+
+                                                    </label>
+                                                    <textarea class="form-control"
+                                                        style="height:100%;background-color: rgb(243, 246, 250);"
+                                                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
                                             </div>
                                             <div class="mt-2 mb-3">
                                                 <h4>Yuborilgan sms misoli:</h4>
                                             </div>
-                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 ">
-                                                <textarea name="message"
-                                                    style="display:block; margin:0; width: 100%;
-                                                    border-color: rgb(95, 95, 221);border-radius:10px;
-                                                    height: 300px;background-color: rgba(212, 213, 214, 0.73);"></textarea>
+                                            <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 m-0 pb-2">
+                                                <div class="form-group form-element-textarea" style="height: 150px;">
+                                                    <label for="exampleFormControlTextarea1"
+                                                        class="il-gray fs-14 fw-500 align-center">
+
+                                                    </label>
+                                                    <textarea class="form-control"
+                                                        style="height:100%;background-color: rgb(238, 238, 238);"
+                                                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <button class="btn-primary"
+                                                        style="float:right;border-radius: 5px;">Saqlash</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="themes1" role="tabpanel" aria-labelledby="extensions-tab">
+                                <div class="tab-pane fade" id="themes1" role="tabpanel"
+                                    aria-labelledby="extensions-tab">
                                     <div class="row">
                                         <div class="col-12 col-lg-12 col-md-12 col-xxl-12 ">
+                                            <div class="row">
+                                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 p-0 mt-2">
+                                                    <div class="bg-white radius-xl p-2 pb-2">
+                                                        <div style="border:1px rgb(145, 145, 145) solid;background-color:rgb(245, 245, 250);
+                                                        padding: 10px;border-radius: 5px;">
+                                                            <div>
+                                                                <h4>500 000</h4>
+                                                            </div>
+                                                            <div style="margin-left: 0; margin-bottom: 0; margin-top:15px;">
+                                                                <a>SMS balansi</a>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 p-0 mt-2">
+                                                    <div class="bg-white radius-xl p-2 pb-2">
+                                                        <div style="border:1px rgb(145, 145, 145) solid;background-color:rgb(245, 245, 250);
+                                                        padding: 10px;border-radius: 5px;">
+                                                            <div>
+                                                                <h4>1500</h4>
+                                                            </div>
+                                                            <div style="margin-left: 0; margin-bottom: 0; margin-top:15px;">
+                                                                <a>Yuborilgan SMS lar soni</a>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 p-0 mt-2">
+                                                    <div class="bg-white radius-xl p-2 pb-2">
+                                                        <div style="border:1px rgb(145, 145, 145) solid;background-color:rgb(245, 245, 250);
+                                                        padding: 10px;border-radius: 5px;">
+                                                            <div>
+                                                                <h4>420 000</h4>
+                                                            </div>
+                                                            <div style="margin-left: 0; margin-bottom: 0; margin-top:15px;">
+                                                                <a>Yuborilgan SMS lar miqddori</a>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="table4 bg-white mb-30">
                                                 <div class="table-responsive">
                                                     <table class="table mb-0">
@@ -194,7 +252,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-            
+
                                                             <tr>
                                                                 <td>
                                                                     <div class="userDatatable-content">
@@ -233,12 +291,13 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="userDatatable-content">
-                                                                        <span class="badge badge-round badge-success badge-lg">
+                                                                        <span
+                                                                            class="badge badge-round badge-success badge-lg">
                                                                             Yuborilgan
                                                                         </span>
                                                                     </div>
                                                                 </td>
-                                                            </tr>          
+                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -252,30 +311,189 @@
                 </div>
             </div>
         </div>
-        <div class="drawer-basic-wrap">
-            <div class="atbd-drawer drawer-basic d-none">
-                <div class="atbd-drawer__header">
-                    <h6 class="drawer-title">Shablon qo'shish</h6>
-                </div><!-- ends: .atbd-drawer__header -->
-                <div class="atbd-drawer__body">
-                    <div class="drawer-content mt-2">
-                        <input type="text" placeholder="Shablon nomi"
-                        style="border:1px rgb(65, 65, 172) solid; border-radius:5px;" >
-                    </div>
-                    <div class="col-12 col-lg-12 col-md-12 col-xxl-12 p-0 mt-2 ">
-                        <textarea name="message"
-                            style="display:block; margin:0; width: 100%;
-                            border-color: rgb(95, 95, 221);border-radius:10px;
-                            height: 300px;background-color: rgba(212, 213, 214, 0.73);"
-                            placeholder="SMSning matni" ></textarea>
-                    </div>
-                    <div class="mt-2">
-                        <button style="float:right;border: 1px rgb(14, 172, 230) solid;border-radius: 5px;" class="btn-primary"
-                        >Saqlash</button>
-                    </div>
-                </div><!-- ends: .atbd-drawer__body -->
-            </div>
-        </div>
     </div>
-</div>
-{% endblock %}
+    <div class="drawer-basic-wrap">
+        <div class="atbd-drawer drawer-basic d-none">
+            <div class="atbd-drawer__header">
+                <h6 class="drawer-title">Shablon qo'shish</h6>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <textarea class="form-control" style="height:50px; background-color: rgb(243, 246, 250);"
+                        id="exampleFormControlTextarea1" rows="3" placeholder="Nomi" ></textarea>
+                </div>
+                <div class="drawer-content">
+                    <textarea class="form-control" style="height:150px;margin-top:15px; background-color: rgb(243, 246, 250);"
+                        id="exampleFormControlTextarea1" rows="3" placeholder="Shablon matni" ></textarea>
+                </div>
+                <div class="mt-2">
+                    <button class="btn-primary"
+                        style="float:right;border-radius: 5px;">Saqlash</button>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+        <div class="atbd-drawer drawer-account d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h6 class="drawer-title">Create a new account</h6>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+                                <div class="form-group col-lg-6">
+                                    <label for="username">Name</label>
+                                    <input type="text" name="name" id="username" class="form-control form-control-sm"
+                                        placeholder="Please Enter Your Name">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="url">Url</label>
+                                    <input type="url" name="name" id="url" class="form-control form-control-sm"
+                                        placeholder="Please Enter URL">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="owner">Owner</label>
+                                    <select name="url" id="owner" class="form-control-sm">
+                                        <option value="">Jack Ma</option>
+                                        <option value="">Tom liu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="type">Type</label>
+                                    <select name="url" id="type" class="form-control-sm">
+                                        <option value="">Jack Ma</option>
+                                        <option value="">Tom liu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="approver">Approver</label>
+                                    <select name="url" id="approver" class="form-control-sm">
+                                        <option value="">Jack Ma</option>
+                                        <option value="">Tom liu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="datepicker">DateTime</label>
+                                    <input type="text" name="name" id="datepicker" class="form-control form-control-sm"
+                                        placeholder="Please Enter URL">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="description">Discription</label>
+                                    <textarea name="description" id="description" class="form-control form-control-sm"
+                                        placeholder="PLease Enter Url Description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+
+
+
+
+        <div class="atbd-drawer drawer-profile d-none">
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <h6>User Profile</h6>
+                    <div class="profile-info-box">
+                        <div class="profile-info-box__single">
+                            <h6>Personal</h6>
+                            <div class="profile-info d-flex flex-wrap">
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Full Name:</span>
+                                    <span class="profile-info__text">Lily</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Account:</span>
+                                    <span class="profile-info__text">adminDesign@example.com</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">City:</span>
+                                    <span class="profile-info__text">Toronto</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Country:</span>
+                                    <span class="profile-info__text">Canada</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Birthday:</span>
+                                    <span class="profile-info__text">February 21,2020</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Website:</span>
+                                    <span class="profile-info__text">-</span>
+                                </div><!-- ends: .profile-info__single -->
+                            </div>
+                            <div class="profile-info-extra">
+                                <span class="profile-info__label">Message:</span>
+                                <span class="profile-info__text">Make things as simple as possible but no
+                                    simpler.</span>
+                            </div>
+                        </div><!-- ends: .aprofile-info-box__single -->
+                        <div class="profile-info-box__single">
+                            <h6>Company</h6>
+                            <div class="profile-info d-flex flex-wrap">
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Position:</span>
+                                    <span class="profile-info__text">Programmer</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Responsibilities:</span>
+                                    <span class="profile-info__text">Coding</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Department:</span>
+                                    <span class="profile-info__text">XTech</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Supervisor:</span>
+                                    <span class="profile-info__text">Canada</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Birthday:</span>
+                                    <span class="profile-info__text">February 21,2020</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Website:</span>
+                                    <span class="profile-info__text">-</span>
+                                </div><!-- ends: .profile-info__single -->
+                            </div>
+                            <div class="profile-info-extra">
+                                <span class="profile-info__label">Skills:</span>
+                                <span class="profile-info__text">C / C + +, data structures, software engineering,
+                                    operating systems, computer networks, databases, compiler theory, computer
+                                    architecture, Microcomputer Principle and Interface Technology, Computer English,
+                                    Java, ASP, etc.</span>
+                            </div>
+                        </div><!-- ends: .aprofile-info-box__single -->
+                        <div class="profile-info-box__single">
+                            <h6>Conact</h6>
+                            <div class="profile-info d-flex flex-wrap">
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Email:</span>
+                                    <span class="profile-info__text">adminDesign@example.com</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Phone Number:</span>
+                                    <span class="profile-info__text">+86 181 0000 0000</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Github:</span>
+                                    <span class="profile-info__text"><a href="#">github.com/admin-desing/</a></span>
+                                </div><!-- ends: .profile-info__single -->
+                            </div>
+                        </div><!-- ends: .aprofile-info-box__single -->
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+
+
+    </div>
+    <div class="overlay-dark"></div>
+    <div class="overlay-dark-l2"></div>
+    <div class="overlay-dark-sidebar"></div>
+    <div class="customizer-overlay"></div>
+    {% endblock %}

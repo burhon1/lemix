@@ -1,0 +1,13 @@
+.card-hover {
+    box-sizing: border-box;
+    border: 2px;
+}
+
+.card-hover:hover {
+    border: 2px solid royalblue !important;
+    cursor: pointer;
+}
+
+.card-hover label {
+    cursor: pointer;
+}
