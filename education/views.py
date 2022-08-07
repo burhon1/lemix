@@ -65,3 +65,6 @@ def debt_course_view(request,id):
 def message_settings_view(request):
     return render(request,'education/message_settings.html') 
 
+def lid_first_view(request):
+    return render(request,'education/lid_first.html') 
+

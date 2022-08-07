@@ -1,369 +1,382 @@
-{% extends 'atomic/theme.html' %} 
+{% extends 'atomic/theme.html' %}
 {% load static %}
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4>Kurslar-4ta </h4> <h4 class="text-capitalize breadcrumb-title"></h4>
-               <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10"data-drawer="account" > Kurs qo'shish
-        </button>
+        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
+            <h4>Kurslar-4ta </h4>
+            <h4 class="text-capitalize breadcrumb-title"></h4>
+            <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account"> Kurs
+                qo'shish
+            </button>
         </div>
     </div>
 </div>
 <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 mb-1">
-                        <div class="card px-20">
-                            <div class="card-body p-1">
-                                <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-list">
-                                    <div class="table-responsive">
-                                        <div id="filter-form-container"></div>
-                                        <table class="table mb-0 table-borderless adv-table-course-list" data-sorting="true" data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="left" data-paging-size="10">
-                                            <thead>
-                                                <tr class="userDatatable-header">
-                                                    <th>
-                                                        <span class="userDatatable-title">id</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title">Nomi</span>
-                                                    </th>
-                                                    <th data-type="html" data-name='position'>
-                                                        <span class="userDatatable-title">Davomiyligi</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title">Narxi</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title">Guruhlar</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title">O'quvchilar</span>
-                                                    </th>
-                                                    <th data-type="html" data-name='status'>
-                                                        <span class="userDatatable-title">status</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title float-right">Amallar</span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+    <div class="row">
+        <div class="col-12 mb-1">
+            <div class="card px-20">
+                <div class="card-body p-1">
+                    <div
+                        class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-list">
+                        <div class="table-responsive">
+                            <div id="filter-form-container"></div>
+                            <table class="table mb-0 table-borderless adv-table-course-list" data-sorting="true"
+                                data-filter-container="#filter-form-container" data-paging-current="1"
+                                data-paging-position="left" data-paging-size="10">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th>
+                                            <span class="userDatatable-title">id</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Nomi</span>
+                                        </th>
+                                        <th data-type="html" data-name='position'>
+                                            <span class="userDatatable-title">Davomiyligi</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Narxi</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Guruhlar</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">O'quvchilar</span>
+                                        </th>
+                                        <th data-type="html" data-name='status'>
+                                            <span class="userDatatable-title">status</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title float-right">Amallar</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">01</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>Kellie Marquot </h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            6 oy
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            400 000
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            3
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            28
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">02</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>Robert Clinton</h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           5oy
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           600000
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            1
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           28
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">01</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="#" class="text-dark fw-500">
+                                                        <h6>Kellie Marquot </h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                6 oy
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                400 000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                3
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                28
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span
+                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                <li>
+                                                    <a href="#" class="view">
+                                                        <span data-feather="eye"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="edit">
+                                                        <span data-feather="edit"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="remove">
+                                                        <span data-feather="trash-2"></span></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">04</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>Jack Kalis</h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           3 oy
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            500 000
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            2
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            55
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">02</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="#" class="text-dark fw-500">
+                                                        <h6>Robert Clinton</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                5oy
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                600000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                1
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                28
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span
+                                                    class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                <li>
+                                                    <a href="#" class="view">
+                                                        <span data-feather="eye"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="edit">
+                                                        <span data-feather="edit"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="remove">
+                                                        <span data-feather="trash-2"></span></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">04</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>Jack Kalis</h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           3 oy
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            500 000
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            2
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            55
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                            
-                                        </table>
-                              
-                                    </div>
-                                </div>
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">04</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="#" class="text-dark fw-500">
+                                                        <h6>Jack Kalis</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                3 oy
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                500 000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                2
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                55
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span
+                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                <li>
+                                                    <a href="#" class="view">
+                                                        <span data-feather="eye"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="edit">
+                                                        <span data-feather="edit"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="remove">
+                                                        <span data-feather="trash-2"></span></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
-                            </div>
+
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">04</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="#" class="text-dark fw-500">
+                                                        <h6>Jack Kalis</h6>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                3 oy
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                500 000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                2
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                55
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span
+                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                <li>
+                                                    <a href="#" class="view">
+                                                        <span data-feather="eye"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="edit">
+                                                        <span data-feather="edit"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="remove">
+                                                        <span data-feather="trash-2"></span></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
                         </div>
                     </div>
+
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
 <!-- ends: .modal-Basic -->
- 
+
 
 
 
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
-      <div
-        class="atbd-drawer__header d-flex aling-items-center justify-content-between"
-      ><h3>Kurs qo'shish</h3>
-        <h6 class="drawer-title"></h6>
-        <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
-      </div>
-      <!-- ends: .atbd-drawer__header -->
-      <div class="atbd-drawer__body">
-        
-        <div class="drawer-content">
-         
-          <div class="drawer-account-form form-basic">
-         
-            <form action="#">
-              
-              
-                
-               
-               
-
-
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
-                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
-                            <input type=" text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Narx</label>
-                            <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2" placeholder="soni">
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="exampleFormControlTextarea1" class="il-gray fs-14 fw-500 align-center">Izoh</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
-                   
-                    </div>
-
-                       
-
-                    </div>
-                  </div>
-                  </div>
-               </div>
-           
-          </div>
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h3>Kurs qo'shish</h3>
+            <h6 class="drawer-title"></h6>
+            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
         </div>
-   
-    <!-- ends: .atbd-drawer -->
+        <!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body">
+
+            <div class="drawer-content">
+
+                <div class="drawer-account-form form-basic">
+
+                    <form action="#">
+
+
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                    <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                        id="a1" placeholder="Nomi">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
+                                    <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                        id="a1" placeholder="Nomi">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
+                                    <input type=" text" class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                        id="a2" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Narx</label>
+                                    <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                        id="a2" placeholder="soni">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="exampleFormControlTextarea1"
+                                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+
+                            </div>
+
+
+
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ends: .atbd-drawer -->
 
 <div class="overlay-dark"></div>
 <div class="overlay-dark-l2"></div>

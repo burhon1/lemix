@@ -1,12 +1,389 @@
-{% extends 'atomic/theme.html' %} 
+{% extends 'atomic/theme.html' %}
 {% load static %}
 {% block content %}
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12">
-            <div>
-                
+        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-0">
+            <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-0">
+                <div style="display:flex;" class="card m-0 mt-2 p-3">
+                    <div style="display:flex;">
+                        <h3 style="margin:auto auto;">Lidlar - 112 ta</h3>
+                        <div style="margin:auto auto;">
+                            <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="kanban-tab" data-toggle="pill" href="#kanban"
+                                        role="tab" aria-controls="kanban" aria-selected="true">Kanban</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="ryhot-tab" data-toggle="pill" href="#ryhot" role="tab"
+                                        aria-controls="ryhot" aria-selected="false">Ro'yhat</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="split-tab" data-toggle="pill" href="#split" role="tab"
+                                        aria-controls="split" aria-selected="false">Split</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="display: flex; margin:auto auto;" class="ml-3 p-2">
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                + Lid qo'shish
+                            </button>
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                Vazifalar
+                            </button>
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                Formalar
+                            </button>
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                Arxiv
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-0">
+                <div class="tab-pane fade" id="kanban" role="tabpanel" aria-labelledby="kanban-tab">
+
+                </div>
+                <div class="tab-pane fade" id="kanban" role="tabpanel" aria-labelledby="kanban-tab">
+
+                </div>
+                <div class="tab-pane fade" id="split" role="tabpanel" aria-labelledby="split-tab">
+                    <div class="row">
+                        <div class="col-12 col-lg-3 col-md-3 col-xl-3 col-xxl-3 p-0">
+                            <div class="card ml-3 mt-2 p-2 ">
+                                <div>
+                                    <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                        <span data-feather="search" class="ml-1"></span>
+                                        <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search"
+                                            placeholder="Qidirish" aria-label="Search">
+                                    </form>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="single" style="display:flex; padding:10px; padding-left: 0;">
+                                        <div class="checkbox-theme-default custom-checkbox " style="margin:auto;">
+                                            <input class="checkbox" type="checkbox" id="check-1" style="margin:auto;">
+                                            <label for="check-1" style="margin:auto;">
+                                                <span class="checkbox-text">
+
+
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="data" style="margin:auto;">
+                                            <h5 style="margin:auto; font-size: medium;">Burhon Baqoyev</h5>
+                                            <h6 style="margin:auto; font-size: x-small;">+998 (99) 999 99 99</h6>
+                                        </div>
+                                    </div>
+                                    <div class="single" style="display:flex; padding:10px; padding-left: 0;">
+                                        <div class="checkbox-theme-default custom-checkbox " style="margin:auto;">
+                                            <input class="checkbox" type="checkbox" id="check-2" style="margin:auto;">
+                                            <label for="check-2" style="margin:auto;">
+                                                <span class="checkbox-text">
+
+
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="data" style="margin:auto;">
+                                            <h5 style="margin:auto; font-size: medium;">Burhon Baqoyev</h5>
+                                            <h6 style="margin:auto; font-size: x-small;">+998 (99) 999 99 99</h6>
+                                        </div>
+                                    </div>
+                                    <div class="single" style="display:flex; padding:10px; padding-left: 0;">
+                                        <div class="checkbox-theme-default custom-checkbox " style="margin:auto;">
+                                            <input class="checkbox" type="checkbox" id="check-3" style="margin:auto;">
+                                            <label for="check-3" style="margin:auto;">
+                                                <span class="checkbox-text">
+
+
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="data" style="margin:auto;">
+                                            <h5 style="margin:auto; font-size: medium;">Burhon Baqoyev</h5>
+                                            <h6 style="margin:auto; font-size: x-small;">+998 (99) 999 99 99</h6>
+                                        </div>
+                                    </div>
+                                    <div class="single" style="display:flex; padding:10px; padding-left: 0;">
+                                        <div class="checkbox-theme-default custom-checkbox " style="margin:auto;">
+                                            <input class="checkbox" type="checkbox" id="check-4" style="margin:auto;">
+                                            <label for="check-4" style="margin:auto;">
+                                                <span class="checkbox-text">
+
+
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="data" style="margin:auto;">
+                                            <h5 style="margin:auto; font-size: medium;">Burhon Baqoyev</h5>
+                                            <h6 style="margin:auto; font-size: x-small;">+998 (99) 999 99 99</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-9 col-md-9 col-xl-9 col-xxl-9 p-0">
+                            <div class="card ml-3 mt-2 p-2 ">
+                                <div class="card-body">
+                                    <div class="tab-wrapper">
+
+                                        <div class="atbd-tab tab-horizontal">
+                                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab"
+                                                        href="#tab-v-1" role="tab" aria-controls="tab-v-1"
+                                                        aria-selected="true">Ma'lumotlar</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-2-tab" data-toggle="tab"
+                                                        href="#tab-v-2" role="tab" aria-controls="tab-v-2"
+                                                        aria-selected="false">Topshiriqlar</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-4-tab" data-toggle="tab"
+                                                        href="#tab-v-4" role="tab" aria-controls="tab-v-4"
+                                                        aria-selected="false">Muloqot</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-3-tab" data-toggle="tab"
+                                                        href="#tab-v-3" role="tab" aria-controls="tab-v-3"
+                                                        aria-selected="false">Tarix</a>
+                                                </li>
+
+
+
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel"
+                                                    aria-labelledby="tab-v-1-tab">
+                                                    <a style="font-size:20px;">Infos</a>
+                                                    <div>
+                                                        <div class="single mt-2" style="height: 60px;padding:5px;
+                                                        border:1px blue solid;border-radius:5px;background-color:rgb(246, 250, 253);">
+                                                            <span data-feather="file-text" class="ml-1"></span>
+                                                            <h6 style="display:inline;">Notes (0)</h6>
+                                                            <button class="btn btn-default btn-squared btn-outline-primary" 
+                                                            style="display:inline;float: right;padding:0 20px;margin:0;">New</button>
+                                                        </div>
+                                                        <div class="single mt-2" style="height: 60px;padding:5px;
+                                                        border:1px blue solid;border-radius:5px;background-color:rgb(246, 250, 253);">
+                                                            <span data-feather="file" class="ml-1"></span>
+                                                            <h6 style="display:inline;">Files (0)</h6>
+                                                            <button class="btn btn-default btn-squared btn-outline-primary" 
+                                                            style="display:inline;float: right;padding:0 20px;margin:0;">Add file</button>
+                                                        </div>
+                                                        <div class="mt-3" style="display:flex;justify-content: center;">
+                                                            <button class="btn btn-default btn-squared btn-outline-primary" 
+                                                            style="display:flex;justify-content: center ;padding:0 20px;margin:0;">Upload file</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-2" role="tabpanel"
+                                                    aria-labelledby="tab-v-2-tab">
+                                                    <div class="row">
+                                                        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12">
+                                                            <div class="chat-box p-0 pt-2"
+                                                                style="background-color:rgb(246, 245, 255);">
+                                                                <div class="mb-2">
+                                                                    <a>Topshiriqlar soni - 14ta | Bugun - 0</a>
+                                                                    <button
+                                                                        class="btn btn-primary btn-default btn-squared drawer-trigger"
+                                                                        data-drawer="basic" style="float:right;">+
+                                                                        Qo'shish</button>
+                                                                </div>
+                                                                <div class="flex-1 incoming-chat">
+                                                                    <div class="chat-text-box">
+                                                                        <div class="media ">
+                                                                            <div
+                                                                                class="chat-text-box__photo mr-2 pl-2 ">
+                                                                                <span data-feather="users"></span>
+                                                                            </div>
+                                                                            <div class="media-body">
+                                                                                <div class="chat-text-box__content">
+                                                                                    <div
+                                                                                        class="chat-text-box__title d-flex align-items-center">
+
+                                                                                    </div>
+                                                                                    <div class="d-flex align-items-center mb-20 mt-10 p-0 pl-2 pt-1"
+                                                                                        style="width:100%;">
+                                                                                        <div class="chat-text-box__subtitle  bg-white"
+                                                                                            style="width:100%;">
+                                                                                            <div style="padding:10px">
+
+                                                                                                <a>Meeting</a>
+                                                                                                <span
+                                                                                                    data-feather="more-vertical"
+                                                                                                    style="float:right;"></span>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                style="padding-left:10px;">
+                                                                                                <a
+                                                                                                    style="color:green;">Today</a>
+                                                                                                <a
+                                                                                                    style="margin:auto 10px;">CEO</a>
+                                                                                                <span
+                                                                                                    data-feather="user"></span>
+                                                                                                <a>Hoshimjon</a>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                style="background-color:rgb(249, 242, 230); padding: 10px;margin-top:5px;">
+                                                                                                Test uchun yozildi
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-4" role="tabpanel"
+                                                    aria-labelledby="tab-v-4-tab">
+                                                    <div class="row">
+                                                        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12">
+                                                            <div class="chat-box p-0 pt-2"
+                                                                style="background-color:rgb(246, 245, 255);">
+                                                                <!-- Start: Incomming -->
+                                                                <div class="flex-1 incoming-chat">
+                                                                    <div class="chat-text-box">
+                                                                        <div class="media ">
+                                                                            <div
+                                                                                class="chat-text-box__photo mr-2 pl-2 ">
+                                                                                <span data-feather="users"></span>
+                                                                            </div>
+                                                                            <div class="media-body">
+                                                                                <div class="chat-text-box__content">
+                                                                                    <div
+                                                                                        class="chat-text-box__title d-flex align-items-center">
+
+                                                                                    </div>
+                                                                                    <div class="d-flex align-items-center mb-20 mt-10 p-0 pl-2 pt-1"
+                                                                                        style="width:100%;">
+                                                                                        <div class="chat-text-box__subtitle  bg-white"
+                                                                                            style="width:100%;">
+                                                                                            <div style="padding:10px">
+
+                                                                                                <a>Meeting</a>
+                                                                                                <span
+                                                                                                    data-feather="more-vertical"
+                                                                                                    style="float:right;"></span>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                style="padding-left:10px;">
+                                                                                                <a
+                                                                                                    style="color:green;">Today</a>
+                                                                                                <a
+                                                                                                    style="margin:auto 10px;">CEO</a>
+                                                                                                <span
+                                                                                                    data-feather="user"></span>
+                                                                                                <a>Hoshimjon</a>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                style="background-color:rgb(249, 242, 230); padding: 10px;margin-top:5px;">
+                                                                                                Test uchun yozildi
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-3" role="tabpanel"
+                                                    aria-labelledby="tab-v-3-tab">
+                                                    <div class="row">
+                                                        <div class="col-12 p-0 ">
+
+                                                            <div class="card mb-25">
+                                                                <div class="card-body pt-0 pb-0">
+                                                                    <div class="drag-drop-wrap">
+                                                                        <div
+                                                                            class="drag-drop table-responsive-lg bg-white w-100 mb-30">
+                                                                            <table class="table mb-0 table-basic">
+                                                                                <tbody>
+
+                                                                                    <tr class="draggable">
+                                                                                        <td>
+                                                                                            <div>
+                                                                                                <div
+                                                                                                    class="atbd-badge-list d-flex align-items-center">
+                                                                                                    <span
+                                                                                                        class="badge badge-round badge-light badge-lg badge-outlined">
+                                                                                                        Burhon Baqoyev
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <h6 class="mt-2"> user
+                                                                                                    authed</h6>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            94 123 56 78
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            12.12.2020
+                                                                                        </td>
+                                                                                    </tr>
+
+
+                                                                                    <tr class="draggable">
+                                                                                        <td>
+                                                                                            <div>
+                                                                                                <div
+                                                                                                    class="atbd-badge-list d-flex align-items-center">
+                                                                                                    <span
+                                                                                                        class="badge badge-round badge-light badge-lg badge-outlined">
+                                                                                                        Burhon Baqoyev
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <h6 class="mt-2"> user
+                                                                                                    authed</h6>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            94 123 56 78
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            12.12.2020
+                                                                                        </td>
+                                                                                    </tr>
+
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
