@@ -1,0 +1,24 @@
+.button123:hover {
+    background-color: rgb(166, 167, 167);
+    color: white;
+}
+
+.hweq{
+    display:flex;
+    border: 2px rgb(169, 168, 168) solid;
+     border-radius: 5px;
+     background-color:white;padding:10px;
+     margin-bottom:5px;
+}
+
+.hweq:hover {
+    border: 2px rgb(1, 1, 1) solid;
+    color: black;
+    background-color: rgb(243, 243, 243);
+}
+
+.hweq:active{
+    border: 2px rgb(36, 4, 109) solid;
+    color: black;
+    background-color: rgb(227, 227, 253);
+}

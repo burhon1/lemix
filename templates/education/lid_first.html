@@ -1,5 +1,8 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'main1.css' %}">
+{% endblock %}
 {% block content %}
 
 <div class="container-fluid">
@@ -57,8 +60,8 @@
                     <div class="row">
                         <div class="col-3 col-lg-3 col-md-3 col-xl-3 col-xxl-3 p-0">
                             <div class="changelog mt-1 ml-3">
-                                <div class="card">
-                                    <div class="card-header">
+                                <div>
+                                    <div class="card-header" style="border-radius: 10px;">
                                         <div class="changelog__title">
                                             <form action="/"
                                                 class="d-flex align-items-center add-contact__form my-sm-0 my-2">
@@ -69,46 +72,47 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div style="height:100%;" class="p-2">
-                                        <div class="card-body p-1 mt-1" style="background-color: rgb(243, 249, 254); border:1px rgb(139, 139, 225) solid;border-radius:5px;">
-                                            <div style="display:flex;">
-                                                <div style="display:inline;margin:auto;margin-right: 0; margin-left:20px;">
-                                                    <input type="checkbox" style="display:inline;">
-                                                </div>
-                                                <div style="display:inline;margin-left:15px;">
-                                                    <h6 style="font-size:15px;margin:auto;margin-left: 10px; padding:auto;">Burhon Baqoyev</h6>
-                                                    <h6 style="font-size:15px;margin:auto;margin-left: 10px; padding:auto;">+998 99 999 99 99</h6>
-                                                </div>
+
+                                    <div class="mt-2">
+                                        <div class="hweq">
+                                            <div style="display:inline;margin:auto;margin-right: 0; margin-left:20px;">
+                                                <input type="checkbox" style="display:inline;">
+                                            </div>
+                                            <div style="display:inline;margin-left:15px;">
+                                                <h6 style="font-size:15px;margin:auto;margin-left: 10px;color:black; padding:auto;">
+                                                    Burhon Baqoyev</h6>
+                                                <h6 style="font-size:15px;margin:auto;margin-left: 10px;color:black; padding:auto;">
+                                                    +998 99 999 99 99</h6>
                                             </div>
                                         </div>
-                                        <div class="card-body p-1 mt-1" style="background-color: rgb(243, 249, 254); border:1px rgb(139, 139, 225) solid;border-radius:5px;">
-                                            <div style="display:flex;">
-                                                <div style="display:inline;margin:auto;margin-right: 0; margin-left:20px;">
-                                                    <input type="checkbox" style="display:inline;">
-                                                </div>
-                                                <div style="display:inline;margin-left:15px;">
-                                                    <h6 style="font-size:15px;margin:auto;margin-left: 10px; padding:auto;">Burhon Baqoyev</h6>
-                                                    <h6 style="font-size:15px;margin:auto;margin-left: 10px; padding:auto;">+998 99 999 99 99</h6>
-                                                </div>
+                                        <div class="hweq">
+                                            <div style="display:inline;margin:auto;margin-right: 0; margin-left:20px;">
+                                                <input type="checkbox" style="display:inline;">
+                                            </div>
+                                            <div style="display:inline;margin-left:15px;">
+                                                <h6 style="font-size:15px;margin:auto;margin-left: 10px;color:black; padding:auto;">
+                                                    Burhon Baqoyev</h6>
+                                                <h6 style="font-size:15px;margin:auto;margin-left: 10px;color:black; padding:auto;">
+                                                    +998 99 999 99 99</h6>
                                             </div>
                                         </div>
-                                        <div class="card-body p-1 mt-1" style="background-color: rgb(243, 249, 254); border:1px rgb(139, 139, 225) solid;border-radius:5px;">
-                                            <div style="display:flex;">
-                                                <div style="display:inline;margin:auto;margin-right: 0; margin-left:20px;">
-                                                    <input type="checkbox" style="display:inline;">
-                                                </div>
-                                                <div style="display:inline;margin-left:15px;">
-                                                    <h6 style="font-size:15px;margin:auto;margin-left: 10px; padding:auto;">Burhon Baqoyev</h6>
-                                                    <h6 style="font-size:15px;margin:auto;margin-left: 10px; padding:auto;">+998 99 999 99 99</h6>
-                                                </div>
+                                        <div class="hweq">
+                                            <div style="display:inline;margin:auto;margin-right: 0; margin-left:20px;">
+                                                <input type="checkbox" style="display:inline;">
+                                            </div>
+                                            <div style="display:inline;margin-left:15px;">
+                                                <h6 style="font-size:15px;margin:auto;margin-left: 10px;color:black; padding:auto;">
+                                                    Burhon Baqoyev</h6>
+                                                <h6 style="font-size:15px;margin:auto;margin-left: 10px;color:black; padding:auto;">
+                                                    +998 99 999 99 99</h6>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                             </div>
                         </div>
-
                         <div class="col-9 col-lg-9 col-md-9 col-xl-9 col-xxl-9 p-0">
                             <div class="card ml-1 mt-1 p-2 ">
                                 <div class="card-body">
@@ -144,7 +148,7 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel"
                                                     aria-labelledby="tab-v-1-tab">
-                                                    
+
                                                     <div class="table-responsive">
 
                                                         <table>
@@ -152,11 +156,12 @@
                                                             <tbody>
                                                                 <tr class="p-1">
                                                                     <td>
-                                                                        <a style="padding-top:7px;">F.I.O :</a>
+                                                                        <a style="padding-top:7px;">F.I.O:</a>
 
                                                                     </td>
                                                                     <td style="padding:3px;">
-                                                                        <a style="padding-top:7px;">Baqoyev Burhon</a>
+                                                                        <a style="padding-top:7px;color: black;">Baqoyev
+                                                                            Burhon</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="p-1">
@@ -164,8 +169,10 @@
                                                                         <a style="padding-top:7px;">Telefon 1:</a>
                                                                     </td>
                                                                     <td style="padding:3px;">
-                                                                        <a style="padding-top:7px;">+998</a>
-                                                                        <a style="padding-top:7px;">99 123-12-12</a>
+                                                                        <a
+                                                                            style="padding-top:7px;color: black;">+998</a>
+                                                                        <a style="padding-top:7px;color: black;">99
+                                                                            123-12-12</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="p-1">
@@ -173,24 +180,28 @@
                                                                         <a style="padding-top:7px;">Telefon 2:</a>
                                                                     </td>
                                                                     <td style="padding:3px;">
-                                                                        <a style="padding-top:7px;">+998</a>
-                                                                        <a style="padding-top:7px;">99 123-12-12</a>
+                                                                        <a
+                                                                            style="padding-top:7px;color: black;">+998</a>
+                                                                        <a style="padding-top:7px;color: black;">99
+                                                                            123-12-12</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="p-1">
                                                                     <td>
-                                                                        <a style="padding-top:7px;">Manzil :</a>
+                                                                        <a style="padding-top:7px;">Manzil:</a>
                                                                     </td>
                                                                     <td style="padding:3px;">
-                                                                        <a style="padding-top:7px;">Manzil-uy-raqami</a>
+                                                                        <a
+                                                                            style="padding-top:7px;color: black;">Manzil-uy-raqami</a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="p-1">
                                                                     <td>
-                                                                        <a style="padding-top:7px;">Manba :</a>
+                                                                        <a style="padding-top:7px;">Manba:</a>
                                                                     </td>
                                                                     <td style="padding:3px;">
-                                                                        <a style="padding-top:7px;">Instagram</a>
+                                                                        <a
+                                                                            style="padding-top:7px;color: black;">Instagram</a>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -200,28 +211,42 @@
                                                     <div>
                                                         <div class="single mt-2"
                                                             style="height: 60px;padding:5px;
-                                                        border:1px blue solid;border-radius:5px;background-color:rgb(246, 250, 253);">
+                                                        border:1px rgb(148, 148, 148) solid;border-radius:5px;background-color:rgba(246, 246, 246, 0.885);">
                                                             <span data-feather="file-text" class="ml-1"></span>
                                                             <h6 style="display:inline;">Notes (0)</h6>
-                                                            <button
-                                                                class="btn btn-default btn-squared btn-outline-primary"
-                                                                style="display:inline;float: right;padding:0 20px;margin:0;">New</button>
+                                                            <div class="drawer-btn" style="float:right;">
+                                                                <button
+                                                                    class="button123 btn btn-white btn-default btn-squared drawer-trigger btn-shadow-white"
+                                                                    data-drawer="basic">New</button>
+                                                            </div>
+                                                            
+
                                                         </div>
                                                         <div class="single mt-2"
                                                             style="height: 60px;padding:5px;
-                                                        border:1px blue solid;border-radius:5px;background-color:rgb(246, 250, 253);">
+                                                            border:1px rgb(148, 148, 148) solid;border-radius:5px;background-color:rgba(246, 246, 246, 0.885);">
                                                             <span data-feather="file" class="ml-1"></span>
                                                             <h6 style="display:inline;">Files (0)</h6>
-                                                            <button
-                                                                class="btn btn-default btn-squared btn-outline-primary"
-                                                                style="display:inline;float: right;padding:0 20px;margin:0;">Add
-                                                                file</button>
-                                                        </div>
-                                                        <div class="mt-3" style="display:flex;justify-content: center;">
-                                                            <button
-                                                                class="btn btn-default btn-squared btn-outline-primary"
-                                                                style="display:flex;justify-content: center ;padding:0 20px;margin:0;">Upload
-                                                                file</button>
+                                                            <div class="atbd-tag-wrap"
+                                                                style="display:inline;float:right;padding:0 20px;margin:0;padding: 0;">
+
+                                                                <div class="atbd-upload">
+                                                                    <div class="atbd-upload__button">
+                                                                        <a href="javascript:void(0)"
+                                                                            class="button123 btn btn-lg btn-outline btn-white btn-shadow-white btn-upload"
+                                                                            onclick="$('#upload-1').click()"></span>Add
+                                                                            file</a>
+                                                                        <input type="file" name="upload-1"
+                                                                            class="upload-one" id="upload-1">
+                                                                    </div>
+                                                                    <div class="atbd-upload__file">
+                                                                        <ul>
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -427,6 +452,194 @@
             </div>
         </div>
     </div>
+
+    <div class="drawer-basic-wrap">
+        <div class="atbd-drawer drawer-basic d-none">
+            <div class="atbd-drawer__header">
+                <h6 class="drawer-title">Note qo'shish</h6>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                
+                <div class="drawer-content">
+                    <textarea class="form-control"
+                        style="height:200px;margin-top:15px; background-color: rgb(243, 246, 250);"
+                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary btn-default btn-squared" style="float:right;">Saqlash</button>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+        <div class="atbd-drawer drawer-account d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h6 class="drawer-title">Create a new account</h6>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+                                <div class="form-group col-lg-6">
+                                    <label for="username">Name</label>
+                                    <input type="text" name="name" id="username" class="form-control form-control-sm"
+                                        placeholder="Please Enter Your Name">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="url">Url</label>
+                                    <input type="url" name="name" id="url" class="form-control form-control-sm"
+                                        placeholder="Please Enter URL">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="owner">Owner</label>
+                                    <select name="url" id="owner" class="form-control-sm">
+                                        <option value="">Jack Ma</option>
+                                        <option value="">Tom liu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="type">Type</label>
+                                    <select name="url" id="type" class="form-control-sm">
+                                        <option value="">Jack Ma</option>
+                                        <option value="">Tom liu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="approver">Approver</label>
+                                    <select name="url" id="approver" class="form-control-sm">
+                                        <option value="">Jack Ma</option>
+                                        <option value="">Tom liu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="datepicker">DateTime</label>
+                                    <input type="text" name="name" id="datepicker" class="form-control form-control-sm"
+                                        placeholder="Please Enter URL">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="description">Discription</label>
+                                    <textarea name="description" id="description" class="form-control form-control-sm"
+                                        placeholder="PLease Enter Url Description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+
+
+
+
+        <div class="atbd-drawer drawer-profile d-none">
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <h6>User Profile</h6>
+                    <div class="profile-info-box">
+                        <div class="profile-info-box__single">
+                            <h6>Personal</h6>
+                            <div class="profile-info d-flex flex-wrap">
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Full Name:</span>
+                                    <span class="profile-info__text">Lily</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Account:</span>
+                                    <span class="profile-info__text">adminDesign@example.com</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">City:</span>
+                                    <span class="profile-info__text">Toronto</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Country:</span>
+                                    <span class="profile-info__text">Canada</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Birthday:</span>
+                                    <span class="profile-info__text">February 21,2020</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Website:</span>
+                                    <span class="profile-info__text">-</span>
+                                </div><!-- ends: .profile-info__single -->
+                            </div>
+                            <div class="profile-info-extra">
+                                <span class="profile-info__label">Message:</span>
+                                <span class="profile-info__text">Make things as simple as possible but no
+                                    simpler.</span>
+                            </div>
+                        </div><!-- ends: .aprofile-info-box__single -->
+                        <div class="profile-info-box__single">
+                            <h6>Company</h6>
+                            <div class="profile-info d-flex flex-wrap">
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Position:</span>
+                                    <span class="profile-info__text">Programmer</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Responsibilities:</span>
+                                    <span class="profile-info__text">Coding</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Department:</span>
+                                    <span class="profile-info__text">XTech</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Supervisor:</span>
+                                    <span class="profile-info__text">Canada</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Birthday:</span>
+                                    <span class="profile-info__text">February 21,2020</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Website:</span>
+                                    <span class="profile-info__text">-</span>
+                                </div><!-- ends: .profile-info__single -->
+                            </div>
+                            <div class="profile-info-extra">
+                                <span class="profile-info__label">Skills:</span>
+                                <span class="profile-info__text">C / C + +, data structures, software engineering,
+                                    operating systems, computer networks, databases, compiler theory, computer
+                                    architecture, Microcomputer Principle and Interface Technology, Computer English,
+                                    Java, ASP, etc.</span>
+                            </div>
+                        </div><!-- ends: .aprofile-info-box__single -->
+                        <div class="profile-info-box__single">
+                            <h6>Conact</h6>
+                            <div class="profile-info d-flex flex-wrap">
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Email:</span>
+                                    <span class="profile-info__text">adminDesign@example.com</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Phone Number:</span>
+                                    <span class="profile-info__text">+86 181 0000 0000</span>
+                                </div><!-- ends: .profile-info__single -->
+                                <div class="profile-info__single">
+                                    <span class="profile-info__label">Github:</span>
+                                    <span class="profile-info__text"><a href="#">github.com/admin-desing/</a></span>
+                                </div><!-- ends: .profile-info__single -->
+                            </div>
+                        </div><!-- ends: .aprofile-info-box__single -->
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+
+
+    </div>
+
+</div>
+
+<div class="overlay-dark">
+</div>
+<div class="overlay-dark-l2">
+</div>
+<div class="overlay-dark-sidebar">
+</div>
+<div class="customizer-overlay">
 </div>
 
 {% endblock %}
