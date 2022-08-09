@@ -22,3 +22,8 @@
     color: black;
     background-color: rgb(227, 227, 253);
 }
+
+.selectlar:hover{
+    border: 0.5px rgb(100, 38, 244) solid;
+    border-radius: 3px;
+}

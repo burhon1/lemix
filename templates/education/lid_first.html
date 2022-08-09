@@ -53,7 +53,7 @@
                 <div class="tab-pane fade" id="kanban" role="tabpanel" aria-labelledby="kanban-tab">
 
                 </div>
-                <div class="tab-pane fade" id="kanban" role="tabpanel" aria-labelledby="kanban-tab">
+                <div class="tab-pane fade" id="ryhot" role="tabpanel" aria-labelledby="ryhot-tab">
 
                 </div>
                 <div class="tab-pane fade" id="split" role="tabpanel" aria-labelledby="split-tab">
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="col-9 col-lg-9 col-md-9 col-xl-9 col-xxl-9 p-0">
-                            <div class="card ml-1 mt-1 p-2 ">
+                            <div class="card ml-1 mt-1 p-0 ml-3" style="width:97%;">
                                 <div class="card-body">
                                     <div class="tab-wrapper">
 
@@ -213,11 +213,11 @@
                                                             style="height: 60px;padding:5px;
                                                         border:1px rgb(148, 148, 148) solid;border-radius:5px;background-color:rgba(246, 246, 246, 0.885);">
                                                             <span data-feather="file-text" class="ml-1"></span>
-                                                            <h6 style="display:inline;">Notes (0)</h6>
+                                                            <h6 style="display:inline;">Eslatma (0)</h6>
                                                             <div class="drawer-btn" style="float:right;">
                                                                 <button
                                                                     class="button123 btn btn-white btn-default btn-squared drawer-trigger btn-shadow-white"
-                                                                    data-drawer="basic">New</button>
+                                                                    data-drawer="basic">+ Qo'shish</button>
                                                             </div>
                                                             
 
@@ -226,7 +226,7 @@
                                                             style="height: 60px;padding:5px;
                                                             border:1px rgb(148, 148, 148) solid;border-radius:5px;background-color:rgba(246, 246, 246, 0.885);">
                                                             <span data-feather="file" class="ml-1"></span>
-                                                            <h6 style="display:inline;">Files (0)</h6>
+                                                            <h6 style="display:inline;">Fayllar (0)</h6>
                                                             <div class="atbd-tag-wrap"
                                                                 style="display:inline;float:right;padding:0 20px;margin:0;padding: 0;">
 
@@ -234,10 +234,9 @@
                                                                     <div class="atbd-upload__button">
                                                                         <a href="javascript:void(0)"
                                                                             class="button123 btn btn-lg btn-outline btn-white btn-shadow-white btn-upload"
-                                                                            onclick="$('#upload-1').click()"></span>Add
-                                                                            file</a>
+                                                                            onclick="$('#upload-1').click()"></span>+ Fayl qo'shish</a>
                                                                         <input type="file" name="upload-1"
-                                                                            class="upload-one" id="upload-1">
+                                                                            class="upload-one" id="upload-1" multiple>
                                                                     </div>
                                                                     <div class="atbd-upload__file">
                                                                         <ul>
@@ -254,58 +253,56 @@
                                                     aria-labelledby="tab-v-2-tab">
                                                     <div class="row">
                                                         <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12">
-                                                            <div class="chat-box p-0 pt-2"
-                                                                style="background-color:rgb(246, 245, 255);">
-                                                                <div class="mb-2">
-                                                                    <a>Topshiriqlar soni - 14ta | Bugun - 0</a>
-                                                                    <button
-                                                                        class="btn btn-primary btn-default btn-squared drawer-trigger"
-                                                                        data-drawer="basic" style="float:right;">+
-                                                                        Qo'shish</button>
-                                                                </div>
-                                                                <div class="flex-1 incoming-chat">
-                                                                    <div class="chat-text-box">
-                                                                        <div class="media ">
-                                                                            <div
-                                                                                class="chat-text-box__photo mr-2 pl-2 ">
-                                                                                <span data-feather="users"></span>
+                                                            <div class="chat-box p-0 pt-2">                                                                
+                                                                <div class="card h-100">
+                                                                    <div class="mb-2 p-2">
+                                                                        <a class="mt-3">Topshiriqlar soni - 14ta | Bugun - 0</a>
+                                                                        <button
+                                                                            class="btn btn-primary btn-default btn-squared drawer-trigger"
+                                                                            data-drawer="account" style="float:right;">+
+                                                                            Qo'shish</button>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="about-projects">
+                                                                            <div class="about-projects__details">
+                                                                                <p class="fs-15 mb-25">Many support queries and technical questions will already
+                                                                                    be
+                                                                                    answered in
+                                                                                    supporting
+                                                                                    documentation such as FAQ's and comments from previous buyers. Anim pariatur
+                                                                                    cliche
+                                                                                    reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                                                                    wolf moon
+                                                                                    officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
+                                                                                    nesciunt laborum
+                                                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                                                                    single-origin
+                                                                                    coffee nulla assumenda shoreditch.</p>
+                                                                                <p class="fs-15"> Anim pariatur cliche reprehenderit, enim eiusmod high
+                                                                                    life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                                                                                    cupidatat
+                                                                                    skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                                                                    3 wolf moon
+                                                                                    tempor</p>
                                                                             </div>
-                                                                            <div class="media-body">
-                                                                                <div class="chat-text-box__content">
-                                                                                    <div
-                                                                                        class="chat-text-box__title d-flex align-items-center">
-
-                                                                                    </div>
-                                                                                    <div class="d-flex align-items-center mb-20 mt-10 p-0 pl-2 pt-1"
-                                                                                        style="width:100%;">
-                                                                                        <div class="chat-text-box__subtitle  bg-white"
-                                                                                            style="width:100%;">
-                                                                                            <div style="padding:10px">
-
-                                                                                                <a>Meeting</a>
-                                                                                                <span
-                                                                                                    data-feather="more-vertical"
-                                                                                                    style="float:right;"></span>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                style="padding-left:10px;">
-                                                                                                <a
-                                                                                                    style="color:green;">Today</a>
-                                                                                                <a
-                                                                                                    style="margin:auto 10px;">CEO</a>
-                                                                                                <span
-                                                                                                    data-feather="user"></span>
-                                                                                                <a>Hoshimjon</a>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                style="background-color:rgb(249, 242, 230); padding: 10px;margin-top:5px;">
-                                                                                                Test uchun yozildi
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                            <ul class="d-flex text-capitalize">
+                                                                                <li>
+                                                                                    <span class="color-light fs-13">Mavzu</span>
+                                                                                    <p class="color-dark fs-14 mt-1 mb-0 fw-500">Qayta bog'lanish</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span class="color-light fs-13">Mas'ul</span>
+                                                                                    <p class="color-dark fs-14 mt-1 mb-0 fw-500">Burhon Baqoyev(CEO)</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span class="color-light fs-13">Vaqti:</span>
+                                                                                    <p class="color-primary fs-14 mt-1 mb-0 fw-500">04.08.2022 18:31</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span class="color-light fs-13">Muddati:</span>
+                                                                                    <p class="color-danger fs-14 mt-1 mb-0 fw-500">09.08.2022 10:00</p>
+                                                                                </li>
+                                                                            </ul>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -315,52 +312,316 @@
                                                 </div>
                                                 <div class="tab-pane fade" id="tab-v-4" role="tabpanel"
                                                     aria-labelledby="tab-v-4-tab">
-                                                    <div class="row">
-                                                        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12">
-                                                            <div class="chat-box p-0 pt-2"
-                                                                style="background-color:rgb(246, 245, 255);">
-                                                                <!-- Start: Incomming -->
-                                                                <div class="flex-1 incoming-chat">
-                                                                    <div class="chat-text-box">
-                                                                        <div class="media ">
-                                                                            <div
-                                                                                class="chat-text-box__photo mr-2 pl-2 ">
-                                                                                <span data-feather="users"></span>
+                                                    <div class="chat-box p-xl-30 pl-lg-20 pr-lg-0">
+                                                        <!-- Start: Incomming -->
+                                                        <div class="flex-1 incoming-chat">
+                                                            <div class="chat-text-box">
+                                                                <div class="media ">
+                                                                    <div class="chat-text-box__photo ">
+                                                                        <img src="img/author/1.jpg" class="align-self-start mr-15 wh-46" alt="img">
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <div class="chat-text-box__content">
+                                                                            <div class="chat-text-box__title d-flex align-items-center">
+                                                                                <h6 class="fs-14">Domnic Harys</h6>
+                                                                                <span class="chat-text-box__time fs-12 color-light fw-400 ml-15">8:30
+                                                                                    PM</span>
                                                                             </div>
-                                                                            <div class="media-body">
-                                                                                <div class="chat-text-box__content">
-                                                                                    <div
-                                                                                        class="chat-text-box__title d-flex align-items-center">
-
-                                                                                    </div>
-                                                                                    <div class="d-flex align-items-center mb-20 mt-10 p-0 pl-2 pt-1"
-                                                                                        style="width:100%;">
-                                                                                        <div class="chat-text-box__subtitle  bg-white"
-                                                                                            style="width:100%;">
-                                                                                            <div style="padding:10px">
-
-                                                                                                <a>Meeting</a>
-                                                                                                <span
-                                                                                                    data-feather="more-vertical"
-                                                                                                    style="float:right;"></span>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                style="padding-left:10px;">
-                                                                                                <a
-                                                                                                    style="color:green;">Today</a>
-                                                                                                <a
-                                                                                                    style="margin:auto 10px;">CEO</a>
-                                                                                                <span
-                                                                                                    data-feather="user"></span>
-                                                                                                <a>Hoshimjon</a>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                style="background-color:rgb(249, 242, 230); padding: 10px;margin-top:5px;">
-                                                                                                Test uchun yozildi
+                                                                            <div class="d-flex align-items-center mb-20 mt-10">
+                                                                                <div class="chat-text-box__subtitle p-20 bg-primary">
+                                                                                    <p class="color-white">Jam nonumy eirmod tempor invidunt ut
+                                                                                        labore
+                                                                                        et dolore magna aliquyam erat consetetur sadipscing elitr
+                                                                                        sed
+                                                                                        diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                                                                        aliquyam erat sed diam voluptua..</p>
+                                                                                </div>
+                                                                                <div class="chat-text-box__other d-flex">
+                                                                                    <div class="chat-text-box__reaction px-sm-15 px-2">
+                    
+                                                                                        <div class="emotions">
+                                                                                            <div class="dropdown  dropdown-click ">
+                                                                                                <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                    <span data-feather="smile"></span> </button>
+                                                                                                <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                                    <ul class="emotions__parent d-flex">
+                                                                                                        <li>
+                                                                                                            <a class="" href="#">
+                                                                                                                <img src="img/svg/cool.png" alt="emotions">
+                                                                                                            </a>
+                                                                                                        </li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/happy2.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/happy.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/shocked.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/like.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/heart.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                    </ul>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
-
+                    
                                                                                     </div>
+                    
+                                                                                    <div class="dropdown dropdown-click">
+                                                                                        <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <span data-feather="more-horizontal"></span>
+                                                                                        </button>
+                                                                                        <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                            <a class="dropdown-item" href="#">Copy</a>
+                                                                                            <a class="dropdown-item" href="#">Quote</a>
+                                                                                            <a class="dropdown-item" href="#">Forward</a>
+                                                                                            <a class="dropdown-item" href="#">Report</a>
+                                                                                        </div>
+                                                                                    </div>
+                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End: Incomming -->
+                                                        <p class="social-connector text-center text-capitalize">
+                                                            <span>today</span>
+                                                        </p>
+                                                        <!-- Start: Outgoing -->
+                                                        <div class="flex-1 justify-content-end d-flex outgoing-chat mt-20">
+                                                            <div class="chat-text-box">
+                                                                <div class="media ">
+                                                                    <div class="media-body">
+                                                                        <div class="chat-text-box__content">
+                                                                            <div class="chat-text-box__title d-flex align-items-center justify-content-end mb-2">
+                                                                                <span class="chat-text-box__time fs-12 color-light fw-400">8:30
+                                                                                    PM</span>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center justify-content-end">
+                                                                                <div class="chat-text-box__other d-flex">
+                                                                                    <div class="px-15">
+                    
+                                                                                        <div class="dropdown dropdown-click">
+                                                                                            <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <span data-feather="more-horizontal"></span>
+                                                                                            </button>
+                                                                                            <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                                <a class="dropdown-item" href="#">Copy</a>
+                                                                                                <a class="dropdown-item" href="#">Quote</a>
+                                                                                                <a class="dropdown-item" href="#">Forward</a>
+                                                                                                <a class="dropdown-item" href="#">Report</a>
+                                                                                                <a class="dropdown-item" href="#">remove</a>
+                                                                                            </div>
+                                                                                        </div>
+                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="chat-text-box__subtitle p-20 bg-deep">
+                                                                                    <p class="color-gray">Jam nonumy eirmod tempor invidunt ut
+                                                                                        labore
+                                                                                        et dolore magna aliquyam erat consetetur sadipscing elitr
+                                                                                        sed
+                                                                                        diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                                                                        aliquyam erat sed diam voluptua..</p>
+                                                                                </div>
+                    
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-1 justify-content-end d-flex outgoing-chat">
+                                                            <div class="chat-text-box">
+                                                                <div class="media ">
+                                                                    <div class="media-body">
+                                                                        <div class="chat-text-box__content">
+                                                                            <div class="d-flex align-items-center justify-content-end">
+                                                                                <div class="chat-text-box__other d-flex">
+                                                                                    <div class="px-15">
+                    
+                                                                                        <div class="dropdown dropdown-click">
+                                                                                            <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <span data-feather="more-horizontal"></span>
+                                                                                            </button>
+                                                                                            <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                                <a class="dropdown-item" href="#">Copy</a>
+                                                                                                <a class="dropdown-item" href="#">Quote</a>
+                                                                                                <a class="dropdown-item" href="#">Forward</a>
+                                                                                                <a class="dropdown-item" href="#">Report</a>
+                                                                                            </div>
+                                                                                        </div>
+                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="chat-text-box__subtitle p-20 bg-deep">
+                                                                                    <p class="color-gray">Jam nonumy eirmod tempor invidunt ut
+                                                                                        labore et
+                                                                                        dolore magna.</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End: Outgoing  -->
+                                                        <!-- Start: Incomming -->
+                                                        <div class="flex-1 incoming-chat mt-30">
+                                                            <div class="chat-text-box">
+                                                                <div class="media ">
+                                                                    <div class="chat-text-box__photo ">
+                                                                        <img src="img/author/1.jpg" class="align-self-start mr-15 wh-46" alt="img">
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <div class="chat-text-box__content">
+                                                                            <div class="chat-text-box__title d-flex align-items-center">
+                                                                                <h6 class="fs-14">Domnic Harys</h6>
+                                                                                <span class="chat-text-box__time fs-12 color-light fw-400 ml-15">8:30
+                                                                                    PM</span>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center mb-20 mt-10">
+                                                                                <div class="chat-text-box__subtitle p-20 bg-primary">
+                                                                                    <p class="color-white">Jam nonumy eirmod tempor invidunt ut
+                                                                                        labore
+                                                                                        et dolore magna.</p>
+                                                                                </div>
+                                                                                <div class="chat-text-box__other d-flex">
+                                                                                    <div class="chat-text-box__reaction px-sm-15 px-2">
+                    
+                                                                                        <div class="emotions">
+                                                                                            <div class="dropdown  dropdown-click ">
+                                                                                                <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                    <span data-feather="smile"></span> </button>
+                                                                                                <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                                    <ul class="emotions__parent d-flex">
+                                                                                                        <li>
+                                                                                                            <a class="" href="#">
+                                                                                                                <img src="img/svg/cool.png" alt="emotions">
+                                                                                                            </a>
+                                                                                                        </li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/happy2.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/happy.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/shocked.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/like.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                        <li><a class="" href="#">
+                                                                                                                <img src="img/svg/heart.png" alt="emotions">
+                                                                                                            </a></li>
+                                                                                                    </ul>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                    
+                                                                                    </div>
+                    
+                                                                                    <div class="dropdown dropdown-click">
+                                                                                        <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <span data-feather="more-horizontal"></span>
+                                                                                        </button>
+                                                                                        <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                            <a class="dropdown-item" href="#">Copy</a>
+                                                                                            <a class="dropdown-item" href="#">Quote</a>
+                                                                                            <a class="dropdown-item" href="#">Forward</a>
+                                                                                            <a class="dropdown-item" href="#">Report</a>
+                                                                                        </div>
+                                                                                    </div>
+                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End: Incomming -->
+                                                        <!-- Start: Outgoing -->
+                                                        <div class="flex-1 justify-content-end d-flex outgoing-chat">
+                                                            <div class="chat-text-box">
+                                                                <div class="media ">
+                                                                    <div class="media-body">
+                                                                        <div class="chat-text-box__content">
+                                                                            <div class="chat-text-box__title d-flex align-items-center justify-content-end mb-2">
+                                                                                <span class="chat-text-box__time fs-12 color-light fw-400">8:30
+                                                                                    PM</span>
+                                                                            </div>
+                                                                            <div class="d-flex align-items-center justify-content-end">
+                                                                                <div class="chat-text-box__other d-flex">
+                                                                                    <div class="px-15">
+                    
+                                                                                        <div class="dropdown dropdown-click">
+                                                                                            <button class="btn-link border-0 bg-transparent p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <span data-feather="more-horizontal"></span>
+                                                                                            </button>
+                                                                                            <div class="dropdown-default dropdown-bottomRight dropdown-menu-right dropdown-menu">
+                                                                                                <a class="dropdown-item" href="#">Copy</a>
+                                                                                                <a class="dropdown-item" href="#">Quote</a>
+                                                                                                <a class="dropdown-item" href="#">Forward</a>
+                                                                                                <a class="dropdown-item" href="#">Report</a>
+                                                                                                <a class="dropdown-item" href="#">remove</a>
+                                                                                            </div>
+                                                                                        </div>
+                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="chat-text-box__subtitle p-20 bg-deep">
+                                                                                    <p class="color-gray">Jam nonumy eirmod tempor invidunt ut
+                                                                                        labore et
+                                                                                        dolore magna.</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="seen-chat seen-chat-group  d-flex align-items-center  justify-content-end mb-2 mt-10">
+                                                                                <ul class="d-flex">
+                                                                                    <li>
+                                                                                        <img src="img/author/1.jpg" alt="img" class="wh-20 rounded-circle">
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <img src="img/author/2.jpg" alt="img" class="wh-20 rounded-circle">
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <img src="img/author/3.jpg" alt="img" class="wh-20 rounded-circle">
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <img src="img/author/4.jpg" alt="img" class="wh-20 rounded-circle">
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <img src="img/author/1.jpg" alt="img" class="wh-20 rounded-circle">
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End: Outgoing  -->
+                                                        <!-- Start: Incomming -->
+                                                        <div class="flex-1 incoming-chat mt-30">
+                                                            <div class="chat-text-box">
+                                                                <div class="media ">
+                                                                    <div class="chat-text-box__photo ">
+                                                                        <img src="img/author/1.jpg" class="align-self-start mr-15 wh-46" alt="img">
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <div class="chat-text-box__content">
+                                                                            <div class="d-flex align-items-center ">
+                                                                                <div class="chat-text-box__subtitle typing cbg-light pr-30">
+                                                                                    <p class="color-light text-capitalize">typing...</p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -439,10 +700,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -472,7 +731,7 @@
         </div><!-- ends: .atbd-drawer -->
         <div class="atbd-drawer drawer-account d-none">
             <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
-                <h6 class="drawer-title">Create a new account</h6>
+                <h6 class="drawer-title">Topshiriq qo'shish</h6>
                 <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
             </div><!-- ends: .atbd-drawer__header -->
             <div class="atbd-drawer__body">
@@ -481,155 +740,40 @@
                         <form action="#">
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label for="username">Name</label>
-                                    <input type="text" name="name" id="username" class="form-control form-control-sm"
-                                        placeholder="Please Enter Your Name">
+                                    <label for="owner">Mavzu</label>
+                                            <select name="select-tag" id="select-tag" class="form-control " 
+                                            style="margin-left:5px;margin-right:auto; height: 48px;border: 0.5px rgb(235, 233, 250) solid;">
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label for="url">Url</label>
-                                    <input type="url" name="name" id="url" class="form-control form-control-sm"
-                                        placeholder="Please Enter URL">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="owner">Owner</label>
-                                    <select name="url" id="owner" class="form-control-sm">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="type">Type</label>
-                                    <select name="url" id="type" class="form-control-sm">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="approver">Approver</label>
-                                    <select name="url" id="approver" class="form-control-sm">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="datepicker">DateTime</label>
-                                    <input type="text" name="name" id="datepicker" class="form-control form-control-sm"
-                                        placeholder="Please Enter URL">
+                                    <label for="owner">Mas'ul</label>
+                                            <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="description">Discription</label>
-                                    <textarea name="description" id="description" class="form-control form-control-sm"
-                                        placeholder="PLease Enter Url Description"></textarea>
+                                    <label for="description">Topshiriq matni</label>
+                                    <textarea name="description" id="description" class="form-control form-control-sm"></textarea>
                                 </div>
+                                
                             </div>
                         </form>
                     </div>
                 </div>
             </div><!-- ends: .atbd-drawer__body -->
-        </div><!-- ends: .atbd-drawer -->
-
-
-
-
-        <div class="atbd-drawer drawer-profile d-none">
-            <div class="atbd-drawer__body">
-                <div class="drawer-content">
-                    <h6>User Profile</h6>
-                    <div class="profile-info-box">
-                        <div class="profile-info-box__single">
-                            <h6>Personal</h6>
-                            <div class="profile-info d-flex flex-wrap">
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Full Name:</span>
-                                    <span class="profile-info__text">Lily</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Account:</span>
-                                    <span class="profile-info__text">adminDesign@example.com</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">City:</span>
-                                    <span class="profile-info__text">Toronto</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Country:</span>
-                                    <span class="profile-info__text">Canada</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Birthday:</span>
-                                    <span class="profile-info__text">February 21,2020</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Website:</span>
-                                    <span class="profile-info__text">-</span>
-                                </div><!-- ends: .profile-info__single -->
-                            </div>
-                            <div class="profile-info-extra">
-                                <span class="profile-info__label">Message:</span>
-                                <span class="profile-info__text">Make things as simple as possible but no
-                                    simpler.</span>
-                            </div>
-                        </div><!-- ends: .aprofile-info-box__single -->
-                        <div class="profile-info-box__single">
-                            <h6>Company</h6>
-                            <div class="profile-info d-flex flex-wrap">
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Position:</span>
-                                    <span class="profile-info__text">Programmer</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Responsibilities:</span>
-                                    <span class="profile-info__text">Coding</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Department:</span>
-                                    <span class="profile-info__text">XTech</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Supervisor:</span>
-                                    <span class="profile-info__text">Canada</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Birthday:</span>
-                                    <span class="profile-info__text">February 21,2020</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Website:</span>
-                                    <span class="profile-info__text">-</span>
-                                </div><!-- ends: .profile-info__single -->
-                            </div>
-                            <div class="profile-info-extra">
-                                <span class="profile-info__label">Skills:</span>
-                                <span class="profile-info__text">C / C + +, data structures, software engineering,
-                                    operating systems, computer networks, databases, compiler theory, computer
-                                    architecture, Microcomputer Principle and Interface Technology, Computer English,
-                                    Java, ASP, etc.</span>
-                            </div>
-                        </div><!-- ends: .aprofile-info-box__single -->
-                        <div class="profile-info-box__single">
-                            <h6>Conact</h6>
-                            <div class="profile-info d-flex flex-wrap">
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Email:</span>
-                                    <span class="profile-info__text">adminDesign@example.com</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Phone Number:</span>
-                                    <span class="profile-info__text">+86 181 0000 0000</span>
-                                </div><!-- ends: .profile-info__single -->
-                                <div class="profile-info__single">
-                                    <span class="profile-info__label">Github:</span>
-                                    <span class="profile-info__text"><a href="#">github.com/admin-desing/</a></span>
-                                </div><!-- ends: .profile-info__single -->
-                            </div>
-                        </div><!-- ends: .aprofile-info-box__single -->
-                    </div>
-                </div>
-            </div><!-- ends: .atbd-drawer__body -->
-        </div><!-- ends: .atbd-drawer -->
-
-
+        </div><!-- ends: .atbd-drawer --><!-- ends: .atbd-drawer -->
     </div>
+
+
 
 </div>
 
