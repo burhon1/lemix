@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def test2_view(request):
-    return render(request,'education/test.html')    
+    return render(request,'education/test.html')     
 
 def teachers_view(request):
     return render(request,'education/teachers.html')  
