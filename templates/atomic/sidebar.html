@@ -2,17 +2,23 @@
     <div class="sidebar__menu-group">
         <ul class="sidebar_nav mt-2">
             <li>
-                <a href="changelog.html" class="">
+                <a class="">
                     <span data-feather="grid" class="nav-icon"></span>
                     <span class="menu-text">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="changelog.html" class="">
+                <a href="{% url 'education:lid-sk' %}" class="">
                     <span data-feather="inbox" class="nav-icon"></span>
                     <span class="menu-text">Lidlar</span>
                 </a>
             </li>
+            <li>
+                <a href="changelog.html" class="">
+                    <span data-feather="clipboard" class="nav-icon"></span>
+                    <span class="menu-text">Topshiriqlar</span>
+                </a>
+            </li>   
             <li>
                 <a href="{% url 'education:groups-list' %}" class="">
                     <span data-feather="layers" class="nav-icon"></span>
@@ -39,6 +45,9 @@
                         <a class="" href="{% url 'education:teachers' %}">O’qituvchilar</a>
                     </li>
                     <li>
+                        <a class="" href="performance.html">Ota-onalar</a>
+                    </li>
+                    <li>
                         <a class="" href="performance.html">Imtihonlar</a>
                     </li>
                     <li>
@@ -54,7 +63,16 @@
                 </a>
                 <ul>
                     <li>
-                        <a class="" href="index.html">To’lovlar</a>
+                        <a class="" href="index.html">Barcha to'lovlar</a>
+                    </li>
+                    <li>
+                        <a class="" href="business.html">Kurs to'lovlari</a>
+                    </li>
+                    <li>
+                        <a class="" href="business.html">Guruh to'lovlari</a>
+                    </li>
+                    <li>
+                        <a class="" href="business.html">Qarzdorlik</a>
                     </li>
                     <li>
                         <a class="" href="business.html">Xarajatlar</a>
@@ -109,12 +127,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="changelog.html" class="">
-                    <span data-feather="message-circle" class="nav-icon"></span>
-                    <span class="menu-text">Chat</span>
-                </a>
-            </li>        
+                 
         </ul>
     </div>
 </aside>

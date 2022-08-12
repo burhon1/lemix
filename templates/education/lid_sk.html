@@ -1,0 +1,1120 @@
+{% extends 'atomic/theme.html' %} 
+{% load static %} 
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-0">
+            <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-0">
+                <div style="display:flex;" class="card m-0 mt-2 p-0">
+                    <div style="display:flex;">
+                        <h3 style="margin: auto; margin-left: 20px;">Lidlar - 112 ta</h3>
+                        <div style="margin:auto auto;">
+                            <div class="tab-wrapper">
+
+                                <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" id="plugins-tab" data-toggle="pill" href="plugins"
+                                            role="tab" aria-controls="plugins" aria-selected="true">Kanban</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="themes-tab" data-toggle="pill" href="{% url 'education:lid-ry' %}" role="tab"
+                                            aria-controls="themes" aria-selected="false">Ro'yhat</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="extensions1-tab" data-toggle="pill" href="{% url 'education:lid-first' %}"
+                                            role="tab" aria-controls="extensions1" aria-selected="false">Split</a>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div style="display: flex; margin:auto auto;" class="ml-3 p-2">
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                + Lid qo'shish
+                            </button>
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                Vazifalar
+                            </button>
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                Formalar
+                            </button>
+                            <button class="btn btn-primary btn-default btn-squared drawer-trigger ml-1"
+                                data-drawer="basic">
+                                Arxiv
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-0">
+                <div class="tab-content">
+
+                    <div class="tab-pane fade show active" id="plugins" role="tabpanel" aria-labelledby="plugins-tab">
+                        <div class="row">
+                            <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-xxl-12 p-3 pt-0">
+                                <div class="card">
+
+                                    <div class="card-body" style="display:flex;border-bottom: 2px black solid ;">
+                                        <form action="/"
+                                            class="d-flex align-items-center add-contact__form my-sm-0 my-2"
+                                            style="border: 0.5px rgb(206, 206, 206) solid;border-radius: 5px;">
+                                            <span data-feather="search" class="ml-1"></span>
+                                            <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search"
+                                                placeholder="Qidirish" aria-label="Search"
+                                                style="background-color:white;">
+                                        </form>
+
+                                        <div class="atbd-select mr-2 ml-5 ">
+
+                                            <select name="select-1" id="select-1" class="form-control " style="width:125px;" >
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="atbd-select mr-2 ml-2 ">
+
+                                            <select name="select-1" id="select-1" class="form-control " style="width:125px;">
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="atbd-select mr-2 ml-2 ">
+
+                                            <select name="select-1" id="select-1" class="form-control " style="width:125px;">
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="atbd-select mr-2 ml-2 ">
+
+                                            <select name="select-1" id="select-1" class="form-control " style="width:125px;">
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div style="margin:auto;">
+
+                                            <input type="text">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <!-- Lists container -->
+                    
+                                                            
+                                            <div class="kanban-board__card mb-50">
+                                                
+                                                <section class="lists-container kanban-container ">
+                    
+                                                    <div class="list kanban-list draggable" draggable="true">
+                                                        <div class="kanban-tops list-tops w-100">
+                                                            <div class="d-flex justify-content-between align-items-center py-10">
+                                                                <h3 class="list-title">No status</h3>
+                                                            </div>
+                                                        </div>
+                    
+                                                        <ul class="kanban-items list-items  drag-drop ">
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo72">
+                                                                    File Manager Design
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo2">
+                                                                    CRM Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo3">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo4">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo5">
+                                                                    File Manager Design
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo6">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                                                        </ul>
+                    
+                                                        <button class="add-card-btn"><span data-feather="plus"></span>Add a card</button>
+                    
+                                                    </div>
+                    
+                                                    <div class="kanban-list list draggable" draggable="true">
+                                                        <div class="kanban-tops list-tops">
+                                                            <div class="d-flex justify-content-between align-items-center py-10">
+                                                                <h3 class="list-title">So'rovlar</h3>
+                                                            </div>
+                                                        </div>
+                    
+                                                        <ul class="kanban-items list-items">
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo7">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo8">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo9">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo10">
+                                                                    Sales Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo11">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo13">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                                                        </ul>
+                    
+                                                        <button class="add-card-btn"><span data-feather="plus"></span>Add a card</button>
+                    
+                                                    </div>
+                    
+                                                    <div class="kanban-list list draggable" draggable="true">
+                                                        <div class="kanban-tops list-tops">
+                                                            <div class="d-flex justify-content-between align-items-center py-10">
+                                                                <h3 class="list-title">Kutishlar</h3>
+                                                            </div>
+                                                        </div>
+                    
+                                                        <ul class="kanban-items list-items">
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo14">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo15">
+                                                                    Sales Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo16">
+                                                                    Coming Soon Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo17">
+                                                                    Changelog
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo18">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo19">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo20">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo21">
+                                                                    Sales Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo22">
+                                                                    Coming Soon Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo23">
+                                                                    Changelog
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo24">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo25">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo26">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo27">
+                                                                    Sales Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo28">
+                                                                    Coming Soon Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo29">
+                                                                    Changelog
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo30">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo31">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo32">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo33">
+                                                                    Sales Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo34">
+                                                                    Coming Soon Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo35">
+                                                                    Changelog
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo36">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo37">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo38">
+                                                                    Drag &amp; Drop
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo39">
+                                                                    Sales Dashboard
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo40">
+                                                                    Coming Soon Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo41">
+                                                                    Changelog
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo42">
+                                                                    Timeline Page
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                            <li class="d-flex justify-content-between align-items-center ">
+                                                                <div class="lists-items-title" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo43">
+                                                                    Knowledgebase
+                                                                </div>
+                                                                <button class="open-popup-modal" type="button"><span data-feather="edit-2"></span></button>
+                                                                <div class="popup-overlay">
+                                                                    <!--Creates the popup content-->
+                                                                    <div class="popup-content">
+                                                                        <div class="mb-10 popup-textarea">
+                                                                            <textarea class="form-control" rows="3" placeholder="Edit title..."></textarea>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center popup-button">
+                                                                            <button class="save-title-changes btn btn-primary btn-sm btn-squared rounded" type="submit">Submit</button>
+                                                                        </div>
+                                                                        <div class="overlay-close"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                    
+                    
+                                                        </ul>
+                    
+                                                        <button class="add-card-btn"><span data-feather="plus"></span>Add a card</button>
+                    
+                                                    </div>
+
+                                                    <div class="kanban-list list draggable" draggable="true">
+                                                        <div class="list__add-card">
+                                                            <div class="kanban-board__add-card">
+                                                                <button class="shadow-none border-0"><span data-feather="plus"></span></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </section>
+                                            </div>
+                                            <!-- End of lists container -->
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-basic-wrap">
+        <div class="atbd-drawer drawer-basic d-none">
+            <div class="atbd-drawer__header">
+                <h6 class="drawer-title">Eslatma qo'shish</h6>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+
+                <div class="drawer-content">
+                    <textarea class="form-control"
+                        style="height:200px;margin-top:15px; background-color: rgb(243, 246, 250);"
+                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary btn-default btn-squared" style="float:right;">Saqlash</button>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+        <div class="atbd-drawer drawer-account d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h6 class="drawer-title">Topshiriq qo'shish</h6>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+                                <div class="form-group col-lg-6">
+                                    <label for="owner">Mavzu</label>
+                                    <select name="select-tag" id="select-tag" class="form-control "
+                                        style="margin-left:5px;margin-right:auto; height: 48px;border: 0.5px rgb(235, 233, 250) solid;">
+                                        <option value="01">Option 1</option>
+                                        <option value="02">Option 2</option>
+                                        <option value="03">Option 3</option>
+                                        <option value="04">Option 4</option>
+                                        <option value="05">Option 5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="owner">Mas'ul</label>
+                                    <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
+                                        <option value="01">Option 1</option>
+                                        <option value="02">Option 2</option>
+                                        <option value="03">Option 3</option>
+                                        <option value="04">Option 4</option>
+                                        <option value="05">Option 5</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="datetime">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="description">Topshiriq matni</label>
+                                    <textarea name="description" id="description"
+                                        class="form-control form-control-sm"></textarea>
+                                </div>
+                                <div class="mt-2 ml-1">
+                                    <button class="btn btn-primary btn-default btn-squared"
+                                        style="float:right;">Saqlash</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div><!-- ends: .atbd-drawer -->
+        <!-- ends: .atbd-drawer -->
+    </div>
+
+
+
+</div>
+
+{% endblock %}

@@ -36,7 +36,10 @@ def groupslist_view(request):
     return render(request,'education/guruhlar.html')  
 
 def roomslist_view(request):
-    return render(request,'education/roomslist.html')    
+    return render(request,'education/roomslist.html')
+
+def task_view(request):
+    return render(request,'education/task.html')    
 
 def employees_view(request):
     return render(request,'education/employees.html') 
@@ -67,4 +70,10 @@ def message_settings_view(request):
 
 def lid_first_view(request):
     return render(request,'education/lid_first.html') 
+
+def lid_sk_view(request):
+    return render(request,'education/lid_sk.html') 
+
+def lid_ry_view(request):
+    return render(request,'education/lid_ry.html') 
 
