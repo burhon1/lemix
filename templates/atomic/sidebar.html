@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                <a href="changelog.html" class="">
+                <a href="{% url 'education:task' %}" class="">
                     <span data-feather="clipboard" class="nav-icon"></span>
                     <span class="menu-text">Topshiriqlar</span>
                 </a>
@@ -45,13 +45,13 @@
                         <a class="" href="{% url 'education:teachers' %}">O’qituvchilar</a>
                     </li>
                     <li>
-                        <a class="" href="performance.html">Ota-onalar</a>
+                        <a class="" href="{% url 'education:parents-list' %}">Ota-onalar</a>
                     </li>
                     <li>
-                        <a class="" href="performance.html">Imtihonlar</a>
+                        <a class="" href="{% url 'education:teachers' %}">Imtihonlar</a>
                     </li>
                     <li>
-                        <a class="" href="ecommerce.html">Kutubxona</a>
+                        <a class="" href="{% url 'education:teachers' %}">Kutubxona</a>
                     </li>
                 </ul>
             </li>  
@@ -63,22 +63,22 @@
                 </a>
                 <ul>
                     <li>
-                        <a class="" href="index.html">Barcha to'lovlar</a>
+                        <a class="" href="{% url 'education:finance-list' %}">Barcha to'lovlar</a>
                     </li>
                     <li>
-                        <a class="" href="business.html">Kurs to'lovlari</a>
+                        <a class="" href="{% url 'education:debt_course' '1' %}">Kurs to'lovlari</a>
                     </li>
                     <li>
-                        <a class="" href="business.html">Guruh to'lovlari</a>
+                        <a class="" href="{% url 'education:debt_groups' '1' %}">Guruh to'lovlari</a>
                     </li>
                     <li>
-                        <a class="" href="business.html">Qarzdorlik</a>
+                        <a class="" href="{% url 'education:debt-list' %}">Qarzdorlik</a>
                     </li>
                     <li>
-                        <a class="" href="business.html">Xarajatlar</a>
+                        <a class="" href="{% url 'education:expenses-list' %}">Xarajatlar</a>
                     </li>
                     <li>
-                        <a class="" href="performance.html">Maoshlar</a>
+                        <a class="" href="{% url 'education:teachers' %}">Maoshlar</a>
                     </li>
                 </ul>
             </li> 
