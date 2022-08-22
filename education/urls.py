@@ -10,6 +10,9 @@ urlpatterns = [
     
     path('test/',test2_view,name='test'),
     path('task/',task_view,name='task'),
+    path('onlin/',onlin_view,name='onlin'),    
+    path('onlins/<int:id>/',onlins_view,name='onlins'),
+    path('lid/',lid_view,name='lid'),
     path('teachers/',teachers_view,name='teachers'),
     path('courses/list/',courses_list_view,name='courses-list'),
     path('course/<int:id>/detail/',course_detail_view,name='course_detail'),

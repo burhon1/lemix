@@ -1,0 +1,74 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid p-0 ">
+    <h1 class="mt-2">Onlayn darslar</h1>
+    <div class="row mt-2 ">
+        <div class="col-12 col-lg-12 col-xl-12 col-xxl-12">
+            <div class="card-body p-0">
+                <div class="table4  p-25 bg-white mb-30">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr class="userDatatable-header">
+                                    <th>
+                                        <span class="userDatatable-title">#</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Guruh</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Kurs</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Mas'ul shaxs</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Darslar soni</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <div class="userDatatable-content">
+                                            1
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="userDatatable-content">
+                                            <a style="color:black;" href="{% url 'education:group-detail' '1' %}">Guruh-1</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="userDatatable-content">
+                                            <a style="color:black;" href="{% url 'education:course_detail' '1' %}">Matematika</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="userDatatable-content">
+                                            <a style="color:black;" href="{% url 'education:employe_detail' '1' %}">Burhon Baqoyev</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="userDatatable-content d-flex ">
+                                            <a style="color:black;" href="{% url 'education:onlins' '1' %}" >100ta | 
+                                            <span data-feather="youtube"></span><a class="mr-3">40</a>
+                                            <span data-feather="check"></span><a class="mr-3">30</a>
+                                            <span data-feather="edit-3"></span><a class="mr-3">30</a></a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
