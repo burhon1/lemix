@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import os, sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,10 +11,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k%qh!4%iiwyfn)xtmc5qpckb_#zq1k=@tw!%pg(1832#)-p(7z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
+
+# Append module dir
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
+
 
 ALLOWED_HOSTS = ['*']
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
+
 
 # Application definition
 
@@ -27,7 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'user',
-    'education'
+    'education',
+    'admintion'
 ]
 
 MIDDLEWARE = [
@@ -38,6 +44,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admintion.middleware.page_access.check_user_page_access',
+    # 'admintion.middleware.logger.write_logger',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -45,7 +53,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,7 +116,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/uploads/'
 MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 
 # Default primary key field type

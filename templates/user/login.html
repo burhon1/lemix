@@ -37,43 +37,47 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="edit-profile__body">
-                                                            <div class="form-group mb-20">
-                                                                <label for="username"
-                                                                    style="display: block;">Telefon</label>
-                                                                <div class="new"
-                                                                    style="display:flex; justify-content: flex-start;">
-                                                                    <label
-                                                                        style="display:inline; margin: 12px;">+998</label>
-                                                                    <input type="text" class="form-control" id="phone"
-                                                                        placeholder="99 704 65 99" name="phone">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group mb-15">
-                                                                <label for="password-field">Parol</label>
-                                                                <div class="position-relative">
-                                                                    <input id="password-field" type="password"
-                                                                        class="form-control" name="password" value="">
-                                                                    <div
-                                                                        class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2">
+                                                            <form action="" method="post">
+                                                                {% csrf_token %}
+                                                                <div class="form-group mb-20">
+                                                                    <label for="username"
+                                                                        style="display: block;">Telefon</label>
+                                                                    <div class="new"
+                                                                        style="display:flex; justify-content: flex-start;">
+                                                                        <label
+                                                                            style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
+                                                                        <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone"
+                                                                            placeholder="99 704 65 99" name="phone_number">
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="signUp-condition signIn-condition">
-                                                                <div class="checkbox-theme-default custom-checkbox ">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-1">
-                                                                    <label for="check-1">
-                                                                        <span class="checkbox-text">Eslab qolish</span>
-                                                                    </label>
+                                                                <div class="form-group mb-15">
+                                                                    <label for="password-field">Parol</label>
+                                                                    <div class="position-relative">
+                                                                        <input id="password-field" type="password"
+                                                                            class="form-control" name="password" value="">
+                                                                        <div
+                                                                            class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2">
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div
-                                                                class="button-group d-flex pt-1 justify-content-md-start justify-content-center">
-                                                                <button
-                                                                    class="btn btn-primary btn-default btn-squared mr-15 text-capitalize lh-normal px-50 py-15 signIn-createBtn ">
-                                                                    Kirish
-                                                                </button>
-                                                            </div>
+                                                                <div class="signUp-condition signIn-condition">
+                                                                    <div class="checkbox-theme-default custom-checkbox ">
+                                                                        <input class="checkbox" type="checkbox"
+                                                                            id="check-1">
+                                                                        <label for="check-1">
+                                                                            <span class="checkbox-text">Eslab qolish</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="button-group d-flex pt-1 justify-content-md-start justify-content-center">
+                                                                    <button
+                                                                        class="btn btn-primary btn-default btn-squared mr-15 text-capitalize lh-normal px-50 py-15 signIn-createBtn ">
+                                                                        Kirish
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+    
                                                         </div>
                                                     </div><!-- End: .card-body -->
                                                 </div><!-- End: .card -->

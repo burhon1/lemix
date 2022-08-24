@@ -9,6 +9,9 @@ urlpatterns = [
     path('', RedirectView.as_view(url='user/login/', permanent=False)),
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
+    path('admintion/', include('admintion.urls')),
     path('education/', include('education.urls')),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
