@@ -1,0 +1,46 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-xl-12 col-xxl-12 p-1">
+            <div class="card d-flex p-2 pl-3 ml-0 ">
+                <div class="card-body p-1 w-100 ">
+                    <h1 style="display:inline;">Guruh-1</h1>
+                    <div style="display:flex;float: right;">
+                        <button class="ml-1 mr-1 btn btn-light btn-default btn-rounded" style="border-radius: 5px;margin-right: 0;">...</button>
+                        <button class="ml-1 mr-1 btn btn-light btn-default btn-rounded" style="border-radius: 5px;margin-right: 0;">Done</button>
+                        <button class="ml-1 mr-1 btn btn-primary btn-default btn-rounded" style="border-radius: 5px;margin-right: 0;">
+                            <a>Publish</a></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-0 ">
+                <div class="card-body p-3">
+                    <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#modal-basic">O'chirish</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-body">
+                <h4>Siz haqiqattan shablonni o'chirmoqchimisiz?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

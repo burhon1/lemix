@@ -6,7 +6,16 @@ def test2_view(request):
     return render(request,'education/test.html')     
 
 def teachers_view(request):
-    return render(request,'education/teachers.html')  
+    return render(request,'education/teachers.html')
+
+def lid_view(request):
+    return render(request,'education/lid.html')  
+
+def onlin_view(request):
+    return render(request,'education/onlin.html')  
+
+def onlins_view(request,id):
+    return render(request,'education/onlins.html') 
 
 def courses_list_view(request):
     return render(request,'education/courses_list.html')    
