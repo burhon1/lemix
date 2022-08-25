@@ -27,9 +27,6 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(phone, password, **extra_fields)
 
-def change_item(val):
-    return val
-
 class UserQueryset(QuerySet):
     def get_info(self):
         return self.annotate(
