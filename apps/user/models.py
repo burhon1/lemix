@@ -15,7 +15,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100,null=True,blank=True)
     middle_name = models.CharField(max_length=100,null=True,blank=True)
     picture = models.ImageField(upload_to='user/',null=True,blank=True,default='https://www.computerhope.com/issues/pictures/win10-user-account-default-picture.jpg')
-    birtday = models.DateField(null=True,blank=True)
+    birthday = models.DateField(null=True,blank=True)
     gender = models.PositiveSmallIntegerField(choices=COURSES_SEXES,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

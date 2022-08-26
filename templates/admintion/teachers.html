@@ -1,0 +1,215 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
+            <h4 class="text-capitalize breadcrumb-title">O'qituvchilar </h4>
+            <div class="action-btn">
+                <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
+                    + O'qituvchi qo'shish
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mb-1">
+            <div class="card px-20">
+                <div class="card-body p-1">
+                    <div
+                        class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-teachers-list">
+                        <div class="table-responsive">
+                            <div id="filter-form-container"></div>
+                            <div class="table4  p-0 bg-white mb-30">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-borderless adv-table-teachers-list"
+                                        data-sorting="true" data-filter-container="#filter-form-container"
+                                        data-paging-current="1" data-paging-position="left" data-paging-size="10">
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th>
+                                                    <span class="userDatatable-title">Id</span>
+                                                </th>
+                                                <th>
+                                                    <span class="userDatatable-title">Ism</span>
+                                                </th>
+                                                <th>
+                                                    <span class="userDatatable-title">Telefon</span>
+                                                </th>
+                                                <th>
+                                                    <span class="userDatatable-title">Guruhlar</span>
+                                                </th>
+                                                <th>
+                                                    <span class="userDatatable-title">Holati</span>
+                                                </th>
+                                                <th>
+                                                    <span class="userDatatable-title ml-4 ">Amallar</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        1
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        Burhon Baqoyev
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        +998 99 999 99 99
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        2
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span
+                                                            class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <ul class="orderDatatable_actions m-0 d-flex ml-0 "
+                                                        style="width:25%;">
+                                                        <li>
+                                                            <a href="#" class="view w-33 ">
+                                                                <span data-feather="eye"></span></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit w-33">
+                                                                <span data-feather="edit"></span></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove  w-33">
+                                                                <span data-feather="trash-2"></span></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="drawer-basic-wrap">
+    <div class="atbd-drawer drawer-account d-none">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h6 class="drawer-title">O'qituvchi qo'shish</h6>
+            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+        </div>
+        <!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body">
+            <div class="drawer-content">
+                <div class="drawer-account-form form-basic">
+                    <form action="{% url 'admintion:teachers' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Ism</label>
+                                    <input name="first_name" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Familiya</label>
+                                    <input name="last_name" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Telefon raqami</label>
+                                    <input name="phone" type="number"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                        placeholder="998 99 123 45 67">
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                    <div class="atbd-select ">
+    
+                                        <select name="teacer_type" name="select-1" id="select-1" class="form-control ">
+                                            <option value="0">Asistent</option>
+                                            <option value="1">O'qituvchi</option>
+                                        </select>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Tug'ilgan kuni </label>
+                                    <input name="birthday" type="date"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                        placeholder="12/12/2020">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                <select name="gender" name="url" id="owner"
+                                    class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                    <option value="1">Erkak</option>
+                                    <option value="2">Ayol</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Manzili</label>
+                                    <input name="location" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ends: .atbd-drawer__body -->
+</div>
+<!-- ends: .atbd-drawer -->
+</div>
+
+<div class="overlay-dark"></div>
+<div class="overlay-dark-l2"></div>
+
+
+
+
+
+
+
+{% endblock %}

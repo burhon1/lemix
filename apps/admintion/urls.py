@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import employes,rooms,courses
+from .views import employes,rooms,courses,teachers,groups
 app_name = 'admintion'
 
 urlpatterns = [
@@ -8,4 +8,6 @@ urlpatterns = [
     path('employee/<int:id>/detail/',employes.employee_detail_view,name='employee-detail'),
     path('rooms/',rooms.rooms_view,name='rooms'),
     path('courses/',courses.courses_view,name='courses'),
+    path('teachers/',teachers.teachers_view,name='teachers'),
+    path('groups/',groups.groups_view,name='groups'),
 ]
