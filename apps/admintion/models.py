@@ -1,5 +1,6 @@
+from datetime import timezone
 from django.db import models
-from admintion.querysets import rooms_manager
+from admintion.querysets import rooms_manager,groups_manager
 from admintion.data import chooses
 from user.models import CustomUser
 
@@ -36,7 +37,7 @@ class GroupsDays(models.Model):
 
 class Group(models.Model):
     title = models.CharField(max_length=50)
-    comment = models.TextField()
+    comments = models.TextField(default="")
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name="teacher")
     trainer = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name="trainer")
@@ -44,8 +45,9 @@ class Group(models.Model):
     days = models.ManyToManyField(GroupsDays)
     pay_type = models.PositiveSmallIntegerField(choices=chooses.PAY_FORMS)
     status = models.PositiveSmallIntegerField(choices=chooses.GROUPS_STATUS)
-    start_time = models.TimeField(null=True, blank=True)
-    end_time = models.TimeField(null=True, blank=True)
+    start_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
+    end_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
+    groups = groups_manager.GroupManager()
 
     def __str__(self) -> str:
         return self.title
