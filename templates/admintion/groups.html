@@ -22,7 +22,9 @@
                     <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-group">
                         <div class="table-responsive">
                             <div id="filter-form-container"></div>
-                            <table class="table mb-0 table-borderless adv-table-group"  data-sorting="true" data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="left" data-paging-size="10">
+                            <table class="table mb-0 table-borderless adv-table-group" data-sorting="true"
+                                data-filter-container="#filter-form-container" data-paging-current="1"
+                                data-paging-position="left" data-paging-size="10">
                                 <thead>
                                     <tr class="userDatatable-header">
                                         <th>
@@ -75,8 +77,9 @@
                                         </td>
 
                                         <td>
-                                            <div class="userDatatable-content" >
-                                                <a href="/education/teacher/1/detail/" style="color:black;">Burhon Baqoyev</a>
+                                            <div class="userDatatable-content">
+                                                <a href="/education/teacher/1/detail/" style="color:black;">Burhon
+                                                    Baqoyev</a>
                                             </div>
                                         </td>
                                         <td>
@@ -132,7 +135,8 @@
 
                                         <td>
                                             <div class="userDatatable-content">
-                                                <a href="/education/teacher/1/detail/" style="color:black;">Burhon Baqoyev</a>
+                                                <a href="/education/teacher/1/detail/" style="color:black;">Burhon
+                                                    Baqoyev</a>
                                             </div>
                                         </td>
                                         <td>
@@ -161,64 +165,64 @@
                                             </div>
                                         </td>
 
-                                        <tr>
-                                            <td>
-                                                <div class="userDatatable-content">03</div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable-inline-title">
-                                                        <a href="/education/group/1/detail/" class="text-dark fw-500">
-                                                            <h6>Robotatexnik</h6>
-                                                        </a>
-                                                    </div>
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">03</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable-inline-title">
+                                                    <a href="/education/group/1/detail/" class="text-dark fw-500">
+                                                        <h6>Robotatexnik</h6>
+                                                    </a>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    IT
-                                                </div>
-                                            </td>
-    
-                                            <td>
-                                                <div class="userDatatable-content" >
-                                                    <a href="/education/teacher/1/detail/" style="color:black;">Shaxzod</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    Du/Se/Chor
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    10:10-12:00
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    15
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    450 000
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    ...
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content d-inline-block">
-                                                    <span
-                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                IT
+                                            </div>
+                                        </td>
 
-                                      
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <a href="/education/teacher/1/detail/" style="color:black;">Shaxzod</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                Du/Se/Chor
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                10:10-12:00
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                15
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                450 000
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                ...
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span
+                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -247,17 +251,14 @@
             <div class="atbd-drawer__body">
                 <div class="drawer-content">
                     <div class="drawer-account-form form-basic">
-                        <form action="#">
+                        <form action="{% url 'admintion:groups' %}" method="post">
+                            {% csrf_token %}
                             <div class="form-row">
-
-
-
-
                                 <div class="row ">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
-                                            <input type="text"
+                                            <input name="title" type="text"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
                                                 placeholder="Nomi">
                                         </div>
@@ -265,7 +266,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
-                                            <select name="url" id="owner"
+                                            <select name="course" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
                                                 <option value="">Matematika</option>
                                                 <option value="">Robotatexnika</option>
@@ -276,26 +277,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
-                                            <select name="url" id="owner"
+                                            <select name="status" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">tayyorlanmoqda</option>
-                                                <option value="">ishga tayyor</option>
-                                                <option value="">ishga tushgan</option>
-                                                <option value="">To'xtab turipdi</option>
-                                                <option value="">Tugatdi</option>
-                                                <option value="">Arxivchi</option>
+                                                <option value="1">tayyorlanmoqda</option>
+                                                <option value="2">ishga tayyor</option>
+                                                <option value="3">ishga tushgan</option>
+                                                <option value="4">To'xtab turipdi</option>
+                                                <option value="5">Tugatdi</option>
+                                                <option value="6">Arxivchi</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
-                                            <select name="url" id="owner"
+                                            <select name="teacher" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">Burhon Baqoyev</option>
-                                                <option value="">Aziz Saidmurodov</option>
-                                                <option value="">Shaxzod Erkinov</option>
-
+                                                {% for teacher in teachers %}
+                                                <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -303,89 +303,62 @@
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Yordamchi
                                                 o'qituvchi</label>
-                                            <select name="url" id="owner"
+                                            <select name="trainer" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">Burhon Baqoyev</option>
-                                                <option value="">Aziz Saidmurodov</option>
-                                                <option value="">Shaxzod Erkinov</option>
-
+                                                {% for trainer in trainers %}
+                                                <option value="{{trainer.id}}">{{trainer.user.first_name}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
-
-
-
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona</label>
-                                            <select name="url" id="owner"
+                                            <select name="room" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">1-xona</option>
-                                                <option value="">2-xona</option>
-                                                <option value="">3-xona</option>
-                                                <option value="">4-xona</option>
-                                                <option value="">5-xona</option>
-                                                <option value="">6-xona</option>
-                                                <option value="">7-xona</option>
-                                                <option value="">8-xona</option>
-                                                <option value="">9-xona</option>
-                                                <option value="">10-xona</option>
-                                                <option value="">11-xona</option>
-                                                <option value="">12-xona</option>
+                                                {% for room in rooms %}
+                                                <option value="{{room.id}}">{{room.title}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
-
-
                                     <div class="col-md-6">
                                         <div class="card  card-md-4 mb-30">
-
                                             <div class="card-body p-0">
                                                 <label for="a2" class="il-gray fs-14 fw-500 align-center">Kunlar</label>
                                                 <div class="atbd-select ">
-
-                                                    <select name="select-search" id="select-search"
+                                                    <select name="days" id="select-search"
                                                         class="form-control form-group" multiple="multiple">
-                                                        <option value="01">Du</option>
-                                                        <option value="02">Se</option>
-                                                        <option value="03">Chor</option>
-                                                        <option value="04">Pay</option>
-                                                        <option value="05">Ju</option>
-                                                        <option value="05">Sha</option>
-                                                        <option value="05">Yak</option>
+                                                        <option value="1">Du</option>
+                                                        <option value="2">Se</option>
+                                                        <option value="3">Chor</option>
+                                                        <option value="4">Pay</option>
+                                                        <option value="5">Ju</option>
+                                                        <option value="5">Sha</option>
+                                                        <option value="5">Yak</option>
                                                     </select>
-
                                                 </div>
-
-
                                             </div>
                                         </div>
-
-
-
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">To'lov
                                                 formati</label>
-                                            <select name="url" id="owner"
+                                            <select name="pay_type" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">Darsbay</option>
-                                                <option value="">Oylik</option>
-                                                <option value="">Yillik</option>
-                                                <option value="">Modulli</option>
-
+                                                <option value="1">Darsbay</option>
+                                                <option value="2">Oylik</option>
+                                                <option value="3">Yillik</option>
+                                                <option value="4">Modulli</option>
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars boshlanish
                                                 vaqti</label>
-                                            <input type="time"
+                                            <input type="time" name="start_time"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
                                                 placeholder="soni">
                                         </div>
@@ -394,30 +367,23 @@
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugash
                                                 vaqti</label>
-                                            <input type="time"
+                                            <input type="time" name="end_time"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
                                                 placeholder="soni">
                                         </div>
                                     </div>
-
-
-
                                     <div class="col-md-12">
                                         <label for="exampleFormControlTextarea1"
                                             class="il-gray fs-14 fw-500 align-center">Izoh</label>
                                         <textarea class="form-control form-row" id="exampleFormControlTextarea1"
-                                            rows="2"></textarea>
+                                            name="comments" rows="2"></textarea>
                                     </div>
-
-
                                     <div class="col-md-12">
-                                        <button type="button" class="btn btn-primary btn-sm  "
+                                        <button type="submit" class="btn btn-primary btn-sm  "
                                             style="margin-top:20px ;">Saqlash</button>
-
                                     </div>
-
-
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
