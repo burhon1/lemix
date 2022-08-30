@@ -51,21 +51,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            {% for obj in objs %}
                                             <tr>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        1
+                                                        {{forloop.counter}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        Burhon Baqoyev
+                                                        {{obj.user.first_name}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        +998 99 999 99 99
+                                                        {{obj.user.phone}}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -74,10 +74,17 @@
                                                     </div>
                                                 </td>
                                                 <td>
+                                                    {% if obj.status %}
                                                     <div class="userDatatable-content d-inline-block">
                                                         <span
-                                                            class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                            class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">active</span>
                                                     </div>
+                                                    {% else %}
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span
+                                                            class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                    </div>
+                                                    {% endif %}
                                                 </td>
                                                 <td>
                                                     <ul class="orderDatatable_actions m-0 d-flex ml-0 "
@@ -97,6 +104,8 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            {% endfor %}
+                                            
 
 
                                         </tbody>

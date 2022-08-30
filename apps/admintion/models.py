@@ -31,6 +31,7 @@ class Course(models.Model):
 class Teacher(models.Model):
     teacer_type = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    status = models.BooleanField(default=False,null=True,blank=True)
 
 class GroupsDays(models.Model):
     days = models.PositiveSmallIntegerField(choices=chooses.GROUPS_DAYS)

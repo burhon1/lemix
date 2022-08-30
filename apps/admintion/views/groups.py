@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse
 
-from admintion.models import Room, Teacher
+from admintion.models import Room, Teacher,Course,Group,GroupsDays
 
 def groups_view(request):
     context = {}
@@ -18,8 +18,33 @@ def groups_view(request):
         start_time = post.get('start_time',False)
         end_time = post.get('end_time',False)
         comments = post.get('comments',False)
+        print(course)
+        if title and course and status and teacher and room and trainer and days and pay_type and start_time and end_time and comments:
+            course = Course.objects.filter(id=course).first()
+            teacher = Teacher.objects.filter(id=teacher).first()
+            room = Room.objects.filter(id=room).first()
+            trainer = Teacher.objects.filter(id=trainer).first()
+            days=GroupsDays.objects.filter(id__in=days)
+            group = Group(
+                title=title,
+                comments=comments,
+                course=course,
+                teacher=teacher,
+                trainer=trainer,
+                room=room,
+                pay_type=pay_type,
+                status=status,
+                start_time=start_time,
+                end_time=end_time
+            )
+            group.save()
+            group.days.add(*days)
+            return redirect('admintion:groups')
+        else:
+            context['error'] = 'Malumotlar to\'liq kiritilmadi'  
+            return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
     context['teachers'] = Teacher.objects.filter(teacer_type=True) 
     context['trainers'] = Teacher.objects.filter(teacer_type=False)
     context['rooms'] = Room.objects.all()
-    print(context['teachers'])
+    context['courses'] = Course.objects.all()
     return render(request,'admintion/groups.html',context)
