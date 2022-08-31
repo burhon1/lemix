@@ -21,4 +21,5 @@ def teachers_view(request):
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:teachers')+f"?error={context['error']}")
-    return render(request,'admintion/teachers.html') 
+    context['objs'] = Teacher.objects.all()
+    return render(request,'admintion/teachers.html',context) 

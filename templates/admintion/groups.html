@@ -268,9 +268,9 @@
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
                                             <select name="course" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">Matematika</option>
-                                                <option value="">Robotatexnika</option>
-                                                <option value="">Web dasturlash</option>
+                                                {% for course in courses %}
+                                                <option value="{{course.id}}">{{course.title}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
