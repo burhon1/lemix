@@ -17,7 +17,7 @@ DEBUG = os.environ.get('DEBUG', True)
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['t.lemix.uz']
+ALLOWED_HOSTS = ['t.lemix.uz','localhost:8005']
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
 CSRF_TRUSTED_ORIGINS = ['http://*','https://*']
 
