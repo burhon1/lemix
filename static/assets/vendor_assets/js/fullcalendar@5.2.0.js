@@ -9526,7 +9526,7 @@ var FullCalendar = (function (exports) {
             this.sourceElRect = null; // screen coords relative to viewport
             // options that can be set directly by caller
             this.parentNode = document.body;
-            this.zIndex = 9999;
+            this.zIndex = '9999 !import';
             this.revertDuration = 0;
         }
         ElementMirror.prototype.start = function (sourceEl, pageX, pageY) {

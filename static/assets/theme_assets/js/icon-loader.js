@@ -1,4 +1,4 @@
-$.getJSON("json/icons.json", function (data) {
+$.getJSON("/static/json/icons.json", function (data) {
   const { faIcons } = data;
   const { laIcons } = data;
   const feIcons = data.featherIcons;

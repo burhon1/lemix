@@ -101,7 +101,7 @@
         editable: true,
         eventSources: [familyEvents, productLaunch, teamMeeting, projectUpdate],
         contentHeight: 800,
-        initialView: "timeGridWeek",
+        initialView: "timeGridDay",
         eventDidMount: function (view) {
           $(".fc-list-day").each(function () {});
         },

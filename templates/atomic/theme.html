@@ -9,7 +9,6 @@
     <title>InTech Academy</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     {% include 'atomic/injectcss.html' %}
     {% block style %}
     {% endblock %}
@@ -50,6 +49,21 @@
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
     {% include 'atomic/injectjs.html' %}
 </body>
+<style>
+    #ui-datepicker-div
+    {
+            z-index: 9999 !important;
+    }
+</style>
+<script>
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    datapick = document.querySelector('#datepicker8').placeholder=today;
+</script>
 {% block script %}
 {% endblock %}
 </html>

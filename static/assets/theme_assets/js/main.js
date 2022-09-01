@@ -6,14 +6,14 @@
     $(window).on('load', function () {
       $("#overlayer").hide();
     });
-
+    console.log($("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7"))
     // wait until the DOM is ready
     $("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7").datepicker({
       dateFormat: "d MM yy",
       duration: "medium",
       changeMonth: true,
       changeYear: true,
-      yearRange: "2021:2010",
+      yearRange: "2022:2010",
     });
     $("#datepicker9").datepicker({
       dateFormat: 'yy-mm-dd',
@@ -21,8 +21,9 @@
       showWeek: true
     });
     $("#datepicker8").datepicker({
+      dateFormat: "d/mm/yy",
       minDate: -20,
-      maxDate: "+1M +10D"
+      maxDate: "+2M +10D"
     });
   });
 
@@ -359,7 +360,7 @@
   }
 
   /* Select */
-  $("#countryOption,#cityOption,#skillsOption,#exampleFormControlSelect1,#select-countryOption").select2({
+  $("#countryOption,#cityOption,#skillsOption,#exampleFormControlSelect1,#exampleFormControlSelect2,#select-countryOption").select2({
     minimumResultsForSearch: Infinity,
     placeholder: "Please Select",
     allowClear: true,
