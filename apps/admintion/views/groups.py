@@ -18,7 +18,6 @@ def groups_view(request):
         start_time = post.get('start_time',False)
         end_time = post.get('end_time',False)
         comments = post.get('comments',False)
-        print(course)
         if title and course and status and teacher and room and trainer and days and pay_type and start_time and end_time and comments:
             course = Course.objects.filter(id=course).first()
             teacher = Teacher.objects.filter(id=teacher).first()

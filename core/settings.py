@@ -16,10 +16,10 @@ DEBUG = os.environ.get('DEBUG', True)
 # Append module dir
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
-
-ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ['t.lemix.uz']
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
-
+CSRF_TRUSTED_ORIGINS = ['http://*','https://*']
 
 # Application definition
 
