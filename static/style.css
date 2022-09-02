@@ -23184,9 +23184,13 @@ table.table-rounded tbody tr td:last-child {
 }
 
 #filter-form-container .form-inline {
-  justify-content: end !important;
   flex-direction: row-reverse !important;
+  justify-content: flex-end;
   margin-top: 5px;
+}
+
+#filter-form-container .form-inline > div {
+  margin-right:0 !important;
 }
 
 @media only screen and (max-width: 991px) {
@@ -23201,6 +23205,10 @@ table.table-rounded tbody tr td:last-child {
   font-weight: 400;
   color: #5A5F7D;
   text-transform: capitalize;
+}
+
+#filter-form-container {
+  display: flex;
 }
 
 @media only screen and (max-width: 575px) {
