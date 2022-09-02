@@ -35,7 +35,10 @@
                                 <thead>
                                     <tr class="userDatatable-header">
                                         <th>
-                                            <span class="userDatatable-title">id</span>
+
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Id</span>
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">FIO</span>
@@ -65,13 +68,17 @@
                                 <tbody>
                                     {% for user in users %}
                                     <tr style=" border-radius: 40px; padding: 15px; ">
+                                        <th style="margin:auto;display: flex;justify-content:center;align-content:center;">
+                                            <input type="checkbox" style="margin:auto;display: flex;justify-content:center;align-content:center;">
+                                        </th>
                                         <td>
                                             <div class="userDatatable-content">{{forloop.counter}}</div>
                                         </td>
                                         <td>
                                             <div class="d-flex">
                                                 <div class="userDatatable-inline-title">
-                                                    <a href="{% url 'admintion:employee-detail' user.id %}" class="text-dark fw-500">
+                                                    <a href="{% url 'admintion:employee-detail' user.id %}"
+                                                        class="text-dark fw-500">
                                                         <h6>{{user.full_name}}</h6>
                                                     </a>
                                                 </div>
@@ -162,30 +169,33 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a1" class="il-gray fs-14 fw-500 align-center">Ism</label>
-                                    <input name="first_name" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                        id="a1" placeholder="Nomi">
+                                    <input name="first_name" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a1" class="il-gray fs-14 fw-500 align-center">Familiya</label>
-                                    <input name="last_name" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                        id="a1" placeholder="Nomi">
+                                    <input name="last_name" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a2" class="il-gray fs-14 fw-500 align-center">Telefon</label>
-                                    <input name="phone" type=" number"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="998 *** ** **">
+                                    <div class="w-100 d-flex ">
+                                        <a style="margin:auto;margin-right: 15px;">+998</a>
+                                        <input name="phone" type=" number" style="display:inlinle;"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15 w-60 " id="a2">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugilgan kun</label>
-                                    <input name="birthday" type="date" class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                        id="a2" placeholder="soni">
+                                    <input name="birthday" type="date"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                        placeholder="soni">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -200,8 +210,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a2" class="il-gray fs-14 fw-500 align-center">Manzili</label>
-                                    <input name="location" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                        id="a2" placeholder="">
+                                    <input name="location" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                        placeholder="">
                                 </div>
                             </div>
 
@@ -210,14 +221,15 @@
                                 <div class="checkbox-group d-flex">
                                     {% for group in groups %}
                                     <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                                        <input value="{{group.id}}" name="groups" class="checkbox" type="checkbox" id="check-grp-{{group.id}}">
+                                        <input value="{{group.id}}" name="groups" class="checkbox" type="checkbox"
+                                            id="check-grp-{{group.id}}">
                                         <label for="check-grp-{{group.id}}">
                                             <span class="checkbox-text">{{group.name}}</span>
                                         </label>
                                     </div>
                                     {% endfor %}
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 mt-2 pl-0 ">
                                     <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
                                 </div>
                             </div>
