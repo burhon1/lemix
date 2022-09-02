@@ -251,34 +251,44 @@
             <div class="atbd-drawer__body">
                 <div class="drawer-content">
                     <div class="drawer-account-form form-basic">
-                        <form action="{% url 'admintion:groups' %}" method="post">
+                        <form class="was-validated" action="{% url 'admintion:groups' %}" method="post">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="row ">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
-                                            <input name="title" type="text"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                                placeholder="Nomi">
+                                            <div class="form-group">
+                                                <label for="validationServer01"
+                                                    class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                                <input name="title" type="text"
+                                                    class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                                    id="validationServer01" required>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+
                                         <div class="form-group">
-                                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
-                                            <select name="course" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                {% for course in courses %}
-                                                <option value="{{course.id}}">{{course.title}}</option>
-                                                {% endfor %}
+                                            <label for="validationServer04"
+                                                class="il-gray fs-14 fw-500 align-center">Kurs</label>
+                                            <select
+                                                class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                id="validationServer04" aria-describedby="validationServer04Feedback"
+                                                required>
+                                                <option value="1">Front</option>
+                                                <option value="2">Back</option>
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
-                                            <select name="status" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                            <label for="validationServer04"
+                                                class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                            <select
+                                                class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                id="validationServer04" aria-describedby="validationServer04Feedback"
+                                                required>
                                                 <option value="1">tayyorlanmoqda</option>
                                                 <option value="2">ishga tayyor</option>
                                                 <option value="3">ishga tushgan</option>
@@ -286,17 +296,23 @@
                                                 <option value="5">Tugatdi</option>
                                                 <option value="6">Arxivchi</option>
                                             </select>
+
                                         </div>
+
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
-                                            <select name="teacher" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                            <label for="validationServer04"
+                                                class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
+                                            <select
+                                                class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                id="validationServer04" aria-describedby="validationServer04Feedback"
+                                                required>
                                                 {% for teacher in teachers %}
                                                 <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
                                                 {% endfor %}
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -313,11 +329,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona</label>
-                                            <select name="room" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                {% for room in rooms %}
-                                                <option value="{{room.id}}">{{room.title}}</option>
+                                            <label for="validationServer04"
+                                                class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
+                                            <select
+                                                class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                id="validationServer04" aria-describedby="validationServer04Feedback"
+                                                required>
+                                                {% for teacher in teachers %}
+                                                <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -325,17 +344,20 @@
                                     <div class="col-md-6">
                                         <div class="card  card-md-4 mb-30">
                                             <div class="card-body p-0">
-                                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Kunlar</label>
-                                                <div class="atbd-select ">
-                                                    <select name="days" id="select-search"
-                                                        class="form-control form-group" multiple="multiple">
+                                                <div class="form-group">
+                                                    <label for="validationServer04"
+                                                        class="il-gray fs-14 fw-500 align-center">Kunlar</label>
+                                                    <select
+                                                        class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                        id="validationServer04"
+                                                        aria-describedby="validationServer04Feedback" required>
                                                         <option value="1">Du</option>
                                                         <option value="2">Se</option>
                                                         <option value="3">Chor</option>
                                                         <option value="4">Pay</option>
                                                         <option value="5">Ju</option>
-                                                        <option value="5">Sha</option>
-                                                        <option value="5">Yak</option>
+                                                        <option value="6">Sha</option>
+                                                        <option value="7">Yak</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -343,33 +365,42 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">To'lov
-                                                formati</label>
-                                            <select name="pay_type" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="1">Darsbay</option>
-                                                <option value="2">Oylik</option>
-                                                <option value="3">Yillik</option>
-                                                <option value="4">Modulli</option>
-                                            </select>
+                                            <div class="form-group">
+                                                <label for="validationServer04"
+                                                    class="il-gray fs-14 fw-500 align-center">To'lov formati</label>
+                                                <select
+                                                    class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                    id="validationServer04"
+                                                    aria-describedby="validationServer04Feedback" required>
+                                                    <option value="1">Darsbay</option>
+                                                    <option value="2">Oylik</option>
+                                                    <option value="3">Yillik</option>
+                                                    <option value="4">Modulli</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars boshlanish
-                                                vaqti</label>
-                                            <input type="time" name="start_time"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                                placeholder="soni">
+                                            <div class="form-group">
+                                                <label for="validationServer01"
+                                                    class="il-gray fs-14 fw-500 align-center">Dars boshlanish
+                                                    vaqti</label>
+                                                <input name="first_name" type="text"
+                                                    class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                                    id="validationServer01" required>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugash
+                                            <label for="validationServer01"
+                                                class="il-gray fs-14 fw-500 align-center">Dars tugash
                                                 vaqti</label>
-                                            <input type="time" name="end_time"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                                placeholder="soni">
+                                            <input name="first_name" type="text"
+                                                class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                                id="validationServer01" required>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -388,7 +419,7 @@
                     </div>
                 </div>
             </div>
-            
+
     </div>
     <!-- ends: .atbd-drawer -->
 </div>

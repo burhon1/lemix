@@ -139,22 +139,25 @@
     <div class="atbd-drawer__body">
       <div class="drawer-content">
         <div class="drawer-account-form form-basic">
-          <form action="{% url 'admintion:rooms' %}" method="post" enctype="multipart/form-data">
+          <form class="was-validated" action="{% url 'admintion:rooms' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-row">
               <div class="row">
                 <div class="col-md-12">
+
                   <div class="form-group">
-                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Xona nomi</label>
-                    <input name="title" type="text" class="form-control is-invalid ih-medium ip-light radius-xs b-light"
-                      id="a1" placeholder="Nomi">
+                    <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">Xona nomi</label>
+                    <input name="first_name" type="text"
+                      class="form-control is-invalid ih-medium ip-light radius-xs b-light" id="validationServer01"
+                      required>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Xona sig'imi</label>
-                    <input name="capacity" type="text" class="form-control is-invalid ih-medium ip-light radius-xs b-light"
-                      id="a1" placeholder="30 ta ">
+                    <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">Xona sig'imi</label>
+                    <input name="first_name" type="text"
+                      class="form-control is-invalid ih-medium ip-light radius-xs b-light" id="validationServer01"
+                      required>
                   </div>
                 </div>
                 <div class="col-md-12">

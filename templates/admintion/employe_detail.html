@@ -1,23 +1,73 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+
+    .v-num {
+        font-size: 14px;
+    }
+
+    .application-faqs .panel-title a {
+        font-size: 12px !important;
+    }
+
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:before {
+        margin: 0 !important;
+    }
+
+    .table--default thead tr th:not(:first-child) {
+        text-align: center;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-
             <div class="col-lg-12 p-0 ">
                 <div class="card card-default card-md mb-4 mt-3 p-3">
                     <ul class="atbd-breadcrumb nav">
                         <li class="atbd-breadcrumb__item">
-
                             <a href="#">
                                 Xodimlar
                             </a>
                             <span class="breadcrumb__seperator">
                                 <span class="la la-slash"></span>
                             </span>
-
-
                         </li>
                         <li class="atbd-breadcrumb__item">
                             <a href="#">{{obj.full_name}}</a>
@@ -30,47 +80,65 @@
     </div>
     <div class="row">
         <div class="col-xxl-3 col-lg-3 col-sm-3">
-            
-            <div class="card mb-25">
-                <div class="card-body text-center p-0">
-
-                    <div class="account-profile border-bottom pt-25 px-25 pb-0 flex-column d-flex align-items-center ">
-                        <div class="ap-img mb-20 pro_img_wrapper">
-                            <input id="file-upload" type="file" name="fileUpload" class="d-none">
-                            <label for="file-upload">
-                                <!-- Profile picture image-->
-                                <img class="ap-img__main rounded-circle wh-120" src="{{obj.picture}}"
-                                    alt="profile">
-                                <span class="cross" id="remove_pro_pic">
-                                    <span data-feather="camera"></span>
-                                </span>
-                            </label>
+            <div class="changeLog-history mb-30 p-0 ">
+                <div class="card">
+                    <div class="card-header w-100 ">
+                        <div class="account-profile border-bottom pt-25 px-25 pb-0 flex-column d-flex align-items-center w-100">
+                            <div class="ap-img mb-20 pro_img_wrapper">
+                                <input id="file-upload" type="file" name="fileUpload" class="d-none">
+                                <label for="file-upload">
+                                    <!-- Profile picture image-->
+                                    <img class="ap-img__main rounded-circle wh-120" src="{{obj.picture}}" alt="profile">
+                                    <span class="cross" id="remove_pro_pic">
+                                        <span data-feather="camera"></span>
+                                    </span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body m-0 p-0 ">
-                        <div>
-                            <ul>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4">F.I.O:{{obj.full_name}}</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4">Telefon raqam:{{obj.phone_number}}</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 "
-                                    style="border:1px black solid; width:50% ; margin-left: 15px; border-radius: 5xp;">
-                                    Adminstrator:</li>
-
+                    <div class="card-body">
+                        <div class="menu-wrapper">
+                            <ul class="v-history-list mb-3 pb-3 border-bottom">
+                                <li class="w-100 mb-2"><span class="version-date">F.I.O:</span><span
+                                        class="version-name">Burhon Baqoyev</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">Tel:</span><span
+                                        class="version-name">+998 99 999 99 99</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">Tug'ilgan kuni:</span><span
+                                        class="version-name">01.01.2022</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">Manzil:</span><span
+                                        class="version-name">None</span></li>
                             </ul>
-                        </div>
-                        <div>
-                            <button class="btn btn-default btn-squared btn-outline-warning m-1 ml-3">SMS yuborish
-                            </button>
-                            <button class="btn btn-default btn-squared btn-outline-primary m-1 ml-3">Chatga o'tish
-                            </button>
-                            <button class="btn btn-default btn-squared btn-outline-dark m-1 mb-3 ml-3">Topshiriqlar
-                            </button>
-                        </div>
-                        <!-- ends: .list-box -->
-                    </div>
 
+                            <ul class="atbd-menu menu-top menu-vertical w-100 " style="border: none;">
+                                <li class="atbd-menu__item has-submenu">
+                                    <a class="atbd-menu__link active" href="#">
+                                        <span class="atbd-menu__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-mail">
+                                                <path
+                                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                                </path>
+                                                <polyline points="22,6 12,13 2,6"></polyline>
+                                            </svg></span>
+                                        <span class="atbd-menu__text">SMS yuborish</span>
+                                    </a>
+
+                                </li>
+                                <li class="atbd-menu__item has-submenu">
+                                    <a class="atbd-menu__link active" href="#">
+                                        <span data-feather="check-square"></span>
+                                        <span class="atbd-menu__text">Topshiriqlar</span>
+                                    </a>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <!-- Profile Acoount End -->
         </div>
         <div class="col-xxl-9 col-lg-9 col-sm-9">
@@ -80,7 +148,7 @@
                         <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link active" id="plugins-tab" data-toggle="pill" href="#plugins"
-                                    role="tab" aria-controls="plugins" aria-selected="true">Ma'lumotlar</a>
+                                    role="tab" aria-controls="plugins" aria-selected="true">Davomat</a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes1" role="tab"
@@ -96,36 +164,13 @@
             <div class="cus-8 col-md-12 mt-4 p-0 ">
                 <div class="tab-content" id="knowledgebaseContent">
                     <div class="tab-pane fade show active" id="plugins" role="tabpanel" aria-labelledby="plugins-tab">
-                        <div class="container-fluid  p-0 ">
-                            <div class="card mb-25">
-                                <div class="ps-tab p-20 pb-25">
-                                    <div class="col-12">
-                                        <div class="card card-default card-md mb-4">
-                                            <div class="card-body">
-                                                <div>
-                                                    <ul>
-                                                        <li class="list-box__item">F.I.O:{{obj.full_name}}</li>
-                                                        <li class="list-box__item">Tug'ilgan kun:{{obj.birthday|date:"d.m.Y"}}</li>
-                                                        <li class="list-box__item">Telefon raqam:{{obj.phone_number}}</li>
-                                                        <li class="list-box__item">Manzil:{{obj.location}}</li>
-
-                                                    </ul>
-                                                </div>
-                                                <!-- ends: .list-box -->
-                                            </div>
-                                        </div>
-                                        <!-- ends: .card -->
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="tab-pane fade" id="themes1" role="tabpanel" aria-labelledby="themes-tab">
                         <div class="container-fluid p-0 ">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="contact-list-wrap mb-25">
+                                    <div class="card p-3 mb-25">
                                         <div class="contact-list bg-white radius-xl w-100">
                                             <div class="table-responsive">
 
@@ -198,65 +243,61 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="extensions1" role="tabpanel" aria-labelledby="extensions1-tab">
-                        <div class="col-12 mt-30 p-0 ">
-
-                            <div class="card mb-25">
-                                <div class="card-body pt-0 pb-0">
-                                    <div class="drag-drop-wrap">
-                                        <div class="drag-drop table-responsive-lg bg-white w-100 mb-30">
-                                            <table class="table mb-0 table-basic">
-                                                <tbody>
-
-                                                    <tr class="draggable">
-                                                        <td>
-                                                            <div>
-                                                                <div class="atbd-badge-list d-flex align-items-center">
-                                                                    <span
-                                                                        class="badge badge-round badge-light badge-lg badge-outlined">
-                                                                        Burhon Baqoyev
-                                                                    </span>
-                                                                </div>
-                                                                <h6 class="mt-2"> user authed</h6>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            94 123 56 78
-                                                        </td>
-                                                        <td>
-                                                            12.12.2020
-                                                        </td>
-                                                    </tr>
-
-
-                                                    <tr class="draggable">
-                                                        <td>
-                                                            <div>
-                                                                <div class="atbd-badge-list d-flex align-items-center">
-                                                                    <span
-                                                                        class="badge badge-round badge-light badge-lg badge-outlined">
-                                                                        Burhon Baqoyev
-                                                                    </span>
-                                                                </div>
-                                                                <h6 class="mt-2"> user authed</h6>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            94 123 56 78
-                                                        </td>
-                                                        <td>
-                                                            12.12.2020
-                                                        </td>
-                                                    </tr>
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                        <div class="card p-3">
+                            <div class="table4  bg-white mb-30 p-10">
+                                <div class="table-responsive">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th>
+                                                    <span
+                                                        class="userDatatable-title">Nomi</span>
+                                                </th>
+                                                <th>
+                                                    <span
+                                                        class="userDatatable-title">Login</span>
+                                                </th>
+                                                <th>
+                                                    <span
+                                                        class="userDatatable-title">Telefon</span>
+                                                </th>
+                                                <th>
+                                                    <span
+                                                        class="userDatatable-title">Vaqti</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+    
+                                            <tr>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        Chegirma berildi
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        Burhon Baqoyev(CEO)
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        (99) 123-12-12
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        31.07.2022
+                                                    </div>
+                                                </td>
+                                            </tr>
+    
+    
+    
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <!-- ends: card -->
-
                         </div>
                     </div>
                 </div>
@@ -265,4 +306,6 @@
     </div>
 </div>
 </div>
+
+
 {% endblock %}
