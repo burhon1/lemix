@@ -1070,7 +1070,7 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		
 
 				//groups
-				var $group_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position'})
+				var $group_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position mr-sm-0'})
 				.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
 				.prependTo(self.$form);
 		
