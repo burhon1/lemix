@@ -7,10 +7,10 @@
         <div class="col-12 mb-1">
             <div class="card px-20 ">
                 <div class="card-body p-1">
-                    <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-group">
+                    <div class="userDatatable adv-table global-shadow border-0 bg-white w-100 adv-table-task">
                         <div class="table-responsive">
                             <div id="filter-form-container"></div>
-                            <table class="table mb-0 table-borderless adv-table-group" data-sorting="true"
+                            <table class="table mb-0 table-borderless adv-table-task" data-sorting="true"
                                 data-filter-container="#filter-form-container" data-paging-current="1"
                                 data-paging-position="left" data-paging-size="10">
                                 <thead>
@@ -18,13 +18,13 @@
                                         <th>
                                             <span class="userDatatable-title">#</span>
                                         </th>
-                                        <th>
+                                        <th data-type="html" data-name='name_type'>
                                             <span class="userDatatable-title">Nomi</span>
                                         </th>
                                         <th data-type="html" data-name='position'>
                                             <span class="userDatatable-title">Tavsif</span>
                                         </th>
-                                        <th>
+                                        <th data-type="html" data-name='status'>
                                             <span class="userDatatable-title">Holati</span>
                                         </th>
                                         <th>
@@ -33,10 +33,10 @@
                                         <th>
                                             <span class="userDatatable-title ">Muddati</span>
                                         </th>
-                                        <th>
+                                        <th data-type="html" data-name='for_who'>
                                             <span class="userDatatable-title ">Kim uchun</span>
                                         </th>
-                                        <th>
+                                        <th data-type="html" data-name='executor'>
                                             <span class="userDatatable-title ">Javobgar(bajaruvchi)</span>
                                         </th>
                                     </tr>
@@ -47,12 +47,8 @@
                                             <div class="userDatatable-content">01</div>
                                         </td>
                                         <td>
-                                            <div class="d-flex">
-                                                <div class="userDatatable-inline-title">
-                                                    <a class="text-dark fw-500">
-                                                        <h6>Telefon qilish</h6>
-                                                    </a>
-                                                </div>
+                                            <div class="userDatatable-content">
+                                                Telefon qilish
                                             </div>
                                         </td>
                                         <td>
@@ -101,4 +97,183 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+    // .adv-table-task
+    $(function() {
+    $('.adv-table-task').footable({
+      filtering: {
+        enabled: true
+      },
+      "paging": {
+              "enabled": true,
+			  "current": 1
+	  },
+      strings: {
+        enabled: false
+      },
+      "filtering": {
+              "enabled": true
+          },
+      components: {
+          filtering: FooTable.MyFiltering
+      },
+    }); 
+  });
+  
+FooTable.MyFiltering = FooTable.Filtering.extend({
+	construct: function(instance){
+		this._super(instance);
+		// props for the first dropdown
+		this.types = ['Telefon qilish','Sms jo\'natish','Probniy dars'];
+		this.typeDefault = 'All';
+		this.$type = null;
+		// props for the second dropdown
+        this.jobTitles = ['Active','deactivate','Blocked'];
+		this.jobTitleDefault = 'All';
+		this.$jobTitle = null;
+        // props for third dropdown
+		this.for_whoes = ['Hoshimov Daler'];
+		this.for_whoDefault = 'All';
+		this.$for_who = null;
+        // props for forth dropdown
+		this.executors = ['Burhon Baqoyev'];
+		this.executorDefault = 'All';
+		this.$executor = null;
+        
+        
+	},
+	$create: function(){
+		this._super();
+		var self = this;
+        // create the type form group and dropdown
+		var $type_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position my-md-25 my-15 mr-sm-20 mr-0 '})
+			.prependTo(self.$form);
+
+		self.$type = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onTypeDropdownChanged)
+			.append($('<option/>', {text: self.typeDefault}))
+			.appendTo($type_form_grp);
+
+		$.each(self.types, function(i, type){
+			self.$type.append($('<option/>').text(type));
+		});
+
+		// create the status form group and dropdown
+		var $jobTitle_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
+			.prependTo(self.$form);
+
+		self.$jobTitle = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onJobTitleDropdownChanged)
+			.append($('<option/>', {text: self.jobTitleDefault}))
+			.appendTo($jobTitle_form_grp);
+
+		$.each(self.jobTitles, function(i, jobTitle){
+			self.$jobTitle.append($('<option/>').text(jobTitle));
+		});
+
+        // create the for who form group and dropdown
+		var $for_who_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
+			.prependTo(self.$form);
+
+		self.$for_who = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onForWhoDropdownChanged)
+			.append($('<option/>', {text: self.for_whoDefault}))
+			.appendTo($for_who_form_grp);
+
+		$.each(self.for_whoes, function(i, for_who){
+			self.$for_who.append($('<option/>').text(for_who));
+		});
+
+        // create the for executor group and dropdown
+		var $executor_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0'})
+			.prependTo(self.$form);
+
+		self.$executor = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+			.on('change', {self: self}, self._onExecutorDropdownChanged)
+			.append($('<option/>', {text: self.executorDefault}))
+			.appendTo($executor_form_grp);
+
+		$.each(self.executors, function(i, executor){
+			self.$executor.append($('<option/>').text(executor));
+		});
+	},
+    _onTypeDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.typeDefault){
+			self.addFilter('name_type', selected, ['name_type']);
+		} else {
+			self.removeFilter('name_type');
+		}
+		self.filter();
+	},
+	_onJobTitleDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.jobTitleDefault){
+			self.addFilter('status', selected, ['status']);
+		} else {
+			self.removeFilter('status');
+		}
+		self.filter();
+	},
+    _onForWhoDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.for_whoDefault){
+			self.addFilter('for_who', selected, ['for_who']);
+		} else {
+			self.removeFilter('for_who');
+		}
+		self.filter();
+	},
+    _onExecutorDropdownChanged: function(e){
+		var self = e.data.self,
+			selected = $(this).val();
+		if (selected !== self.executorDefault){
+			self.addFilter('executor', selected, ['executor']);
+		} else {
+			self.removeFilter('executor');
+		}
+		self.filter();
+	},
+	draw: function(){
+		this._super();
+        // handle the type filter if one is supplied
+		var type = this.find('name_type');
+		if (type instanceof FooTable.Filter){
+			this.$type.val(type.query.val());
+		} else {
+			this.$type.val(this.typeDefault);
+		}
+
+		// handle the status filter if one is supplied
+		var jobTitle = this.find('status');
+		if (jobTitle instanceof FooTable.Filter){
+			this.$jobTitle.val(jobTitle.query.val());
+		} else {
+			this.$jobTitle.val(this.jobTitleDefault);
+		}
+
+        // handle the for who filter if one is supplied
+		var for_who = this.find('for_who');
+		if (for_who instanceof FooTable.Filter){
+			this.$for_who.val(for_who.query.val());
+		} else {
+			this.$for_who.val(this.for_whoDefault);
+		}
+
+         // handle the executor filter if one is supplied
+		var executor = this.find('executor');
+		if (executor instanceof FooTable.Filter){
+			this.$executor.val(executor.query.val());
+		} else {
+			this.$executor.val(this.executorDefault);
+		}
+	}
+});
+</script>
 {% endblock %}

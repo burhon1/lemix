@@ -23184,7 +23184,8 @@ table.table-rounded tbody tr td:last-child {
 }
 
 #filter-form-container .form-inline {
-  justify-content: center;
+  justify-content: end !important;
+  flex-direction: row-reverse !important;
   margin-top: 5px;
 }
 
