@@ -31,6 +31,9 @@
                                         <thead>
                                             <tr class="userDatatable-header">
                                                 <th>
+                                                    <span class="userDatatable-title"></span>
+                                                </th>
+                                                <th>
                                                     <span class="userDatatable-title">Id</span>
                                                 </th>
                                                 <th>
@@ -53,6 +56,11 @@
                                         <tbody>
                                             {% for obj in objs %}
                                             <tr>
+                                                <td
+                                                    style="margin:auto;display: flex;justify-content:center;align-content:center;height: 100%;">
+                                                    <input type="checkbox"
+                                                        style="margin:auto;display:flex;justify-content:center;align-content:center;">
+                                                </td>
                                                 <td>
                                                     <div class="userDatatable-content">
                                                         {{forloop.counter}}
@@ -87,27 +95,21 @@
                                                     {% endif %}
                                                 </td>
                                                 <td>
-                                                    <ul class="orderDatatable_actions m-0 d-flex ml-0 "
+                                                    <ul class="orderDatatable_actions m-0 d-flex ml-0 justify-content-center "
                                                         style="width:25%;">
-                                                        <li>
-                                                            <a href="#" class="view w-33 ">
-                                                                <span data-feather="eye"></span></a>
-                                                        </li>
                                                         <li>
                                                             <a href="#" class="edit w-33">
                                                                 <span data-feather="edit"></span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" class="remove  w-33">
-                                                                <span data-feather="trash-2"></span></a>
+                                                            <a href="#" class="edit">
+                                                                <span data-feather="trash-2" data-toggle="modal"
+                                                                    data-target="#modal-basic"></span></a>
                                                         </li>
                                                     </ul>
                                                 </td>
                                             </tr>
                                             {% endfor %}
-                                            
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -122,6 +124,25 @@
 </div>
 
 
+
+<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-body">
+                <h4>Siz haqiqattan ushbu o'qituvchini o'chirmoqchimisiz?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
@@ -132,69 +153,83 @@
         <div class="atbd-drawer__body">
             <div class="drawer-content">
                 <div class="drawer-account-form form-basic">
-                    <form action="{% url 'admintion:teachers' %}" method="post">
+                    <form class="was-validated" action="{% url 'admintion:teachers' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Ism</label>
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Ism</label>
                                     <input name="first_name" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                        placeholder="">
+                                        class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                        id="validationServer01" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Familiya</label>
-                                    <input name="last_name" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                        placeholder="">
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Familiya</label>
+                                    <input name="first_name" type="text"
+                                        class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                        id="validationServer01" required>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Telefon raqami</label>
-                                    <input name="phone" type="number"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="998 99 123 45 67">
-                                </div>
-                            </div>
-    
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Turi</label>
-                                    <div class="atbd-select ">
-    
-                                        <select name="teacer_type" name="select-1" id="select-1" class="form-control ">
-                                            <option value="0">Asistent</option>
-                                            <option value="1">O'qituvchi</option>
-                                        </select>
-    
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Telefon</label>
+                                    <div class="w-100 d-flex ">
+                                        <a for="validationServer01" style="margin:auto;margin-right: 15px;">+998</a>
+                                        <input name="last_name" type="text" style="display:inlinle;"
+                                            class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                            id="validationServer01" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Tug'ilgan kuni </label>
-                                    <input name="birthday" type="date"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="12/12/2020">
+                                    <label for="validationServer04"
+                                        class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                    <select
+                                        class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                        id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                        <option selected disabled value="">Tanlang</option>
+                                        <option value="1">O'qituvchi</option>
+                                        <option value="0">Yordamchi(support)</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
-                                <select name="gender" name="url" id="owner"
-                                    class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                <div class="form-group">
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Tug'ilgan kuni </label>
+                                    <div class="w-100 d-flex ">
+                                        
+                                        <input name="last_name" type="text" style="display:inlinle;"
+                                            class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                            id="validationServer01" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationServer04" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                <select
+                                    class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                    id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                    <option selected disabled value="">Tanlang</option>
                                     <option value="1">Erkak</option>
                                     <option value="2">Ayol</option>
                                 </select>
+
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Manzili</label>
-                                    <input name="location" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="">
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Manzil</label>
+                                    <input name="first_name" type="text"
+                                        class="form-control is-invalid ih-medium ip-light radius-xs b-light"
+                                        id="validationServer01" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
