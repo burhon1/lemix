@@ -25,6 +25,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_seen = models.DateTimeField(blank=True, null=True)
     location = models.CharField(max_length=100,null=True,blank=True)
 
+    def full_name(self):
+        return self.first_name+" "+self.last_name
+
     class Meta:
         ordering = ("created_at",)
 
