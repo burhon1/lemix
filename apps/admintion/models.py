@@ -49,6 +49,7 @@ class Group(models.Model):
     start_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     end_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     groups = groups_manager.GroupManager()
+    objects = models.Manager()
 
     def __str__(self) -> str:
         return self.title
@@ -57,7 +58,7 @@ class Student(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     status = models.BooleanField(default=False,null=True,blank=True)
     source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
-    group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name="student"),
+    group = models.ForeignKey(Group,on_delete=models.CASCADE),
     comment = models.TextField()
     # student = 
     

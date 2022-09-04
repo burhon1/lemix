@@ -6,8 +6,6 @@ from django.db.models.query import QuerySet
 class GroupQueryset(QuerySet):
     def groups(self):
         return self.annotate(
-            student=Count('student')
-            ).annotate(
             course=F("course__title"),
             teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
             )

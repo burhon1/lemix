@@ -46,6 +46,13 @@ def groups_view(request):
     context['trainers'] = Teacher.objects.filter(teacer_type=False)
     context['rooms'] = Room.objects.all()
     context['courses'] = Course.objects.all()
-    context['groups'] = Group.groups.groups()
-    print(context['groups'])
+    # context['groups'] = Group.groups.groups()
+    # print(context['groups'])
+    from django.db.models import Value, Case, When,F,Manager,Count
+    def get_data(obj):
+        print(obj)
+        return '2'
+    print(Group.objects.annotate(
+    student=Value(get_data(F('id')))
+))
     return render(request,'admintion/groups.html',context)
