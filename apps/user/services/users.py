@@ -7,7 +7,6 @@ def user_add(groups,post):
     birthday = post.get('birthday',False)
     gender = post.get('gender',False)
     location = post.get('location',False)
-    print(location)
     if first_name and last_name and phone and birthday and gender and groups:
         custom_user = CustomUser.objects.create(
             first_name=first_name,

@@ -169,7 +169,7 @@
                                 <div class="form-group">
                                     <label for="validationServer01"
                                         class="il-gray fs-14 fw-500 align-center">Familiya</label>
-                                    <input name="first_name" type="text"
+                                    <input name="last_name" type="text"
                                         class="form-control is-invalid ih-medium ip-light radius-xs b-light"
                                         id="validationServer01" required>
                                 </div>
@@ -181,7 +181,7 @@
                                         class="il-gray fs-14 fw-500 align-center">Telefon</label>
                                     <div class="w-100 d-flex ">
                                         <a for="validationServer01" style="margin:auto;margin-right: 15px;">+998</a>
-                                        <input name="last_name" type="text" style="display:inlinle;"
+                                        <input name="phone" type="text" style="display:inlinle;"
                                             class="form-control is-invalid ih-medium ip-light radius-xs b-light"
                                             id="validationServer01" required>
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="form-group">
                                     <label for="validationServer04"
                                         class="il-gray fs-14 fw-500 align-center">Turi</label>
-                                    <select
+                                    <select name="teacer_type"
                                         class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
                                         id="validationServer04" aria-describedby="validationServer04Feedback" required>
                                         <option selected disabled value="">Tanlang</option>
@@ -201,20 +201,19 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="validationServer01"
-                                        class="il-gray fs-14 fw-500 align-center">Tug'ilgan kuni </label>
-                                    <div class="w-100 d-flex ">
-                                        
-                                        <input name="last_name" type="text" style="display:inlinle;"
-                                            class="form-control is-invalid ih-medium ip-light radius-xs b-light"
-                                            id="validationServer01" required>
+                                <div class="form-group form-group-calender mb-20">
+                                    <label for="datepicker" class="il-gray fs-14 fw-500 align-center">Tug'ilgan sanasi</label>
+                                    <div class="position-relative">
+                                        <input name="birthday" type="text"
+                                            class="form-control  ih-medium ip-gray radius-xs b-light" id="datepicker"
+                                            placeholder="2021-10-01">
+                                        <a href="#"><span data-feather="calendar"></span></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="validationServer04" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
-                                <select
+                                <select name="gender"
                                     class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
                                     id="validationServer04" aria-describedby="validationServer04Feedback" required>
                                     <option selected disabled value="">Tanlang</option>
@@ -227,7 +226,7 @@
                                 <div class="form-group">
                                     <label for="validationServer01"
                                         class="il-gray fs-14 fw-500 align-center">Manzil</label>
-                                    <input name="first_name" type="text"
+                                    <input name="location" type="text"
                                         class="form-control is-invalid ih-medium ip-light radius-xs b-light"
                                         id="validationServer01" required>
                                 </div>
