@@ -9,11 +9,11 @@
     console.log($("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7"))
     // wait until the DOM is ready
     $("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7").datepicker({
-      dateFormat: "d MM yy",
+      dateFormat: "yy-mm-dd",
       duration: "medium",
       changeMonth: true,
       changeYear: true,
-      yearRange: "2022:2010",
+      yearRange: "1989:2022",
     });
     $("#datepicker9").datepicker({
       dateFormat: 'yy-mm-dd',
@@ -21,7 +21,7 @@
       showWeek: true
     });
     $("#datepicker8").datepicker({
-      dateFormat: "d/mm/yy",
+      dateFormat: "yy-mm-dd",
       minDate: -20,
       maxDate: "+2M +10D"
     });

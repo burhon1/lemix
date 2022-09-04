@@ -23,3 +23,10 @@ PAY_FORMS = (
     (3, "Yillik"),
     (4, "Modulli")
 )
+
+STUDENT_SOURCES = (
+    (1, "Telegram"),
+    (2, "Banner"),
+    (3, "Seminar"),
+    (4, "Tik-tok"),
+)
