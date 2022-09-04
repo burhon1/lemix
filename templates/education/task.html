@@ -4,6 +4,12 @@
 
 <div class="container-fluid p-2">
     <div class="row">
+		<div class="col-12 mt-2" style="display:flex;justify-content: space-between;">
+			<h3 style="display:inline;">Topshiriqlar</h3>
+			<button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
+				+ Qo'shish
+			</button>
+		</div>
         <div class="col-12 mb-1">
             <div class="card px-20 mb-3 ">
                 <div class="card-body p-1">
@@ -97,7 +103,107 @@
     </div>
 </div>
 
+<div class="drawer-basic-wrap">
+    <div class="atbd-drawer drawer-account d-none" style="overflow-y: scroll !important;">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h3 class="drawer-title">Yangi topshiriq qo'shish</h3>
+            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+        </div>
+        <dir>
+            <!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Kim uchun</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">Burhon Baqoyev</option>
+                                                <option value="">Aziz Saidmurodov</option>
+                                                <option value="">Shaxzod Erkinov</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+									<div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Mavzu</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">M1</option>
+                                                <option value="">M2</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">
+                                                Vaqti</label>
+                                            <input type="time"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                                placeholder="soni">
+                                        </div>
+                                    </div>
+
+									<div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Mas'ul</label>
+                                            <select name="url" id="owner"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                <option value="">Burhon Baqoyev</option>
+                                                <option value="">Aziz Saidmurodov</option>
+                                                <option value="">Shaxzod Erkinov</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <label for="exampleFormControlTextarea1"
+                                            class="il-gray fs-14 fw-500 align-center">Matni</label>
+                                        <textarea class="form-control form-row" id="exampleFormControlTextarea1"
+                                            rows="2"></textarea>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary btn-sm  "
+                                            style="margin-top:20px ;">Saqlash</button>
+
+                                    </div>
+
+
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ends: .atbd-drawer__body -->
+    </div>
+    <!-- ends: .atbd-drawer -->
+</div>
+<div class="overlay-dark"></div>
+<div class="overlay-dark-l2"></div>
+
+
+
 {% endblock %}
+
+
+
+
+
+
+
+
 
 {% block script %}
 <script>
