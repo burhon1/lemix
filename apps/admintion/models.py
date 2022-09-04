@@ -57,7 +57,7 @@ class Student(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     status = models.BooleanField(default=False,null=True,blank=True)
     source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
-    group = models.ForeignKey(Group,on_delete=models.CASCADE,null=True, blank=True,related_name="student_group"),
+    group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name="student"),
     comment = models.TextField()
     # student = 
     
