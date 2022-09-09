@@ -9,6 +9,12 @@ def teachers_view(request):
     return render(request,'education/teachers.html')
 
 def lid_view(request):
+    return render(request,'education/lid.html')
+
+def lid_royhati_view(request):
+    return render(request,'education/lidlar_royxati.html')
+
+def lid_arxiv_view(request):
     return render(request,'education/lid.html')  
 
 def onlin_view(request):
