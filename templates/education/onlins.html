@@ -4,43 +4,149 @@
 
 <div class="container-fluid p-0">
     <div class="row">
-        <div class="col-12 col-lg-12 col-xl-12 col-xxl-12 p-1">
-            <div class="card d-flex p-2 pl-3 ml-0 ">
-                <div class="card-body p-1 w-100 ">
+        <div class="col-12 col-lg-12 col-xl-12 col-xxl-12 p-3">
+            <div class="card mb-3 d-flex p-2 pl-3 ml-0 ">
+                <div class="card-body p-2 w-100 ">
                     <h1 style="display:inline;">Guruh-1</h1>
                     <div style="display:flex;float: right;">
-                        <button class="ml-1 mr-1 btn btn-light btn-default btn-rounded" style="border-radius: 5px;margin-right: 0;">...</button>
-                        <button class="ml-1 mr-1 btn btn-light btn-default btn-rounded" style="border-radius: 5px;margin-right: 0;">Done</button>
-                        <button class="ml-1 mr-1 btn btn-primary btn-default btn-rounded" style="border-radius: 5px;margin-right: 0;">
+                        <button type="submit" class="ml-1 mr-1 btn btn-light btn-default btn-rounded"
+                            style="border-radius: 5px;margin-right: 0;">...</button>
+                        <button type="submit" class="ml-1 mr-1 btn btn-light btn-default btn-rounded"
+                            style="border-radius: 5px;margin-right: 0;">Done</button>
+                        <button type="submit" class="ml-1 mr-1 btn btn-primary btn-default btn-rounded"
+                            style="border-radius: 5px;margin-right: 0;">
                             <a>Publish</a></button>
                     </div>
                 </div>
             </div>
-            <div class="card p-0 ">
+            <div class="card mb-3 p-2">
                 <div class="card-body p-3">
-                    <button type="button" class="btn btn-secondary btn-sm mr-2" data-toggle="modal" data-target="#modal-basic">O'chirish</button> 
+                    <h2 class="mb-2">1-bo'lim</h2>
+
+                    <div class="drag-drop-wrap">
+                        <div class="drag-drop table-responsive-lg bg-white w-100 mb-30">
+                            <table class="table mb-0 table-basic">
+                                <tbody>
+
+                                    <tr class="draggable" draggable="true">
+
+                                        <td class="pl-0">
+                                            <div class="d-flex justify-content-sm-start">
+
+
+                                                <div class="icon p-1 mr-2"
+                                                    style="border:2px rgb(3, 3, 103) solid;border-radius: 5px;background-color: rgb(239, 239, 251);">
+                                                    <span data-feather="code" style="width:30px;height:30px;">
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <h4>HTML/CSS darslari</h4>
+                                        </td>
+
+                                        <td class="d-flex justify-content-end">
+                                            <button type="submit"
+                                                class="ml-1 mr-1 btn btn-light btn-default btn-rounded"
+                                                style="border-radius: 5px;float: right;">...</button>
+                                        </td>
+
+                                    </tr>
+                                    <tr class="draggable" draggable="true">
+
+                                        <td class="pl-0">
+                                            <div class="d-flex justify-content-sm-start" style="padding: auto;">
+
+                                                <div class="icon p-1 mr-2 d-flex align-items-center"
+                                                    style="border:2px rgb(3, 3, 103) solid;border-radius: 5px;background-color: rgb(239, 239, 251);">
+                                                    <span data-feather="code" style="width:30px;height:30px;">
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <h4>GIT darslari</h4>
+                                        </td>
+
+                                        <td class="d-flex justify-content-end">
+                                            <button type="submit"
+                                                class="ml-1 mr-1 btn btn-light btn-default btn-rounded"
+                                                style="border-radius: 5px;float: right;">...</button>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#modal-bg-primary">+Yangi dars qo'shish</button>
+                </div>
+            </div>
+            <div class="card mb-3 p-2">
+                <div class="card-body p-3">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#modal-basic">+ Yangi bo'lim qo'shish</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
+<div class="modal-bg-primary modal fade show" id="modal-bg-primary" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
-            <div class="modal-body">
-                <h4>Siz haqiqattan shablonni o'chirmoqchimisiz?</h4>
+            <div class="modal-body" style="margin:auto;">
+                <h4 style="margin:auto;">Yangi dars qo'shish</h4>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+            <div class="modal-footer p-1 mb-2" style="width: 60%;margin: auto;">
+                <button type="submit" class="btn btn-light btn-default btn-squared w-100 d-flex justify-content-center"><span data-feather="youtube"></span>
+                    Video
+                </button>
+            </div>
+            <div class="modal-footer p-1 mb-2" style="width: 60%;margin: auto;">
+                <button type="submit" class="btn btn-light btn-default btn-squared w-100 d-flex justify-content-center"><span data-feather="align-left"></span>
+                    Matnli
+                </button>
+            </div>
+            <div class="modal-footer p-1 mb-2" style="width: 60%;margin: auto;">
+                <button type="submit" class="btn btn-light btn-default btn-squared w-100 d-flex justify-content-center"><span data-feather="check-circle"></span>
+                    Test
+                </button>
+            </div>
+            <div class="modal-footer p-1 mb-2" style="width: 60%;margin: auto;">
+                <button type="submit" class="btn btn-light btn-default btn-squared w-100 d-flex justify-content-center"><span data-feather="home"></span>
+                    Uy vazifa
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="modal-bg-primary modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-body" style="margin:auto;">
+                <h4 style="margin:auto;">Yangi bo'lim qo'shish</h4>
+            </div>
+            <div class="modal-footer" style="display:block;">
+                <div class="form-group mb-0">
+                    <input type="text" class="form-control form-control-lg" placeholder="Nomini kiriting">
+                </div>
+                <div class="mt-3">
+                    <button style="float:right;" type="button" class="btn btn-primary btn-sm ml-1">Saqlash</button>
+                    <button style="float:right;" type="button" class="btn btn-secondary btn-sm"
+                        data-dismiss="modal">Bekor qilish</button>
+                </div>
             </div>
         </div>
     </div>
-
-
 </div>
 
 {% endblock %}
