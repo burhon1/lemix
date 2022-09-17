@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block style %}
-
 <style>
     .cardPay {
         position: relative;
@@ -72,7 +71,6 @@
         margin-right: 7px;
     }
 </style>
-
 {% endblock %}
 
 {% block content %}
@@ -1510,161 +1508,69 @@
             <div class="atbd-drawer__body">
                 <div class="drawer-content">
                     <div class="drawer-account-form form-basic">
-                        <form action="#">
+                        <form action="{% url 'admintion:lead-list' %}" method="post" autocomplete="off">
+                            {% csrf_token %}
                             <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label for="username">Ism</label>
-                                    <input type="text" name="name" id="username"
-                                        class="form-control form-control-sm border-light" placeholder="Isminggiz...">
+                                <div class="form-group col-md-6">
+                                    <label for="a10" class="il-gray fs-14 fw-500 align-center">Ism</label>
+                                    <input name="first_name" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a10"
+                                        placeholder="Isminggiz">
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="tel">Telefon raqam</label>
-                                    <input type="text" name="tel" id="tel"
-                                        class="form-control form-control-sm border-light" placeholder="(99) 123-45-67">
+                                <div class="form-group col-md-6">
+                                    <label for="a10" class="il-gray fs-14 fw-500 align-center">Familiya</label>
+                                    <input name="last_name" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a10"
+                                        placeholder="Familiyangiz...">
                                 </div>
-                                <!-- <div class="form-group col-lg-6">
-                                <label for="owner">Owner</label>
-                                <select name="url" id="owner" class="form-control-sm">
-                                    <option value="">Jack Ma</option>
-                                    <option value="">Tom liu</option>
-                                </select>
-                            </div> -->
-                                <div class="form-group col-lg-6">
-                                    <label for="manba">Manbasi</label>
-                                    <select name="manba" id="manba" class="form-control-sm border-light">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
+                                <div class="form-group col-md-6">
+                                    <label for="a10" class="il-gray fs-14 fw-500 align-center">Telefon raqam</label>
+                                    <input name="phone" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a10"
+                                        placeholder="(99) 123-45-67">
+                                </div>
+                                <div class="form-group form-group-calender mb-20 col-md-6">
+                                    <label for="datepicker" class="il-gray fs-14 fw-500 align-center">Tug'ilgan
+                                        sanasi</label>
+                                    <div class="position-relative">
+                                        <input name="birthday" type="text"
+                                            class="form-control  ih-medium ip-gray radius-xs b-light" id="datepicker"
+                                            placeholder="2021-10-01">
+                                        <a href="#"><span data-feather="calendar"></span></a>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="exampleFormControlSelect4"
+                                        class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                    <select name="gender" class="form-control px-15" id="exampleFormControlSelect4">
+                                        <option value="1">Erkak</option>
+                                        <option value="2">Ayol</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="hol">Holati</label>
-                                    <select name="hol" id="hol" class="form-control-sm border-light">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
+                                <div class="form-group col-md-6">
+                                    <label for="exampleFormControlSelect3"
+                                        class="il-gray fs-14 fw-500 align-center">Manbasi</label>
+                                    <select name="source" class="form-control px-15" id="exampleFormControlSelect3">
+                                        <option value="1">Telegram</option>
+                                        <option value="2">Banner</option>
+                                        <option value="3">Seminar</option>
+                                        <option value="4">Tik-tok</option>
                                     </select>
                                 </div>
-                                <!-- <div class="form-group col-lg-6">
-                                <label for="kurs">Kurs</label>
-                                <select name="kurs" id="kurs" class="form-control-sm">
-                                    <option value="">Jack Ma</option>
-                                    <option value="">Tom liu</option>
-                                </select>
-                            </div> -->
-                                <!-- <div class="form-group col-lg-6">
-                                <label for="datepicker">DateTime</label>
-                                <input type="text" name="name" id="datepicker" class="form-control form-control-sm" placeholder="Please Enter URL">
-                            </div> -->
-                                <div class="form-group col-12">
-                                    <label for="description">Izoh</label>
-                                    <textarea name="description" id="description"
-                                        class="form-control border-light form-control-sm"
-                                        placeholder="PLease Enter Url Description"></textarea>
+                                <div class="form-group form-element-textarea mb-20 col-md-12">
+                                    <label for="exampleFormControlTextarea1"
+                                        class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                    <textarea name="comment" class="form-control" id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                </div>
+    
+                                <div class="col-12 view-form form-row">
+    
                                 </div>
                                 <div class="col-12">
-                                    <div class="forms w-100">
-                                        <div class="forms-view" id="parent">
-                                            <label for="a10" class="col-12 p-1">Ota-ona</label>
-                                            <div class="form-group  col-6  p-0">
-                                                <input type="text" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="Ota-ona...">
-                                            </div>
-                                            <div class="form-group col-6 p-0">
-                                                <input type="text" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="(99) 134-56-87">
-                                                <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(0)"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="feather feather-x">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="forms-view " id="telegram">
-                                            <label for="a10" class="col-12 p-1">Telegram</label>
-                                            <div class="form-group col-12 p-0">
-                                                <input type="text" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="(99) 134-56-87">
-                                                <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(1)"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="feather feather-x">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="forms-view " id="manzil">
-                                            <label for="a10" class="col-12 p-1">Manzil</label>
-                                            <div class="form-group col-12 p-0">
-                                                <input type="text" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="Manzil...">
-                                                <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(2)"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="feather feather-x">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="forms-view " id="email">
-                                            <label for="a10" class="col-12 p-1">Email</label>
-                                            <div class="form-group col-12 p-0">
-                                                <input type="email" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="example@.com">
-                                                <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(3)"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="feather feather-x">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                            </div>
-
-                                        </div>
-                                        <div class="forms-view " id="passport">
-                                            <label for="a10" class="col-12 p-1">Passport</label>
-                                            <div class="form-group col-12 p-0">
-                                                <input type="text" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="WW1111111">
-                                                <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(4)"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="feather feather-x">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="forms-view " id="file">
-                                            <label for="a10" class="col-12 p-1">File Yuklash</label>
-                                            <div class="form-group col-12 p-0">
-                                                <input type="file" name="name" id="a10"
-                                                    class="form-control form-control-sm border-light mr-2"
-                                                    placeholder="file">
-                                                <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(5)"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="feather feather-x">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="buttons d-flex flex-wrap  w-100">
-
-                                        <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                            onclick="handleClickIcon(0)">
+                                        <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3"
+                                            onclick="handleAddItem('parent-23',['name','phone'],'Ota-ona',['text','text'],['Ota-ona...','(99) 134-56-87'])">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -1675,18 +1581,17 @@
                                                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                                             </svg>
                                         </button>
-                                        <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                            onclick="handleClickIcon(1)">
+                                        <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3"
+                                            onclick="handleAddItem('telegram-23',['telegram'],'Telegram',['text'],['(99) 134-56-87'])">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-send">
+                                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
                                                 <line x1="22" y1="2" x2="11" y2="13" />
                                                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
                                             </svg>
                                         </button>
-                                        <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                            onclick="handleClickIcon(2)">
+                                        <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3"
+                                            onclick="handleAddItem('location-23',['location'],'Manzil',['text'],['Manzil...'])">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -1695,19 +1600,18 @@
                                                 <circle cx="12" cy="10" r="3" />
                                             </svg>
                                         </button>
-                                        <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                            onclick="handleClickIcon(3)">
+                                        <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3"
+                                            onclick="handleAddItem('email-23',['location'],'Email',['email'],['Email...'])">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-mail">
+                                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
                                                 <path
                                                     d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                                 <polyline points="22,6 12,13 2,6" />
                                             </svg>
                                         </button>
-                                        <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                            onclick="handleClickIcon(4)">
+                                        <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3"
+                                            onclick="handleAddItem('password-23',['password'],'Passport',['text'],['AA0000000'])">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -1719,8 +1623,8 @@
                                                 <polyline points="10 9 9 9 8 9" />
                                             </svg>
                                         </button>
-                                        <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                            onclick="handleClickIcon(5)">
+                                        <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3"
+                                            onclick="handleAddItem('file-23',['file'],'Fayl Yuklash',['file'],['AA0000000'])">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -1731,119 +1635,18 @@
                                                 <polyline points="16 16 12 12 8 16" />
                                             </svg>
                                         </button>
-
                                     </div>
                                 </div>
                                 <p class="col-12">
+    
+                                <a href="#" class="text-right d-block col-12" onclick="handleClickIcon(7)">+Guruhga
+                                    qo’shish: </a>
                                 <div class="forms w-100">
                                     <div class="forms-view" id="parent">
-                                        <label for="a10" class="col-12 p-1">Qo'shimcha</label>
-                                        <div class="form-group  col-6  p-0">
-                                            <input type="date" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="Ota-ona...">
-
-                                        </div>
-                                        <div class="form-group  col-6  p-0">
-                                            <div class="radio-horizontal-list d-flex">
-
-
-                                                <div class="radio-theme-default custom-radio ">
-                                                    <input class="radio" type="radio" name="radio-horizontal" value=0
-                                                        id="radio-vl1">
-                                                    <label for="radio-vl1">
-                                                        <span class="radio-text">Erkak</span>
-                                                    </label>
-                                                </div>
-
-
-
-
-                                                <div class="radio-theme-default custom-radio ">
-                                                    <input class="radio" type="radio" name="radio-horizontal" value=0
-                                                        id="radio-vl2">
-                                                    <label for="radio-vl2">
-                                                        <span class="radio-text">Ayol</span>
-                                                    </label>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group  col-6  p-0">
-
-                                            <div class="atbd-select w-100">
-
-                                                <select name="select-tag" id="select-tag" class="form-control-sm "
-                                                    multiple="multiple">
-                                                    <option value="01">Option 1</option>
-                                                    <option value="02">Option 2</option>
-                                                    <option value="03">Option 3</option>
-                                                    <option value="04">Option 4</option>
-                                                    <option value="05">Option 5</option>
-                                                </select>
-
-                                            </div>
-
-                                        </div>
+                                        <label for="a10" class="col-12 p-1">Guruhga qo’shish</label>
                                         <div class="form-group col-6 p-0">
-                                            <select class="form-control-sm  select2-hidden-accessible"
-                                                id="countryOption" data-select2-id="countryOption" tabindex="-1"
-                                                aria-hidden="true">
-                                                <option data-select2-id="5">1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(6)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <a href="#" class="text-right d-block col-12" onclick="handleClickIcon(6)">+Qo’shimcha
-                                    ma’lumotlar: </a>
-                                <div class="forms w-100">
-                                    <div class="forms-view" id="parent">
-                                        <label for="a10" class="col-12 p-1">Demo</label>
-                                        <div class="form-group col-12 p-0">
-                                            <select class="form-control-sm  select2-hidden-accessible"
-                                                id="countryOption" data-select2-id="countryOption" tabindex="-1"
-                                                aria-hidden="true">
-                                                <option data-select2-id="5">1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(7)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <a href="#" class="text-right d-block col-12" onclick="handleClickIcon(7)">+Demo
-                                    darsga qo’shish: </a>
-                                <div class="forms w-100">
-                                    <div class="forms-view" id="parent">
-                                        <label for="a10" class="col-12 p-1">Topshiriq</label>
-                                        <div class="form-group col-6 p-0">
-                                            <select class="form-control-sm  select2-hidden-accessible"
-                                                id="countryOption" data-select2-id="countryOption" tabindex="-1"
-                                                aria-hidden="true">
+                                            <select class="form-control-sm  select2-hidden-accessible" id="countryOption"
+                                                data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
                                                 <option data-select2-id="5">1</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -1853,7 +1656,6 @@
                                         </div>
                                         <div class="form-group  col-6  p-0">
                                             <div class="atbd-select w-100">
-
                                                 <select name="select-tag" id="select-tag" class="form-control-sm "
                                                     multiple="multiple">
                                                     <option value="01">Option 1</option>
@@ -1862,50 +1664,149 @@
                                                     <option value="04">Option 4</option>
                                                     <option value="05">Option 5</option>
                                                 </select>
-
+    
                                             </div>
                                         </div>
                                         <div class="form-group  col-6  p-0">
                                             <input type="date" name="name" id="a10"
                                                 class="form-control form-control-sm border-light mr-2"
                                                 placeholder="Ota-ona...">
-
+    
                                         </div>
                                         <div class="form-group  col-6  p-0">
-
+    
                                             <input type="text" name="name" id="a10"
                                                 class="form-control form-control-sm border-light mr-2"
                                                 placeholder="Ota-ona...">
-
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(8)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
+    
+                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(8)" width="24"
+                                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-x">
                                                 <line x1="18" y1="6" x2="6" y2="18" />
                                                 <line x1="6" y1="6" x2="18" y2="18" />
                                             </svg>
-
+    
                                         </div>
-
+    
                                     </div>
-
+    
                                 </div>
                                 <a href="#" class="text-right d-block col-12" onclick="handleClickIcon(8)">+Topshiriq
                                     qo’shish: </a>
+                                <div class="forms-view" id="parent1">
+                                    <label for="a10" class="col-12 p-1">Topshiriq</label>
+                                    <div class="form-group col-6 p-0">
+                                        <select class="form-control-sm  select2-hidden-accessible" id="countryOption"
+                                            data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                                            <option data-select2-id="5">1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group  col-6  p-0">
+                                        <div class="atbd-select w-100">
+    
+                                            <select name="select-tag" id="select-tag" class="form-control-sm "
+                                                multiple="multiple">
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="03">Option 3</option>
+                                                <option value="04">Option 4</option>
+                                                <option value="05">Option 5</option>
+                                            </select>
+    
+                                        </div>
+                                    </div>
+                                    <div class="form-group  col-6  p-0">
+                                        <input type="date" name="name" id="a10"
+                                            class="form-control form-control-sm border-light mr-2" placeholder="Ota-ona...">
+    
+                                    </div>
+                                    <div class="form-group  col-6  p-0">
+    
+                                        <input type="text" name="name" id="a10"
+                                            class="form-control form-control-sm border-light mr-2" placeholder="Ota-ona...">
+    
+                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(8)" width="24"
+                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-x">
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+    
+                                    </div>
+                                </div>
                                 </p>
                             </div>
-                            <button class="btn btn-primary">Saqlash</button>
-                        </form>
+                            <button type="submit" class="btn btn-primary">Saqlash</button>
                     </div>
+                    </form>
                 </div>
-            </div><!-- ends: .atbd-drawer__body -->
-        </div><!-- ends: .atbd-drawer -->
-
-
-
-    </div>
-
-
+            </div>
+        </div><!-- ends: .atbd-drawer__body -->
+    </div><!-- ends: .atbd-drawer -->
 </main>
+{% endblock %}
 
+{% block script %}
+<script>
+    var forms = document.querySelectorAll('.forms-view')
+    for (let i = 0; i < forms.length; i++) {
+        forms[i].style.display = 'none'
+    }
+    var array = []
+    function handleClickIcon(x) {
+        if (array.includes(x)) {
+            forms[array[array.indexOf(x)]].style.display = 'none';
+            array = array.filter(e => e != x);
+        }
+        else {
+            forms[x].style.display = 'flex';
+            array.push(x)
+        }
+        console.log(array)
+        //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+    }
+
+    var form = document.querySelector('.view-form');
+
+    function handleAddItem(_id, names, labelName, typs, plcs) {
+        var doc_id = document.querySelector('#' + _id)
+        if (!doc_id) {
+            var wrap = document.createElement('div');
+            wrap.classList.add(...['form-group', 'row', 'w-100', 'mx-0']);
+            wrap.id = _id;
+            var label = document.createElement('label');
+            label.for = "a" + names[0];
+            label.classList.add(...['il-gray', 'fs-14', 'fw-500', 'align-center', 'col-md-12']);
+            label.textContent = labelName;
+            wrap.appendChild(label);
+            typs.map((item, index) => {
+                var input = document.querySelector('input');
+                input.type = item;
+                input.classList.add(...['col-md-' + Math.floor(10 / typs.length), 'form-control', 'ih-medium', 'ip-light', 'radius-xs', 'b-light', 'px-15']);
+                input.id = "a" + names[index];
+                input.placeholder = plcs[index];
+                wrap.appendChild(input);
+                input = null;
+            })
+            var img = document.createElement('img');
+            img.src = "{% static 'img/svg/ixis.svg' %}";
+            img.className = "ml-auto";
+            img.addEventListener('click', function () {
+                document.querySelector('#' + _id).remove()
+            })
+            wrap.appendChild(img);
+            form.appendChild(wrap);
+            label = null;
+        }
+        else {
+            doc_id.remove()
+        }
+    }
+</script>
 {% endblock %}

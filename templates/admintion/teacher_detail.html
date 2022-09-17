@@ -1,0 +1,499 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 p-2 ">
+            <div class="card card-default card-md mb-4 mt-3 p-3">
+                <ul class="atbd-breadcrumb nav">
+                    <li class="atbd-breadcrumb__item">
+
+                        <a href="#">
+                            O'qituvchilar
+                        </a>
+                        <span class="breadcrumb__seperator">
+                            <span class="la la-slash"></span>
+                        </span>
+
+
+                    </li>
+                    <li class="atbd-breadcrumb__item">
+                        <a href="#">Burhon Baqoyev</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="col-xxl-3 col-lg-3 col-sm-3">
+            <!-- Profile Acoount -->
+            <div class="card mb-25">
+                <div class="card-body text-center p-0">
+
+                    <div class="account-profile border-bottom pt-25 px-25 pb-0 flex-column d-flex align-items-center ">
+                        <div class="ap-img mb-20 pro_img_wrapper">
+                            <input id="file-upload" type="file" name="fileUpload" class="d-none">
+                            <label for="file-upload">
+                                <!-- Profile picture image-->
+                                <img class="ap-img__main rounded-circle wh-120" src="{% static 'img/profile.png' %}"
+                                    alt="profile">
+                                <span class="cross" id="remove_pro_pic">
+                                    <span data-feather="camera"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body m-0 p-0 ">
+                        <div>
+                            <ul>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4">F.I.O:</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Telefon raqam:</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Tug'ilgan kun:</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Manzil:</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Izoh:</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Guruhlar:3</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">O'quvchilar:30</li>
+
+                            </ul>
+                        </div>
+                        <div>
+                            <button class="btn btn-default btn-squared btn-outline-warning m-1 ml-3">SMS yuborish
+                            </button>
+                            <button class="btn btn-default btn-squared btn-outline-primary m-1 ml-3">Chatga o'tish
+                            </button>
+                            <button class="btn btn-default btn-squared btn-outline-dark m-1 mb-3 ml-3">Topshiriqlar
+                            </button>
+                        </div>
+                        <!-- ends: .list-box -->
+                    </div>
+
+                </div>
+            </div>
+            <!-- Profile Acoount End -->
+        </div>
+        <div class="col-xxl-9 col-lg-9 col-sm-9">
+            <div class="knowledgebase-details knowledgebase-details--row m-0 pt-4 pb-4">
+                <div class="row pl-5 pr-5">
+                    <div class="cus-8 col-md-12 ">
+                        <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="plugins-tab" data-toggle="pill" href="#plugins"
+                                    role="tab" aria-controls="plugins" aria-selected="true">Guruhlar</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes" role="tab"
+                                    aria-controls="themes" aria-selected="false">Davomat</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes1" role="tab"
+                                    aria-controls="themes" aria-selected="false">Ish haqi</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="extensions-tab" data-toggle="pill" href="#extensions" role="tab"
+                                    aria-controls="extensions" aria-selected="false">Jadval</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="extensions1-tab" data-toggle="pill" href="#extensions1"
+                                    role="tab" aria-controls="extensions1" aria-selected="false">Tarix</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="cus-8 col-md-12 mt-4 p-0 ">
+                <div class="tab-content" id="knowledgebaseContent">
+                    <div class="tab-pane fade show active" id="plugins" role="tabpanel" aria-labelledby="plugins-tab">
+                        <div class="container-fluid  p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100"
+                                            style="display:flex; justify-content:space-between;">
+                                            <div><a
+                                                    style="border:1px rgb(126, 126, 248) solid; border-radius: 4px; padding:3px;">
+                                                    Scratch 1</a>
+                                                <a style="margin-left:10px">06.06.2022-06.12.2022</a>
+                                            </div>
+                                            <span style="display:inline; margin-right:0;"
+                                                class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+
+                                        </div>
+                                        <div class="contact-list bg-white radius-xl w-100"
+                                            style="display:flex; justify-content:space-between;">
+                                            <div>
+                                                <a>Scratch kursi</a>
+                                            </div>
+                                            <div>
+                                                <a> Du,Se,Cho </a>
+                                                <a> 10:00-12:00 </a>
+                                                <a> Room 2 </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:30px;">
+                                                                <div>
+                                                                    <span>#</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class=" pl-5">
+                                                                    <span>FIO</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>O'zlashtirish</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>Uyga vazifa</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span>Imtihon</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span>Davomat</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span>Sana</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <span>1</span>
+                                                            </td>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a class="pl-4">Burhon Baqoyev</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">80%</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">24/28</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="position">90% 4/4</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">80%</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">15.05.2025</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
+                        <div class="container-fluid p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="d-flex align-items-center pl-5">
+                                                                    <span>Sana</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Holat</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>Vaqt</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span class="">Izoh</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a>30.06.2022</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="userDatatable-content d-inline-block">
+                                                                    <span
+                                                                        class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">09:50</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">20 daqiqa kechikdi</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="themes1" role="tabpanel" aria-labelledby="themes-tab">
+                        <div class="container-fluid p-0 ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="contact-list-wrap mb-25">
+                                        <div class="contact-list bg-white radius-xl w-100">
+                                            <div class="table-responsive">
+
+                                                <table class="table mb-0 table-borderless table-rounded">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class=" pl-5">
+                                                                    <span>#</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class=" pl-5">
+                                                                    <span>Nomi</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="c-email">
+                                                                <span>Sana</span>
+                                                            </th>
+                                                            <th class="c-company">
+                                                                <span>Summa</span>
+                                                            </th>
+                                                            <th class="c-position">
+                                                                <span class="">To'lov turi</span>
+                                                            </th>
+                                                            <th class="c-phone">
+                                                                <span class="">Izoh</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>
+                                                                <span class="email" style="padding-left:50px;">1</span>
+                                                            </td>
+                                                            <td>
+                                                                <div class="contact-item d-flex align-items-center">
+                                                                    <div class="contact-personal-info d-flex">
+                                                                        <div class="contact_title">
+                                                                            <h6>
+                                                                                <a class="pl-4">Test-1</a>
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">12.06.2022</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="com-name">250000</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="position">Karta </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="email">1-guruh uchun</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: col-12 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="extensions" role="tabpanel" aria-labelledby="extensions-tab">
+                        <div class="container-fluid p-0 ">
+                            <div class="row calendar-grid justify-content-center">
+                                <div class="col-xxl-3 col-xl-5 col-md-6 col-sm-8">
+                                    <div class="atbd-calendar-left">
+                                        <button class="btn btn-secondary btn-lg btn-create-event" data-toggle="modal"
+                                            data-target="#c-event-modal">
+                                            <span data-feather="plus"></span>Create New Event</button>
+                                        <div class="card card-md mb-4">
+                                            <div class="card-body px-10">
+                                                <div class="date-picker">
+                                                    <div class="date-picker__calendar"></div>
+                                                    <!-- ends: .date-picker__calendar -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card card-md mb-4">
+                                            <div class="card-body">
+                                                <div class="draggable-events" id="draggable-events">
+                                                    <div class="draggable-events__top d-flex justify-content-between">
+                                                        <h6>My Calendars</h6>
+                                                        <a href="#">
+                                                            <span data-feather="plus"></span></a>
+                                                    </div>
+                                                    <ul class="draggable-event-list">
+                                                        <li class="draggable-event-list__single d-flex align-items-center"
+                                                            data-class="primary">
+                                                            <span class="badge-dot badge-primary"></span>
+                                                            <span class="event-text">Family Events</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center"
+                                                            data-class="secondary">
+                                                            <span class="badge-dot badge-secondary"></span>
+                                                            <span class="event-text">Product Launch</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center"
+                                                            data-class="success">
+                                                            <span class="badge-dot badge-success"></span>
+                                                            <span class="event-text">Team Meeting</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center"
+                                                            data-class="primary">
+                                                            <span class="badge-dot badge-primary"></span>
+                                                            <span class="event-text">UI/UX Tasks</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                        <li class="draggable-event-list__single d-flex align-items-center"
+                                                            data-class="warning">
+                                                            <span class="badge-dot badge-warning"></span>
+                                                            <span class="event-text">Project Update</span>
+                                                        </li>
+                                                        <!-- ends: .draggable-event-list__single -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ends: .card -->
+                                    </div>
+                                </div>
+                                <!-- ends: .col-lg-3 -->
+                                <div class="col-xxl-9 col-xl-7">
+                                    <div class="card card-default card-md mb-4">
+                                        <div class="card-body">
+                                            <div id='full-calendar'></div>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .card -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="extensions1" role="tabpanel" aria-labelledby="extensions1-tab">
+                        <div class="container-fluid  pl-3 ">
+                            <div class="row">
+                                <div class="card mb-25 col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
+                                    <div class="card-body pt-0 pb-0">
+                                        <div class="drag-drop-wrap">
+                                            <div class="drag-drop table-responsive-lg bg-white w-100 mb-30">
+                                                <table class="table mb-0 table-basic">
+                                                    <tbody>
+
+                                                        <tr class="draggable">
+                                                            <td>
+                                                                <div>
+                                                                    <div
+                                                                        class="atbd-badge-list d-flex align-items-center">
+                                                                        <span
+                                                                            class="badge badge-round badge-light badge-lg badge-outlined">
+                                                                            Burhon Baqoyev
+                                                                        </span>
+                                                                    </div>
+                                                                    <h6 class="mt-2"> user authed</h6>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                94 123 56 78
+                                                            </td>
+                                                            <td>
+                                                                12.12.2020
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr class="draggable">
+                                                            <td>
+                                                                <div>
+                                                                    <div
+                                                                        class="atbd-badge-list d-flex align-items-center">
+                                                                        <span
+                                                                            class="badge badge-round badge-light badge-lg badge-outlined">
+                                                                            Burhon Baqoyev
+                                                                        </span>
+                                                                    </div>
+                                                                    <h6 class="mt-2"> user authed</h6>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                94 123 56 78
+                                                            </td>
+                                                            <td>
+                                                                12.12.2020
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: card -->
+                            </div>
+                            <!-- ends: col-12 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

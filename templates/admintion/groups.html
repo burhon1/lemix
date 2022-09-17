@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4 class="text-capitalize breadcrumb-title">Guruhlar-3ta </h4>
+            <h4 class="text-capitalize breadcrumb-title">Guruhlar-{{groups.count|default:0}}ta </h4>
             <div class="action-btn">
                 <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
                     Guruh qo'shish
@@ -65,7 +65,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <div class="userDatatable-inline-title">
-                                                    <a href="/education/group/1/detail/" class="text-dark fw-500">
+                                                    <a href="{% url 'admintion:group-detail' id=group.id %}" class="text-dark fw-500">
                                                         <h6> {{group.title}}</h6>
                                                     </a>
                                                 </div>
@@ -79,7 +79,7 @@
 
                                         <td>
                                             <div class="userDatatable-content">
-                                                <a href="/education/teacher/1/detail/" style="color:black;">{{group.teacher}}</a>
+                                                <a href="{% url 'admintion:group-detail' id=group.id %}" style="color:black;">{{group.teacher}}</a>
                                             </div>
                                         </td>
                                         <td>

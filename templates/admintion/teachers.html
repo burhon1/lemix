@@ -68,7 +68,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        {{obj.user.first_name}}
+                                                        <a href="{% url 'admintion:teacher-detail' obj.id %}">{{obj.user.first_name}}</a>
                                                     </div>
                                                 </td>
                                                 <td>

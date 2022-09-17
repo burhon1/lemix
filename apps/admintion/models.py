@@ -1,6 +1,7 @@
+from calendar import Calendar
 from datetime import timezone
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager
+from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager
 from admintion.data import chooses
 from user.models import CustomUser
 
@@ -32,6 +33,8 @@ class Teacher(models.Model):
     teacer_type = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     status = models.BooleanField(default=False,null=True,blank=True)
+    teachers = teachers_manager.TeacherManager()
+    objects = models.Manager()
 
 class GroupsDays(models.Model):
     days = models.PositiveSmallIntegerField(choices=chooses.GROUPS_DAYS)
@@ -46,6 +49,7 @@ class Group(models.Model):
     days = models.ManyToManyField(GroupsDays)
     pay_type = models.PositiveSmallIntegerField(choices=chooses.PAY_FORMS)
     status = models.PositiveSmallIntegerField(choices=chooses.GROUPS_STATUS)
+    start_date = models.DateField(null=True, blank=True)
     start_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     end_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     groups = groups_manager.GroupManager()
@@ -60,5 +64,28 @@ class Student(models.Model):
     source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
     group = models.ForeignKey(Group,on_delete=models.CASCADE,null=True,blank=True,related_name='student')
     comment = models.TextField()
-    # student = 
-    
+    students =  students_manager.StudentManager()
+    objects = models.Manager()
+
+class Attendace(models.Model):
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendace')
+    status = models.SmallIntegerField(choices=chooses.STUDENT_ATTANDENCE_TYPE,null=True,blank=True)
+    date = models.DateField()
+    objects = models.Manager()
+    attendaces = attendace_manager.AttendaceManager()
+
+
+class Payment(models.Model):
+    paid = models.PositiveIntegerField()
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='payment')
+    created = models.DateTimeField(auto_now_add=True)
+
+class FormLead(models.Model):
+    fio = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
+    status = models.PositiveSmallIntegerField(choices=chooses.LEAD_FORM_STATUS,null=True,blank=True)
+    comment = models.TextField()
+
+    def __str__(self) -> str:
+        return self.fio
