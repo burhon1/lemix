@@ -30,3 +30,14 @@ STUDENT_SOURCES = (
     (3, "Seminar"),
     (4, "Tik-tok"),
 )
+
+STUDENT_ATTANDENCE_TYPE = (
+    (1,'Bor edi'),
+    (2,'Yoq'),
+    (3,'Kechikdi')
+)
+
+
+LEAD_FORM_STATUS = (
+    (1,'Telefon qilish'),
+)

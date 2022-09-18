@@ -21,5 +21,14 @@ def teachers_view(request):
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:teachers')+f"?error={context['error']}")
-    context['objs'] = Teacher.objects.all()
+    context['objs'] = Teacher.objects.teacher()
     return render(request,'admintion/teachers.html',context) 
+
+
+def teacher_detail_view(request,id):
+    context = {}
+    if request.method == "POST":
+        post = request.POST
+    context['objs'] = Teacher.teachers.teachers()
+    print(context['objs'].values('full_name'))
+    return render(request,'admintion/teacher_detail.html',context) 
