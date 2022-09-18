@@ -18,7 +18,19 @@ def lid_arxiv_view(request):
     return render(request,'education/lid.html')  
 
 def onlin_view(request):
-    return render(request,'education/onlin.html')  
+    return render(request,'education/onlin.html') 
+
+def onlin_video_view(request):
+    return render(request,'education/onlin_video.html') 
+
+def onlin_text_view(request):
+    return render(request,'education/onlin_text.html') 
+
+def onlin_test_view(request):
+    return render(request,'education/onlin_test.html') 
+
+def onlin_hwork_view(request):
+    return render(request,'education/onlin_hwork.html') 
 
 def onlins_view(request,id):
     return render(request,'education/onlins.html') 

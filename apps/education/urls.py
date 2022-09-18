@@ -1,4 +1,3 @@
-
 from django.urls import path
 
 from education.views import *
@@ -10,7 +9,11 @@ urlpatterns = [
     
     path('test/',test2_view,name='test'),
     path('task/',task_view,name='task'),
-    path('onlin/',onlin_view,name='onlin'),    
+    path('onlin/',onlin_view,name='onlin'),
+    path('onlin_test/',onlin_test_view,name='onlin_test'),
+    path('onlin_text/',onlin_text_view,name='onlin_text'),
+    path('onlin_video/',onlin_video_view,name='onlin_video'),
+    path('onlin_hwork/',onlin_hwork_view,name='onlin_hwork'),    
     path('onlins/<int:id>/',onlins_view,name='onlins'),
     path('lid/',lid_view,name='lid'),
     path('teachers/',teachers_view,name='teachers'),
@@ -38,4 +41,5 @@ urlpatterns = [
     path('students/list/',students_list_view,name='students-list'),
     path('parents/list/',parents_list_view,name='parents-list'),
     path('expenses/list/',expenses_list_view,name='expenses-list'),
+    
 ]
