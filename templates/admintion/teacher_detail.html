@@ -18,7 +18,7 @@
 
                     </li>
                     <li class="atbd-breadcrumb__item">
-                        <a href="#">Burhon Baqoyev</a>
+                        <a href="#">{{obj.full_name}}</a>
                     </li>
                 </ul>
 
@@ -45,13 +45,13 @@
                     <div class="card-body m-0 p-0 ">
                         <div>
                             <ul>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4">F.I.O:</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Telefon raqam:</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Tug'ilgan kun:</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Manzil:</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4">F.I.O:{{obj.full_name}}</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Telefon raqam:{{obj.phone_number}}</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Tug'ilgan kun:{{obj.birthday|date:'Y-m-d'}}</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Manzil:{{obj.full_name}}</li>
                                 <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Izoh:</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Guruhlar:3</li>
-                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">O'quvchilar:30</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">Guruhlar:{{obj.location}}</li>
+                                <li class="list-box__item pl-0 d-flex justify-content-left pl-4 ">O'quvchilar:{{obj.students}}</li>
 
                             </ul>
                         </div>

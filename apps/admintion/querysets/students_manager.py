@@ -1,10 +1,11 @@
-from django.db.models import Value,Prefetch, Case, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef
+from django.db.models import Value,CharField, Count, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef
 from django.db.models.functions import Concat,Substr,Cast
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models.query import QuerySet
 
 class StudentQueryset(QuerySet):
     def get_info(self):
+        print(self.count)
         if not self.exists():
             return self.all()
         return self.values(
@@ -16,10 +17,23 @@ class StudentQueryset(QuerySet):
         )
 
     def students(self):
-        return self.get_info()
+        return self.get_info().values(
+            'groups__teacher__user__first_name',
+            'groups__teacher__user__last_name'
+        ).annotate(
+            teacher_name=ArrayAgg(
+                Concat(F('groups__teacher__user__first_name'),Value(' '),F('groups__teacher__user__last_name')),
+                filter=Q(groups__teacher__user__first_name__isnull=False),
+                distinct=True
+            ),
+            group_count = ArrayAgg(
+                F('groups__id'),
+                distinct=True
+            )
+        )
 
     def students_attendace(self,id):
-        return self.get_info().filter(group__id=id).values(
+        return self.get_info().filter(groups__id=id).values(
             'id',
             'full_name'
         ).annotate(
@@ -35,7 +49,7 @@ class StudentQueryset(QuerySet):
         )
 
     def student_balances(self,id):
-        return self.get_info().filter(group__id=id).values(
+        return self.get_info().filter(groups__id=id).values(
             'id',
             'full_name',
             'payment__paid',
