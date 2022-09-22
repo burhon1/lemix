@@ -68,17 +68,17 @@
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        <a href="{% url 'admintion:teacher-detail' obj.id %}">{{obj.user.first_name}}</a>
+                                                        <a href="{% url 'admintion:teacher-detail' obj.id %}">{{obj.full_name}}</a>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        {{obj.user.phone}}
+                                                        {{obj.phone_number}}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        2
+                                                        {{obj.groups}}
                                                     </div>
                                                 </td>
                                                 <td>

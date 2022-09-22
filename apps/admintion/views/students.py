@@ -23,4 +23,14 @@ def students_view(request):
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:students')+f"?error={context['error']}")
+    context['students'] = Student.objects.all()
+    print(context['students'])
+    print(Student.students.students())
     return render(request,'admintion/students.html',context) 
+
+
+def student_detail_view(request,id):
+    context = {}
+    if request.method == "POST":
+        post = request.POST
+    return render(request,'admintion/student_detail.html',context)
