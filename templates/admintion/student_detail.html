@@ -36,40 +36,49 @@
     .atbd-tab .tab-content p {
         font-size: 12px !important;
     }
-    .v-num{
+
+    .v-num {
         font-size: 14px;
     }
-    .application-faqs .panel-title a{
+
+    .application-faqs .panel-title a {
         font-size: 12px !important;
     }
-    .forms-view{
+
+    .forms-view {
         display: flex;
         flex-wrap: wrap;
     }
-    .forms-view > .form-group{
+
+    .forms-view>.form-group {
         display: flex;
         align-items: center;
     }
-    .table-responsive tr td>div{
+
+    .table-responsive tr td>div {
         text-transform: none;
     }
+
     .atbd-select .select2-selection,
-    .select2-container--default .select2-selection--single{
+    .select2-container--default .select2-selection--single {
         height: 1.875rem;
-padding: 0;
-font-size: 12px;
-line-height: 1.5;
--webkit-border-radius: 0.2rem;
-border-radius: 0.2rem;
-margin-right: 7px;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        margin-right: 7px;
     }
-    .select2-container .select2-selection--single .select2-selection__rendered{
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
         width: auto !important;
     }
-    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu > .atbd-menu__link:before {
+
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:before {
         margin-top: 0;
     }
-    #infoUser{
+
+    #infoUser {
         overflow: hidden;
         height: 120px;
     }
@@ -1776,67 +1785,419 @@ margin-right: 7px;
         </div>
     </div>
 </div>
+<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">O'quvchi uchun to'lov qo'shish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="forms w-100">
+                    <div class="atbd-tag-mode ">
+                        <p class="col-12 p-0 mb-1">To'lov summasini kiriting:</p>
+                        <input type="text" name="date" id="date"
+                            class="form-control form-control-sm border-light mb-2">
+
+                        <p class="col-12 p-0 mb-1">To'lov maqsadi:</p>
+
+                        <div class="atbd-select mb-2">
+
+                            <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                                id="countryOption" data-select2-id="countryOption" tabindex="-1"
+                                aria-hidden="true">
+                                <option data-select2-id="5" selected>1 guruh</option>
+                                <option>2 guruh</option>
+                                <option>3 guruh</option>
+                                <option>4 guruh</option>
+                                <option>5 guruh</option>
+                            </select>
+
+                        </div>
+
+                        <p class="col-12 p-0 mb-1">To'lov turi:</p>
+
+                        <div class="atbd-select mb-2">
+
+                            <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                                id="countryOption" data-select2-id="countryOption" tabindex="-1"
+                                aria-hidden="true">
+                                <option data-select2-id="5" selected>1 guruh</option>
+                                <option>2 guruh</option>
+                                <option>3 guruh</option>
+                                <option>4 guruh</option>
+                                <option>5 guruh</option>
+                            </select>
+
+                        </div>
+
+                        <p class="col-12 p-0 mb-1">Izoh:</p>
+                        <textarea name="description" id="description" class="form-control form-control-sm"
+                            placeholder="Izoh matnini kiriting..."></textarea>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal-basic modal fade show" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title"> Guruhga qo'shish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="forms w-100">
+                    <label for="a10" class="col-12 p-1">Guruhni tanlang</label>
+                    <div class="form-group col-12 p-0">
+                        <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                            id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                            <option data-select2-id="5" selected>1 guruh</option>
+                            <option>2 guruh</option>
+                            <option>3 guruh</option>
+                            <option>4 guruh</option>
+                            <option>5 guruh</option>
+                        </select>
+
+                    </div>
+                    <p><b class="fw-bold">Guruh limiti:</b> 12/8 </p>
+                    <p><b class="fw-bold">O'qituvchi:</b> Burhon Baqoyev</p>
+                    <p><b class="fw-bold">Dars kunlari:</b> Dushanba/Chorshanba/Juma</p>
+                    <p><b class="fw-bold">Vaqti:</b> 14:00-16:00</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-basic modal fade show" id="modal-basic4" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">Topshiriq qo'shish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="forms w-100">
+                    <div class="atbd-tag-mode ">
+                        <p class="col-12 p-0 mb-1">Ma'sul</p>
+
+                        <div class="atbd-select mb-2">
+
+                            <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
+                                <option value="01">Option 1</option>
+                                <option value="02">Option 2</option>
+                                <option value="03">Option 3</option>
+                                <option value="04">Option 4</option>
+                                <option value="05">Option 5</option>
+                            </select>
+
+                        </div>
+
+                        <p class="col-12 p-0 mb-1">*Topshiriq mavzusi:</p>
+
+                        <div class="atbd-select mb-2">
+
+                            <select name="select-search" id="select-search" class="form-control ">
+                                <option value="01">Option 1</option>
+                                <option value="02">Option 2</option>
+                                <option value="03">Option 3</option>
+                                <option value="04">Option 4</option>
+                                <option value="05">Option 5</option>
+                            </select>
+
+                        </div>
+
+                        <p class="col-12 p-0 mb-1">*Topshiriq muddati:</p>
+                        <input type="datetime-local" name="date" id="date"
+                            class="form-control form-control-sm border-light mb-2">
+                        <p class="col-12 p-0 mb-1">Topshiriq matni:</p>
+                        <textarea name="description" id="description" class="form-control form-control-sm"
+                            placeholder="Xabar matnini kiriting..."></textarea>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-basic modal fade show" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">Telefon qilish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <p>IP telefoniya(virtual raqam) xizmati sizning tarifingizda ulanmagan. Ushbu xizmatni ulash
+                    yoki batafsil ma'lumot olish uchun qo'llab-quvvatlash markaziga murojaat qiling. </p>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-primary btn-sm">Ha</button> -->
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Rahmat</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-basic modal fade show" id="modal-basic5" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title"> O'quvchini muzlatish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="forms w-100">
+                    <label for="a10" class="col-12 p-1"> Tanlang</label>
+                    <div class="form-group col-12 p-0">
+                        <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                            id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                            <option data-select2-id="5" selected>Umumiy</option>
+                            <option>1 guruh</option>
+                            <option>2 guruh</option>
+                            <option>3 guruh</option>
+                            <option>4 guruh</option>
+                            <option>5 guruh</option>
+                        </select>
+
+                    </div>
+                    <p>Eslatma: O'quvchi umumiy yoki ma'lum bir guruh uchun muzlatilganda, to'lovlar, online
+                        darslar va davomat kabi jarayonlar tizimda hisobga olinmaydi.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-basic modal fade show" id="modal-basic6" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title"> Hisobdan chiqarish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="forms w-100">
+                    <label for="a10" class="col-12 p-1"> Tanlang</label>
+                    <div class="form-group col-12 p-0">
+                        <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                            id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                            <option data-select2-id="5" selected>1 guruh</option>
+                            <option>2 guruh</option>
+                            <option>3 guruh</option>
+                            <option>4 guruh</option>
+                            <option>5 guruh</option>
+                        </select>
+
+                    </div>
+                    <p>Eslatma: Hisobdan chiqarishda guruh tanlanadi, ya'ni tanlangan guruhdan o'quvchi butunlay
+                        chiqarib yuboriladi. Joriy vaqtgacha ta'lim olgani uchun to'lov hisoblanadi, qolgan vaqt
+                        uchun yoki joriy guruh uchun to'lagan pulni qoldig'i balansga qaytariladi. Qaytarilgan
+                        pulni moliya yoki o'quvchini to'lovlar qismidan ko'rishingiz mumkin.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal-basic modal fade show" id="modal-basic7" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">To'lovni bekor qilish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+
+                <p>Siz haqiqatda ushbu to'lovni bekor qilmoqchimisiz</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                <button type="button" class="btn btn-primary btn-sm">Ha, o'chirish</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="drawer-basic-wrap">
+    <div class="atbd-drawer drawer-account d-none">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h6 class="drawer-title">SMS yuborish</h6>
+            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+        </div><!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body">
+            <div class="drawer-content">
+                <div class="drawer-account-form form-basic">
+                    <form action="#">
+                        <div class="form-row">
+
+                            <div class="form-group col-12">
+                                <label for="description">Xabar matni</label>
+                                <textarea name="description" id="description"
+                                    class="form-control form-control-sm"
+                                    placeholder="Xabar matnini kiriting..."></textarea>
+                            </div>
+
+                            <div class="form-group col-12">
+                                <small id="small_code"></small>
+                            </div>
+                            <div class="form-group col-12">
+                                <a href="./sms_yoriqnoma.html">SMSda simvollarni ishlatish bo'yicha
+                                    yo'riqnoma</a>
+                            </div>
+                            <div class="form-group col-12">
+                                <div class="btn btn-primary">Yuborish</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- ends: .atbd-drawer__body -->
+    </div>
+
+    <div class="overlay-dark"></div>
+    <div class="overlay-dark-l2"></div>
+
+
+
+</div>
 {% endblock %}
 
 {% block script %}
 <script>
-    var forms = document.querySelectorAll('.forms-view')
-      for (let i = 0; i < forms.length; i++) {
-           forms[i].style.display='none'
-          }
-      var array=[]
-      document.querySelectorAll('form').forEach(e=>e.addEventListener('submit',j=>j.preventDefault()))
-      function handleClickIcon(x) {
-         
-          if(array.includes(x)){
-          forms[array[array.indexOf(x)]].style.display='none';
-          array = array.filter(e=>e!=x);
-          }
-          else {
-          forms[x].style.display='flex';
-          array.push(x)
-          }
-         console.log(array)
-      //   forms.forEach((e)=>  console.log(e.innerHTML=''))
-      }
-      var infoUser = document.querySelector('#infoUser')
-      var editUser = document.querySelector('#editUser')
-      infoUser.style.display='block'
-      editUser.style.display='none'
-      document.querySelector("#saqlash").style.display='none'
-      document.querySelector('#saqlash').addEventListener('click',e=>{
-          infoUser.style.display='block'
-              editUser.style.display='none'
-              document.querySelector('#edit_btn').innerHTML='Tahrirlash'
-              e.target.style.display='none'
-      })
-      document.querySelector('#edit_btn').addEventListener('click',e=>{
-          e.preventDefault();
-         
-          if(e.target.innerHTML=='Saqlash'){
-              infoUser.style.display='block'
-              editUser.style.display='none'
-              e.target.innerHTML='Tahrirlash'
-              document.querySelector("#saqlash").style.display='none'
-          }
-          else{
-              infoUser.style.display='none'
-              editUser.style.display='flex'
-              e.target.innerHTML='Saqlash'
-              document.querySelector("#saqlash").style.display='block'
-          }
-      })
-      document.querySelector('#version_hidden').addEventListener('click',e=>{
-          if(e.target.innerHTML==`Ko'proq`)
-         {
-          infoUser.style.height='auto'
-          e.target.innerHTML='Kamroq'
-         }
-          else 
-          {
-              infoUser.style.height='120px'
-              e.target.innerHTML=`Ko'proq`
-          }
-      })
-  </script>
+     var forms = document.querySelectorAll('.forms-view')
+        for (let i = 0; i < forms.length; i++) {
+            forms[i].style.display = 'none'
+        }
+        var array = []
+        document.querySelectorAll('form').forEach(e => e.addEventListener('submit', j => j.preventDefault()))
+        function handleClickIcon(x) {
+
+            if (array.includes(x)) {
+                forms[array[array.indexOf(x)]].style.display = 'none';
+                array = array.filter(e => e != x);
+            }
+            else {
+                forms[x].style.display = 'flex';
+                array.push(x)
+            }
+            console.log(array)
+            //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+        }
+        var infoUser = document.querySelector('#infoUser')
+        var editUser = document.querySelector('#editUser')
+        infoUser.style.display = 'block'
+        editUser.style.display = 'none'
+        document.querySelector("#saqlash").style.display = 'none'
+        document.querySelector('#saqlash').addEventListener('click', e => {
+            infoUser.style.display = 'block'
+            editUser.style.display = 'none'
+            document.querySelector('#edit_btn').innerHTML = 'Tahrirlash'
+            e.target.style.display = 'none'
+        })
+        document.querySelector('#edit_btn').addEventListener('click', e => {
+            e.preventDefault();
+
+            if (e.target.innerHTML == 'Saqlash') {
+                infoUser.style.display = 'block'
+                editUser.style.display = 'none'
+                e.target.innerHTML = 'Tahrirlash'
+                document.querySelector("#saqlash").style.display = 'none'
+            }
+            else {
+                infoUser.style.display = 'none'
+                editUser.style.display = 'flex'
+                e.target.innerHTML = 'Saqlash'
+                document.querySelector("#saqlash").style.display = 'block'
+            }
+        })
+        document.querySelector('#version_hidden').addEventListener('click', e => {
+            if (e.target.innerHTML == `Ko'proq`) {
+                infoUser.style.height = 'auto'
+                e.target.innerHTML = 'Kamroq'
+            }
+            else {
+                infoUser.style.height = '120px'
+                e.target.innerHTML = `Ko'proq`
+            }
+        })
+
+</script>
 {% endblock %}
