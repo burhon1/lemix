@@ -23,9 +23,8 @@ def students_view(request):
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:students')+f"?error={context['error']}")
-    context['students'] = Student.objects.all()
+    context['students'] = Student.students.students()
     print(context['students'])
-    print(Student.students.students())
     return render(request,'admintion/students.html',context) 
 
 
