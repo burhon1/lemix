@@ -41,3 +41,9 @@ STUDENT_ATTANDENCE_TYPE = (
 LEAD_FORM_STATUS = (
     (1,'Telefon qilish'),
 )
+
+STUDENT_STATUS = (
+    (1, 'Aktiv'),
+    (2, 'Muzlatilgan'),
+    (3, 'Ketgan'),
+)
