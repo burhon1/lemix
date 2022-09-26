@@ -1,4 +1,4 @@
-from django.db.models import Value,CharField, Count, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef
+from django.db.models import Value,CharField, Count, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef, Sum
 from django.db.models.functions import Concat,Substr,Cast
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models.query import QuerySet
@@ -17,18 +17,28 @@ class StudentQueryset(QuerySet):
 
     def students(self):
         return self.get_info().values(
-            'groups__teacher__user__first_name',
-            'groups__teacher__user__last_name'
+            'id',
+            'user__first_name',
+            'user__last_name',
+            'user__phone',
+            'groups',
+            'status'
         ).annotate(
-            teacher_name=ArrayAgg(
-                Concat(F('groups__teacher__user__first_name'),Value(' '),F('groups__teacher__user__last_name')),
-                filter=Q(groups__teacher__user__first_name__isnull=False),
-                distinct=True
-            ),
-            group_count = ArrayAgg(
-                F('groups__id'),
-                distinct=True
-            )
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                ),
+            group_count = F('groups__id'),
+            payment = Sum(F('payment__paid'), distinct=True),
+            attendace = Count(F('attendace'))
         )
 
     def students_attendace(self,id):
@@ -58,6 +68,10 @@ class StudentQueryset(QuerySet):
             ).annotate(
                 attendaces=ArrayAgg(Cast('attendace__date', TextField()),distinct=True)
             )
+    
+    def students_by_status(self, status: int=1):
+        return self.get_info().filter(status=status)
+    
 
     def setudent_list(self):
         return self.get_info().filter(status=True).values('id','full_name')

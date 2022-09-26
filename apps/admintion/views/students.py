@@ -24,7 +24,10 @@ def students_view(request):
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:students')+f"?error={context['error']}")
     context['students'] = Student.students.students()
-    print(context['students'])
+    context['students_count'] = context['students'].count()
+    context['active_students'] = context['students'].students_by_status(status=1).count()
+    context['nonactive_students'] = context['students'].students_by_status(status=2).count()
+    context['removed_students'] = context['students'].students_by_status(status=3).count()
     return render(request,'admintion/students.html',context) 
 
 

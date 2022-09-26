@@ -60,7 +60,7 @@ class Group(models.Model):
 
 class Student(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
-    status = models.BooleanField(default=False,null=True,blank=True)
+    status = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
     source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
     groups = models.ManyToManyField(Group,related_name='student')
     comment = models.TextField()
