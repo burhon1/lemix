@@ -1580,7 +1580,7 @@
             // }
             for (var i = 0; i < res.days.length; i++) {
                 var item = document.createElement('th');
-                item.className='day_parent';
+                item.className='day_title';
                 var dat = new Date(res.days[i])
                 item.textContent=dat.getDate()
                 document.querySelector(".day_parent").appendChild(item)
