@@ -35,7 +35,7 @@ class StudentQueryset(QuerySet):
                 Substr(F('user__phone'),6,2),
                 Value(' '),
                 Substr(F('user__phone'),8,2)
-                ),
+            ),
             group_count = F('groups__id'),
             payment = Sum(F('payment__paid'), distinct=True),
             attendace = Count(F('attendace'))
@@ -68,10 +68,6 @@ class StudentQueryset(QuerySet):
             ).annotate(
                 attendaces=ArrayAgg(Cast('attendace__date', TextField()),distinct=True)
             )
-    
-    def students_by_status(self, status: int=1):
-        return self.get_info().filter(status=status)
-    
 
     def setudent_list(self):
         return self.get_info().filter(status=True).values('id','full_name')
