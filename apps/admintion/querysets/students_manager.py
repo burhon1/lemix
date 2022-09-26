@@ -5,7 +5,6 @@ from django.db.models.query import QuerySet
 
 class StudentQueryset(QuerySet):
     def get_info(self):
-        print(self.count)
         if not self.exists():
             return self.all()
         return self.values(
@@ -60,6 +59,9 @@ class StudentQueryset(QuerySet):
                 attendaces=ArrayAgg(Cast('attendace__date', TextField()),distinct=True)
             )
 
+    def setudent_list(self):
+        return self.get_info().filter(status=True).values('id','full_name')
+
 class StudentManager(Manager):
     def get_query_set(self):
         return StudentQueryset(self.model)
@@ -72,3 +74,6 @@ class StudentManager(Manager):
         
     def student_balances(self,id):
         return self.get_query_set().student_balances(id)
+
+    def studet_list(self):
+        return self.get_query_set().setudent_list()  

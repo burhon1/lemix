@@ -62,6 +62,7 @@ def group_detail_view(request,id):
         pass
     context['group'] = Group.groups.group(id)
     context = context | get_attendace(id,context['group']['start_date'])
+    context['student_list'] = Student.students.studet_list()
     return  render(request,'admintion/group.html',context)
 
 def get_attendace_view(request):
@@ -93,4 +94,17 @@ def change_attendace_view(request):
            date=data['date']
         ) 
         attendace.save() 
+    return JsonResponse({'status':201,'count':0})  
+
+
+def add_student_view(request,id):
+    context={}
+    if request.method == "POST":
+        student = request.POST.get('student',False)
+        if student:
+            print(student)
+            return redirect('admintion:group-detail',id=id)
+        else:
+            context['error'] = 'Malumotlar to\'liq kiritilmadi'  
+            return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
     return JsonResponse({'status':201,'count':0})  
