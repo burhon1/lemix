@@ -1,7 +1,7 @@
 from calendar import Calendar
 from datetime import timezone
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager
+from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager
 from admintion.data import chooses
 from user.models import CustomUser
 
@@ -52,6 +52,7 @@ class Group(models.Model):
     start_date = models.DateField(null=True, blank=True)
     start_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     end_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
+    limit = models.PositiveIntegerField(default=0)
     groups = groups_manager.GroupManager()
     objects = models.Manager()
 
@@ -68,9 +69,13 @@ class Student(models.Model):
     objects = models.Manager()
 
 class Attendace(models.Model):
-    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendace')
+    # student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendace')
     status = models.SmallIntegerField(choices=chooses.STUDENT_ATTANDENCE_TYPE,null=True,blank=True)
     date = models.DateField()
+    group_student = models.ForeignKey("GroupStudents", models.DO_NOTHING, null=True,related_name='attendance')
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    creator = models.ForeignKey(CustomUser, models.DO_NOTHING, related_name="created_attendaces", null=True)
+    
     objects = models.Manager()
     attendaces = attendace_manager.AttendaceManager()
 
@@ -89,3 +94,20 @@ class FormLead(models.Model):
 
     def __str__(self) -> str:
         return self.fio
+
+
+class GroupStudents(models.Model):
+    student = models.ForeignKey(Student, models.CASCADE, related_name='ggroups') #, related_name="groups")
+    group   = models.ForeignKey(Group, models.CASCADE, related_name="students")
+    status  = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('student', 'group')
+class Parents(models.Model):
+    user     = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    students = models.ManyToManyField(Student, null=True)
+    passport = models.CharField("Passport", max_length=10, null=True)
+    telegram = models.CharField("Telegram contact number", max_length=16, null=True)
+    
+    parents = parents_manager.ParentsManager()

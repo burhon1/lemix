@@ -61,7 +61,8 @@ class GroupQueryset(QuerySet):
                 'course__price',
                 'room__title',
                 'start_date',
-                'days'
+                'days',
+                'limit'
             ).filter(id=id).first()
 
 class GroupManager(Manager):

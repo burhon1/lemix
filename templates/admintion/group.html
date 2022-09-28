@@ -245,7 +245,7 @@
                                                                         role="tablist">
                                                                         {% for month in months.old|slice:"-3:" %}
                                                                         <li>
-                                                                            <a id="month-{{month.key}}" onclick="handleChangeMonth('{{group.id}}','{{month.key}}','{{group.id}}')" class="{% if month.value == months.current %}active{% endif %} month_key month-{{month.date}}" href="#">{{month.value}}</a>
+                                                                            <a id="month-{{month.key}}" onclick="handleChangeMonth('{{group.id}}','{{month.key}}')" class="{% if month.value == months.current %}active{% endif %} month_key month-{{month.date}}" href="#">{{month.value}}</a>
                                                                         </li>
                                                                         {% endfor %}
                                                                     </ul>
@@ -1530,7 +1530,8 @@
     return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
     }
     function handleChange(id, date) {
-        var status = document.getElementById(`${id.toString()}|${date.toString()}`)
+        var status = document.getElementById(`${id.toString()}-${date.toString()}`)
+        var group_id = window.location.pathname.split('/')[3]; // need to optimize some points
         fetch(`{% url 'admintion:change-attendace' %}`, {
             method: 'POST',
             headers: {
@@ -1540,6 +1541,7 @@
             body: JSON.stringify({
                 id,
                 date,
+                group_id: group_id,
                 status:status.value
             })
         }).then(res => res.json()).then(res => {

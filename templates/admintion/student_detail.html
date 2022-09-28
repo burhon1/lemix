@@ -1,5 +1,6 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block style %}
 <style>
     .cardPay {
@@ -92,7 +93,7 @@
                 <form class="col-md-4 col-sm-12" id="formedit">
                     <div class="card">
                         <div class="card-header border-bottom-none">
-                            <h6>Jonibek Negmurodov</h6>
+                            <h6>{{ student.full_name }}</h6>
                             <div class="card-extra">
                                 <div class="dropdown dropdown-hover">
                                     <a class="btn-link" href="#">
@@ -108,9 +109,9 @@
                                     </a>
 
                                     <div class="dropdown-default">
-                                        <a class="dropdown-item" href="#" id="edit_btn">Tahrirlash</a>
-                                        <a class="dropdown-item" href="#">Aktivlashtirish</a>
-                                        <a class="dropdown-item text-danger color-danger"
+                                        <a class="dropdown-item" href="#" id="edit_btn" data-toggle="modal" data-target="#modal-basic11">Tahrirlash</a>
+                                        <a class="dropdown-item" href="#" onClick="ActivateStudent({{student.id}})">Aktivlashtirish</a>
+                                        <a class="dropdown-item text-danger color-danger"  data-toggle="modal" data-target="#modal-basic12"
                                             href="#">O'chirish</a>
 
 
@@ -124,42 +125,44 @@
 
                             <ul class="v-history-list  pb-3" id="infoUser">
                                 <li class="w-100 mb-2"><span class="version-date">ID</span><span
-                                        class="version-name">99888777</span></li>
+                                        class="version-name">{{ student.id }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Telefon</span><span
-                                        class="version-name">+998997025312</span></li>
+                                        class="version-name">{{ student.phone_number }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Manbasi</span><span
-                                        class="version-name">Instagram </span></li>
+                                        class="version-name">{{ student.source|get_type_name:"source" }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Holati</span><span
-                                        class="version-name">Aloqaga chiqish kerak</span></li>
+                                        class="version-name">{{ student.source|get_type_name:"status" }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Kurs</span><span
-                                        class="version-name">Matematika</span></li>
+                                        class="version-name">{{ courses }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Jinsi</span><span
-                                        class="version-name">Erkak</span></li>
+                                        class="version-name">{{ student.gender|get_type_name:"gender"}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Tug'ilgan
-                                        sanasi</span><span class="version-name"> 27.05.2000</span></li>
+                                        sanasi</span><span class="version-name"> {{ student.birthday|date:"d. m.Y"}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Bo'sh kunlari
                                         vaqti</span><span class="version-name">Du,Pa,Sha </span></li>
                                 <li class="w-100 mb-2"><span class="version-date">O'qishdan
                                         maqsad</span><span class="version-name">OTM kirish</span></li>
+                                {% if parent %}
                                 <li class="w-100 mb-2"><span class="version-date">Ota-ona FIO</span><span
-                                        class="version-name">Falonchiyev Pistonchi</span></li>
+                                    class="version-name">{{ parent.full_name }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Ota-ona raqami</span><span
-                                        class="version-name">+998997025312</span></li>
+                                        class="version-name">{{ parent.phone_number }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Telegram
-                                        raqami</span><span class="version-name">+998997025312</span></li>
+                                        raqami</span><span class="version-name">{{ parent.telegram }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Manzili</span><span
-                                        class="version-name">Buxoro shaxar Mustaqillik ko'chasi </span></li>
+                                        class="version-name">{{ student.location }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Email</span><span
-                                        class="version-name"> example@gmail.com</span></li>
+                                        class="version-name"> {{ student.email }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Passport seriyasi va
                                         raqami</span>
-                                    <span class="version-name">AC1234567</span>
+                                    <span class="version-name">{{ parent.passport }}</span>
                                 </li>
                                 <li class="w-100 mb-2"><span class="version-date">File</span>
                                     <span class="version-name">file.pdf</span>
                                 </li>
+                                {% endif %}
                                 <li class="w-100 mb-2"><span class="version-date">Izoh</span>
-                                    <span class="version-name">bla la .....</span>
+                                    <span class="version-name">{{ student.comment }}</span>
                                 </li>
 
                             </ul>
@@ -183,7 +186,7 @@
                                         raqam</label>
                                     <input type="text" name="tel" id="tel"
                                         class="form-control form-control-sm border-light"
-                                        value="(99) 123-45-67" placeholder="(99) 123-45-67">
+                                        value="{{student.phone_number}}" placeholder="(99) 123-45-67">
                                 </div>
 
                                 <div class="form-group col-12">
@@ -199,19 +202,25 @@
                                 <div class="form-group col-12 ">
                                     <label for="manba"
                                         class=" color-dark fs-12 fw-500 align-center">Manbasi</label>
-                                    <select name="manba" id="manba"
+                                    <select name="source" id="manba" value="{{ student.source }}"
                                         class="form-control  form-control-sm border-light">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
+                                        <option value="1">Telegram</option>
+                                        <option value="2">Banner</option>
+                                        <option value="3">Seminar</option>
+                                        <option value="4">Tik tok</option>
+
+
                                     </select>
                                 </div>
                                 <div class="form-group  col-12">
                                     <label for="hol "
                                         class=" color-dark fs-12 fw-500 align-center">Holati</label>
-                                    <select name="hol" id="hol"
+                                    <select name="hol" id="hol"  value="{{ student.status }}"
                                         class="form-control form-control-sm border-light">
-                                        <option value="">Jack Ma</option>
-                                        <option value="">Tom liu</option>
+                                        <option value="1">Aktiv</option>
+                                        <option value="2">Muzlatilgan</option>
+                                        <option value="3">Ketgan</option>
+
                                     </select>
                                 </div>
 
@@ -220,7 +229,7 @@
                                         class=" color-dark fs-12 fw-500 align-center">Izoh</label>
                                     <textarea name="description" id="description"
                                         class="form-control border-light form-control-sm"
-                                        placeholder="PLease Enter Url Description">Word bilan ishlashni bilaman</textarea>
+                                        placeholder="PLease Enter Url Description">{{ student.comment }}</textarea>
                                 </div>
                                 <div class="col-12">
                                     <div class="forms w-100">
@@ -547,7 +556,7 @@
                                                 <line x1="12" y1="8" x2="12" y2="16" />
                                                 <line x1="8" y1="12" x2="16" y2="12" />
                                             </svg>
-                                            <span class="atbd-menu__text" data-toggle="modal"
+                                            <span class="atbd-menu__text" data-toggle="modal" onClick="getGroups({{ student.id }})"
                                                 data-target="#modal-basic2">Guruhga qo'shish</span>
                                         </a>
 
@@ -578,7 +587,7 @@
                                                 <line x1="10" y1="15" x2="10" y2="9" />
                                                 <line x1="14" y1="15" x2="14" y2="9" />
                                             </svg>
-                                            <span class="atbd-menu__text" data-toggle="modal"
+                                            <span class="atbd-menu__text" data-toggle="modal" onclick="getStudentGroups({{ student.id }}, 'deactivate', 'student_groups_select')"
                                                 data-target="#modal-basic5">O'quvchini muzlatish </span>
                                         </a>
 
@@ -593,7 +602,7 @@
                                                 <line x1="15" y1="9" x2="9" y2="15" />
                                                 <line x1="9" y1="9" x2="15" y2="15" />
                                             </svg>
-                                            <span class="atbd-menu__text" data-toggle="modal"
+                                            <span class="atbd-menu__text" data-toggle="modal"  onclick="getStudentGroups({{ student.id }}, 'remove', 'student_groups_select2')"
                                                 data-target="#modal-basic6">Hisobdan chiqarish </span>
                                         </a>
 
@@ -1133,6 +1142,7 @@
                                         <div class="tab-pane fade show active" id="tab-v-5" role="tabpanel"
                                             aria-labelledby="tab-v-5-tab">
                                             <div class="row">
+                                                {% for group in groups %}
                                                 <div class=" col-sm-12 col-lg-6">
                                                     <div class="card-single mb-4">
 
@@ -1140,37 +1150,25 @@
                                                         <div
                                                             class="card card-default card-md bg-white card-bordered">
                                                             <div class="card-header">
-                                                                <h6>Guruh 1</h6>
-
-                                                                <!-- <div class="card-extra">
-                                                                            <div class="dropdown dropdown-hover">
-                                                                                <a class="btn-link" href="">More</a>
-            
-                                                                                <div class="dropdown-default">
-                                                                                    <a class="dropdown-item" href="#">More One</a>
-                                                                                    <a class="dropdown-item" href="#">More Two</a>
-                                                                                    <a class="dropdown-item" href="#">More Three</a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div> -->
+                                                                <h6>{{ group.group.title }}</h6>
 
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="card-content">
-                                                                    <p>Kurs: Matematika
-                                                                    <p> O'qituvchi: Hamroyev Shaxzod</p>
-                                                                    <p> Dars kunlari: Du/Se/Cho</p>
-                                                                    <p> Vaqti: 14:00-16:00</p>
-                                                                    <p> Guruh boshlanishi: 02.03.2022</p>
+                                                                    <p>Kurs: {{ group.group.course }}
+                                                                    <p> O'qituvchi: {{ group.group.teacher.user.last_name|default:"" }} {{ group.group.teacher.user.first_name|default:"" }}</p>
+                                                                    <p> Dars kunlari: {{group.group|readable_days }}</p>
+                                                                    <p> Vaqti: {{ group.group.start_time }}-{{ group.group.end_time }}</p>
+                                                                    <p> Guruh boshlanishi: {{ group.group.start_date|date:"d. m. Y"}}</p>
                                                                     <p> Guruh yakunlanishi: 05.11.2022</p>
                                                                     <p> O'quvchi qo'shilgan vaqti:
                                                                         05.03.2022 10:45</p>
-                                                                    <p> Kurs narxi: 400 000 so'm</p>
-                                                                    <p> O'quvchi uchun: 300 000 so'm</p>
-                                                                    <p> Chegirma: 100 000 so'm</p>
+                                                                    <p> Kurs narxi: {{ group.group.course.price|readable_soums }} so'm</p>
+                                                                    <p> O'quvchi uchun: {{ group.group.course.price|readable_soums }} so'm</p>
+                                                                    <p> Chegirma: {{ group.group.course.price|readable_soums}} so'm</p>
                                                                     <p class="d-flex align-items-center">
                                                                         O'quvchi holati:<span
-                                                                            class="selling-badge order-bg-opacity-success color-success">Faol</span>
+                                                                            class="selling-badge order-bg-opacity-{{ group.status|get_status}} color-{{ group.status|get_status}}">{{group.status|get_status_name}}</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -1180,61 +1178,19 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-sm-12 ">
-                                                    <div class="card-single mb-4">
-
-
-                                                        <div
-                                                            class="card card-default card-md bg-white card-bordered">
-                                                            <div class="card-header">
-                                                                <h6>Guruh 2</h6>
-
-                                                                <!-- <div class="card-extra">
-                                                                            <div class="dropdown dropdown-hover">
-                                                                                <a class="btn-link" href="">More</a>
-            
-                                                                                <div class="dropdown-default">
-                                                                                    <a class="dropdown-item" href="#">More One</a>
-                                                                                    <a class="dropdown-item" href="#">More Two</a>
-                                                                                    <a class="dropdown-item" href="#">More Three</a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div> -->
-
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <div class="card-content">
-                                                                    <p>Kurs: Matematika
-                                                                    <p> O'qituvchi: Hamroyev Shaxzod</p>
-                                                                    <p> Dars kunlari: Du/Se/Cho</p>
-                                                                    <p> Vaqti: 14:00-16:00</p>
-                                                                    <p> Guruh boshlanishi: 02.03.2022</p>
-                                                                    <p> Guruh yakunlanishi: 05.11.2022</p>
-                                                                    <p> O'quvchi qo'shilgan vaqti:
-                                                                        05.03.2022 10:45</p>
-                                                                    <p> Kurs narxi: 400 000 so'm</p>
-                                                                    <p> O'quvchi uchun: 300 000 so'm</p>
-                                                                    <p> Chegirma: 100 000 so'm</p>
-                                                                    <p class="d-flex align-items-center">
-                                                                        O'quvchi holati:<span
-                                                                            class="selling-badge order-bg-opacity-danger color-danger">Muzlatilgan</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-
-                                                    </div>
-                                                </div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab-v-6" role="tabpanel"
                                             aria-labelledby="tab-v-6-tab">
                                             <div class="card border-0">
                                                 <div class="card-header">
-                                                    <p>SAT 1 guruhidagi davomat - 98% <br>
-                                                        Intermediate 3 guruhidagi davomat - 85%</p>
+                                                    <p>{% if attendace_results %}
+                                                            {% for res in attendace_results %}
+                                                                {{ res.group }} guruhida - {{ res.percentage}}% <br>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </p>
                                                     <div class="card-extra">
                                                         <ul class="card-tab-links mr-3 nav-tabs nav"
                                                             role="tablist">
@@ -1303,65 +1259,27 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr class="text-center">
-                                                                                <td class="text-center">
-                                                                                    Guruh 1</td>
+                                                                            {% for attendace in attendaces %}
+                                                                                <tr class="text-center">
+                                                                                    <td class="text-center">
+                                                                                        {{ attendace.group_student.group.title }}</td>
 
-                                                                                <td class="text-center">
-                                                                                    14.09.2022
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    <span
-                                                                                        class="selling-badge order-bg-opacity-success color-success">Keldi</span>
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    Jonibek
-                                                                                    Negmurodov(Manager)</td>
-                                                                                <td class="text-center">
-                                                                                    14.09.2022 11:59
-                                                                                </td>
+                                                                                    <td class="text-center">
+                                                                                        {{ attendace.date|date:'d.m.Y'}}
+                                                                                    </td>
+                                                                                    <td class="text-center">
+                                                                                        <span
+                                                                                            class="selling-badge order-bg-opacity-{{ attendace.status|get_status}} color-{{ attendace.status|get_status}}">{{ attendace.status|get_type_name:"attendance"}}</span>
+                                                                                    </td>
+                                                                                    <td class="text-center">
+                                                                                        {{ attendace.creator.full_name }}(Manager)</td>
+                                                                                    <td class="text-center">
+                                                                                        {{ attendace.created|date:'d.m.Y H:i' }}
+                                                                                    </td>
 
-                                                                            </tr>
-                                                                            <tr class="text-center">
-                                                                                <td class="text-center">
-                                                                                    Guruh 2</td>
+                                                                                </tr>
 
-                                                                                <td class="text-center">
-                                                                                    14.09.2022
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    <span
-                                                                                        class="selling-badge order-bg-opacity-danger color-danger">Kelmadi</span>
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    Jonibek
-                                                                                    Negmurodov(Manager)</td>
-                                                                                <td class="text-center">
-                                                                                    14.09.2022 11:59
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr class="text-center">
-                                                                                <td class="text-center">
-                                                                                    Guruh 3</td>
-
-                                                                                <td class="text-center">
-                                                                                    14.09.2022
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    <span
-                                                                                        class="selling-badge order-bg-opacity-primary color-primary">Kechikdi</span>
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    Jonibek
-                                                                                    Negmurodov(Manager)</td>
-                                                                                <td class="text-center">
-                                                                                    14.09.2022 11:39
-                                                                                </td>
-
-                                                                            </tr>
-
-
+                                                                            {% endfor %}
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -1866,30 +1784,26 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
             </div>
-            <div class="modal-body">
-                <div class="forms w-100">
-                    <label for="a10" class="col-12 p-1">Guruhni tanlang</label>
-                    <div class="form-group col-12 p-0">
-                        <select class="form-control  form-control-sm border-light select2-hidden-accessible"
-                            id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
-                            <option data-select2-id="5" selected>1 guruh</option>
-                            <option>2 guruh</option>
-                            <option>3 guruh</option>
-                            <option>4 guruh</option>
-                            <option>5 guruh</option>
-                        </select>
-
+                <div class="modal-body">
+                    <div class="forms w-100">
+                        <label for="a10" class="col-12 p-1">Guruhni tanlang</label>
+                        <div class="form-group col-12 p-0">
+                            <select class="form-control  form-control-sm border-light select2-hidden-accessible get_groups"
+                                id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                            </select>
+    
+                        </div>
+                            <p class="group_limit"> <b class="fw-bold">Guruh limiti:</b>  </p>
+                            <p class="group_teacher"> <b class="fw-bold">O'qituvchi:</b>  </p>
+                            <p class="group_days"> <b class="fw-bold">Dars kunlari:</b>  </p>
+                            <p class="group_times"> <b class="fw-bold">Vaqti:</b>  </p>
                     </div>
-                    <p><b class="fw-bold">Guruh limiti:</b> 12/8 </p>
-                    <p><b class="fw-bold">O'qituvchi:</b> Burhon Baqoyev</p>
-                    <p><b class="fw-bold">Dars kunlari:</b> Dushanba/Chorshanba/Juma</p>
-                    <p><b class="fw-bold">Vaqti:</b> 14:00-16:00</p>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                    <button type="button" class="btn btn-primary btn-sm" onClick="SetStudentGroup({{ student.id }})">Saqlash</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -2004,14 +1918,8 @@
                 <div class="forms w-100">
                     <label for="a10" class="col-12 p-1"> Tanlang</label>
                     <div class="form-group col-12 p-0">
-                        <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                        <select class="form-control  form-control-sm border-light select2-hidden-accessible student_groups_select"
                             id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
-                            <option data-select2-id="5" selected>Umumiy</option>
-                            <option>1 guruh</option>
-                            <option>2 guruh</option>
-                            <option>3 guruh</option>
-                            <option>4 guruh</option>
-                            <option>5 guruh</option>
                         </select>
 
                     </div>
@@ -2021,7 +1929,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm"  onClick="SetStudentGroupStatus({{ student.id }}, 'deactivate', 'student_groups_select')">Saqlash</button>
             </div>
         </div>
     </div>
@@ -2046,13 +1954,9 @@
                 <div class="forms w-100">
                     <label for="a10" class="col-12 p-1"> Tanlang</label>
                     <div class="form-group col-12 p-0">
-                        <select class="form-control  form-control-sm border-light select2-hidden-accessible"
+                        <select class="form-control  form-control-sm border-light select2-hidden-accessible student_groups_select2"
                             id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
-                            <option data-select2-id="5" selected>1 guruh</option>
-                            <option>2 guruh</option>
-                            <option>3 guruh</option>
-                            <option>4 guruh</option>
-                            <option>5 guruh</option>
+                            
                         </select>
 
                     </div>
@@ -2064,7 +1968,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm"  onClick="SetStudentGroupStatus({{ student.id }}, 'remove', 'student_groups_select2')">Saqlash</button>
             </div>
         </div>
     </div>
@@ -2096,6 +2000,230 @@
 
 </div>
 
+<div class="modal-basic modal fade show" id="modal-basic12" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">O'quvchini o'chirish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+
+                <p>Siz haqiqatda ushbu o'quvchini o'chirib yubormoqchimisiz?<br>
+                    Eslatma: O'quvchi ma'lumotlarini qayta tiklab bo'lmaydi. Faqat yangidan yaratishingiz mumkin. 
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="deleteStudent({{ student.id }})">Ha, o'chirish</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal-basic modal fade show" id="modal-basic11" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title"> Tahrirlash</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row " id="editUser">
+                    <div class="form-group col-6">
+                        <label for="username" class=" color-dark fs-12 fw-500 align-center">Ism</label>
+                        <input type="text" name="first_name" id="first_name" class="form-control form-control-sm border-light student_first_name" value="{{ student.user__first_name }}" placeholder="Isminggiz...">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="username" class=" color-dark fs-12 fw-500 align-center">Sharifi</label>
+                        <input type="text" name="middle_name" id="last_name" class="form-control form-control-sm border-light student_middle_name" value="{{ student.user__middle_name}}" placeholder="Familiyangiz...">
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="username" class=" color-dark fs-12 fw-500 align-center">Familiya</label>
+                        <input type="text" name="last_name" id="last_name" class="form-control form-control-sm border-light student_last_name" value="{{ student.user__last_name}}" placeholder="Familiyangiz...">
+                    </div>
+                    
+                    <div class="form-group col-12">
+                        <label for="tel" class=" color-dark fs-12 fw-500 align-center">Telefon raqam</label>
+                        <input type="text" name="phone" id="tel" class="form-control form-control-sm border-light student_phone" value={{ student.phone_number }} placeholder="(99) 123-45-67">
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label for="promise" class=" color-dark fs-12 fw-500 align-center">O'qishdan maqsad</label>
+                        <input type="text" name="promise" id="promise" class="form-control form-control-sm border-light" value="Jonibek" placeholder="Isminggiz...">
+                    </div>
+                   
+                 
+                    <div class="form-group col-12 ">
+                        <label for="manba" class=" color-dark fs-12 fw-500 align-center">Manbasi</label>
+                        <select name="source" id="manba" class="form-control  form-control-sm border-light student_source" value="{{ student.source }}">
+                            <option value="1">Telegram</option>
+                            <option value="2">Banner</option>
+                            <option value="3">Seminar</option>
+                            <option value="4">Tik tok</option>
+                        </select>
+                    </div>
+                    {% comment %} <div class="form-group  col-12">
+                        <label for="hol " class=" color-dark fs-12 fw-500 align-center">Holati</label>
+                        <select name="hol" id="hol" class="form-control form-control-sm border-light" value={{ student.status }}>
+                            <option value="">Jack Ma</option>
+                            <option value="">Tom liu</option>
+                        </select>
+                    </div> {% endcomment %}
+                
+                    <div class="form-group col-12">
+                        <label for="description" class=" color-dark fs-12 fw-500 align-center">Izoh</label>
+                        <textarea name="comment"  id="description" class="form-control border-light form-control-sm student_comment" placeholder="PLease Enter Url Description">{{ student.comment }}</textarea>
+                    </div>
+      <div class="col-12">
+        <div class="forms w-100">
+            <div class="forms-view" id="parent">
+                <label for="a10" class="col-12 p-1  color-dark fs-12 fw-500 align-center">Ota-ona</label>
+                <div class="form-group  col-12 p-0">
+                    <input type="text" name="parent" id="a10" value="{{ parent.ful_name }}" class="form-control form-control-sm border-light mr-2" placeholder="Ota-ona...">
+                </div>
+                <div class="form-group col-12 p-0">
+                    <input type="text" name="name" id="a10" class="form-control form-control-sm border-light mr-2" value="(99) 134-56-87" placeholder="(99) 134-56-87">
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(0)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+            </div>
+            <div class="forms-view " id="telegram">
+                <label for="a10" class="col-12 p-1  color-dark fs-12 fw-500 align-center">Telegram</label>
+                <div class="form-group col-12 p-0">
+                    <input type="text" name="telegram" id="a10" class="form-control form-control-sm border-light mr-2" value="(99) 134-56-87" placeholder="(99) 134-56-87">
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(1)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+            </div>
+            <div class="forms-view " id="manzil">
+                <label for="a10" class="col-12 p-1  color-dark fs-12 fw-500 align-center">Manzil</label>
+                    <div class="form-group col-12 p-0">
+                        <input type="text" name="location" id="a10" class="form-control form-control-sm border-light mr-2 student_location" value="Buxoro shaxar" placeholder="Manzil...">
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(2)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+
+            
+            </div>
+            <div class="forms-view " id="email">
+                <label for="a10" class="col-12 p-1  color-dark fs-12 fw-500 align-center">Email</label>
+                <div class="form-group col-12 p-0">
+                    <input type="email" name="email" id="a10" class="form-control form-control-sm border-light mr-2" value="example@gmail.com" placeholder="example@.com">
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(3)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+             
+            </div>
+            <div class="forms-view " id="passport">
+                <label for="a10" class="col-12 p-1  color-dark fs-12 fw-500 align-center">Passport</label>
+                <div class="form-group col-12 p-0">
+                    <input type="text" name="passport" id="a10" class="form-control form-control-sm border-light mr-2" value="WW1111111" placeholder="WW1111111">
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(4)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+            </div>
+            <div class="forms-view " id="file">
+                <label for="a10" class="col-12 p-1  color-dark fs-12 fw-500 align-center">Rasm Yuklash</label> 
+                <div class="form-group col-12 p-0">
+                    <input type="file" name="picture" id="a10" class="form-control form-control-sm border-light mr-2" value="{{ student.picture}}" placeholder="file">
+                    <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(5)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+            </div>
+        </div>
+<div class="buttons d-flex flex-wrap  w-100">
+
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(0)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(1)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                 </button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(2)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(3)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(4)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                 </button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(5)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/><polyline points="16 16 12 12 8 16"/></svg>
+</button>
+
+</div>
+      </div>
+                             <p class="col-12">
+                                <div class="forms w-100">
+                                    <div class="forms-view" id="parent">
+                                        <label for="a10" class="col-12 p-1">Qo'shimcha ma'lumotlar: </label>
+                                        <p  class="col-12 p-1 small mb-1">Tug'ilgan sanasi</p>
+                                        <div class="form-group  col-12 p-0 mb-2">
+                                            <input type="date" name="birthday" id="a10" class="form-control form-control-sm border-light mr-2" value="Falonchiyev Pistoni" placeholder="Ota-ona...">
+                                       
+                                        </div>
+                                        <p  class="col-12 p-1 small mb-1">Jinsi</p>
+                                        <div class="form-group  col-12  p-0 mb-2">
+                                            <div class="radio-horizontal-list d-flex">
+
+
+                                                <div class="radio-theme-default custom-radio ">
+                                                    <input class="radio" type="radio" name="radio-horizontal" value=0 id="radio-vl1">
+                                                    <label for="radio-vl1">
+                                                        <span class="radio-text">Erkak</span>
+                                                    </label>
+                                                </div>
+        
+        
+        
+        
+                                                <div class="radio-theme-default custom-radio ">
+                                                    <input class="radio" type="radio" name="radio-horizontal" value=0 id="radio-vl2">
+                                                    <label for="radio-vl2">
+                                                        <span class="radio-text">Ayol</span>
+                                                    </label>
+                                                </div>
+        
+        
+                                            </div>
+                                        </div>
+                                        <p  class="col-12 p-1 small mb-1">Qiziqadigan kurslar</p>
+                                        <div class="form-group col-12 p-0">
+                                            <select class="form-control  form-control-sm border-light select2-hidden-accessible" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                                                <option data-select2-id="5" selected>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+    
+                                           <svg xmlns="http://www.w3.org/2000/svg"  onclick="handleClickIcon(6)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                         
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                                <button class="btn btn-icon btn-circle btn-outline-primary  mr-3" style="visibility: hidden;width: 100%;" ><a href="# " onclick="handleClickIcon(6)" style="visibility: visible;" class="text-right d-block col-12" >+Qo’shimcha ma’lumotlar: </a></button>
+                               
+                             </p>                
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="editStudent({{ student.id }})">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
@@ -2146,11 +2274,35 @@
         for (let i = 0; i < forms.length; i++) {
             forms[i].style.display = 'none'
         }
+        var buttons =document.querySelectorAll('.btn.btn-icon.btn-circle.btn-outline-primary');
+        for (let i = 0; i < buttons.length; i++) {
+             buttons[i].style.display='flex'
+            }
         var array = []
+        var arrayb=[]
         document.querySelectorAll('form').forEach(e => e.addEventListener('submit', j => j.preventDefault()))
         function handleClickIcon(x) {
-
-            if (array.includes(x)) {
+            if(array.includes(x)){
+                forms[array[array.indexOf(x)]].style.display='none';
+                if(buttons[x]!=undefined){
+    
+                    buttons[arrayb[arrayb.indexOf(x)]].style.display='flex';
+                    arrayb = arrayb.filter(e=>e!=x);
+                }
+                array = array.filter(e=>e!=x);
+                
+                }
+                else {
+                forms[x].style.display='flex';
+                if(buttons[x]!=undefined){
+    
+                    buttons[x].style.display='none';
+                    arrayb.push(x)
+                }
+                array.push(x)
+                
+                }
+            /*if (array.includes(x)) {
                 forms[array[array.indexOf(x)]].style.display = 'none';
                 array = array.filter(e => e != x);
             }
@@ -2158,7 +2310,7 @@
                 forms[x].style.display = 'flex';
                 array.push(x)
             }
-            console.log(array)
+            console.log(array) */
             //   forms.forEach((e)=>  console.log(e.innerHTML=''))
         }
         var infoUser = document.querySelector('#infoUser')
@@ -2172,22 +2324,6 @@
             document.querySelector('#edit_btn').innerHTML = 'Tahrirlash'
             e.target.style.display = 'none'
         })
-        document.querySelector('#edit_btn').addEventListener('click', e => {
-            e.preventDefault();
-
-            if (e.target.innerHTML == 'Saqlash') {
-                infoUser.style.display = 'block'
-                editUser.style.display = 'none'
-                e.target.innerHTML = 'Tahrirlash'
-                document.querySelector("#saqlash").style.display = 'none'
-            }
-            else {
-                infoUser.style.display = 'none'
-                editUser.style.display = 'flex'
-                e.target.innerHTML = 'Saqlash'
-                document.querySelector("#saqlash").style.display = 'block'
-            }
-        })
         document.querySelector('#version_hidden').addEventListener('click', e => {
             if (e.target.innerHTML == `Ko'proq`) {
                 infoUser.style.height = 'auto'
@@ -2199,5 +2335,207 @@
             }
         })
 
+        function getGroups(id){
+            var url = `/admintion/student/${id}/add-group/`;
+            fetch(url)
+            .then(res=>res.json())
+            .then(res => {
+                var select = document.getElementsByClassName('get_groups')[0];
+                while (select.options.length > 0) {
+                    select.remove(0);
+                }
+                
+                if (res.groups.length === 0){
+                    const option = new Option("Guruhlar mavjud emas");
+                    select.appendChild(option);
+                }
+                else {
+                    const option = new Option();
+                    select.appendChild(option);
+                }
+                res.groups.forEach(function(group){
+                    const option = new Option(group.title, group.id);
+                    select.appendChild(option);
+                })
+                console.log(select.value);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+
+        function SetStudentGroup(id){
+            var select = document.getElementsByClassName('get_groups')[0];
+            if (select.value){
+                console.log("SetStudentGroup: ", select.value, id);
+                var url = `/admintion/student/${id}/add-group/`;
+                let formData = new FormData();
+                formData.append('group', select.value);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        "X-CSRFToken": "{{csrf_token}}",
+                    },
+                    body: formData,
+                })
+                .then(res => res.json()).then(res=>{
+                    location.reload();
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+
+            }
+
+            return 
+        }
+
+        var select = document.getElementsByClassName('get_groups')[0];
+        select.addEventListener('change', (event)=>{
+            console.log(event.target.value);
+            var url = `/admintion/group/${event.target.value}/data/`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            })
+            .then(res => res.json())
+            .then(res => {
+                function array_to_string(arr){
+                    const days = ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba", "Yakshanba"] 
+                    let day = '';                        
+                    arr.forEach(function(day_num){
+                        console.log(days[parseInt(day_num)-1]);
+                        day = `${day}${days[parseInt(day_num)-1]}/`
+                    })
+                    return day.slice(0, -1);
+                };
+                document.getElementsByClassName("group_limit")[0].innerHTML = `<b class="fw-bold">Guruh limiti:</b>` + "  " + `${res.group.total_student} / ${res.group.limit}`;
+                document.getElementsByClassName("group_teacher")[0].innerHTML = `<b class="fw-bold">O'qituvchi:</b>` + "  " +res.group.teacher;
+                document.getElementsByClassName("group_days")[0].innerHTML = `<b class="fw-bold">Dars kunlari:</b>` + "  " + array_to_string(res.group.days);
+                document.getElementsByClassName("group_times")[0].innerHTML = `<b class="fw-bold">Vaqti:</b>` + "  " +res.group.times;
+            })
+            .catch(err=> {
+                console.log(err);
+            })
+        });
+
+        function getStudentGroups(id, status, select_class){
+            var url = `/admintion/student/${id}/${status}-in-group/`;
+            fetch(url,{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            })
+            .then(res=>res.json())
+            .then(res => {
+                var select = document.getElementsByClassName(`${select_class}`)[0];
+                if(select.options){
+                    while (select.options.length > 0) {
+                        select.remove(0);
+                    }
+                }
+                const option = new Option("Umumiy", "umumiy");
+                select.appendChild(option);
+
+                res.groups.forEach(function(group){
+                    const option = new Option(group.group__title, group.id);
+                    select.appendChild(option);
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+
+        function SetStudentGroupStatus(id, status, select_class){
+            var select = document.getElementsByClassName(`${select_class}`)[0];
+            if (select.value){
+                var url = `/admintion/student/${id}/${status}-in-group/`;
+                let formData = new FormData();
+                formData.append('group_student', select.value);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        "X-CSRFToken": "{{csrf_token}}",
+                    },
+                    body: formData,
+                })
+                .then(res => res.json()).then(res=>{
+                    location.reload();
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+            }
+            return 
+        }
+
+        function editStudent(id){
+            var url = `/admintion/student/${id}/detail/`;
+            let formData = new FormData();
+            student = JSON.stringify(
+                    {'first_name': document.getElementsByClassName('student_first_name')[0].value,
+                    'last_name': document.getElementsByClassName('student_last_name')[0].value,
+                    'middle_name': document.getElementsByClassName('student_middle_name')[0].value,
+                    'phone': document.getElementsByClassName('student_phone')[0].value,
+                    'source': document.getElementsByClassName('student_source')[0].value,
+                    'comment': document.getElementsByClassName('student_comment')[0].value,
+                    'location': document.getElementsByClassName('student_location')[0].value,}
+                )
+                formData.append('student', student);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        "X-CSRFToken": "{{csrf_token}}",
+                    },
+                    body: formData,
+                })
+                .then(res => {
+                    location.reload();
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+        }
+
+        function ActivateStudent(id){
+            fetch(`/admintion/student/${id}/activate-in-group/`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    "X-CSRFToken": "{{csrf_token}}",
+                }
+            })
+            .then(res=>res.json()).then(res=>{
+                location.reload();
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+        function deleteStudent(id){
+            fetch(`/admintion/student/${id}/delete/`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    "X-CSRFToken": "{{csrf_token}}",
+                }
+            })
+            .then(res=>{
+                window.location.href = '/admintion/students/';
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
 </script>
 {% endblock %}
