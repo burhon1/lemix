@@ -5,7 +5,6 @@ from django.db.models.query import QuerySet
 
 class StudentQueryset(QuerySet):
     def get_info(self):
-        print(self.count)
         if not self.exists():
             return self.all()
         return self.values(
@@ -69,7 +68,7 @@ class StudentQueryset(QuerySet):
             ).annotate(
                 attendaces=ArrayAgg(Cast('ggroups__attendance__date', TextField()),distinct=True)
             )
-    
+
     def students_by_status(self, status: int=1):
         return self.get_info().filter(status=status)
     
@@ -92,6 +91,10 @@ class StudentQueryset(QuerySet):
             picture = F('user__picture'),
         ).filter(id=id).first()
 
+    def setudent_list(self):
+        return self.get_info().filter(status=True).values('id','full_name')
+
+
 class StudentManager(Manager):
     def get_query_set(self):
         return StudentQueryset(self.model)
@@ -107,3 +110,6 @@ class StudentManager(Manager):
 
     def student_detail(self, id):
         return self.get_query_set().student_detail(id)
+
+    def studet_list(self):
+        return self.get_query_set().setudent_list()  
