@@ -42,7 +42,7 @@ class StudentQueryset(QuerySet):
         )
 
     def students_attendace(self,id):
-        return self.get_info().filter(ggroups__id=id).values(
+        return self.get_info().filter(ggroups__group__id=id).values(
             'id',
             'full_name'
         ).annotate(
