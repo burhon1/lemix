@@ -1573,11 +1573,11 @@
             })
         }).then(res => res.json()).then(res => {
             var day_parent = document.querySelector(".day_parent");
-            // while (day_parent.childElementCount>2) {
-            //     if(child.className=="day_title"){
-            //         day_parent.removeChild(day_parent.lastElementChild);
-            //     }
-            // }
+            while (day_parent.childElementCount>2) {
+                if(child.className=="day_title"){
+                    day_parent.removeChild(day_parent.lastElementChild);
+                }
+            }
             for (var i = 0; i < res.days.length; i++) {
                 var item = document.createElement('th');
                 item.className='day_title';
