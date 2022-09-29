@@ -21,7 +21,7 @@ class StudentQueryset(QuerySet):
             'user__first_name',
             'user__last_name',
             'user__phone',
-            'groups',
+            # 'groups',
             'status'
         ).annotate(
             full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
@@ -35,42 +35,65 @@ class StudentQueryset(QuerySet):
                 Substr(F('user__phone'),6,2),
                 Value(' '),
                 Substr(F('user__phone'),8,2)
-            ),
-            group_count = F('groups__id'),
+                ),
+            group_count = Count(F('ggroups'), distinct=True),
             payment = Sum(F('payment__paid'), distinct=True),
-            attendace = Count(F('attendace'))
+            attendace = ArrayAgg(F('ggroups__attendance'), distinct=True)
         )
 
     def students_attendace(self,id):
-        return self.get_info().filter(groups__id=id).values(
+        return self.get_info().filter(ggroups__group__id=id).values(
             'id',
             'full_name'
         ).annotate(
             attendace_status=ArrayAgg(
-                Cast('attendace__status', TextField()),
-                filter=Q(attendace__status__isnull=False
+                Cast('ggroups__attendance__status', TextField()),
+                filter=Q(ggroups__attendance__status__isnull=False
             ))
         ).annotate(
             attendace=ArrayAgg(
-                Cast('attendace__date', TextField()),
-                filter=Q(attendace__date__isnull=False
+                Cast('ggroups__attendance__date', TextField()),
+                filter=Q(ggroups__attendance__date__isnull=False
             )),
         )
 
     def student_balances(self,id):
-        return self.get_info().filter(groups__id=id).values(
+        return self.get_info().filter(ggroups__id=id).values(
             'id',
             'full_name',
             'payment__paid',
             'payment__created',
             'payment__paid',
-            'attendace__date'
+            #'attendace__date'
             ).annotate(
-                attendaces=ArrayAgg(Cast('attendace__date', TextField()),distinct=True)
+                attendaces=ArrayAgg(Cast('ggroups__attendance__date', TextField()),distinct=True)
             )
+
+    def students_by_status(self, status: int=1):
+        return self.get_info().filter(status=status)
+    
+    def student_detail(self, id: int):
+        return self.get_info().values(
+            'id',
+            'groups',
+            'status',
+            'source',
+            'comment',
+            'user__first_name', 'user__last_name', 'user__middle_name'
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'), F('user__phone')),
+            gender = F('user__gender'),
+            birthday = F('user__birthday'),
+            location = F('user__location'),
+            payment = Sum(F('payment__paid'), distinct=True),
+            picture = F('user__picture'),
+        ).filter(id=id).first()
 
     def setudent_list(self):
         return self.get_info().filter(status=1).values('id','full_name')
+
 
 class StudentManager(Manager):
     def get_query_set(self):
@@ -84,6 +107,9 @@ class StudentManager(Manager):
         
     def student_balances(self,id):
         return self.get_query_set().student_balances(id)
+
+    def student_detail(self, id):
+        return self.get_query_set().student_detail(id)
 
     def studet_list(self):
         return self.get_query_set().setudent_list()  

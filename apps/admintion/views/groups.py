@@ -5,7 +5,7 @@ from datetime import date,datetime
 from django.core import serializers
 import json
 
-from admintion.models import Room, Teacher,Course,Group,GroupsDays,Student,Attendace
+from admintion.models import GroupStudents, Room, Teacher,Course,Group,GroupsDays,Student,Attendace
 from admintion.utilts.users import get_days,get_month
 from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
@@ -81,20 +81,36 @@ def get_attendace_view(request):
 def change_attendace_view(request):
     data = json.loads(request.body)
     data['status'] = int(data['status'])
-    attendace = Attendace.objects.filter(student__id=data['id'],date=data['date'])
+    # attendace = Attendace.objects.filter(student__id=data['id'],date=data['date'])
+    gr_student, created = GroupStudents.objects.get_or_create(
+        student_id=data['id'],group_id=data['group_id'])
+    attendace = Attendace.objects.filter(group_student=gr_student,date=data['date'])
+    
     if attendace.exists():
         attendace=attendace.first()
         attendace.status=data['status']
         attendace.save()
     else:
-        student=Student.objects.filter(id=data['id']).first()
+        # student=Student.objects.filter(id=data['id']).first()
+        # attendace = Attendace(
+        #    student=student,
+        #    status=data['status'],
+        #    date=data['date']
+        # )
         attendace = Attendace(
-           student=student,
+           group_student=gr_student,
            status=data['status'],
-           date=data['date']
-        ) 
+           date=data['date'],
+           creator=request.user
+        )
         attendace.save() 
-    return JsonResponse({'status':201,'count':0})  
+
+    return JsonResponse({'status':201,'count':0})
+
+def group_detail_data(request, id: int):
+    context = dict()
+    context['group'] = Group.groups.group(id)
+    return JsonResponse(context)
 
 
 def add_student_view(request,id):
@@ -107,4 +123,4 @@ def add_student_view(request,id):
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
-    return JsonResponse({'status':201,'count':0})  
+    return JsonResponse({'status':201,'count':0}) 

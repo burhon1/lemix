@@ -25,9 +25,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     last_seen = models.DateTimeField(blank=True, null=True)
     location = models.CharField(max_length=100,null=True,blank=True)
-
+    email = models.EmailField(null=True)
     def full_name(self):
-        return self.first_name+" "+self.last_name
+        return str(self.first_name)+" "+str(self.last_name) # qiymati none bo'lsa xato qaytardi
 
     class Meta:
         ordering = ("created_at",)

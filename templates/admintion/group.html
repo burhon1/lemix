@@ -245,7 +245,7 @@
                                                                         role="tablist">
                                                                         {% for month in months.old|slice:"-3:" %}
                                                                         <li>
-                                                                            <a id="month-{{month.key}}" onclick="handleChangeMonth('{{group.id}}','{{month.key}}','{{group.id}}')" class="{% if month.value == months.current %}active{% endif %} month_key month-{{month.date}}" href="#">{{month.value}}</a>
+                                                                            <a id="month-{{month.key}}" onclick="handleChangeMonth('{{group.id}}','{{month.key}}', '{{group.id}}')" class="{% if month.value == months.current %}active{% endif %} month_key month-{{month.date}}" href="#">{{month.value}}</a>
                                                                         </li>
                                                                         {% endfor %}
                                                                     </ul>
@@ -1533,7 +1533,9 @@
     return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
     }
     function handleChange(id, date) {
-        var status = document.getElementById(`${id.toString()}|${date.toString()}`)
+        var status = document.getElementById(`${id.toString()}-${date.toString()}`)
+        var group_id = window.location.pathname.split('/')[3]; // need to optimize some points
+        console.log(group_id);
         fetch(`{% url 'admintion:change-attendace' %}`, {
             method: 'POST',
             headers: {
@@ -1543,6 +1545,7 @@
             body: JSON.stringify({
                 id,
                 date,
+                group_id: group_id,
                 status:status.value
             })
         }).then(res => res.json()).then(res => {
@@ -1573,11 +1576,24 @@
             })
         }).then(res => res.json()).then(res => {
             var day_parent = document.querySelector(".day_parent");
-            while (day_parent.childElementCount>2) {
-                if(child.className=="day_title"){
-                    day_parent.removeChild(day_parent.lastElementChild);
-                }
+            // while (day_parent.childElementCount>2) {
+            //     if(child.className=="day_title"){
+            //         day_parent.removeChild(day_parent.lastElementChild);
+            //     }
+            // }
+            //old_lists = document.querySelectorAll('.day_list').forEach((e,index) => {
+            //    console.log(e, index);
+             //   e.remove()
+            // });
+            old_lists = document.querySelectorAll('.day_list');
+            for (let i=0; i< old_lists.length; i++){
+                old_lists[i].remove();
             }
+            old_lists = document.querySelectorAll('.day_title');
+            for (let i=0; i< old_lists.length; i++){
+                old_lists[i].remove();
+            }
+
             for (var i = 0; i < res.days.length; i++) {
                 var item = document.createElement('th');
                 item.className='day_title';
@@ -1585,9 +1601,6 @@
                 item.textContent=dat.getDate()
                 document.querySelector(".day_parent").appendChild(item)
             }
-            document.querySelectorAll('.day_list').forEach((e,index) => {
-                e.remove()
-            });
             for(var i=0;i<res.students_attendace.length;i++){
                 var student = res.students_attendace[i]
                 for(var j=0;j<student.attendaces.length; j++){
