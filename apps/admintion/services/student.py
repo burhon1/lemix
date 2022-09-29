@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from ..models import Group, Student, GroupStudents
+from ..models import Group, Parents, Student, GroupStudents
 
 
 def set_student_group(student: Student, group: Group):
@@ -36,4 +36,17 @@ def update_student(student_id, data):
     user.email = data.get('email', user.email)
 
     student.save()
+    user.save()
+
+def update_parent(parent_id, data):
+    parent = get_object_or_404(Parents, pk=parent_id)
+    parent.phone = data.get('passport', parent.passport)
+    parent.telegram = data.get('telegram', parent.telegram)
+    
+    user = parent.user
+    user.first_name = data.get('full_name'[1], user.first_name)
+    user.last_name = data.get('full_name'[0], user.last_name)
+    user.phone = str(data.get('phone', user.phone)).replace('+998', '')
+
+    parent.save()
     user.save()
