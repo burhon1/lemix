@@ -92,7 +92,7 @@ class StudentQueryset(QuerySet):
         ).filter(id=id).first()
 
     def setudent_list(self):
-        return self.get_info().filter(status=True).values('id','full_name')
+        return self.get_info().filter(status=1).values('id','full_name')
 
 
 class StudentManager(Manager):
