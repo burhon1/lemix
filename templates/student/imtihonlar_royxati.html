@@ -1,0 +1,324 @@
+{% extends 'student/main.html' %}
+{% load static %}
+
+{% block title %}
+Imtihonlar ro'yxati - Lemix
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+    .v-num{
+        font-size: 14px;
+    }
+    .application-faqs .panel-title a{
+        font-size: 12px !important;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+        <div class=" contents expanded">
+
+            <div class="container-fluid">
+                <div class="row mt-3">
+
+                    <div class="col-12 d-block">
+                        <div class="changelog mb-30">
+                            <div class="card">
+                              
+                                <div class="card-body p-30">
+                                    <div class="row">
+                                        <div class="col-12 mb-20">
+                                            <div class="atbd-nav-controller nav-controller-slide">
+                                                <div class="btn-group atbd-button-group btn-group-normal nav" role="tablist">
+                                                    <a class="btn btn-sm btn-outline-light nav-link active" id="control1-tab" data-toggle="tab" href="#control1" role="tab" aria-controls="control1" aria-selected="true">Barchasi</a>
+                                                    <a class="btn btn-sm btn-outline-light nav-link" id="control2-tab" data-toggle="tab" href="#control2" role="tab" aria-controls="control2" aria-selected="false">Aktiv</a>
+                                                    <a class="btn btn-sm btn-outline-light nav-link" id="control2-tab" data-toggle="tab" href="#control3" role="tab" aria-controls="control2" aria-selected="false">Bo'lib o'tgan</a>
+                                                    <a class="btn btn-sm btn-outline-light nav-link" id="control2-tab" data-toggle="tab" href="#control4" role="tab" aria-controls="control2" aria-selected="false">Kelgusi</a>
+                                                </div>
+                                                <div class="nav-controller-content tab-content">
+                                                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
+                                                        <div class="tab-slide-content">
+                                                            <div class="atbd-tab tab-horizontal row">
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Boshlash</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Boshlash</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Boshlash</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Boshlash</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="control2" role="tabpanel" aria-labelledby="control2-tab">
+                                                        <div class="tab-slide-content">
+                                                            <div class="atbd-tab row tab-horizontal">
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Boshlash</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Boshlash</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Natija</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                    <div class="card-body">
+                                                                        <div class="card-content row">
+                                                                            <div class="col-9">
+                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                               <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <button class="btn btn-primary btn-block">Natija</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="control3" role="tabpanel" aria-labelledby="control1-tab">
+                                                        <div class="tab-slide-content">
+                                                            <div class="atbd-tab tab-horizontal">
+                                                                <div class="atbd-tab row tab-horizontal">
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary btn-block">Natija</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary btn-block">Natija</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary btn-block">Natija</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary btn-block">Natija</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="control4" role="tabpanel" aria-labelledby="control1-tab">
+                                                        <div class="tab-slide-content">
+                                                            <div class="atbd-tab tab-horizontal">
+                                                                <div class="atbd-tab row tab-horizontal">
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row">
+                                                                                <div class="col-9">
+                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                                   <span class="text-muted mt-3 fs-12   ">12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
+                                                                                </div>
+                                                                                <div class="col-3">
+                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+{% endblock %}

@@ -11,7 +11,9 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('admintion/', include('admintion.urls')),
     path('education/', include('education.urls')),
+    path('student/', include('student.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)

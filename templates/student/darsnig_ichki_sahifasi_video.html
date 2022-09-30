@@ -1,0 +1,786 @@
+{% extends 'student/main.html' %}
+{% load static %}
+
+{% block title %}
+Darsing Ichki Sahifasi - Lemix
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+    .atbd-tab .tab-content p{
+        font-size: 12px !important;
+    } 
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+
+        <div class="contents">
+
+            <div class="container-fluid">
+                <div class="row mt-3">
+                 
+                    <div class="col-12 changelog-19 d-block">
+                        <div class="changelog mb-30">
+                            <div class="card">
+                                <!-- <div class="card-header">
+                                    <div class="changelog__title">
+                                        <span class="v-num">Version 2.1.6</span>
+                                        <span class="sign">-</span>
+                                        <span class="rl-date">April 26, 2022</span>
+                                    </div>
+                                </div> -->
+                                <div class="card-body p-30">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- video  bo'lsa-->
+                                            <iframe style="width: 100%; object-fit: contain;min-height: 300px;" src="https://www.youtube.com/embed/D7eFpRf4tac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            <!-- text bo'lsa -->
+                                            <!-- <div class="about-projects__details">
+                                                <h6 class="mb-3 fs-20">Web dizayn. (CSS3, FLEX, Bootstrap, LESS)</h6>
+                                                <p class="fs-15 mb-25">Many support queries and technical questions will already
+                                                    be
+                                                    answered in
+                                                    supporting
+                                                    documentation such as FAQ's and comments from previous buyers. Anim pariatur
+                                                    cliche
+                                                    reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                                    wolf moon
+                                                    officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
+                                                    nesciunt laborum
+                                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                                    single-origin
+                                                    coffee nulla assumenda shoreditch.</p>
+                                                <p class="fs-15"> Anim pariatur cliche reprehenderit, enim eiusmod high
+                                                    life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                                                    cupidatat
+                                                    skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                                    3 wolf moon
+                                                    tempor</p>
+                                            </div> -->
+
+                                        </div>
+                                        <!-- video bo\'lsa commentaridan ochjiladi' -->
+                                        <div class="col-9">
+                                            <h3>Web Disagn (CSS , Flexbox, bootstrap, Sass)</h3>
+                                        </div>
+                                        <div class="col-3 ">
+                                            <a href="#" class="d-flex align-items-center">Keyingisi 
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                                                        <div class="tab-wrapper">
+
+                                        <div class="atbd-tab tab-horizontal">
+                                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+                                                <li class="nav-item">
+                                                    <a class="nav-link " id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="false">Savol javob</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Qo'llanma</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">Faq</a>
+                                                </li>
+
+
+
+                                            </ul>
+                                            <div class="tab-content">
+
+
+
+                                                <div class="tab-pane fade  " id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
+                                                    <form action="#">
+                                                        <div class="mailCompose-form-content">
+                                                           
+                                                            <div class="form-group">
+                                                                <textarea name="message" id="mail-reply-message" class="form-control-lg" placeholder="Type your message..."></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="reply-form__action d-flex justify-content-between align-items-center">
+                                                            <div class="reply-form__left d-flex align-items-center">
+                                                                <a href="#" class="btn-remove">
+                                                                    <span data-feather="trash-2"></span></a>
+                                                                <a href="#">
+                                                                    <span data-feather="paperclip"></span></a>
+                                                                <a href="#">
+                                                                    <span data-feather="smile"></span></a>
+                                                            </div>
+                                                            <div class="reply-form__right">
+                                                          
+                                                                <button class="btn btn-md btn-primary btn-send">Send</button>
+    
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                                    <div class="row">
+                                                   
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/pdf.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/psd.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                            <div class="fileM-single mb-25 mr-2 ml-2">
+
+                                                                <div class="fileM-card ">
+                                                                 
+                                                                            <div class="fileM-img mb-0">
+                                                                                <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                                                            </div>
+                                                                            <p class="fileM-excerpt fs-10">Main-admin-design.zip </p>
+                                                                          
+                                                                </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
+                                                    <div class="tab-content" id="v-pills-tabContent">
+                                                        <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                            <!-- Edit Profile -->
+                        
+                                                             <h4 class="fw-500 mb-30">Using Applications</h4>
+                                                             
+                                                                    <div class="application-faqs">
+                                                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                                                            <!-- panel 1 -->
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading" role="tab" id="headingOne">
+                                                                                    <h4 class="panel-title">
+                                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                            How long does it take to download updates?
+                                                                                        </a>
+                                                                                    </h4>
+                        
+                                                                                </div>
+                                                                                <div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+                                                                                    <div class="panel-body">
+                                                                                        <p class="mb-sm-35 mb-20">Many support queries and technical questions will
+                                                                                            already be answered in supporting documentation such as FAQ's
+                                                                                            and comments from previous buyers. Anim pariatur cliche
+                                                                                            reprehenderit, enim eiusmod high life accusamus terry richardson
+                                                                                            ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                                                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                                                                            3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                                                                            single-origin coffee nulla assumenda shoreditch et.</p>
+                                                                                        <span class="fs-14 fw-500 color-dark">Was this article
+                                                                                            helpful?</span>
+                                                                                        <div class="button-group d-flex mt-2">
+                        
+                        
+                        
+                        
+                                                                                            <button class="btn btn-default btn-squared btn-outline-success px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-meh"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="15" x2="16" y2="15"></line><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                                                                Yes
+                                                                                            </button>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                                                                                            <button class="btn btn-default btn-squared btn-outline-warning px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-frown"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                                                                No
+                                                                                            </button>
+                        
+                        
+                        
+                        
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- panel 2 -->
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                                                    <h4 class="panel-title">
+                                                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                            How to use SCSS variables to build custom color?
+                                                                                        </a>
+                                                                                    </h4>
+                        
+                                                                                </div>
+                                                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                                    <div class="panel-body">
+                                                                                        <p class="mb-sm-35 mb-20">Many support queries and technical questions will
+                                                                                            already be answered in supporting documentation such as FAQ's
+                                                                                            and comments from previous buyers. Anim pariatur cliche
+                                                                                            reprehenderit, enim eiusmod high life accusamus terry richardson
+                                                                                            ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                                                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                                                                            3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                                                                            single-origin coffee nulla assumenda shoreditch et.</p>
+                                                                                        <span class="fs-14 fw-500 color-dark">Was this article
+                                                                                            helpful?</span>
+                                                                                        <div class="button-group d-flex mt-2">
+                        
+                        
+                        
+                        
+                                                                                            <button class="btn btn-default btn-squared btn-outline-success px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-meh"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="15" x2="16" y2="15"></line><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                                                                Yes
+                                                                                            </button>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                                                                                            <button class="btn btn-default btn-squared btn-outline-warning px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-frown"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                                                                No
+                                                                                            </button>
+                        
+                        
+                        
+                        
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- panel 3 -->
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading" role="tab" id="headingThree">
+                                                                                    <h4 class="panel-title">
+                                                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                                            How long does it take to download updates?
+                                                                                        </a>
+                                                                                    </h4>
+                        
+                                                                                </div>
+                                                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                                                    <div class="panel-body">
+                                                                                        <p class="mb-sm-35 mb-20">Many support queries and technical questions will
+                                                                                            already be answered in supporting documentation such as FAQ's
+                                                                                            and comments from previous buyers. Anim pariatur cliche
+                                                                                            reprehenderit, enim eiusmod high life accusamus terry richardson
+                                                                                            ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                                                                            dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                                                                            3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                                                                            single-origin coffee nulla assumenda shoreditch et.</p>
+                                                                                        <span class="fs-14 fw-500 color-dark">Was this article
+                                                                                            helpful?</span>
+                                                                                        <div class="button-group d-flex mt-2">
+                        
+                        
+                        
+                        
+                                                                                            <button class="btn btn-default btn-squared btn-outline-success px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-meh"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="15" x2="16" y2="15"></line><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                                                                Yes
+                                                                                            </button>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                                                                                            <button class="btn btn-default btn-squared btn-outline-warning px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-frown"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                                                                No
+                                                                                            </button>
+                        
+                        
+                        
+                        
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        
+                                                                        </div>
+                                                                    </div>
+                                                               
+                        
+                                                            <!-- Edit Profile End -->
+                                                        </div>
+                                                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                                        </div>
+                                                        <div class="tab-pane fade " id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="v-pills-support" role="tabpanel" aria-labelledby="v-pills-support-tab">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>       
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 changelog-5 d-block">
+                        <div class="changeLog-history mb-30">
+                            <div class="card">
+                                <div class="card-header py-20 px-20">
+                                    <div class="changelog-history__title text-uppercase">
+                                        Darslar
+                                    </div>
+                                    <div class="changelog-history__titleExtra">
+
+                                    </div>
+                                </div>
+                                <div class="card-body p-15">
+                                    <div class="changelog__according">
+                                        <div class="changelog__accordingWrapper">
+                                            <div id="accordion">
+                                                <div class="card">
+                                                    <div class="card-header w-100 px-sm-30 px-15" id="heading16">
+                                                        <div role="button" class="w-100 changelog__accordingCollapsed collapsed" data-toggle="collapse" data-target="#collapse16" aria-expanded="true" aria-controls="collapse16">
+                                                            <div class="changelog__accordingTitle d-flex justify-content-between w-100">
+                                                                <div class="v-num">Kirish</div>
+                                                                <div class="changelog__accordingArrow">
+                                                                    <span data-feather="chevron-right"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="collapse16" class="collapse" aria-labelledby="heading16" data-parent="#accordion1">
+                                                            <div class="tab-content" id="v-pills-tabContent">
+                                                                <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                                    <!-- Edit Profile -->
+                                
+                                                                            <div class="application-faqs">
+                                                                                <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                                                                                    <!-- panel 1 -->
+                                                                                    <div class="panel panel-default">
+                                                                                        <div class="panel-heading" role="tab" id="headingOne">
+                                                                                            <h4 class="panel-title">
+                                                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                                   1.HTML
+                                                                                                </a>
+                                                                                            </h4>
+                                
+                                                                                        </div>
+                                                                                        <div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+                                                                                            <div class="panel-body ">
+                                                                                             <div class="row mb-2">
+                                                                                                <div class="checkbox-group d-flex col-10">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                    
+                                                                                                        <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                            Html boshlang'ich tushunchalar . Teg va attributlar
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="todo-list__right col-2">
+                                                                                                            <a href="#" class="plus">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                                                                                            </a>
+                                                                                                       
+                                                                                                </div>
+                                                                                             </div>
+                                                                                             <div class="row mb-2">
+                                                                                                <div class="checkbox-group d-flex col-10">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                    
+                                                                                                        <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                            HTMLda jadvallar
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="todo-list__right col-2">
+                                                                                                            <a href="#" class="plus">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                                                                                             
+                                                                                                            </a>
+                                                                                                       
+                                                                                                </div>
+                                                                                             </div>
+                                                                                             <div class="row mb-2">
+                                                                                                <div class="checkbox-group d-flex col-10">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 
+                                                                                                                </a>
+                                                                                                    
+                                                                                                        <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                            HTMLda stillar bilan ishlash
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="todo-list__right col-2">
+                                                                                                            <a href="#" class="plus">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                                                                                            </a>
+                                                                                                       
+                                                                                                </div>
+                                                                                             </div>
+                                                                                             <div class="row mb-2">
+                                                                                                <div class="checkbox-group d-flex col-10">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>  
+                                                                                                                </a>
+                                                                                                    
+                                                                                                        <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                            Uyga vazifa | Test
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="todo-list__right col-2">
+                                                                                                            <a href="#" class="plus">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                                                                                            </a>
+                                                                                                       
+                                                                                                </div>
+                                                                                             </div>
+                                                                                                </div>
+                                                                                              
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- panel 2 -->
+                                                                                    <div class="panel panel-default">
+                                                                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                                                                            <h4 class="panel-title">
+                                                                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                                    2. Html asoslari
+                                                                                                </a>
+                                                                                            </h4>
+                                
+                                                                                        </div>
+                                                                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                                            <div class="panel-body">
+                                                                                                <div class="row">
+                                                                                                    <div class="checkbox-group d-flex col-10">
+                                                                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                    <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                        
+                                                                                                            <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                                Html boshlang'ich tushunchalar . Teg va attributlar
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="todo-list__right col-2">
+                                                                                                                <a href="#" class="plus">
+                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                                                                                                </a>
+                                                                                                           
+                                                                                                    </div>
+                                                                                                 </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   
+                                                                                </div>
+                                                                            </div>
+                                                                   
+                                                                    <!-- Edit Profile End -->
+                                                                </div>
+                                                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                                                </div>
+                                                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                                                </div>
+                                                                <div class="tab-pane fade " id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                                                </div>
+                                                                <div class="tab-pane fade" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+                                                                </div>
+                                                                <div class="tab-pane fade" id="v-pills-support" role="tabpanel" aria-labelledby="v-pills-support-tab">
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header w-100 px-sm-30 px-15" id="heading15">
+                                                        <div role="button" class="w-100 changelog__accordingCollapsed collapsed" data-toggle="collapse" data-target="#collapse15" aria-expanded="true" aria-controls="collapse15">
+                                                            <div class="changelog__accordingTitle d-flex justify-content-between w-100">
+                                                                <div class="v-num">Biznes traning</div>
+                                                                <div class="changelog__accordingArrow">
+                                                                    <span data-feather="chevron-right"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="collapse15" class="collapse" aria-labelledby="heading15" data-parent="#accordion1">
+                                                        <div class="tab-content" id="v-pills-tabContent">
+                                                            <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                                <!-- Edit Profile -->
+                            
+                                                                        <div class="application-faqs">
+                                                                            <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                                                                                <!-- panel 1 -->
+                                                                                <div class="panel panel-default">
+                                                                                    <div class="panel-heading" role="tab" id="headingOne">
+                                                                                        <h4 class="panel-title">
+                                                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                               1.HTML
+                                                                                            </a>
+                                                                                        </h4>
+                            
+                                                                                    </div>
+                                                                                    <div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+                                                                                        <div class="panel-body ">
+                                                                                         <div class="row">
+                                                                                            <div class="checkbox-group d-flex col-10">
+                                                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                            <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                
+                                                                                                    <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                        Html boshlang'ich tushunchalar . Teg va attributlar
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="todo-list__right col-2">
+                                                                                                        <a href="#" class="plus">
+                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                                                                                        </a>
+                                                                                                   
+                                                                                            </div>
+                                                                                         </div>
+                                                                                         <div class="row">
+                                                                                            <div class="checkbox-group d-flex col-10">
+                                                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                            <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                
+                                                                                                    <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                        Html boshlang'ich tushunchalar . Teg va attributlar
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="todo-list__right col-2">
+                                                                                                        <a href="#" class="plus">
+                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                                                                                        </a>
+                                                                                                   
+                                                                                            </div>
+                                                                                         </div>
+                                                                                         <div class="row">
+                                                                                            <div class="checkbox-group d-flex col-10">
+                                                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                            <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                
+                                                                                                    <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                        Html boshlang'ich tushunchalar . Teg va attributlar
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="todo-list__right col-2">
+                                                                                                        <a href="#" class="plus">
+                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                                                                                        </a>
+                                                                                                   
+                                                                                            </div>
+                                                                                         </div>
+                                                                                            </div>
+                                                                                          
+                                                                                        
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- panel 2 -->
+                                                                                <div class="panel panel-default">
+                                                                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                                                                        <h4 class="panel-title">
+                                                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                                2. Html asoslari
+                                                                                            </a>
+                                                                                        </h4>
+                            
+                                                                                    </div>
+                                                                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                                        <div class="panel-body">
+                                                                                            <div class="row mb-2">
+                                                                                                <div class="checkbox-group d-flex col-10">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                <a href="#" class="plus mr-2 fs-14 ">
+                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>  </a>
+                                                                                                    
+                                                                                                        <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                            Html boshlang'ich tushunchalar . Teg va attributlar
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="todo-list__right col-2">
+                                                                                                            <a href="#" class="plus">
+                                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                                                                                            </a>
+                                                                                                       
+                                                                                                </div>
+                                                                                             </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                               
+                                                                            </div>
+                                                                        </div>
+                                                               
+                                                                <!-- Edit Profile End -->
+                                                            </div>
+                                                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                                            </div>
+                                                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                                            </div>
+                                                            <div class="tab-pane fade " id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                                            </div>
+                                                            <div class="tab-pane fade" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+                                                            </div>
+                                                            <div class="tab-pane fade" id="v-pills-support" role="tabpanel" aria-labelledby="v-pills-support-tab">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+{% endblock %}
