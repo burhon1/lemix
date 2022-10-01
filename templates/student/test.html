@@ -7,16 +7,14 @@ Test
 
 {% block style %}
 <style>
-    .cardPay {
+    .cardPay{
         position: relative;
     }
-
-    .cardPay:hover {
+    .cardPay:hover{
         border: 1px solid #5f63f2;
-
+      
     }
-
-    .cardPay:hover::after {
+    .cardPay:hover::after{
         content: "";
         position: absolute;
         left: 0;
@@ -28,33 +26,15 @@ Test
         width: 100%;
         background-color: #5f63f288;
     }
-
-    .feature-card--1 figcaption h5 {
-        margin: 0 0 0.5rem 0 !important;
-    }
-
-    .feature-cards:hover {
-        cursor: pointer;
-        box-shadow: 0 0 5px #5f63f2;
-    }
-
-    .atbd-tab .tab-content p {
-        font-size: 12px !important;
-    }
-    .v-num{
-        font-size: 14px;
-    }
-    .application-faqs .panel-title a{
-        font-size: 12px !important;
-    }
+  
 </style>
-
 {% endblock %}
-
 
 {% block content %}
 
-        <div class=" contents expanded">
+
+        <div class=" contents">
+
             <div class="container-fluid">
                 <div class="row mt-3">
 
@@ -1024,4 +1004,6 @@ Test
                 </div>
             </div>
         </div>
+
+
 {% endblock %}
