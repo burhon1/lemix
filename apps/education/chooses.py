@@ -15,7 +15,8 @@ DAYS_CHOICES =(
 LESSONS_CHOICES = (
     (1, "Video"),
     (2, "Maqola"),
-    (3, "Test")
+    (3, "Test"),
+    (4, "Uy vazifasi"),
 )
 
 LESSONS_STATUS_CHOICES = (
