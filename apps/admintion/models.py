@@ -106,7 +106,7 @@ class GroupStudents(models.Model):
         unique_together = ('student', 'group')
 class Parents(models.Model):
     user     = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    students = models.ManyToManyField(Student, null=True)
+    students = models.ManyToManyField(Student)
     passport = models.CharField("Passport", max_length=10, null=True)
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
     
