@@ -1,6 +1,6 @@
 {% extends 'student/main.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block title %}
     Kurslar
 {% endblock %}
@@ -71,325 +71,88 @@
                                             <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
                                                 
                                                 
+                                                <div class="row">              
+                                                    {% for group in groups %}
+                                                        {% if group.finished %}
+                                                        {% else %}
+                                                            <div class="col-xxl-3 col-lg-4 col-md-6 mb-25" >
+                                                                <div class="feature-cards feature-card--1 border">
+                                                                    <a href="{% url 'student:course-modules' group.course_id %}">
+                                                                    <figure class="feather-cards__figure  ">
+                                                                        <img src="{% static 'img/blog-single4.png' %}" alt="">
+                                                                        <figcaption>
+                                                                        
+                                                                            <h5 class="m-2">{{ group.course }}</h5>
+                                                                            <p class="mb-2"><i class="fa fa-layer-group"></i>   {{ group.group__title}}
+                                                                            </p>
+                                                                            <div class="feature-cards__top mb-2">
+                                                                                <span><i class="fa fa-calendar mr-2"></i> {{ group.id|readable_days}}</span><span>{{ group.times }} </span>
+                                                                            </div>
+                                                                        <div class="  feature-cards__top">
+                                                                                        <span > <i class="fa fa-user mr-2"></i> {{ group.teacher }}</span><span >{{ group.created|date:'d.m.Y' }}</span>
+                                                                                    </div>
+                                                                        </figcaption>
+                                                                    </figure></a>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
                                                 <div class="row">
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
+                                                    {% for group in groups %}
+                                                    {% if group.finished %}
+                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25" >
                                                         <div class="feature-cards feature-card--1 border">
-                                                            <a href="{% url 'student:course-modules' 1 %}">
+                                                            <a href="{% url 'student:course-modules' group.course_id %}">
                                                                 <figure class="feather-cards__figure  ">
                                                                     <img src="{% static 'img/blog-single4.png' %}" alt="">
                                                                     <figcaption>
-                                                                      
-                                                                        <h5 class="m-2">Matematika</h5>
-                                                                        <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
+                                                                    
+                                                                        <h5 class="m-2">{{ group.course }}</h5>
+                                                                        <p class="mb-2"><i class="fa fa-layer-group"></i>   {{ group.group__title}}
                                                                         </p>
                                                                         <div class="feature-cards__top mb-2">
-                                                                            <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
+                                                                            <span><i class="fa fa-calendar mr-2"></i> {{ group.id|readable_days}}</span><span>{{ group.times }} </span>
                                                                         </div>
-                                                                       <div class="  feature-cards__top">
-                                                                                    <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
+                                                                    <div class="  feature-cards__top">
+                                                                                    <span > <i class="fa fa-user mr-2"></i> {{ group.teacher }}</span><span >{{ group.created|date:'d.m.Y' }}</span>
                                                                                 </div>
                                                                     </figcaption>
                                                                 </figure>
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                             
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
-                                                <div class="row">
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                 
-                                                                            <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                           
-                                                                      
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
+                                                    {% else %}
+                                                    {% endif %}
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
                                                 <div class="row">
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
+                                                    {% for group in groups %}
+                                                            <div class="col-xxl-3 col-lg-4 col-md-6 mb-25" >
+                                                                <div class="feature-cards feature-card--1 border">
+                                                                    <a href="{% url 'student:course-modules' group.course_id %}">
+                                                                    <figure class="feather-cards__figure  ">
+                                                                        <img src="{% static 'img/blog-single4.png' %}" alt="">
+                                                                        <figcaption>
+                                                                        
+                                                                            <h5 class="m-2">{{ group.course }}</h5>
+                                                                            <p class="mb-2"><i class="fa fa-layer-group"></i>   {{ group.group__title}}
+                                                                            </p>
+                                                                            <div class="feature-cards__top mb-2">
+                                                                                <span><i class="fa fa-calendar mr-2"></i> {{ group.id|readable_days}}</span><span>{{ group.times }} </span>
                                                                             </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                                                        <div class="feature-cards feature-card--1 border">
-                                                            <figure class="feather-cards__figure  ">
-                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
-                                                                <figcaption>
-                                                                  
-                                                                    <h5 class="m-2">Matematika</h5>
-                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   Matematika B2
-                                                                    </p>
-                                                                    <div class="feature-cards__top mb-2">
-                                                                        <span><i class="fa fa-calendar mr-2"></i> Du,Chor,Ju</span><span>14:00-16:00 </span>
-                                                                    </div>
-                                                                   <div class="  feature-cards__top">
-                                                                                <span > <i class="fa fa-user mr-2"></i> Burhon Baqoyev1</span><span >24.07.2022</span>
-                                                                            </div>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
-                                                    </div>
+                                                                        <div class="  feature-cards__top">
+                                                                                        <span > <i class="fa fa-user mr-2"></i> {{ group.teacher }}</span><span >{{ group.created|date:'d.m.Y' }}</span>
+                                                                                    </div>
+                                                                        </figcaption>
+                                                                    </figure></a>
+                                                                </div>
+                                                            </div>
+                                                    {% endfor %}
                                                 </div>
                                             </div>
 

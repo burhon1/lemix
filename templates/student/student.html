@@ -1,6 +1,6 @@
 {% extends 'student/main.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block title %}
 Student
 {% endblock %}
@@ -43,24 +43,28 @@ Student
                                 <!-- Card 2 End  -->
                                 <div class="ap-po-details ap-po-details--2  radius-xl bg-white d-flex justify-content-between">
                                         <div class="overview-content">
-                                            <h1>2 000 000 <small>UZS</small></h1>
+                                            <h1>{{ balance|readable_soums |default:"0"}} <small>UZS</small></h1>
                                             <p class="m-0">Umumiy balans</p>
                                             
                                         </div>
                                 </div>
                                 <!-- Card 2 End  -->
                             </div>
-                            <div class="col-xxl-3 col-sm-6  col-ssm-12 mb-10">
+                            
                                 <!-- Card 2 End  -->
-                                <div class="ap-po-details ap-po-details--2  radius-xl bg-white d-flex justify-content-between">
+                                {% for group in groups %}
+                                <div class="col-xxl-3 col-sm-6  col-ssm-12 mb-10">
+                                    <div class="ap-po-details ap-po-details--2  radius-xl bg-white d-flex justify-content-between">
                                         <div class="overview-content">
-                                            <h1>2 000 000 <small>UZS</small></h1>
+                                            <h1>{{ group.group__course__price|readable_soums }} <small>UZS</small></h1>
                                             <p class="m-0">Summa</p>
-                                            
+                                            <small>{{ group.group__title }}</small>
                                         </div>
+                                    </div>
+                                    <!-- Card 2 End  -->
                                 </div>
-                                <!-- Card 2 End  -->
-                            </div>
+                                {% endfor %}
+                                
                             <div class="col-xxl-3 col-sm-6  col-ssm-12 mb-10">
                                 <!-- Card 2 End  -->
                                 <div class="ap-po-details ap-po-details--2  radius-xl bg-white d-flex justify-content-between">
@@ -85,21 +89,7 @@ Student
                                     <div class="table-responsive">
                                         <div class="adv-table-table__header">
                                             <h4 class="mb-4">To'lovlar</h4>
-                                            <!-- <div class="adv-table-table__button">
-                                                <div class="dropdown">
-                                                    <a class="btn btn-primary dropdown-toggle atbd-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Export
-                                                    </a>
-
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="#">copy</a>
-                                                        <a class="dropdown-item" href="#">csv</a>
-                                                        <a class="dropdown-item" href="#">print</a>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </div>
-                                        <!-- <div id="filter-form-container"></div> -->
                                         <table class="table mb-0 table-borderless" data-sorting="true"  data-paging-current="1" data-paging-position="right" data-paging-size="10">
                                             <thead>
                                                 <tr class="userDatatable-header">
@@ -130,57 +120,60 @@ Student
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">01</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">0111</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           9 000 000
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Payme
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Web Developer uchun to'lov
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Hi Ji Hu
-                                                        </div>
-                                                    </td>
-                                                    <!-- <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                        </div>
-                                                    </td> -->
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="printer">
-                                                                    <span data-feather="printer"></span></a>
-                                                            </li>
-                                                            <!-- <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li> -->
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-
+                                                {% for payment in payments %}
+                                                    
+                                                    <tr>
+                                                        <td>
+                                                            <div class="userDatatable-content">{{ forloop.counter }}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">{{ payment.id }}</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                               {{ payment.paid|readable_soums }}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                                {{ payment.payment_type|get_type_name:"payment" }}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                                {{ payment.comment|default:"-"}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                                {{payment.receiver }}
+                                                            </div>
+                                                        </td>
+                                                        <!-- <td>
+                                                            <div class="userDatatable-content d-inline-block">
+                                                                <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                            </div>
+                                                        </td> -->
+                                                        <td>
+                                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                                <li>
+                                                                    <a href="#" class="view">
+                                                                        <span data-feather="eye"></span></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="printer">
+                                                                        <span data-feather="printer"></span></a>
+                                                                </li>
+                                                                <!-- <li>
+                                                                    <a href="#" class="remove">
+                                                                        <span data-feather="trash-2"></span></a>
+                                                                </li> -->
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+        
+                                                {% endfor %}
+                                                
 
                                             </tbody>
                                         </table>

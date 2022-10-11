@@ -1,7 +1,8 @@
 from calendar import Calendar
 from datetime import timezone
+from multiprocessing.dummy import Manager
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager
+from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager
 from admintion.data import chooses
 from user.models import CustomUser
 
@@ -24,7 +25,7 @@ class Course(models.Model):
     price = models.PositiveIntegerField()
     comment = models.TextField()
     status = models.BooleanField(default=False)
-
+    courses = course_manager.CoursesManager()
     def __str__(self) -> str:
         return self.title
 
@@ -65,6 +66,8 @@ class Student(models.Model):
     source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
     groups = models.ManyToManyField(Group,related_name='student')
     comment = models.TextField()
+    balance = models.IntegerField("O'quvchining hisobidagi mablag'", default=0)
+    
     students =  students_manager.StudentManager()
     objects = models.Manager()
 
@@ -72,9 +75,9 @@ class Attendace(models.Model):
     # student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendace')
     status = models.SmallIntegerField(choices=chooses.STUDENT_ATTANDENCE_TYPE,null=True,blank=True)
     date = models.DateField()
-    group_student = models.ForeignKey("GroupStudents", models.DO_NOTHING, null=True,related_name='attendance')
+    group_student = models.ForeignKey("GroupStudents", models.SET_NULL, null=True,related_name='attendance')
     created = models.DateTimeField(auto_now_add=True, null=True)
-    creator = models.ForeignKey(CustomUser, models.DO_NOTHING, related_name="created_attendaces", null=True)
+    creator = models.ForeignKey(CustomUser, models.SET_NULL, related_name="created_attendaces", null=True)
     
     objects = models.Manager()
     attendaces = attendace_manager.AttendaceManager()
@@ -84,7 +87,10 @@ class Payment(models.Model):
     paid = models.PositiveIntegerField()
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='payment')
     created = models.DateTimeField(auto_now_add=True)
-
+    receiver = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    payment_type = models.SmallIntegerField("To'lov turi", choices=chooses.PAYMENT_TYPE, default=1)
+    comment = models.CharField("Izoh", max_length=500, null=True)
+    payments = payment_manager.PaymentManager()
 class FormLead(models.Model):
     fio = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
@@ -101,7 +107,10 @@ class GroupStudents(models.Model):
     group   = models.ForeignKey(Group, models.CASCADE, related_name="students")
     status  = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
     created = models.DateTimeField(auto_now_add=True)
-
+    # activated_till = models.DateTimeField("O'quvchi uchun guruhning aktiv muddati", null=True)
+    finished = models.BooleanField(default=False)
+    custom_manager = group_students_manager.GroupStudentManager()
+    objects = models.Manager()
     class Meta:
         unique_together = ('student', 'group')
 class Parents(models.Model):

@@ -1,0 +1,56 @@
+{% load static %}
+<div class="row">
+    <div class="col-12">
+        <div class="about-projects__details">
+            <h6 class="mb-3 fs-20">{{ content.title }}</h6>
+            {% if content.homework %}
+                <div class="fileM-single mb-25 mr-2 ml-2">
+
+                    <div class="fileM-card ">
+                                <div class="fileM-img mb-0">
+                                    <img class="wh-50" src="{% static 'img/pdf.png' %}" alt="">
+                                </div>
+                                <a class="btn btn-primary" href="{{ content.homework.url }}" download>Yuklab olish </a>
+                    </div>
+
+                </div>
+            {% else %}
+                <p class="fs-15 mb-25">{{ content.text|safe }}</p>
+            {% endif %}
+            
+            
+
+                <!-- file yuklash -->
+                <div>
+                <textarea class="form-control border-primary mb-25" id="text-homework" name="text-homework" rows="3" placeholder="Sizning javobingiz..."></textarea>
+             
+                <div class="atbd-upload">
+        <div class="atbd-upload__button mb-2">
+            <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#uploadhomework').click()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Faylni yuklash uchun shu yerga bosing yoki faylni shu yerga keltirib tashang</a>
+            <input type="file" multiple="true" name="uploadhomework" class="upload-one" id="uploadhomework">
+        </div>
+        <div class="atbd-upload__file">
+            <ul></ul>
+        </div>
+    </div>
+    <button class="btn btn-primary mt-3" onclick="sendHomework({{content.id}})">Yuborish</button>              
+    </div>
+    <div class="response-message"></div>
+                <!-- file yuklanib bo'lgandan keyin chiqadi  (code : 200) -->
+                <!-- <div class=" alert alert-success p-30" role="alert">
+
+
+                    <div class="alert-content">
+
+
+                        <p>Javobingiz muvaffaqiyatli yuborildi! <br>
+                            Tez orada ball qo‘yiladi!</p>
+
+
+                    </div>
+                </div> -->
+        </div>
+
+    </div>
+  
+</div>

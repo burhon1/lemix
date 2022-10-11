@@ -1,0 +1,26 @@
+<div class="row">
+    {% if questions %}
+        {% for question in questions %}
+        <div class="col-12 mb-20">
+            <div class="card card-default border" id="question-{{question.question.id}}">
+                <div class="card-header">
+                    <h6>{{forloop.counter}}. {{ question.question.question }}</h6>
+    
+                </div>
+                <div class="card-body">
+                    <div class="card-content">
+                        {% for answer in question.question.answers %}
+                            <div class="radio-theme-default custom-radio ">
+                                <input class="radio" type="radio" name="radio-default-{{question.id }}" value="{{ question.answer.id }}" id="radio-answer-{{question.question.id }}-{{ answer.id }}">
+                                <label for="radio-answer-{{question.question.id }}-{{ answer.id }}">
+                                    <span class="radio-text">{{ answer.answer }}</span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>

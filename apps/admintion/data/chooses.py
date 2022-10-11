@@ -47,3 +47,10 @@ STUDENT_STATUS = (
     (2, 'Muzlatilgan'),
     (3, 'Ketgan'),
 )
+PAYMENT_TYPE = (
+    (1, 'Naqd'),
+    (2, 'Payme'),
+    (3, 'Click'),
+    (4, 'Apelsin'),
+    (5, 'Visa Card'),
+)

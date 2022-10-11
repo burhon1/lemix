@@ -12,7 +12,6 @@ urlpatterns = [
     path('admintion/', include('admintion.urls')),
     path('education/', include('education.urls')),
     path('student/', include('student.urls')),
-    path('tinymce/', include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

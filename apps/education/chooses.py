@@ -12,7 +12,7 @@ DAYS_CHOICES =(
     (6, "Se,Ju"),
 )
 
-LESSONS_CHOICES = (
+CONTENT_CHOICES = (
     (1, "Video"),
     (2, "Maqola"),
     (3, "Test"),
@@ -27,4 +27,10 @@ LESSONS_STATUS_CHOICES = (
 FILE_TYPES_CHOICES = (
     (1, "PDF"),
     (2, "MP3")
+)
+
+LESSONS_CHOICES = (
+    (1, 'Dars'),
+    (2, 'Test'),
+    (3, 'Uy vazifasi'),
 )

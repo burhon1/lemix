@@ -1,0 +1,177 @@
+{% load static %}
+<div class="row">
+    <div class="col-12">
+        {% if content.content_type == 1 %}
+            {% if content.video %}
+                <video width="100%" min-height="300px" controls>
+                    <source src="{{ content.video.url }}" type="video/mp4">
+                </video> 
+            {% else %}
+                <iframe style="width: 100%; object-fit: contain;min-height: 300px;" src="{{ content.video_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            {% endif %}
+        {% elif content.content_type == 2 %}
+            <div class="about-projects__details">
+                <h6 class="mb-3 fs-20">{{ content.title }}</h6>
+                {{ content.value|safe}}
+            </div>
+        {% endif%}
+    </div>
+    <!-- video bo\'lsa commentaridan ochjiladi' -->
+    {% if content.content_type == 1 %}
+        <div class="col-9">
+            <h3>{{ content.title }}</h3>
+        </div>
+    {% else %}
+        <div class="col-9"></div>
+    {% endif %}
+    <div class="col-3 ">
+        <a href="{% url 'student:lesson' 'next-content' content.id %}" class="d-flex align-items-center">Keyingisi 
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+
+        </a>
+    </div>
+</div>
+                                    
+<div class="tab-wrapper">
+
+<div class="atbd-tab tab-horizontal">
+    <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+        <li class="nav-item">
+            <a class="nav-link " id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="false">Savol javob</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Qo'llanma</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">Faq</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+
+
+
+        <div class="tab-pane fade  " id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
+            <form action="#">
+                <div class="mailCompose-form-content">
+                   
+                    <div class="form-group">
+                        <textarea name="message" id="mail-reply-message" class="form-control-lg" placeholder="Type your message..."></textarea>
+                    </div>
+                </div>
+                <div class="reply-form__action d-flex justify-content-between align-items-center">
+                    <div class="reply-form__left d-flex align-items-center">
+                        <a href="#" class="btn-remove">
+                            <span data-feather="trash-2"></span></a>
+                        <a href="#">
+                            <span data-feather="paperclip"></span></a>
+                        <a href="#">
+                            <span data-feather="smile"></span></a>
+                    </div>
+                    <div class="reply-form__right">
+                  
+                        <button class="btn btn-md btn-primary btn-send">Send</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+            <div class="row">
+           
+                {% if resources %}
+                    {% for resource in resources %}
+                    <div class="fileM-single mb-25 mr-2 ml-2">
+
+                        <div class="fileM-card ">
+                         
+                                    
+                                    {% if resource.file %}
+                                    <a href="{{ resource.file.url }}"  >
+                                        <div class="fileM-img mb-0">
+                                            <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                        </div>
+                                        <p class="fileM-excerpt fs-10">{{ resource.file }} </p>
+                                    </a>    
+                                    {% elif resource.link %}
+                                    <a href="{{ resource.link }}">
+                                        <div class="fileM-img mb-0">
+                                            <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
+                                        </div>
+                                        <p class="fileM-excerpt fs-10">{{ resource.file }} </p>
+                                    </a>
+                                    {% endif %}
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                    
+                
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <!-- Edit Profile -->
+
+                     <h4 class="fw-500 mb-30"></h4>
+                     
+                    {% if faqs %}
+                    <div class="application-faqs">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <!-- panel 1 -->
+                            {% for faq in faqs %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-faq-{{ faq.id }}" aria-expanded="true" aria-controls="collapse-faq-{{ faq.id }}">
+                                                {{ faq.question }}
+                                            </a>
+                                        </h4>
+
+                                    </div>
+                                    <div id="collapse-faq-{{ faq.id }}" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <p class="mb-sm-35 mb-20">{{ faq.answer }}</p>
+                                            <span class="fs-14 fw-500 color-dark">Foydali deb hisoblaysizmi?</span>
+                                            <div class="button-group d-flex mt-2">
+
+                                                <button class="btn btn-default btn-squared btn-outline-success px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-meh"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="15" x2="16" y2="15"></line><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                    Ha
+                                                </button>
+
+                                                <button class="btn btn-default btn-squared btn-outline-warning px-15 "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-frown"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                                    Yo'q
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+               
+                    {% endif %}
+
+                    <!-- Edit Profile End -->
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                </div>
+                <div class="tab-pane fade " id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                </div>
+                <div class="tab-pane fade" id="v-pills-notification" role="tabpanel" aria-labelledby="v-pills-notification-tab">
+                </div>
+                <div class="tab-pane fade" id="v-pills-support" role="tabpanel" aria-labelledby="v-pills-support-tab">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>   

@@ -63,8 +63,6 @@ class StudentQueryset(QuerySet):
             'full_name',
             'payment__paid',
             'payment__created',
-            'payment__paid',
-            #'attendace__date'
             ).annotate(
                 attendaces=ArrayAgg(Cast('ggroups__attendance__date', TextField()),distinct=True)
             )
@@ -79,7 +77,8 @@ class StudentQueryset(QuerySet):
             'status',
             'source',
             'comment',
-            'user__first_name', 'user__last_name', 'user__middle_name'
+            'user__first_name', 'user__last_name', 'user__middle_name',
+            'balance'
         ).annotate(
             full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
             phone_number = Concat(
@@ -112,4 +111,4 @@ class StudentManager(Manager):
         return self.get_query_set().student_detail(id)
 
     def studet_list(self):
-        return self.get_query_set().setudent_list()  
+        return self.get_query_set().setudent_list()

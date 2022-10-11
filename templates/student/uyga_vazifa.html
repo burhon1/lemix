@@ -76,51 +76,33 @@ Uyga vazifa- Lemix
                                                     <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
                                                         <div class="tab-slide-content">
                                                             <div class="atbd-tab tab-horizontal row">
-                                                              
-                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                    <div class="card-body">
-                                                                        <div class="card-content row d-flex flex-nowrap align-items-start ">
-                                                                            <div>
-                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                {% if homeworks %}
+                                                                    {% for homework in homeworks %}
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row d-flex flex-nowrap align-items-start ">
+                                                                                <div>
+                                                                                   <h3 class="mb-3"> {{ homework.title }}</h3>
+                                                                                </div>
+                                                                                
+                                                                                    {% if homework.ball and  homework.closed is False %}
+                                                                                    <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
+                                                                                {% elif homework.closed is False %}
+                                                                                    <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</a>
+                                                                                {% else %}
+                                                                                    <button class="btn border-light btn-block" style="max-width: 150px;" disabled>Yopiq</button>
+                                                                                {% endif %}
+                                                                                
                                                                             </div>
-                                                                            <a href="{% url 'student:module_hometask' 1 %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
-                                                                        </div>
-                                                                        <span class="text-muted mt-3 fs-12   "> <span class="color-info">baholangan </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                    <div class="card-body">
-                                                                        <div class="card-content row d-flex flex-nowrap align-items-start ">
-                                                                            <div>
-                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
+                                                                            <span class="text-muted mt-3 fs-12   "> 
+                                                                                {% if homework.ball %}<span class="color-info">baholangan </span>
+                                                                                {% elif homework.closed %}<span class="color-danger">Yopiq </span>
+                                                                                {% else %}<span class="color-info">Ochiq </span>
+                                                                                {% endif %} / {{ homework.opened_at|date:'d.m.Y'}}, {{ homework.opened_at|date:'H:i'}} - {{ homework.closed_at|date:'H:i'}}    / <b> 90 </b>ta savol  /  0%</span>
                                                                             </div>
-                                                                            <button class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</button>
-                                                                        </div>
-                                                                        <span class="text-muted mt-3 fs-12   "> <span class="color-success">Ochiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                    <div class="card-body">
-                                                                        <div class="card-content row d-flex flex-nowrap align-items-start ">
-                                                                            <div>
-                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
-                                                                            </div>
-                                                                            <button class="btn border-light btn-block" style="max-width: 150px;" disabled>Yopiq</button>
-                                                                        </div>
-                                                                        <span class="text-muted mt-3 fs-12   "> <span class="color-danger">Yopiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                    <div class="card-body">
-                                                                        <div class="card-content row d-flex flex-nowrap align-items-start ">
-                                                                            <div>
-                                                                               <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
-                                                                            </div>
-                                                                            <button class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</button>
-                                                                        </div>
-                                                                        <span class="text-muted mt-3 fs-12   "> <span class="color-success">Ochiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                        </div>
-                                                                </div>
+                                                                    </div>
+                                                                    {% endfor %}
+                                                                {% endif %}
                                                                
                                                             </div>
                                                         </div>
@@ -129,7 +111,35 @@ Uyga vazifa- Lemix
                                                         <div class="tab-slide-content">
                                                             <div class="atbd-tab row tab-horizontal">
                                                                 
-                                                                .....
+                                                                {% if homeworks %}
+                                                                    {% for homework in homeworks %}
+                                                                    {% if homework.closed %}
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row d-flex flex-nowrap align-items-start ">
+                                                                                <div>
+                                                                                   <h3 class="mb-3"> {{ homework.title }}</h3>
+                                                                                </div>
+                                                                                
+                                                                                    {% if homework.ball and  homework.closed is False %}
+                                                                                    <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
+                                                                                {% elif homework.closed is False %}
+                                                                                    <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</a>
+                                                                                {% else %}
+                                                                                    <button class="btn border-light btn-block" style="max-width: 150px;" disabled>Yopiq</button>
+                                                                                {% endif %}
+                                                                                
+                                                                            </div>
+                                                                            <span class="text-muted mt-3 fs-12   "> 
+                                                                                {% if homework.ball %}<span class="color-info">baholangan </span>
+                                                                                {% elif homework.closed %}<span class="color-danger">Yopiq </span>
+                                                                                {% endif %} / {{ homework.opened_at|date:'d.m.Y'}}, {{ homework.opened_at|date:'H:i'}} - {{ homework.closed_at|date:'H:i'}}    / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                               
                                                             </div>
                                                         </div>
                                                     </div>
@@ -137,71 +147,40 @@ Uyga vazifa- Lemix
                                                         <div class="tab-slide-content">
                                                             <div class="atbd-tab tab-horizontal">
                                                                 <div class="atbd-tab row tab-horizontal">
-                                                               ...........................
+                                                                    {% if homeworks %}
+                                                                    {% for homework in homeworks %}
+                                                                    {% if homework.closed is False %}
+                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
+                                                                        <div class="card-body">
+                                                                            <div class="card-content row d-flex flex-nowrap align-items-start ">
+                                                                                <div>
+                                                                                   <h3 class="mb-3"> {{ homework.title }}</h3>
+                                                                                </div>
+                                                                                
+                                                                                    {% if homework.ball or homework.homework and  homework.closed is False %}
+                                                                                    <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
+                                                                                {% elif homework.closed is False %}
+                                                                                    <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</a>
+                                                                                {% else %}
+                                                                                    <button class="btn border-light btn-block" style="max-width: 150px;" disabled>Yopiq</button>
+                                                                                {% endif %}
+                                                                                
+                                                                            </div>
+                                                                            <span class="text-muted mt-3 fs-12   "> 
+                                                                                {% if homework.ball %}<span class="color-info">baholangan </span>
+                                                                                {% else %}<span class="color-info">Ochiq </span>
+
+                                                                                {% endif %} / {{ homework.opened_at|date:'d.m.Y'}}, {{ homework.opened_at|date:'H:i'}} - {{ homework.closed_at|date:'H:i'}}    / <b> 90 </b>ta savol  /  0%</span>
+                                                                            </div>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="tab-pane fade" id="control4" role="tabpanel" aria-labelledby="control1-tab">
-                                                        <div class="tab-slide-content">
-                                                            <div class="atbd-tab tab-horizontal">
-                                                                <div class="atbd-tab row tab-horizontal">
-                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                        <div class="card-body">
-                                                                            <div class="card-content row">
-                                                                                <div class="col-9">
-                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
-                                                                                   <span class="text-muted mt-3 fs-12   "> <span class="color-success">Ochiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                                </div>
-                                                                                <div class="col-3">
-                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                        <div class="card-body">
-                                                                            <div class="card-content row">
-                                                                                <div class="col-9">
-                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
-                                                                                   <span class="text-muted mt-3 fs-12   "> <span class="color-success">Ochiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                                </div>
-                                                                                <div class="col-3">
-                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                        <div class="card-body">
-                                                                            <div class="card-content row">
-                                                                                <div class="col-9">
-                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
-                                                                                   <span class="text-muted mt-3 fs-12   "> <span class="color-success">Ochiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                                </div>
-                                                                                <div class="col-3">
-                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
-                                                                        <div class="card-body">
-                                                                            <div class="card-content row">
-                                                                                <div class="col-9">
-                                                                                   <h3 class="mb-3"> Respublika miqyosida Matematika fanidan onlayn fan olimpiadasi</h3>
-                                                                                   <span class="text-muted mt-3 fs-12   "> <span class="color-success">Ochiq </span> / 12.05.2022,  12:00 - 16:00  / <b> 90 </b>ta savol  /  0%</span>
-                                                                                </div>
-                                                                                <div class="col-3">
-                                                                                    <button class="btn btn-primary disabled btn-block">Boshlash</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

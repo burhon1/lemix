@@ -1,6 +1,6 @@
 {% extends 'student/main.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block title %}
 Content ro’yxati
 {% endblock %}
@@ -52,93 +52,57 @@ Content ro’yxati
 
                                     <div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
                                         <div class="card-header px-30 pt-30 pb-25 flex-column align-items-start border-bottom-0">
-                                            <h4 class="fw-500 " style="font-size: 2rem;">Digital Marketing</h4>
+                                            <h4 class="fw-500 " style="font-size: 2rem;">{{course.title }}</h4>
                                             <br>
-                                            <p>Bitta kursda 5ta sohani egallang:internet marketing, sayt tuzish, SMM, targeting, SEO</p>
+                                            <p>{{ course.comment }}</p>
                                             <h4 class="fw-900" style="text-transform: none;">Kurs tarkibi:</h4>
                                         </div>
                                         <div class="card-body pt-0">
                                             <div class="application-faqs">
                                                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                                     <!-- panel 1 -->
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingOne">
-                                                            <h4 class="panel-title d-flex justify-content-between">
-                                                                <a data-toggle="collapse" class="d-flex w-100" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                  1. Kirish darsi
-                                                                  
-                                                                </a>
-                                                                <span class="badge badge-round badge-success badge-lg mr-4">Tugallagan</span>
-                                                            </h4>
+                                                    {% for module in modules %}
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="headingOne-{{ module.id }}">
+                                                                <h4 class="panel-title d-flex justify-content-between">
+                                                                    <a data-toggle="collapse" class="d-flex w-100" data-parent="#accordion" href="#collapseOne-{{module.id}}" aria-expanded="true" aria-controls="collapseOne">
+                                                                        {{ module.order }}. {{ module.title }}
+                                                                    </a>
+                                                                    <span class="badge badge-round badge-{{ module.status_class }} badge-lg mr-4">{{ module.status }}</span>
+                                                                </h4>
 
-                                                        </div>
-                                                        <div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
-                                                            <div class="panel-body">
-                                                                <div class="list-box">
-                                                                    <ul>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <a href="{% url 'student:lesson' %}"><p class="mb-0"><b>2.1</b> Header</p></a>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"/></svg> </li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"/></svg> </li>
-                                                                       
-                                                                    </ul>
+                                                            </div>
+                                                            <div id="collapseOne-{{module.id}}" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne-{{ module.id }}">
+                                                                <div class="panel-body">
+                                                                    <div class="list-box">
+                                                                        <ul>
+                                                                            {% if module.lessons %}
+                                                                            
+                                                                                {% for lesson in module.lessons %}
+                                                                                    {% if lesson %}
+                                                                                    <li class="list-box__item d-flex  justify-content-between"> 
+                                                                                        {% if lesson.open or lesson.viewed %}
+                                                                                            <a href="{% url 'student:lesson' 'lesson' lesson.id %}"><p class="mb-0"><b>{{ module.order }}.{{ forloop.counter }}</b> {{ lesson.title }} </p></a>
+                                                                                        {% else %}
+                                                                                            <p class="mb-0"><b>{{ module.order }}.{{ forloop.counter }}</b> {{ lesson.title }}</p>
+                                                                                        {% endif %}
+
+                                                                                        {% if lesson.viewed %}
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"/></svg>
+                                                                                        {% elif lesson.open == False %}
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                                                                        {% endif %}
+                                                                                    
+                                                                                    </li>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            {% endif %}                                                                        
+                                                                        </ul>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <!-- panel 2 -->
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingTwo">
-                                                            <h4 class="panel-title d-flex justify-content-between">
-                                                                <a data-toggle="collapse" class="d-flex w-100" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                                                  2. HTML asoslari va uni qo'llash 
-                                                                  
-                                                                </a>
-                                                                <span class="badge badge-round badge-primary badge-lg badge-primary mr-4">Jarayonda</span>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                            <div class="panel-body">
-                                                                <div class="list-box">
-                                                                    <ul>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"/></svg> </li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"/></svg> </li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p> </li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  </li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></li>
-                                                                      
-                                                                    </ul>
-                                                                </div>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- panel 3 -->
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingThree">
-                                                            <h4 class="panel-title">
-                                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                                    3. CSS darslari
-                                                                </a>
-                                                            </h4>
-
-                                                        </div>
-                                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                            <div class="panel-body">
-                                                                <div class="list-box">
-                                                                    <ul>
-                                                                         <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></li>
-                                                                        <li class="list-box__item d-flex  justify-content-between"> <p class="mb-0"><b>2.1</b> Header</p>  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></li>
-                                                                      
-                                                                    </ul>
-                                                                </div>         
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                         </div>

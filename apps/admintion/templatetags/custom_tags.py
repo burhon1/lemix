@@ -1,5 +1,5 @@
 from django import template
-
+from django.shortcuts import get_object_or_404
 from admintion.models import Attendace, GroupStudents
 from ..data import chooses
 from apps.user.data import chooses as user_chooses
@@ -65,10 +65,14 @@ def get_type_name(value, arg):
         return dict(chooses.GROUPS_DAYS)[value] or ""
     elif arg == "attendance":
         return dict(chooses.STUDENT_ATTANDENCE_TYPE)[value] or ""
+    elif arg == "payment":
+        return dict(chooses.PAYMENT_TYPE)[value] or ""
     return value
 
 def readable_days(value):
     result: str = ''
+    if type(value) == int:
+        value = get_object_or_404(GroupStudents, pk=value).group
     for day in value.days.all():
         try:
             result += str(dict(chooses.GROUPS_DAYS)[day.days]) + "/"
