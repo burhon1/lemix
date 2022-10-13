@@ -1,6 +1,5 @@
 from calendar import Calendar
 from datetime import timezone
-from multiprocessing.dummy import Manager
 from django.db import models
 from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager
 from admintion.data import chooses
@@ -25,6 +24,8 @@ class Course(models.Model):
     price = models.PositiveIntegerField()
     comment = models.TextField()
     status = models.BooleanField(default=False)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    objects = models.Manager()
     courses = course_manager.CoursesManager()
     def __str__(self) -> str:
         return self.title

@@ -1,74 +1,399 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+
+
+{% block title %}
+Online darslar- Lemix
+{% endblock %}
+
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+    .v-num{
+        font-size: 14px;
+    }
+    .application-faqs .panel-title a{
+        font-size: 12px !important;
+    }
+    .forms-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .forms-view > .form-group{
+        display: flex;
+        align-items: center;
+    }
+    .table-responsive tr td>div{
+        text-transform: none;
+    }
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single{
+        height: 1.875rem;
+padding: 0;
+font-size: 12px;
+line-height: 1.5;
+-webkit-border-radius: 0.2rem;
+border-radius: 0.2rem;
+margin-right: 7px;
+    }
+    .userDatatable-title{
+        text-transform: none !important;
+    }
+</style>
+{% endblock %}
 {% block content %}
 
-<div class="container-fluid p-0 ">
-    <h1 class="mt-2">Onlayn darslar</h1>
-    <div class="row mt-2 ">
-        <div class="col-12 col-lg-12 col-xl-12 col-xxl-12">
-            <div class="card-body p-0">
-                <div class="table4  p-25 bg-white mb-30">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th>
-                                        <span class="userDatatable-title">#</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Guruh</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Kurs</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Mas'ul shaxs</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Darslar soni</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
+    <div class="container-fluid p-0 ">
+        <div class="row mt-3">
 
-                                <tr>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            1
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            <a style="color:black;" href="{% url 'education:group-detail' '1' %}">Guruh-1</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            <a style="color:black;" href="{% url 'education:course_detail' '1' %}">Matematika</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            <a style="color:black;" href="{% url 'education:employe_detail' '1' %}">Burhon Baqoyev</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content d-flex ">
-                                            <a style="color:black;" href="{% url 'education:onlins' '1' %}" >100ta | 
-                                            <span data-feather="youtube"></span><a class="mr-3">40</a>
-                                            <span data-feather="check"></span><a class="mr-3">30</a>
-                                            <span data-feather="edit-3"></span><a class="mr-3">30</a></a>
-                                        </div>
-                                    </td>
-                                </tr>
+            <div class="col-lg-12 mb-30">
+                <div class="card">
+                    <div class="card-header color-dark fw-500">
+                      <div class="row align-items-center justify-content-center">
+                       <h2 class="mr-30" style="text-transform: none;"> Online darslar</h2>
+                     
+                      </div>
+                      
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-wrapper">
 
-                            </tbody>
-                        </table>
+                            <div class="atbd-tab tab-horizontal">
+                                <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">Kurslar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Guruhlar</a>
+                                    </li>
+                                 
+
+
+
+                                </ul>
+                                <div class="tab-content">
+
+
+
+                                    <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
+                                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 table-borderless">
+                                                    <thead>
+                                                        <tr class="userDatatable-header">
+                                                            <th>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="custom-checkbox  check-all">
+                                                                        <!-- <input class="checkbox" type="checkbox" id="check-3"> -->
+                                                                        <label for="check-3">
+                                                                            <span class="checkbox-text userDatatable-title">#</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Kurs nomi </span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Guruhlar</span>
+                                                            </th>
+                                                            <!-- <th>
+                                                                <span class="userDatatable-title">Ma'sul o'qituvchi</span>
+                                                            </th> -->
+                                                            <th>
+                                                                <span class="userDatatable-title">Kursdagi asosiy darslar soni</span>
+                                                            </th>
+                                                            <!-- <th>
+                                                                <span class="userDatatable-title">Xodim & Sanasi</span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title float-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>
+                                                            </th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+        
+                                                    {% for course in courses %}
+                                                    <tr >
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                    <!-- <div class="checkbox-group-wrapper">
+                                                                        <div class="checkbox-group d-flex">
+                                                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                <input class="checkbox" type="checkbox" id="check-grp-12">
+                                                                                <label for="check-grp-12"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> -->
+                                                                  
+                                                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                                                </div>
+                                                                <div class="userDatatable-inline-title">
+                                                                    {{ forloop.counter }}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                                <a href="{% url 'education:onlins' course.id %}">
+                                                                    {{ course.title }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content d-inline-block">
+                                                               {{ course.group_count|default:0 }}ta
+                                                            </div>
+                                                           
+                                                        </td>
+                                                        <!-- <td>
+                                                            <div class="userDatatable-content">
+                                                                Burhon Baqoyev
+                                                            </div>
+                                                        </td> -->
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                              {{ course.contents }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                                              {{ course.video_contents }} ta, 
+                                                                 <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                                                 {{ course.text_contents }}ta, 
+                                                                  <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 
+                                                                   {{ course.homework_contents }}ta,
+                                                                   <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> 
+                                                                    {{ course.test_contents }}ta)
+                                                            </div>
+                                                        </td>
+                                                       
+                                                      
+                                                    </tr>
+                                                    {% endfor %}
+        
+        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 table-borderless">
+                                                    <thead>
+                                                        <tr class="userDatatable-header">
+                                                            <th>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="custom-checkbox  check-all">
+                                                                        <!-- <input class="checkbox" type="checkbox" id="check-3"> -->
+                                                                        <label for="check-3">
+                                                                            <span class="checkbox-text userDatatable-title">#</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Guruh </span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Kurs</span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Ma'sul o'qituvchi</span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Darslar soni</span>
+                                                            </th>
+                                                            <!-- <th>
+                                                                <span class="userDatatable-title">Xodim & Sanasi</span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title float-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>
+                                                            </th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+        
+                                                    {% for group in groups %}
+                                                    <tr >
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                    <!-- <div class="checkbox-group-wrapper">
+                                                                        <div class="checkbox-group d-flex">
+                                                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                <input class="checkbox" type="checkbox" id="check-grp-12">
+                                                                                <label for="check-grp-12"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> -->
+                                                                  
+                                                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                                                </div>
+                                                                <div class="userDatatable-inline-title">
+                                                                    {{ forloop.counter }}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                            <a href="{% url 'education:group-detail' group.id %}">
+                                                                {{ group.title }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content d-inline-block">
+                                                               {{ group.course }}
+                                                            </div>
+                                                           
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                                {{ group.teacher|default:''}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="userDatatable-content">
+                                                                {{ group.contents }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                                                {{ group.video_contents }} ta, 
+                                                                   <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                                                   {{ group.text_contents }}ta, 
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 
+                                                                     {{ group.homework_contents }}ta,
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> 
+                                                                      {{ group.test_contents }}ta)
+                                                              </div>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                    
+                                                    {% endfor %}
+        
+        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                        </div>
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">Lidni o'chirish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <p>Ushbu arxivdagi lidni haqiqatdan ham o'chirmoqchimisiz?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm">Ha, o'chirilsin</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">Lidni avtivlashtirish.</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <p>Ushbu lid avtiv lidlar qatoriga kiritilsinmi?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm">Ha</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Yoq</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        var forms = document.querySelectorAll('.forms-view')
+        for (let i = 0; i < forms.length; i++) {
+             forms[i].style.display='none'
+            }
+        var array=[]
+        function handleClickIcon(x) {
+            if(array.includes(x)){
+            forms[array[array.indexOf(x)]].style.display='none';
+            array = array.filter(e=>e!=x);
+            }
+            else {
+            forms[x].style.display='flex';
+            array.push(x)
+            }
+           console.log(array)
+        //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+        }
+    </script>
 
 {% endblock %}

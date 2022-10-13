@@ -12,6 +12,7 @@ class Modules(models.Model):
     title  = models.CharField("Modul sarlavhasi", max_length=300)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     order  = models.IntegerField("Dars o'rni", default=0)
+    comment= models.TextField(null=True,blank=True)
     objects = models.Manager()
     modules = modules.ModulesManager()
     class Meta:
@@ -27,6 +28,8 @@ class Lessons(models.Model):
     title  = models.CharField("Mavzu sarlavhasi", max_length=300)
     order  = models.IntegerField("Dars o'rni", default=0)
     content_type = models.SmallIntegerField("Content Type", choices=LESSONS_CHOICES, default=1)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    comment= models.TextField(null=True,blank=True)
     objects = models.Manager()
     lessons = lessons.LessonsManager()
     class Meta:
@@ -50,6 +53,9 @@ class Contents(models.Model):
     students     = models.ManyToManyField(Student, verbose_name="Talabalar", blank=True)
     opened_at    = models.DateTimeField("O'quvchiga ochilish vaqti",null=True, blank=True)
     closed_at    = models.DateTimeField("Yopilish vaqti",null=True, blank=True)
+    author       = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    required     = models.BooleanField("Dars tugatilmasa keyingi dars ko'rinmasinmi?", default=False)
+    status       = models.BooleanField("Material tayyormi? ", default=False)
     objects = models.Manager()
     contents = contents.ContentsManager()
     class Meta:
@@ -77,6 +83,7 @@ class Contents(models.Model):
 class Resources(models.Model):
     lesson  = models.ForeignKey(Lessons, models.CASCADE, null=True, blank=True, verbose_name="Dars", related_name='resources')
     module  = models.ForeignKey(Modules, models.CASCADE, null=True, blank=True, verbose_name="Modul", related_name='module_resources')
+    content = models.ForeignKey(Contents, models.CASCADE, null=True, blank=True, verbose_name="Content", related_name='content_resources')
     file    = models.FileField("Manba", null=True, blank=True)
     link    = models.URLField("Manba havolasi", null=True, blank=True)
     objects = models.Manager()

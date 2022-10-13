@@ -27,20 +27,20 @@ class ModuleAdmin(admin.ModelAdmin):
 class LessonAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'module', 'order', 'content_type')
     list_display_links = ('id', 'title', )
-    list_filter = ('module', 'content_type')
+    list_filter = ('module', 'content_type', 'author')
 
     list_per_page: int = 50
 
 @admin.register(Contents)
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'lesson', 'order', 'content_type')
+    list_display = ('id', 'title', 'lesson','author', 'order', 'content_type')
     list_display_links = ('id', 'title', )
-    list_filter = ('lesson', 'content_type')
+    list_filter = ('lesson', 'content_type', 'author')
 
     list_per_page: int = 50
 
 @admin.register(Resources)
-class ContentAdmin(admin.ModelAdmin):
+class ResourceAdmin(admin.ModelAdmin):
     list_display = ('id', 'lesson', 'module', )
     list_display_links = ('id', 'lesson', )
     list_filter = ('lesson', 'module')
