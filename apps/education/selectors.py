@@ -242,4 +242,4 @@ def get_lessons(course:Course, user:CustomUser, **filter_kwargs):
         lessons = Lessons.objects.filter(Q(author=user)|Q(author__in=admins), module__course=course, **filter_kwargs)
     else:
         lessons = Lessons.objects.filter(module__course=course, **filter_kwargs)
-    return lessons
+    return lessons.order_by('module', 'order')

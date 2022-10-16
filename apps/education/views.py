@@ -1,13 +1,13 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from admintion.models import Course
-from education.models import Lessons, Modules, Contents
+from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data
-from education.forms import LessonAddForm
-
+from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm
+from django.db.models import Q
 def test2_view(request):
     return render(request,'education/test.html')     
 
@@ -30,25 +30,72 @@ def onlin_view(request):
     context['groups'] = get_groups(request.user)
     return render(request,'education/onlin.html', context) 
 
-def onlin_video_view(request):
-    return render(request,'education/onlin_video.html') 
+@login_required
+def onlin_video_view(request, pk):
+    content = get_object_or_404(Contents, pk=pk)
+    context = dict()
+    context['resources'] = content.content_resources.values('id', 'file', 'link')
+    context['faqs'] = content.faqs.values('id', 'question', 'answer')
+    context['content'] = model_to_dict(content, fields=('id', 'title', 'video', 'video_link', 'text', 'required'))
+    context['action'] = 'tahrirlash'
+    return render(request,'education/onlin_video.html', context=context) 
+
+@login_required
+def onlin_video_create_view(request, lesson_id):
+    if request.method == 'POST':
+        lesson = get_object_or_404(Lessons, id=lesson_id)
+        form = ContentForm(request.POST, request.FILES)
+        if form.is_valid():
+            content = form.save(commit=False)
+            if content.video is None and content.video_link is None:
+                return JsonResponse({'message': 'Video fayl yoki havola yuklashingiz kerak'}, status=400)
+            content.content_type = 1 
+            content.lesson = lesson 
+            content.author = request.user
+            content.save()
+            return JsonResponse({'message':'created'}, status=201)
+        else:
+            return JsonResponse({'message':form.non_field_errors()}, status=400)
+    # return JsonResponse({'message':'so\'rov metodi to\'g\'ri emas.'}, status=400)
+    return render(request,'education/onlin_video.html')
 
 @login_required
 def onlin_text_view(request, lesson_id):
+    lesson = get_object_or_404(Lessons, id=lesson_id)
     if request.method == 'POST':
-        data = dict(request.POST)
-        print(data)
-        data['lesson'] = get_object_or_404(Lessons, pk=lesson_id)
-        try:
-            content = Contents.objects.create(author=request.user, **data)
-            return reverse(redirect('education:onlin_text_update', pk=content.pk))
-        except Exception as e:
-            raise e
+        form = ContentForm(request.POST)
+        
+        if form.is_valid():
+            content = form.save(commit=False)
+            content.author = request.user 
+            content.content_type = 2
+            content.lesson = lesson
+            content.save()
+            print(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
+            return JsonResponse(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
+        else:
+            print(form.non_field_errors())
+            return JsonResponse({'form': form, 'status':400})
     return render(request,'education/onlin_text.html') 
 
 
 def onlin_text_update_view(request, pk):
-    return render(request,'education/onlin_text.html') 
+    context = dict()
+    content = get_object_or_404(Contents, pk=pk)
+    context['content'] = content
+    context['faqs'] = context['content'].faqs.all().values('id', 'question', 'answer')
+    context['resources'] = context['content'].content_resources.all().values('id', 'file', 'link')
+    context['content'] = model_to_dict(context['content'], fields=('id', 'title', 'text', 'required'))
+    if request.method == 'POST':
+        data = request.POST
+        form = TextContentForm(data, instance=content)
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.non_form_errors())
+        return JsonResponse(context['content'], status=200)
+
+    return render(request,'education/onlin_text.html', context) 
 
 def onlin_test_view(request):
     return render(request,'education/onlin_test.html') 
@@ -84,6 +131,15 @@ def onlins_view(request,id):
     context['modules'] = get_modules_data(context['modules'])
     print("\n\n", context, "\n\n")
     return render(request,'education/onlins.html', context) 
+
+@login_required
+def online_delete_view(request, id):
+    course = get_object_or_404(Course, id=id)
+    if course.author == request.user or request.user.is_superuser:
+        course.modules.all().delete()
+        course.tests_set.all().delete()
+        return redirect('education:onlins', kwargs={'id':id}) 
+    return JsonResponse({'status':'Sizda bunga ruhsat yo\'q'})
 
 @login_required
 def modules_view(request):
@@ -123,9 +179,6 @@ def course_modules_view(request, pk):
 def create_lesson_view(request):
     if request.method == 'POST':
         data = request.POST
-        
-        print(data)
-        # data['author'] = request.user
         form = LessonAddForm(data)
         if form.is_valid():
             lesson = form.save(author=request.user)
@@ -207,3 +260,66 @@ def lid_sk_view(request):
 def lid_ry_view(request):
     return render(request,'education/lid_ry.html') 
 
+def faqs(request, *args, **kwargs):
+    content = get_object_or_404(Contents, pk=int(request.GET.get('content')))
+    if request.method == 'POST':
+        formset = FAQFormSet(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                faq = form.save(commit=False)
+                faq.content = content
+                if faq.content:
+                    faq.save()
+            return JsonResponse({'status': 201})
+        else:
+            print(formset.non_form_errors())
+            return JsonResponse({"status": 400})
+    faqs = FAQ.objects.filter(content=content)
+    data = list()
+    for faq in faqs:
+        dct = model_to_dict(faq, fields=('id', 'question', 'answer'))
+        data.append(dct)
+    return JsonResponse({'faqs': data})
+
+def set_content_order(request, pk: int, order: int):
+    content = get_object_or_404(Contents, pk=pk)
+    if content.order > order:
+        query = Q()
+    contents = Contents.objects.filter()
+    
+    content.order = order
+    content.save()
+    return JsonResponse({'status': 200})
+
+
+def online_course_contents_view(request, id):
+    lesson = get_object_or_404(Lessons, pk=id)
+
+    contents = lesson.contents.values('id', 'title', 'content_type', 'status')
+    CONTENT_TYPES = {
+        1: "Video", 2: "File", 3:"Test", 4:"Vazifa"
+    }
+    for content in contents:
+        content['content_type'] = CONTENT_TYPES[content['content_type']]
+
+    return JsonResponse(list(contents), safe=False)
+
+def online_content_resources_view(request):
+    if request.method == 'POST':
+        resources = request.FILES.getlist('resources')
+        pk = request.POST.get('content')
+        content = get_object_or_404(Contents, pk=pk)
+        print(resources)
+        for resource in resources:
+            res, created = Resources.objects.get_or_create(content=content, file=resource)
+            print(res.file)
+        return JsonResponse({'status': 201})
+    return JsonResponse({'status': 200})
+
+
+@login_required
+def modules_detail_view(request, pk):
+    module = get_object_or_404(Modules, pk=pk)
+    lessons = module.lessons.values('id', 'title', 'order')
+
+    return JsonResponse(lessons, safe=False)
