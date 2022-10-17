@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 from admintion.models import Course
 from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data
-from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm
+from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm
 from django.db.models import Q
 def test2_view(request):
     return render(request,'education/test.html')     
@@ -38,6 +38,19 @@ def onlin_video_view(request, pk):
     context['faqs'] = content.faqs.values('id', 'question', 'answer')
     context['content'] = model_to_dict(content, fields=('id', 'title', 'video', 'video_link', 'text', 'required'))
     context['action'] = 'tahrirlash'
+    if request.method == 'POST':
+        form = ContentForm(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            content = form.save()
+            data = model_to_dict(content, fields=('id', 'title', 'video_link', 'text', 'required', 'status'))
+            if content.video:
+                data['video'] = {'name':content.video.name, 'url': content.video.url}
+            if data['video_link'] is None:
+                data['video_link'] = ''
+            print("update: ", data)
+            return JsonResponse(data, status=200)
+        else:
+            return JsonResponse({'errors': form.non_field_errors()}, status=400, safe=False)
     return render(request,'education/onlin_video.html', context=context) 
 
 @login_required
@@ -53,7 +66,7 @@ def onlin_video_create_view(request, lesson_id):
             content.lesson = lesson 
             content.author = request.user
             content.save()
-            return JsonResponse({'message':'created'}, status=201)
+            return JsonResponse(model_to_dict(content, fields=('id', 'title')), status=201)
         else:
             return JsonResponse({'message':form.non_field_errors()}, status=400)
     # return JsonResponse({'message':'so\'rov metodi to\'g\'ri emas.'}, status=400)
@@ -93,6 +106,7 @@ def onlin_text_update_view(request, pk):
             form.save()
         else:
             print(form.non_form_errors())
+        print(context['content'])
         return JsonResponse(context['content'], status=200)
 
     return render(request,'education/onlin_text.html', context) 
@@ -100,8 +114,59 @@ def onlin_text_update_view(request, pk):
 def onlin_test_view(request):
     return render(request,'education/onlin_test.html') 
 
-def onlin_hwork_view(request):
-    return render(request,'education/onlin_hwork.html') 
+
+def get_content_data(content):
+    context = dict()
+    context['content'] = model_to_dict(content, fields=('id', 'title', 'text', 'required'))
+    if content.homework:
+        context['content']['homework'] = {'name': content.homework.name, 'url': content.homework.url}
+    context['action'] = 'tahrirlash'
+    return context
+
+@login_required
+def onlin_hwork_view(request, pk):
+    content = get_object_or_404(Contents, pk=pk)
+    context = dict()
+    if request.method == 'POST':
+        form = ContentForm(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            content = form.save()
+            context = get_content_data(content)
+            return JsonResponse(context, status=200)
+        else:
+            print(form.non_field_errors())
+    context = get_content_data(content)
+    return render(request,'education/onlin_hwork.html', context) 
+
+@login_required
+def onlin_hwork_create_view(request, lesson_id):
+    lesson = get_object_or_404(Lessons, id=lesson_id)
+    if request.method == 'POST':
+        form = ContentForm(request.POST)
+        
+        if form.is_valid():
+            content = form.save(commit=False)
+            content.author = request.user 
+            content.content_type = 4 # CONTENT_CHOICES
+            content.lesson = lesson
+            content.save()
+            print(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
+            return JsonResponse(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
+        else:
+            print(form.non_field_errors())
+            return JsonResponse({'form': form, 'status':400})
+    return render(request,'education/onlin_hwork.html')
+
+
+
+@login_required
+def onlin_hwork_delete_view(request, pk):
+    content = get_object_or_404(Contents, pk=pk)
+    if request.method == 'POST':
+        id = content.lesson.module.course.id
+        content.delete()
+        return JsonResponse({'status':"O'chirildi", 'url': f'/education/onlines/{id}/'})
+    return JsonResponse({'status':'Bajarilmadi'}, status=400)
 
 @login_required
 def onlins_view(request,id):
@@ -118,7 +183,6 @@ def onlins_view(request,id):
             filter_kwargs = {'module_id': module_id}
             context['lessons'] = get_lessons(course, request.user,**filter_kwargs)
             context['lessons'] = get_lessons_data(context['lessons'])
-            print(context["lessons"])
         return JsonResponse(context)
 
     context['modules'] = get_modules(course, request.user)
@@ -142,28 +206,69 @@ def online_delete_view(request, id):
     return JsonResponse({'status':'Sizda bunga ruhsat yo\'q'})
 
 @login_required
-def modules_view(request):
-    if request.user.is_superuser:
-        pass
-    elif request.user.teacher_set.first():
-        pass
-    else:
-        JsonResponse({'status':403, 'message': 'Siz bunday operatsiyani bajara olmaysiz'})
+def online_delete2_view(request, type:str, pk: int):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        course_id =  request.POST.get('course_id')
-        course = Course.objects.filter(id=course_id).first()
-        module:Modules = None
-        try:
-            module = Modules.objects.create(title=name, comment=description, course=course, author=request.user)
-            message = 'Bo\'lim yaratildi'
-        except:
-            
-            message = 'Bunday bo\'limni yaratib bo\'lmaydi'
-    if module:
-        module = model_to_dict(module)
-    return JsonResponse({'message': message, 'module': module})
+        if type == 'course':
+            obj = get_object_or_404(Course, pk=pk)
+            obj.modules.all().delete()
+        if type == 'module':
+            obj = get_object_or_404(Modules, pk=pk)
+            obj.delete()
+        if type == 'lesson':
+            obj = get_object_or_404(Lessons, pk=pk)
+            obj.delete()
+        if type == 'content':
+            obj = get_object_or_404(Contents, pk=pk)
+            obj.delete()
+
+        # course = get_object_or_404(Course, id=id)
+        # if course.author == request.user or request.user.is_superuser:
+        #     course.modules.all().delete()
+        #     course.tests_set.all().delete()
+        return redirect('education:onlins', id=pk) 
+    return JsonResponse({'status':'Sizda bunga ruhsat yo\'q'})
+
+
+@login_required
+def online_activate_view(request, action:str, type: str, pk:int):
+    ACTIONS = {'activate':True, 'draft':False}
+
+    if request.method == 'POST':
+        if type == 'course':
+            obj = get_object_or_404(Course, pk=pk)
+            modules = obj.modules.all()
+            contents = Contents.objects.filter(lesson__module__in=modules)
+            contents.update(status=ACTIONS[action])
+        if type == 'module':
+            obj = get_object_or_404(Modules, pk=pk)
+            contents = Contents.objects.filter(lesson__module=obj)
+            contents.update(status=ACTIONS[action])
+        if type == 'lesson':
+            obj = get_object_or_404(Lessons, pk=pk)
+            contents = Contents.objects.filter(lesson=obj)
+            contents.update(status=ACTIONS[action])
+        if type == 'content':
+            objs = Contents.objects.filter(pk=pk)
+            objs.update(status=ACTIONS[action])
+
+        return JsonResponse({'status':'ok'})
+    return JsonResponse({'status':'get request'})    
+
+@login_required
+def modules_view(request):
+    if request.method == 'POST':
+        form = ModuleForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            module = form.save(commit=False)
+            module.author=request.user
+            module.save()
+            data = model_to_dict(module, fields=('id', 'title'))
+            data['status'] = False
+            return JsonResponse(data, status=201)
+        else:
+            return JsonResponse(form.errors(), safe=False, status=400)
+    return JsonResponse({'status':'ok'})
 
 
 @login_required
@@ -174,6 +279,14 @@ def course_modules_view(request, pk):
     context['modules'] = list(get_modules_data(modules))
     return JsonResponse(context)
 
+
+@login_required
+def course_lessons_view(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    context = dict()
+    context['lessons'] = get_lessons(course, request.user)
+    context['lessons'] = get_lessons_data(context['lessons'])
+    return JsonResponse(context)
 
 @login_required
 def create_lesson_view(request):
@@ -281,6 +394,25 @@ def faqs(request, *args, **kwargs):
         data.append(dct)
     return JsonResponse({'faqs': data})
 
+
+def faq_detail(request, pk):
+    faq = get_object_or_404(FAQ, pk=pk)
+    if request.method == 'POST':
+        faq.delete()
+        return JsonResponse({'status': 'deleted'})
+    return JsonResponse({'status': 'not deleted'})
+
+def faq_update(request, pk):
+    faq = get_object_or_404(FAQ, pk=pk)
+    if request.method == 'POST':
+        form = FAQForm(request.POST, instance=faq)
+        if form.is_valid():
+            faq = form.save()
+            return JsonResponse(model_to_dict(faq, fields=('id', 'question', 'answer')), safe=False)
+        return JsonResponse(form.non_field_errors(), status=400)
+    return JsonResponse(model_to_dict(faq, fields=('id', 'question', 'answer')), safe=False)
+
+
 def set_content_order(request, pk: int, order: int):
     content = get_object_or_404(Contents, pk=pk)
     if content.order > order:
@@ -307,12 +439,13 @@ def online_course_contents_view(request, id):
 def online_content_resources_view(request):
     if request.method == 'POST':
         resources = request.FILES.getlist('resources')
-        pk = request.POST.get('content')
-        content = get_object_or_404(Contents, pk=pk)
+        pk = request.GET.get('content')
+        content = get_object_or_404(Contents, pk=int(pk))
         print(resources)
         for resource in resources:
             res, created = Resources.objects.get_or_create(content=content, file=resource)
-            print(res.file)
+            res.save()
+
         return JsonResponse({'status': 201})
     return JsonResponse({'status': 200})
 
@@ -321,5 +454,16 @@ def online_content_resources_view(request):
 def modules_detail_view(request, pk):
     module = get_object_or_404(Modules, pk=pk)
     lessons = module.lessons.values('id', 'title', 'order')
+    data = dict()
+    data['lessons'] = list(lessons)
+    data['status'] = bool(Contents.objects.filter(lesson__module=module, status=True).count())
+    return JsonResponse(data, safe=False)
 
-    return JsonResponse(lessons, safe=False)
+@login_required
+def online_content_resource_delete_view(request, pk):
+    resource = get_object_or_404(Resources, pk=int(pk))
+    message = "Siz GET so'rov yubordingiz."
+    if request.method == 'POST':
+        resource.delete()
+        message = "O'chirildi."
+    return JsonResponse({'method':request.method, 'message':message})

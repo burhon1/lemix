@@ -98,7 +98,7 @@ margin-right: 7px;
                                         <label for="element-text" class=" col-form-label color-dark fs-14 fw-500 align-center">Video havola manzili(url)ni kiriting yoki video faylni yuklang</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="element-text" placeholder="Video dars manzili(url)" value="{{ content.video_link }}">
+                                        <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="element-text" placeholder="Video dars manzili(url)" value="{{ content.video_link|default:''  }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -107,9 +107,9 @@ margin-right: 7px;
                                     </div>
                                     <div class="col-sm-9">
                                         {% if content.video %}
-                                            <a href="{{ content.video.url }}">{{ content.video }}</a>
+                                            <a href="{{ content.video.url }}">{{ content.video}}</a>
                                         {% endif %}
-                                        <input class="form-control ih-medium ip-light radius-xs b-light px-15" type="file" id="formFile">
+                                        <input class="form-control ih-medium ip-light radius-xs b-light px-15" type="file" id="videoFile">
                                     </div>
                                 </div>
                                 </div>
@@ -129,14 +129,14 @@ margin-right: 7px;
                                 </div>
                                 <div class="col-sm-9 ">
                                     <div class="radio-theme-default custom-radio mb-2">
-                                        <input class="radio" type="radio" name="radio-default" value=0 {% if content.required %}check{% endif %} id="radio-un2">
+                                        <input class="radio" type="radio" name="radio-default" value=1 {% if content.required %}checked{% endif %} id="radio-un2">
                                         <label for="radio-un2">
                                             <span class="radio-text">Dars tugatilmasa keyingi dars ko'rinmasin</span>
                                         </label>
                                     </div>
                                     
                                     <div class="radio-theme-default custom-radio ">
-                                        <input class="radio" type="radio" name="radio-default" value=0 {% if content.required is False %}check{% endif %} id="radio-un3">
+                                        <input class="radio" type="radio" name="radio-default" value=0 {% if content.required is False %}checked{% endif %} id="radio-un3">
                                         <label for="radio-un3">
                                             <span class="radio-text">Ixtiyoriy paytda ko'rinsin</span>
                                         </label>
@@ -174,14 +174,15 @@ margin-right: 7px;
                                             <div class="fileM-single m-2">
 
                                                 {% if resource.file %}
-                                                <div class="fileM-card ">
+                                                <div class="fileM-card resource-id-{{ resource.id }}">
                                                     <div class="card border-0">
                                                         <div class="card-body pb-40 pt-45">
                                                             <div class="fileM-img">
                                                                 <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
                                                             </div>
-                                                            <a href="{{ resource.file.url }}"> <p class="fileM-excerpt">{{ resource.file.name }} </p></a>
-                                                            <span class="size">{{ resource.file.name}}</span>
+                                                            <a href="{{ resource.file.url }}" download> 
+                                                                <p class="fileM-excerpt">{{ resource.file }} </p></a>
+                                                            <span class="size"></span>
                                                             <div class="fileM-action">
                                                                 <div class="fileM-action__right ">
                                                                     <div class="dropdown dropleft position-absolute">
@@ -189,13 +190,13 @@ margin-right: 7px;
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
                                                                         </button>
                                                                         <div class="dropdown-menu">
-                                                                            <a class="dropdown-item text-danger" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>O'chirish</a>                        </div>
+                                                                            <a class="dropdown-item text-danger" onclick="deleteResource('{{ resource.id }}','')" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>O'chirish</a>                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    </div>
+                                                </div>
                                                 {% else %}
                                                     <div class="fileM-card ">
                                                         <div class="card border-0">
@@ -255,25 +256,95 @@ margin-right: 7px;
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <!-- panel 1 -->
                                 {% for faq in faqs %}
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-default panel-faq-{{faq.id}}">
                                         <div class="panel-heading" role="tab" id="headingOne-faq-{{faq.id}}">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne-faq-{{faq.id}}" aria-expanded="true" aria-controls="collapseOne-faq-{{faq.id}}">
-                                                    {{ forloop.counter }}. {{ faq.question }}
+                                                    <p>{{ forloop.counter }}. {{ faq.question }}</p>
                                                 </a>
                                             </h4>
 
                                         </div>
                                         <div id="collapseOne-faq-{{faq.id}}" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne-faq-{{faq.id}}">
                                             <div class="panel-body">
-                                                <p class="mb-sm-35 mb-20">{{ faq.answer }}</p>
-                                            
+                                                <p class="mb-sm-35 mb-20" >{{ faq.answer }}</p>
+                                                <div class="d-flex justify-content-end align-items-center">
+                                                    <button type="button" class="btn btn-outline-secondary btn-default btn-squared mr-2"  data-toggle="modal" data-target="#modalBasicFaq-{{ faq.id }}-del"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>O'chirish</button>
+                                                    <button type="button" class="btn btn-primary btn-default btn-squared "  data-toggle="modal" data-target="#modalBasicFaq-{{ faq.id }}">Tahrirlash</button>
                                                 </div>
+                                                
                                             </div>
+                                        
+                                            <div class="modal-basic modal fade" id="modalBasicFaq-{{ faq.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content modal-bg-white ">
+                                                        <div class="modal-header">
+                                            
+                                            
+                                            
+                                                            <h6 class="modal-title">Savol-Javob tahrirlash</h6>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span data-feather="x"></span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="edit-faq-{{faq.id}}-question" class="il-gray fs-14 fw-500 align-center">Savol matni</label>
+                                                                <input type="text" class="form-control ih-small ip-light radius-xs b-light px-15" id="edit-faq-{{faq.id}}-question" placeholder="" value="{{ faq.question }}">
+                                                            </div>
+                                                            <div class="form-group form-element-textarea mb-20">
+                                                                <label for="edit-faq-{{faq.id}}-answer" class="il-gray fs-14 fw-500 align-center">Javob matni</label>
+                                                                <textarea class="form-control" id="edit-faq-{{faq.id}}-answer" rows="3"> {{ faq.answer }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+                                                            <button type="button" class="btn btn-primary btn-sm " onClick="updateFAQ('{{faq.id}}')">Tahrirlash</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                             
+                                            </div>
+                                            
+
+                                            <div class="modal-basic modal fade" id="modalBasicFaq-{{ faq.id }}-del" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                                                <div class="modal-dialog modal-md" role="document">
+                                                    <div class="modal-content modal-bg-white ">
+                                                        <div class="modal-header">
+                                            
+                                            
+                                            
+                                                            <h6 class="modal-title">Savol-Javobni o'chirish</h6>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span data-feather="x"></span></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Rostan ham <b>{{ faq.question }}</b>ni o'chirmoqchimisiz?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="deleteFAQ({{faq.id}})">O'chirish</button>
+                                                            {% comment %} <button type="button" class="btn btn-primary btn-sm ">Tahrirlash</button> {% endcomment %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                             
+                                            </div>
+                                        
                                         </div>
+                                        
+                                        
+                                        
                                     </div>
+                                
+                                    
+
                                 {% endfor %}
-                              
+                            </div>
                         </div>
 
 
@@ -322,7 +393,54 @@ margin-right: 7px;
                     </div>
                     <div class="card-body py-md-30">
                         <div class="atbd-button-list d-flex flex-wrap">
-                            <button class="btn btn-outline-secondary btn-default btn-squared " data-toggle="modal" data-target="#modal-basic-delete">Bekor qilish </button>
+
+                            <div class="modal-basic modal fade show" id="modal-basic-draft" tabindex="-1" role="dialog" aria-hidden="true">
+
+                                <div class="modal-dialog modal-md" role="document">
+                                    <div class="modal-content modal-bg-white ">
+                                        <div class="modal-header">
+
+                                            <h6 class="modal-title">Draft</h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span data-feather="x"></span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Ushbu dars uchun kiritilgan ma'lumotlar tizimda saqlanadi, ammo o'quvchilar uchum joriy etilmaydi. 
+                                                </p>
+                                                <p>
+                                                Siz darsni tahrirlab yoki o'zgartirishlar kiritib bo'lganingizdan keyin saqlash tugmasini bossangiz bu dars faollashadi.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+                                            <button type="button" class="btn btn-primary btn-sm" id="ContentDraftSaveBtn">Draft saqlash</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            <div class="modal-basic modal fade show" id="modal-basic-saqlash" tabindex="-1" role="dialog" aria-hidden="true">
+
+                                <div class="modal-dialog modal-md" role="document">
+                                    <div class="modal-content modal-bg-white ">
+                                        <div class="modal-header">
+
+                                            <h6 class="modal-title">Saqlash</h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span data-feather="x"></span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Ushbu dars uchun kiritgan barcha ma'lumotlar saqlanadi va o'quvchilarga ko'rinadi.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+                                            <button type="button" class="btn btn-primary btn-sm"  id="ContentSaveBtn">Ha, Saqlash</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+
+                            <button class="btn btn-outline-secondary btn-default btn-squared " data-toggle="modal" data-target="#modal-basic-delete">O'chirish </button>
                             <button class="btn btn-outline-primary btn-default btn-squared" data-toggle="modal" data-target="#modal-basic-draft">Draft
                             </button>
                             <button class="btn btn-primary btn-default btn-squared " data-toggle="modal" data-target="#modal-basic-saqlash">Saqlash
@@ -344,57 +462,6 @@ margin-right: 7px;
 {% endblock %}
 
 {% block model %}
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-header">
-
-
-
-                <h6 class="modal-title">Lidni o'chirish</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span data-feather="x"></span></button>
-            </div>
-            <div class="modal-body">
-                <p>Ushbu arxivdagi lidni haqiqatdan ham o'chirmoqchimisiz?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm">Ha, o'chirilsin</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-
-
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-header">
-
-
-
-                <h6 class="modal-title">Lidni avtivlashtirish.</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span data-feather="x"></span></button>
-            </div>
-            <div class="modal-body">
-                <p>Ushbu lid avtiv lidlar qatoriga kiritilsinmi?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm">Ha</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Yoq</button>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-
 
 
 
@@ -424,65 +491,13 @@ margin-right: 7px;
 
 
 </div>
-<div class="modal-basic modal fade show" id="modal-basic-draft" tabindex="-1" role="dialog" aria-hidden="true">
 
-
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-header">
-
-
-
-                <h6 class="modal-title">Draft</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span data-feather="x"></span></button>
-            </div>
-            <div class="modal-body">
-                <p>Ushbu dars uchun kiritilgan ma'lumotlar tizimda saqlanadi, ammo o'quvchilar uchum joriy etilmaydi. 
-                    </p>
-                    <p>
-                    Siz darsni tahrirlab yoki o'zgartirishlar kiritib bo'lganingizdan keyin saqlash tugmasini bossangiz bu dars faollashadi.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
-                <button type="button" class="btn btn-primary btn-sm">Draft saqlash</button>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-<div class="modal-basic modal fade show" id="modal-basic-saqlash" tabindex="-1" role="dialog" aria-hidden="true">
-
-
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-header">
-
-
-
-                <h6 class="modal-title">Saqlash</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span data-feather="x"></span></button>
-            </div>
-            <div class="modal-body">
-                <p>Ushbu dars uchun kiritgan barcha ma'lumotlar saqlanadi va o'quvchilarga ko'rinadi.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
-                <button type="button" class="btn btn-primary btn-sm">Ha, Saqlash</button>
-            </div>
-        </div>
-    </div>
-
-
-</div>
 {% endblock %}
 
 {% block script %}
 <script>
 
-
+    var fileList = [];
   
 
 
@@ -516,6 +531,7 @@ fileInput.click();
 fileInput.onchange = ({target})=>{
 let file = target.files[0];
 if(file){
+fileList.push(file); 
 let fileName = file.name;
 if(fileName.length >= 12){
   let splitName = fileName.split('.');
@@ -524,10 +540,10 @@ if(fileName.length >= 12){
 uploadFile(fileName);
 }
 }
-
+var counter1 = 0;
 function uploadFile(name){
 let xhr = new XMLHttpRequest();
-xhr.open("POST", "php/upload.php");
+xhr.open("POST", "");
 xhr.upload.addEventListener("progress", ({loaded, total}) =>{
 let fileLoaded = Math.floor((loaded / total) * 100);
 let fileTotal = Math.floor(total / 1000);
@@ -552,11 +568,11 @@ if(loaded == total){
   let uploadedHTML = `
   <div class="fileM-single m-2">
 
-<div class="fileM-card ">
+<div class="fileM-card created counter1-id-${counter1}">
 <div class="card border-0">
     <div class="card-body pb-40 pt-45">
         <div class="fileM-img">
-            <img class="wh-50" src="img/zip.png" alt="">
+            <img class="wh-50" src="{% static 'img/zip.png' %}" alt="">
         </div>
         <p class="fileM-excerpt">${name} </p>
         <span class="size">${fileSize}</span>
@@ -567,11 +583,11 @@ if(loaded == total){
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item text-danger" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>O'chirish</a>                        </div>
+                        <a class="dropdown-item text-danger" onclick="deleteResource('','${counter1}')" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>O'chirish</a>                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </div>
 
@@ -579,6 +595,7 @@ if(loaded == total){
 `;
   uploadedArea.classList.remove("onprogress");
   uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+  counter1 = counter1 + 1;
 }
 });
 let data = new FormData(form);
@@ -594,7 +611,7 @@ function addFAQ(){
         const faq_cards = document.getElementById('accordion');
         
         const div = document.createElement('div');
-        div.className = 'panel panel-default created';
+        div.className = `panel panel-default created counter-${counter}`;
         var element = `
             <div class="panel-heading" role="tab" id="headingOne-${counter}">
                 <h4 class="panel-title">
@@ -623,15 +640,20 @@ function addFAQ(){
     }
 
 
-function saveFAQs(id=null){
-    addFAQ();
+function saveFAQs(id, last_save=false){
+    console.log("last_save: ", last_save)
+    if(last_save != true){
+        addFAQ();
+    }
     if(id != null || id != ''){
         console.log("id: ", id);
         var url = `/education/faqs/?content=${id}`;
         var formData = new FormData();
 
         var created_faqs = document.getElementsByClassName('panel panel-default created');
-
+        if (created_faqs.length == 0){
+            return 0;
+        }
         formData.append('form-TOTAL_FORMS', created_faqs.length);
         formData.append('form-INITIAL_FORMS', '0');
         formData.append('form-MAX_NUM_FORMS', created_faqs.length);
@@ -666,69 +688,208 @@ function saveFAQs(id=null){
         console.log("finished");
     }
 }
+function updateFAQ(id){
+    var url = `/education/faqs/${id}/update/`;
+    var formData = new FormData();
+    formData.append('question', document.getElementById(`edit-faq-${id}-question`).value);
+    formData.append('answer', document.getElementById(`edit-faq-${id}-answer`).value);
+    formData.append('csrftokenmiddleware', '{{ csrf_token }}');
 
+    fetch(url, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: formData,
+    })
+    .then(res=>res.json()).then(res=>{
+        var faq_div = document.getElementsByClassName(`panel-faq-${id}`);
+        var question = faq_div[0].getElementsByTagName('p')[0];
+        question.textContent = `${ question.textContent.split('. ')[0]}. ${res.question}`;
+        var answer = faq_div[0].getElementsByTagName('p');
+        answer[1].textContent = `${res.answer}`;
+        alert("FAQ yangilandi.");
 
-function deleteFAQ(id=null){
-    if(id === null){
+    })
+    .catch(err=>{
+        console.log(err)
+        alert("Amaliyot bajarilmadi.Birozdan so'ng qayta urinib ko'ring")
+    })
+}
 
-    } else{
+function deleteFAQ(id){
+    if(id != ''){
+        var url = `/education/faqs/${id}/delete/`;
+
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        })
+        .then(res=>{
+            var faq_div = document.getElementsByClassName(`panel-faq-${id}`);
+            faq_div[0].remove();
+            alert("FAQ o'chirildi.");
+
+        })
+        .catch(err=>{
+            alert("Amaliyot bajarilmadi.Birozdan so'ng qayta urinib ko'ring")
+        })
+    } else {
 
     }
 }
 
-function addResource(){}
+function saveResources(id){
+    console.log("saveResources");
+    if(id != null || id != ''){
+        var url = `/education/onlines/resources/?content=${id}`;
 
-function saveResources(id=null){
-    if(id === null){
-
+        var formData = new FormData();
+        
+        for(var i=0;i<fileList.length;i++){
+            formData.append('resources', fileList[i], fileList[i].name);
+        }
+        formData.append('csrftokenmiddleware','{{ csrf_token }}')
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: formData,
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            
+        })
+        .catch(err=>{
+            console.log("error: ", err)
+        })
     } else{
-
+        console.log("No id");
     }
 }
 
-function deleteResource(id=null){
-    if(id === null){
+function deleteResource(id, counter){
+    if(id === null || id == ''){
+        console.log("delete Resource : ", id)
+
+        var divs = document.getElementsByClassName(`counter1-id-${counter}`);
+        var name = divs[0].getElementsByClassName('fileM-excerpt')[0].value;
+        for(var i=0;i< fileList.length; i++){
+            if(fileList[i].name == name){
+                fileList.splice(i, 1);
+                break;
+            }
+        }
+        divs[0].remove();
 
     } else{
-
+        var url = `/education/onlines/resources/delete/${id}/`;
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+            divs = document.getElementsByClassName(`resource-id-${id}`);
+            divs[0].remove();
+            alert("Qo'shimcha material yo'q qilindi.");
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     }
 }
 
-function saveContent(id){
-    var url = `/education/online_video/create/${id}/`;
+function saveContent(isReady=true){
+    var url = window.location.href;
 
     var formData = new FormData();
-    var video = document.getElementById('element-text').value;
+    var video = document.getElementById('videoFile').files[0];
     if (video != null ){
+        console.log(video, video.name);
         formData.append('video', video, video.name);
     }
+    var video_link = document.getElementById('element-text').value;
+    if (video_link != 'None' || video_link != ''){
+        console.log(video_link);
+        formData.append('video_link', video_link);
+    } else {
+        formData.append('video_link', null);
+    }
     formData.append('title', document.getElementById('inputName').value);
-    formData.append('video_link', document.getElementById('element-text').value);
     formData.append('text', document.getElementById('id_text').value);
+    formData.append('status', isReady);
     formData.append('csrftokenmiddleware', '{{ csrf_token }}');
 
     fetch(url, {
         method: 'post',
         headers: {
             'X-CSRFToken': '{{ csrf_token }}',
+
         },
         body: formData,
     })
     .then(res=>res.json())
     .then(res=>{
         console.log(res);
-        saveFAQs(res.id);
-        saveResources(res.id);
-        deleteFAQs(res.id);
-        deleteResources(res.id);
+        if(res.id){
+            alert(res.id);
+            saveFAQs(res.id, last_save=true);
+            saveResources(res.id);
+      
+            //if(window.location != `/education/online_video/update/${res.id}`){
+            //    window.location.assign(`/education/online_video/update/${res.id}`);
+            //}
+
+        }
+
     })
     .catch(err=>{
         console.log(err);
+        alert(err);
     })
 
 
 }
 
+function deleteBtn(){
+    var id = window.location.pathname.split('/')[4];
+    if (window.location.pathname.split('/')[3] != 'create'){
+    var url =`/education/online_video/delete/${id}/`;
+    fetch(url, {
+        method: 'post',
+        headers:{
+            'Accept': 'application/json',
+            'X-CSRFToken':'{{ csrf_token }}',
+        },
+    })
+    .then(res=>res.json()).then(res=>{
+        window.location.assign(res.url);
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+    window.location.assign('/education/online/');
+}
+
+document.getElementById('ContentSaveBtn').addEventListener('click', function(){
+    saveContent();
+
+})
+
+document.getElementById('ContentDraftSaveBtn').addEventListener('click', function(){
+    saveContent(isReady=false);
+})
 
 </script>
 
