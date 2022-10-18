@@ -144,7 +144,7 @@ def get_courses_data(courses, teacher: Teacher=None):
         dct['test_contents'] = contents.filter(content_type=3).count()
         dct['homework_contents'] = contents.filter(content_type=4).count()
         dct['contents'] = contents.count()
-
+        dct['status'] = bool(contents.filter(status=True).count())
         data.append(dct)
     return data
 
@@ -208,6 +208,7 @@ def get_modules_data(modules):
         except:
             dct['author_name'] = ''
         dct['lessons'] = list(module.lessons.all().values('id', 'title', 'order','author'))
+        dct['status'] =  bool(Contents.objects.filter(lesson__module=module, status=True).count())
         data.append(dct)
     return data
 
@@ -229,7 +230,7 @@ def get_lessons_data(lessons):
             dct['author_name'] = lesson.author.full_name()
         except:
             dct['author_name'] = ''
-
+        dct['status'] = bool(Contents.objects.filter(lesson=lesson, status=True).count())
         data.append(dct)
 
     return data

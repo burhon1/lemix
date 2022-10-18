@@ -194,7 +194,11 @@
                           {{ course.test_contents }}ta)
                     </h4>
                     <div class="buttons d-flex ">
-                        <span role="button" class="selling-badge order-bg-opacity-success color-success mx-1">Active</span>
+                        {% if course.status %}
+                        <span role="button" class="selling-badge order-bg-opacity-success color-success mx-1" id="course_status">Aktiv</span>
+                        {% else %}
+                        <span role="button" class="selling-badge order-bg-opacity-secondary color-secondary mx-1" id="course_status">Muzlatilgan</span>
+                        {% endif %}
                         <span role="button" class="selling-badge order-bg-opacity-primary color-primary mx-1 cursor-pointer" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">...</span>
                       
                         <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -204,7 +208,7 @@
                             <a class="dropdown-item" style="text-transform: none;" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
                                      Pastga tushirish</a>
-                            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" id="modalActivateBtn" onClick="activateModal('course', {{course.id}}, {% if course.status %} 'draft' {% else %} 'activate' {% endif %})">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                                  <span class="text-success">Aktivlashtirish</span>/
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
@@ -239,19 +243,16 @@
                                     aria-orientation="vertical">
                                     
                                     <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill"
-                                        href="#v-pills-home" role="tab" aria-controls="v-pills-home"
+                                        href="#v-pills-home" role="tab" aria-controls="v-pills-home" onclick="getLessons('', '{{course.id}}')"
                                         aria-selected="true">
                                         <span class="dot bg-primary"></span>Barchasi</a>
                                     {% for module in modules %}
-                                    <a class="nav-link" id="v-pills-profile-{{ module.id }}-tab" data-toggle="pill" onclick="changeGlobeDeleteBtn('{{module.id}}','{{module.title}}')"
+                                    <a class="nav-link" id="v-pills-profile-{{ module.id }}-tab" data-toggle="pill" onClick="getLessons({{ module.id }},{{course.id}})"
                                         href="#v-pills-profile-{{ module.id }}" role="tab" aria-controls="v-pills-profile-{{ module.id }}"
                                         aria-selected="false">
+                                        <!-- moduleSelectedFunction('{{module.id}}','{{module.title}}','{{module.status}}')-->
                                         <span class="dot bg-warning"></span>{{ module.title }}</a>
                                         {% endfor %}
-                                    {% comment %} <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill"
-                                        href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
-                                        aria-selected="false">
-                                        <span class="dot bg-success"></span>2-Modul</a> {% endcomment %}
 
                                 </div>
                             </div>
@@ -302,12 +303,12 @@
                                                             <a class="dropdown-item" style="text-transform: none;" href="#">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
                                                                      Pastga tushirish</a>
-                                                            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                                                            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" onclick="activateModal('lesson', {{lesson.id}}, {% if lesson.status == True %} 'draft' {% else %} 'activate' {% endif %})">
                                                                 <svg style="transform: scale(3.5);margin-right: 7px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                                                                  <span class="text-success">Aktivlashtirish</span>/
                                                                 <svg style="transform: scale(3.5);margin:0 7px;"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
                                                                 muzlatish</a>
-                                                            <a class="dropdown-item" href="#">
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-basic-edit" onclick="EditModalOpen('lesson', '{{lesson.id}}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                                                    Tahrirlash</a>
                                                             <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('lesson','{{lesson.id}}','{{lesson.title}}')">
@@ -381,12 +382,12 @@
                                                         <a class="dropdown-item" style="text-transform: none;" href="#">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
                                                                     Pastga tushirish</a>
-                                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" onclick="activateModal('lesson', '{{lesson.id}}', {% if lesson.status == True %} 'draft' {% else %} 'activate' {% endif %})">
                                                             <svg style="transform: scale(3.5);margin-right: 7px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                                                                 <span class="text-success">Aktivlashtirish</span>/
                                                             <svg style="transform: scale(3.5);margin:0 7px;"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
                                                             muzlatish</a>
-                                                        <a class="dropdown-item" href="#">
+                                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-edit"  onclick="EditModalOpen('lesson', '{{lesson.id}}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                                                 Tahrirlash</a>
                                                         <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('lesson','{{lesson.id}}','{{lesson.title}}')">
@@ -410,45 +411,7 @@
                                     
                                 {% endif %}
                                 {% endfor %}
-                                {% comment %} <!-- panel 2 -->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" data-toggle="collapse"
-                                                data-parent="#accordion" href="#collapseTwo"
-                                                aria-expanded="false" aria-controls="collapseTwo">
-                                                2-Dars
-                                            </a>
-                                        </h4>
-
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse"
-                                        role="tabpanel" aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <!-- <ul class="draggable-list" id="draggable-list"></ul> -->
-                                        </div>
-                                    </div>
-                            </div>
-                            <!-- panel 3 -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingThree">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse"
-                                            data-parent="#accordion" href="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            3-Dars
-                                        </a>
-                                    </h4>
-
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                    aria-labelledby="headingThree">
-                                    <div class="panel-body">
-
-                                        asdasdasd
-                                    </div>
-                                </div>
-                            </div> {% endcomment %}
+                                
                         </div>
 
                     </div>
@@ -513,12 +476,9 @@
 
 <div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
 
-
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
 
                 <h6 class="modal-title">Bo'lim qo'shish</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -631,25 +591,67 @@
 </div>
 {% endfor %}
 
-<div class="modal-basic modal fade show" id="modal-basic-active" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-basic modal fade show" id="modal-basic-edit" tabindex="-1" role="dialog" aria-hidden="true">
 
 
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
 
+                <h6 class="modal-title"> Tahrirlash</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                
+                    {% comment %} <div class="form-group">
+                        <label for="module_select" class="il-gray fs-14 fw-500 align-center">Bo'limni tanlang</label>
+                        <select class="form-control px-15 "  id="module_select" name="module">
+                            <option data-select2-id="2">---</option>
+                            {% for module in modules %}
+                            <option value="{{ module.id}}">{{ module.title }}</option>
+                            {% endfor %}
+                        </select>  </div>
+                  
+                    <div class="form-group">
+                        <label for="a14" class="il-gray fs-14 fw-500 align-center">Dars nomini kiriting</label>
+                        <input name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a14" placeholder="">
+                    </div>
+                    <div class="form-group form-element-textarea mb-20">
+                        <label for="a13" class="il-gray fs-14 fw-500 align-center">
+                            Dars haqida qisqacha</label>
+                        <textarea class="form-control" id="a13" rows="3" name="comment"></textarea>
+                    </div> {% endcomment %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+                <button type="button" class="btn btn-primary btn-sm" id="editButton">Saqlash</button>
+            </div>
+        </div>
+    </div>
 
+
+</div>
+
+
+
+<div class="modal-basic modal fade show" id="modal-basic-active" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
 
                 <h6 class="modal-title"> Faollashtirish</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
             </div>
             <div class="modal-body">
-               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem, tempore adipisci maxime id quo quia nesciunt consequuntur. Architecto doloribus quam eveniet ex, rerum sunt.</p>
+               {% comment %} <p></p> {% endcomment %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Yopish</button>
-                <button type="button" class="btn btn-primary btn-sm">Faollashtirish</button>
+                <button type="button" class="btn btn-primary btn-sm" id="activateButton">Faollashtirish</button>
             </div>
         </div>
     </div>
@@ -668,9 +670,12 @@
                 <h6 class="modal-title"> O'chirish</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
+                    <input name="type" hidden="true" value="" id="id_type">
+                    <input name="id" hidden="true" value="" id="obj_id">
+
             </div>
             <div class="modal-body">
-               <p></p>
+               <!--<p></p> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Bekor qilish</button>
@@ -691,410 +696,12 @@
         <div class="atbd-drawer__body">
             <div class="drawer-content">
                 <div class="drawer-account-form form-basic">
-                    <form action="#">
-                        <div class="form-row">
-                            <div class="form-group col-lg-6">
-                                <label for="username">Ism</label>
-                                <input type="text" name="name" id="username"
-                                    class="form-control form-control-sm border-light"
-                                    placeholder="Isminggiz...">
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="tel">Telefon raqam</label>
-                                <input type="text" name="tel" id="tel"
-                                    class="form-control form-control-sm border-light"
-                                    placeholder="(99) 123-45-67">
-                            </div>
-                            <!-- <div class="form-group col-lg-6">
-                            <label for="owner">Owner</label>
-                            <select name="url" id="owner" class="form-control-sm">
-                                <option value="">Jack Ma</option>
-                                <option value="">Tom liu</option>
-                            </select>
-                        </div> -->
-                            <div class="form-group col-lg-6">
-                                <label for="manba">Manbasi</label>
-                                <select name="manba" id="manba" class="form-control-sm border-light">
-                                    <option value="">Jack Ma</option>
-                                    <option value="">Tom liu</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label for="hol">Holati</label>
-                                <select name="hol" id="hol" class="form-control-sm border-light">
-                                    <option value="">Jack Ma</option>
-                                    <option value="">Tom liu</option>
-                                </select>
-                            </div>
-                            <!-- <div class="form-group col-lg-6">
-                            <label for="kurs">Kurs</label>
-                            <select name="kurs" id="kurs" class="form-control-sm">
-                                <option value="">Jack Ma</option>
-                                <option value="">Tom liu</option>
-                            </select>
-                        </div> -->
-                            <!-- <div class="form-group col-lg-6">
-                            <label for="datepicker">DateTime</label>
-                            <input type="text" name="name" id="datepicker" class="form-control form-control-sm" placeholder="Please Enter URL">
-                        </div> -->
-                            <div class="form-group col-12">
-                                <label for="description">Izoh</label>
-                                <textarea name="description" id="description"
-                                    class="form-control border-light form-control-sm"
-                                    placeholder="PLease Enter Url Description"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <div class="forms w-100">
-                                    <div class="forms-view" id="parent">
-                                        <label for="a10" class="col-12 p-1">Ota-ona</label>
-                                        <div class="form-group  col-6  p-0">
-                                            <input type="text" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="Ota-ona...">
-                                        </div>
-                                        <div class="form-group col-6 p-0">
-                                            <input type="text" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="(99) 134-56-87">
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(0)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="forms-view " id="telegram">
-                                        <label for="a10" class="col-12 p-1">Telegram</label>
-                                        <div class="form-group col-12 p-0">
-                                            <input type="text" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="(99) 134-56-87">
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(1)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="forms-view " id="manzil">
-                                        <label for="a10" class="col-12 p-1">Manzil</label>
-                                        <div class="form-group col-12 p-0">
-                                            <input type="text" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="Manzil...">
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(2)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="forms-view " id="email">
-                                        <label for="a10" class="col-12 p-1">Email</label>
-                                        <div class="form-group col-12 p-0">
-                                            <input type="email" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="example@.com">
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(3)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                    <div class="forms-view " id="passport">
-                                        <label for="a10" class="col-12 p-1">Passport</label>
-                                        <div class="form-group col-12 p-0">
-                                            <input type="text" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="WW1111111">
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(4)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="forms-view " id="file">
-                                        <label for="a10" class="col-12 p-1">File Yuklash</label>
-                                        <div class="form-group col-12 p-0">
-                                            <input type="file" name="name" id="a10"
-                                                class="form-control form-control-sm border-light mr-2"
-                                                placeholder="file">
-                                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(5)"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18" />
-                                                <line x1="6" y1="6" x2="18" y2="18" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="buttons d-flex flex-wrap  w-100">
-
-                                    <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                        onclick="handleClickIcon(0)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-users">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                            <circle cx="9" cy="7" r="4" />
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                        onclick="handleClickIcon(1)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-send">
-                                            <line x1="22" y1="2" x2="11" y2="13" />
-                                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                        onclick="handleClickIcon(2)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-map-pin">
-                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                            <circle cx="12" cy="10" r="3" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                        onclick="handleClickIcon(3)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-mail">
-                                            <path
-                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                            <polyline points="22,6 12,13 2,6" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                        onclick="handleClickIcon(4)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-file-text">
-                                            <path
-                                                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                            <polyline points="14 2 14 8 20 8" />
-                                            <line x1="16" y1="13" x2="8" y2="13" />
-                                            <line x1="16" y1="17" x2="8" y2="17" />
-                                            <polyline points="10 9 9 9 8 9" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-icon btn-circle btn-outline-primary  mr-3"
-                                        onclick="handleClickIcon(5)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-upload-cloud">
-                                            <polyline points="16 16 12 12 8 16" />
-                                            <line x1="12" y1="12" x2="12" y2="21" />
-                                            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
-                                            <polyline points="16 16 12 12 8 16" />
-                                        </svg>
-                                    </button>
-
-                                </div>
-                            </div>
-                            <p class="col-12">
-                            <div class="forms w-100">
-                                <div class="forms-view" id="parent">
-                                    <label for="a10" class="col-12 p-1">Qo'shimcha</label>
-                                    <div class="form-group  col-6  p-0">
-                                        <input type="date" name="name" id="a10"
-                                            class="form-control form-control-sm border-light mr-2"
-                                            placeholder="Ota-ona...">
-
-                                    </div>
-                                    <div class="form-group  col-6  p-0">
-                                        <div class="radio-horizontal-list d-flex">
-
-
-                                            <div class="radio-theme-default custom-radio ">
-                                                <input class="radio" type="radio" name="radio-horizontal"
-                                                    value=0 id="radio-vl1">
-                                                <label for="radio-vl1">
-                                                    <span class="radio-text">Erkak</span>
-                                                </label>
-                                            </div>
-
-
-
-
-                                            <div class="radio-theme-default custom-radio ">
-                                                <input class="radio" type="radio" name="radio-horizontal"
-                                                    value=0 id="radio-vl2">
-                                                <label for="radio-vl2">
-                                                    <span class="radio-text">Ayol</span>
-                                                </label>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group  col-6  p-0">
-
-                                        <div class="atbd-select w-100">
-
-                                            <select name="select-tag" id="select-tag" class="form-control-sm "
-                                                multiple="multiple">
-                                                <option value="01">Option 1</option>
-                                                <option value="02">Option 2</option>
-                                                <option value="03">Option 3</option>
-                                                <option value="04">Option 4</option>
-                                                <option value="05">Option 5</option>
-                                            </select>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group col-6 p-0">
-                                        <select class="form-control-sm  select2-hidden-accessible"
-                                            id="countryOption" data-select2-id="countryOption" tabindex="-1"
-                                            aria-hidden="true">
-                                            <option data-select2-id="5">1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(6)"
-                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="feather feather-x">
-                                            <line x1="18" y1="6" x2="6" y2="18" />
-                                            <line x1="6" y1="6" x2="18" y2="18" />
-                                        </svg>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <a href="#" class="text-right d-block col-12"
-                                onclick="handleClickIcon(6)">+Qo’shimcha ma’lumotlar: </a>
-                            <div class="forms w-100">
-                                <div class="forms-view" id="parent">
-                                    <label for="a10" class="col-12 p-1">Demo</label>
-                                    <div class="form-group col-12 p-0">
-                                        <select class="form-control-sm  select2-hidden-accessible"
-                                            id="countryOption" data-select2-id="countryOption" tabindex="-1"
-                                            aria-hidden="true">
-                                            <option data-select2-id="5">1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(7)"
-                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="feather feather-x">
-                                            <line x1="18" y1="6" x2="6" y2="18" />
-                                            <line x1="6" y1="6" x2="18" y2="18" />
-                                        </svg>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <a href="#" class="text-right d-block col-12" onclick="handleClickIcon(7)">+Demo
-                                darsga qo’shish: </a>
-                            <div class="forms w-100">
-                                <div class="forms-view" id="parent">
-                                    <label for="a10" class="col-12 p-1">Topshiriq</label>
-                                    <div class="form-group col-6 p-0">
-                                        <select class="form-control-sm  select2-hidden-accessible"
-                                            id="countryOption" data-select2-id="countryOption" tabindex="-1"
-                                            aria-hidden="true">
-                                            <option data-select2-id="5">1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group  col-6  p-0">
-                                        <div class="atbd-select w-100">
-
-                                            <select name="select-tag" id="select-tag" class="form-control-sm "
-                                                multiple="multiple">
-                                                <option value="01">Option 1</option>
-                                                <option value="02">Option 2</option>
-                                                <option value="03">Option 3</option>
-                                                <option value="04">Option 4</option>
-                                                <option value="05">Option 5</option>
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group  col-6  p-0">
-                                        <input type="date" name="name" id="a10"
-                                            class="form-control form-control-sm border-light mr-2"
-                                            placeholder="Ota-ona...">
-
-                                    </div>
-                                    <div class="form-group  col-6  p-0">
-
-                                        <input type="text" name="name" id="a10"
-                                            class="form-control form-control-sm border-light mr-2"
-                                            placeholder="Ota-ona...">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(8)"
-                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="feather feather-x">
-                                            <line x1="18" y1="6" x2="6" y2="18" />
-                                            <line x1="6" y1="6" x2="18" y2="18" />
-                                        </svg>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <a href="#" class="text-right d-block col-12"
-                                onclick="handleClickIcon(8)">+Topshiriq qo’shish: </a>
-                            </p>
-                        </div>
-                        <button class="btn btn-primary">Saqlash</button>
-                    </form>
+                    
                 </div>
             </div>
         </div><!-- ends: .atbd-drawer__body -->
     </div><!-- ends: .atbd-drawer -->
 
-    {% comment %} <div id="overlayer">
-        <span class="loader-overlay">
-            <div class="atbd-spin-dots spin-lg">
-                <span class="spin-dot badge-dot dot-primary"></span>
-                <span class="spin-dot badge-dot dot-primary"></span>
-                <span class="spin-dot badge-dot dot-primary"></span>
-                <span class="spin-dot badge-dot dot-primary"></span>
-            </div>
-        </span>
-    </div> {% endcomment %}
     <div class="overlay-dark"></div>
     <div class="overlay-dark-l2"></div>
 </div>
@@ -1103,6 +710,11 @@
 
     {% block script %}
     <script>
+
+        function testFunc(){
+            console.log('test func');
+        }
+
         var forms = document.querySelectorAll('.forms-view')
         for (let i = 0; i < forms.length; i++) {
             forms[i].style.display = 'none'
@@ -1191,11 +803,21 @@
                                   <a class="dropdown-item" style="text-transform: none;" href="#">
                                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
                                            Pastga tushirish</a>
-                                  <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
-                                      ${person.status==false ? `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                      <span class="text-success">Aktivlashtirish</span>`:
-                                     `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
-                                     muzlatish</a>`}
+                                    
+
+
+                                           <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" onclick="activateModal('content', '${person.id}', '${(person.status == true) ?  'draft' : 'activate'}')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                             <span class="text-success">Aktivlashtirish</span>/
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
+                                            muzlatish</a>
+
+                                  
+                                  
+                                  
+                                  
+                                  
+                                           
                                   <a class="dropdown-item" href="${editLink}">
                                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                          Tahrirlash</a>
@@ -1277,6 +899,23 @@
             });
         }
 
+
+        function setStatus(status){
+            var statusspan = document.getElementById('course_status');
+
+                    if(status==true || status=='True'){
+                        statusspan.textContent = 'Aktiv';
+                        statusspan.classList.remove('order-bg-opacity-secondary');
+                        statusspan.classList.add('order-bg-opacity-success color-success');
+                    }
+                    else{
+                        statusspan.textContent = 'Muzlatilgan';
+                        statusspan.classList.remove('order-bg-opacity-success');
+                        statusspan.classList.add('order-bg-opacity-secondary  color-secondary');
+                    }
+        }
+
+
         function addEventListeners() {
             const draggables = document.querySelectorAll('.draggable');
             const dragListItems = document.querySelectorAll('.draggable-list li');
@@ -1331,12 +970,136 @@
             })
         }
 
+        function printLessons(moduleId, lessons){
+
+            if(moduleId!=''){
+                var module_div = document.getElementById(`v-pills-profile-${ moduleId }`);
+            } else{
+                var module_div = document.getElementById(`v-pills-home`);
+            }
+
+            var cardBody = module_div.getElementsByClassName('application-faqs');
+            cardBody.innerHTML = "";
+            for(var i=0; i < lessons.length ;i++){
+                var lesson = lessons[i];
+                var lessonDiv = document.createElement('div');
+                lessonDiv.setAttribute('class', 'panel-group');
+                lessonDiv.setAttribute('id', 'accordion');
+                lessonDiv.setAttribute('role', 'tablist');
+                lessonDiv.setAttribute('aria-multiselectable', 'true');
+
+
+                lessonDiv.innerHTML = `
+                    <!-- panel 1 -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title d-flex"  onClick="getContents(${ lesson.id })">
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseOne-lesson-${ lesson.id }" aria-expanded="true"
+                                aria-controls="collapseOne-lesson-${ lesson.id }" style="font-size: 16px !important;" >
+                                ${ i }. ${ lesson.title }
+                            </a>
+                                
+                                <button class="btn btn-light px-2  d-flex justify-content-center align-items-center mr-2" data-toggle="modal" data-target="#modal-basic3-${ lesson.id }">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                                    </button>
+                                    <span role="button" class="selling-badge order-bg-opacity-primary color-primary  mr-5 cursor-pointer" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">...</span>
+
+                                    <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"/></svg>
+                                                Yuqoriga ko'tarish</a>
+                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
+                                                    Pastga tushirish</a>
+                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" onclick="activateModal('lesson', '${lesson.id}', '${(lesson.status == true) ?  'draft' : 'activate'}')">
+                                            lesson.status == false ? <svg style="transform: scale(3.5);margin-right: 7px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                            <span class="text-success">Aktivlashtirish</span>:
+                                            <svg style="transform: scale(3.5);margin:0 7px;"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
+                                            muzlatish </a>
+                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-edit"  onclick="EditModalOpen('lesson', '${lesson.id}'">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                                Tahrirlash</a>
+                                        <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('lesson','${lesson.id}','${lesson.title}')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                                O'chirish</a>
+
+                                </div>  
+                                
+                            </h4>
+                        </div>
+                        <div id="collapseOne-lesson-${lesson.id}" class="panel-collapse collapse in"
+                            role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+
+                                <ul class="draggable-list" id="draggable-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                `
+                cardBody.innerHTML += lessonDiv;
+                
+        }
+        console.log("cardBody", lessons.length);
+        }
+
+
+        function getLessons(moduleId, courseId){
+            console.log(moduleId, courseId);
+            var url;
+            if(moduleId!=''){
+                var url = `/education/onlines/modules/${moduleId}/`;
+                fetch(url, {
+                    method:'get',
+                    headers:{
+                        'Accept':'application/json',
+                    },
+                })
+                .then(res=>res.json()).then(res=>{
+                    console.log(res.status)
+                    setStatus(res.status, res.lessons);
+                    printLessons(moduleId, res.lessons);
+                })
+            }else if(courseId != ''){
+                var url = `/education/onlines/${courseId}/lessons/`;
+                fetch(url, {
+                    method:'get',
+                    headers:{
+                        'Accept':'application/json',
+                    },
+                })
+                .then(res=>res.json()).then(res=>{
+                    for(var i=0;i<res.lessons.length;i++){
+                        if(res.lessons[i].status == true){
+                            console.log(true, "here");
+                            setStatus(true);
+                            break;
+                        }
+                    }
+                    printLessons(moduleId, res.lessons);
+                })
+            }
+            console.log("moduleId ham courseId ham bo'sh.");
+
+        }
+
+
+
+
+
+
+
+
+
+
+
         function CreateModule(id){
             var url = `/education/onlines/modules/`;
             var formData = new FormData();
-            formData.append('name', document.getElementById('a10').value);
-            formData.append('description', document.getElementById('a11').value);
-            formData.append('course_id', id);
+            formData.append('title', document.getElementById('a10').value);
+            formData.append('comment', document.getElementById('a11').value);
+            formData.append('course', id);
             formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
             console.log(formData);
             fetch(url, {
@@ -1348,16 +1111,41 @@
                 body: formData,
             }).then(res=>res.json())
             .then(res=>{
-                console.log(res.module);
-                var modules = document.getElementById('v-pills-tab');
-                var a = `<a class="nav-link" id="v-pills-profile-${ res.id }-tab" data-toggle="pill"
-                href="#v-pills-profile-${ res.id }" role="tab" aria-controls="v-pills-profile-${ res.id }"
-                aria-selected="false">
-                <span class="dot bg-warning"></span>${ res.title }</a>`
-                modules.appendChild(a);  
+                document.getElementById('a10').value = '';
+                document.getElementById('a11').value = '';
+                var div = document.getElementById('v-pills-tab');
+                
+                var a = document.createElement('a');
+                a.setAttribute('class', "nav-link");
+                a.setAttribute('id', `v-pills-profile-${ res.id }-tab`);
+                a.setAttribute('data-toggle', "pill");
+                a.setAttribute('onclick', `moduleSelectedFunction('${res.id}','${res.title}', ${res.status})`);
+                a.setAttribute('href', `#v-pills-profile-${ res.id }`);
+                a.setAttribute('role', "tab");
+                a.setAttribute('aria-controls', `v-pills-profile-${ res.id }`);
+                a.setAttribute('aria-selected', "false");
+                var p = document.createElement('p');
+                p.innerHTML = `<span class="dot bg-warning"></span> ${res.title}`;
+                a.appendChild(p);
+                div.appendChild(a);
+                
+                var modal = document.createElement('div');
+                modal.classList = "tab-pane fade  show";
+                modal.id = `v-pills-profile-${ res.id }`;
+                modal.setAttribute(' aria-labelledby', `v-pills-profile-${ res.id }-tab`);
+                modal.setAttribute('role', 'tabpanel');
+                modal.innerHTML = `
+                    <div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
+                        <div class="card-header px-30 pt-0 pb-0 border-bottom-0" style="min-height: 20px;">
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="application-faqs">
+                                
+                            </div>
 
-                document.getElementById('a10').value = "";
-                document.getElementById('a11').value = "";
+                        </div>
+                    </div>`
+
                 
             })
             .catch(err=>{
@@ -1410,8 +1198,10 @@
                 body: formData,
             })
             .then(res=>res.json()).then(res=>{
-                console.log("res: ", res);
-                //getLessons(module);
+                document.getElementById('a14').value = null;
+                document.getElementById('a13').value = null;
+                console.log("res: ", res, module);
+                getLessons(module, '');
             })
         }
         function deleteCourse(id){
@@ -1438,35 +1228,157 @@
         function deleteContent(id){
             console.log("delete Content")
         }
+        function deleteObj(type, id){
+            var url = `/education/onlines/delete/${type}/${id}/`;
 
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRFToken':'{{ csrf_token }}'
+                },
+            })
+            .then(res=>{
+                window.location.assign(window.location.href);
+            })
+            .catch(err=>{
+                alert(err);
+            })
+        }
+        function activateObj(action, type, id){
+            // `activate` or `draft` in action
+            var url = `/education/onlines/${action}/${type}/${id}/`;
+            fetch(url, {
+                method: 'post',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+            })
+            .then(res=>{
+                window.location.assign(window.location.href);
+            }).catch(err=>{
+                console.log(err);
+            })
+        }
 
         function deleteModal(type, id, title){
-            // type: module, lesson, content, course
+            // type: module, lesson, content, course  
             var modal = document.getElementById('modal-basic-delete');
             var modal_body = modal.getElementsByClassName('modal-body')[0];
-            console.log("MOdal body: ", modal_body, id, title)
+            console.log("Modal body: ", modal_body, id, title)
             
             let deleteBtn = document.getElementById('delete_button');
-            if (type == 'module'){
-                type = 'modul';
-                deleteBtn.onclick = deleteModule(id);
-            } else if (type == 'lesson'){
-                type = 'darsi';
-                deleteBtn.onclick = deleteLesson(id);
-            } else if (type == 'content'){
-                type = 'kontenti';
-                deleteBtn.onclick = deleteContent(id);
-            } else if (type == 'course'){
-                type = 'kurs';
-                deleteBtn.onclick = deleteCourse(id);
-
-            }
+            deleteBtn.setAttribute('onClick', `deleteObj('${type}', '${id}')`);
             modal_body.innerHTML = `<p>Rostan ham ${title} ${type}ni o'chirishni xohlaysizmi?</p>`;
+            console.log(deleteBtn);
+        }
+        
+        function activateModal(type, id, action){
+            
+            // type: module, lesson, content, course
+            var modal = document.getElementById('modal-basic-active');
+            console.log("modal:", modal);
+            var modal_body = modal.getElementsByClassName('modal-body')[0];
+            var modal_title = modal.getElementsByClassName('modal-title')[0];
+            console.log(modal_title, modal_body);
+            modal_title.innerHTML= `<p>${action == 'activate' ? 'Faollashtirish' : 'Muzlatish' }</p>`
+            modal_body.innerHTML = `<p>Faollashtirilgan kontentlar va darslar o'quvchilarga ko'rinadi. Muzlatilgan kontentlarni esa, o'quvchilar ko'ra olmaydilar.</p>`
+            let activateBtn = document.getElementById('activateButton');
+            activateBtn.setAttribute('onClick', `activateObj('${action}', '${type}', '${id}')`);
+            activateBtn.textContent = `${action == 'activate' ? 'Faollashtirish' : 'Muzlatish'}`
+            console.log(activateBtn);
         }
 
-        function changeGlobeDeleteBtn(id, title){
+
+
+        function moduleSelectedFunction(id, title, status){
             var globeDeleteBtn = document.getElementById('globeDeleteBtn');
             globeDeleteBtn.onclick = deleteModal('module', id, title);
+
+            var statusspan = document.getElementById('course_status');
+            //var activateBtn = document.getElementById('modalActivateBtn');
+            console.log(id, title, status)
+            if(status=='true' || status=='True'){
+                statusspan.textContent = 'Active';
+                statusspan.classList.remove('order-bg-opacity-secondary');
+                statusspan.classList.add('order-bg-opacity-success');
+
+            }
+            else{
+                statusspan.textContent = 'Draft';
+                statusspan.classList.remove('order-bg-opacity-success');
+                statusspan.classList.add('order-bg-opacity-secondary');
+            }
+
         }
+        function saveEdit(type, id){
+            var url = `/education/onlines/update/${type}/${id}/`;
+            var formData = new FormData();
+            var title = document.getElementById('id_title').value;
+            if (title != '' || title!=null){
+                formData.append('title', title)
+            }
+            var comment = document.getElementById('id_comment').value;
+            if (comment != '' || comment!=null){
+                formData.append('comment', comment)
+            }            
+            formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
+            fetch(url, {
+                method: 'post',
+                headers:{
+                    //'Accept':'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: formData,
+            })
+            .then(res=>res.json()).then(res=>{
+                console.log(res);
+                window.location.assign(window.location.href)
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+    }
+        function EditModalOpen(type, id){
+            console.log("Edit Modal: ", type, id);
+            var url = `/education/onlines/update/${type}/${id}/`
+            fetch(url, {
+                method: 'get',
+                headers:{
+                    'Accept':'application/json',
+                },
+            })
+            .then(res=>res.json()).then(res=>{
+                console.log(res);
+
+                var modal = document.getElementById('modal-basic-edit');
+                var form = modal.getElementsByTagName('form')[0];
+                form.innerHTML = "";
+                form.innerHTML += `<div class="form-group">
+                    <label for="id_title" class="il-gray fs-14 fw-500 align-center">Dars nomini kiriting</label>
+                    <input name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_title" placeholder="" value="${res.title}">
+                </div>
+                
+                `;
+
+                form.innerHTML +=`<div class="form-group">
+                    <label for="id_comment" class="il-gray fs-14 fw-500 align-center">Darsga izoh kiriting</label>
+                    <textarea name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_comment" placeholder="">${res.comment}</textarea>
+                </div>
+                `
+                var editBtn = document.getElementById('editButton');
+                editBtn.setAttribute('onclick', `saveEdit('${type}', '${id}')`)
+
+            })
+            .catch(err=>{
+                console.log("err", err)
+         })
+        }
+
+
+
+
+
     </script>
     {% endblock %}
