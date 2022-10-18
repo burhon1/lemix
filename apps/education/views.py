@@ -205,6 +205,26 @@ def online_delete_view(request, id):
         return redirect('education:onlins', kwargs={'id':id}) 
     return JsonResponse({'status':'Sizda bunga ruhsat yo\'q'})
 
+
+@login_required
+def online_update_view(request, type, pk):
+    if type == 'course':
+        obj = get_object_or_404(Course, pk=pk)
+    if type == 'module':
+        obj = get_object_or_404(Modules, pk=pk)
+    if type == 'lesson':
+        obj = get_object_or_404(Lessons, pk=pk)
+    context = model_to_dict(obj, fields=('id', 'title', 'comment'))    
+
+    if request.method == 'POST':
+        data = request.POST
+        obj.title = data['title']
+        obj.comment =data['comment']
+        obj.save()
+        return JsonResponse({'status':'ok'})
+    return JsonResponse(context, safe=False)
+
+
 @login_required
 def online_delete2_view(request, type:str, pk: int):
     if request.method == 'POST':
@@ -232,7 +252,7 @@ def online_delete2_view(request, type:str, pk: int):
 @login_required
 def online_activate_view(request, action:str, type: str, pk:int):
     ACTIONS = {'activate':True, 'draft':False}
-
+    print(action, type, pk)
     if request.method == 'POST':
         if type == 'course':
             obj = get_object_or_404(Course, pk=pk)
@@ -250,7 +270,7 @@ def online_activate_view(request, action:str, type: str, pk:int):
         if type == 'content':
             objs = Contents.objects.filter(pk=pk)
             objs.update(status=ACTIONS[action])
-
+        print(action, type, pk)
         return JsonResponse({'status':'ok'})
     return JsonResponse({'status':'get request'})    
 

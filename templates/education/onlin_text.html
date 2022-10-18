@@ -587,7 +587,7 @@ if(loaded == total){
 let data = new FormData(form);
 xhr.send(data);
 }
-
+var completed = false;
 function saveResources(id){
     console.log("saveResources");
     if(id != null || id != ''){
@@ -607,10 +607,11 @@ function saveResources(id){
             body: formData,
         })
         .then(res=>res.json()).then(res=>{
-            
+            url = `/education/online_text/update/${id}/`;
+            window.location.assign(url);
         })
         .catch(err=>{
-            console.log("error: ", err)
+            console.log(err);
         })
     } else{
         console.log("No id");
@@ -660,6 +661,7 @@ function deleteResource(id, counter){
 
 function SaveContent(is_ready){
     var formData = new FormData();
+    var id = 0;
     formData.append('title', document.getElementById('id_title').value);
     formData.append('text', document.getElementById('mail-reply-message2').value);
     var required = document.getElementById('radio-un2').checked;
@@ -674,21 +676,34 @@ function SaveContent(is_ready){
             'Accept':'application/json',
             'X-CSRFToken':'{{ csrf_token }}',
         },
-        body: formData,
-
+        body: formData
     })
-    .then(res=>res.json()).then(res=>{
-        console.log(res);
+    .then(res => res.json())
+    .then(res => {
         saveFAQs(res.id, last_save=true);
         saveResources(res.id);
 
-        //if(window.location != `/education/online_text/update/${window.location.pathname.split('/')[4]}`){
-        //    window.location.assign(`/education/online_text/update/${window.location.pathname.split('/')[4]}`);
-        //}
+        
+        alert("Amaliyot muvaffaqiyotli yakunlandi")
+        //funcs = [saveFAQs(res.id, last_save=true), saveResources(res.id), window.location.assign(url)]
+        //var sequence = (funcs) => {
+        //     if (funcs.length == 0) return
+        //    let f = funcs.shift()
+        //    f.call( () => {
+        //      sequence(funcs, scope)
+        //    })
+        //  }
+
+         // sequence(funcs, scope)
     })
     .catch(err=>{
         console.log(err);
-    })   
+    })
+    console.log("ID: ", id)
+
+    if(id && id != 0){
+        window.location.assign(url);
+    }
 }
 
 
@@ -785,7 +800,7 @@ function deleteFAQ(id){
         }
     }
 
-    function saveFAQs(content_id, last_save=false){
+    function saveFAQs(content_id, last_save=false, cb = () => {}){
         console.log("last_save: ", last_save)
         if(last_save != true){
             addFAQ();

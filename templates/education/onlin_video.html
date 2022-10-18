@@ -763,7 +763,10 @@ function saveResources(id){
         })
         .then(res=>res.json())
         .then(res=>{
-            
+            if(window.location != `/education/online_video/update/${id}`){
+                window.location.assign(`/education/online_video/update/${id}`);
+            }
+
         })
         .catch(err=>{
             console.log("error: ", err)
@@ -846,10 +849,7 @@ function saveContent(isReady=true){
             saveFAQs(res.id, last_save=true);
             saveResources(res.id);
       
-            //if(window.location != `/education/online_video/update/${res.id}`){
-            //    window.location.assign(`/education/online_video/update/${res.id}`);
-            //}
-
+            
         }
 
     })

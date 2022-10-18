@@ -23,6 +23,7 @@ urlpatterns = [
     path('online_hwork/delete/<int:pk>/',onlin_hwork_delete_view,name='onlin_delete'),
     path('online_hwork/create/<int:lesson_id>/',onlin_hwork_create_view,name='onlin_hwork_create'),
     path('onlines/<int:id>/',onlins_view,name='onlins'),
+    path('onlines/update/<str:type>/<int:pk>/', online_update_view, name='online_update'),
     path('onlines/delete/<str:type>/<int:pk>/', online_delete2_view, name='online_delete2'),
     path('onlines/<str:action>/<str:type>/<int:pk>/', online_activate_view, name='online_activate'),
     path('onlines/<int:id>/delete/',online_delete_view,name='online_delete'),

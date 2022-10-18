@@ -314,7 +314,9 @@ function saveBtn(is_ready){
     })
     .then(res=>res.json()).then(res=>{
         
-        window.location.replace(window.location.href);
+        if(res.id){
+            window.location.replace(`/education/online_hwork/update/${res.id}/`);
+        }
     })
     .catch(err=>{
         console.log(err);
