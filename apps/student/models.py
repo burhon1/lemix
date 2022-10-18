@@ -1,21 +1,24 @@
 from django.db import models
+from user.models import CustomUser
 
 from education.models import Tests, Questions, Answers, Contents
-
+from student.data import choices
 
 class Homeworks(models.Model):
     student = models.ForeignKey("admintion.Student", models.CASCADE)
-    content = models.ForeignKey(Contents, models.CASCADE)
+    content = models.ForeignKey(Contents, models.CASCADE, related_name='homeworks')
     file    = models.FileField(upload_to="student/homeworks", null=True, blank=True)
     text    = models.TextField("O'quvchining javobi", max_length=5000, blank=True)
     ball    = models.SmallIntegerField("Uy vazifasi uchun qo'yilgan baho", null=True, blank=True)
     date_created  = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-
+    comment_file  = models.FileField(upload_to="student/homeworks/comments", null=True, blank=True)
+    comment = models.TextField("O'quvchiga xabar", max_length=5000, blank=True)
+    status  = models.PositiveSmallIntegerField("Uy vazifasining statusi", choices=choices.HOMEWORK_STATUS, default=1)
+    commented = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     class Meta:
         verbose_name = "Uy vazifasi"
         verbose_name_plural = "Uy vazifalari"
-
 
 class TestResults(models.Model):
     student = models.ForeignKey("admintion.Student", models.CASCADE)

@@ -433,20 +433,19 @@
             aria-labelledby="v-pills-messages-tab">
             <!-- Edit Profile -->
 
-            <div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
-                <div class="card-header px-30 pt-0 pb-0 border-bottom-0" style="min-height: 20px;">
-                    
-                </div>
-                <div class="card-body pt-0">
-                    <div class="application-faqs">
-                        <div class="panel-group" id="accordion" role="tablist"
-                            aria-multiselectable="true">
-                            
-                </div>
+                <div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
+                    <div class="card-header px-30 pt-0 pb-0 border-bottom-0" style="min-height: 20px;">
+                        
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="application-faqs">
+                            <div class="panel-group" id="accordion" role="tablist"
+                                aria-multiselectable="true">
+                                
+                    </div>
 
+                </div>
             </div>
-        </div>
-    {% comment %} </div {% endcomment %}
                 </div>
 
                 <!-- Edit Profile End -->
@@ -1119,7 +1118,7 @@
                 a.setAttribute('class', "nav-link");
                 a.setAttribute('id', `v-pills-profile-${ res.id }-tab`);
                 a.setAttribute('data-toggle', "pill");
-                a.setAttribute('onclick', `moduleSelectedFunction('${res.id}','${res.title}', ${res.status})`);
+                a.setAttribute('onclick', `getLessons('${res.id}','${id}')`);
                 a.setAttribute('href', `#v-pills-profile-${ res.id }`);
                 a.setAttribute('role', "tab");
                 a.setAttribute('aria-controls', `v-pills-profile-${ res.id }`);
@@ -1200,8 +1199,8 @@
             .then(res=>res.json()).then(res=>{
                 document.getElementById('a14').value = null;
                 document.getElementById('a13').value = null;
-                console.log("res: ", res, module);
                 getLessons(module, '');
+                window.location.assign(window.location.href);
             })
         }
         function deleteCourse(id){
@@ -1292,7 +1291,7 @@
 
 
 
-        function moduleSelectedFunction(id, title, status){
+        {% comment %} function moduleSelectedFunction(id, title, status){
             var globeDeleteBtn = document.getElementById('globeDeleteBtn');
             globeDeleteBtn.onclick = deleteModal('module', id, title);
 
@@ -1311,7 +1310,7 @@
                 statusspan.classList.add('order-bg-opacity-secondary');
             }
 
-        }
+        } {% endcomment %}
         function saveEdit(type, id){
             var url = `/education/onlines/update/${type}/${id}/`;
             var formData = new FormData();

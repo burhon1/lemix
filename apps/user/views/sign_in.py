@@ -18,7 +18,10 @@ def login_view(request):
                 success = user.first().check_password(password)
                 if success:
                     login(request,user.first())
-                    return redirect('user:account')
+                    if request.user.is_superuser:
+                        return redirect('education:onlin')
+                    elif request.user.student_set.first():
+                        return redirect('student:student')
                 else:
                     context['error'] = "Parol xato kiritildi"   
             else:

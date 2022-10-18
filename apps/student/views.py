@@ -94,11 +94,8 @@ def lesson_detail_view(request, type:str, pk):
         context['content']['value'] = content.get_value
     context['modules'] = Modules.modules.course_modules(lesson.module.course_id)
     context['modules'] = get_updated_modules(context['modules'], request.user, with_lesson_contents=True)
-    context['resources'] = lesson.resources.all()
+    context['resources'] = content.content_resources.all()
     context['faqs'] = content.faqs.all().values('question', 'answer')
-    print("\n\n", context['content'], "\n\n")
-    print("\n\n", context['modules'], "\n\n")
-    print("\n\n", context['resources'], "\n\n")
     
     student = Student.objects.filter(user=request.user).first()
     if student and student not in content.students.all():

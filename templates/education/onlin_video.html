@@ -762,12 +762,6 @@ function saveResources(id){
             body: formData,
         })
         .then(res=>res.json())
-        .then(res=>{
-            if(window.location != `/education/online_video/update/${id}`){
-                window.location.assign(`/education/online_video/update/${id}`);
-            }
-
-        })
         .catch(err=>{
             console.log("error: ", err)
         })
@@ -804,7 +798,6 @@ function deleteResource(id, counter){
             console.log(res);
             divs = document.getElementsByClassName(`resource-id-${id}`);
             divs[0].remove();
-            alert("Qo'shimcha material yo'q qilindi.");
         })
         .catch(err=>{
             console.log(err);
@@ -830,6 +823,8 @@ function saveContent(isReady=true){
     }
     formData.append('title', document.getElementById('inputName').value);
     formData.append('text', document.getElementById('id_text').value);
+    var required = document.getElementById('radio-un2').checked;
+    formData.append('required', required);
     formData.append('status', isReady);
     formData.append('csrftokenmiddleware', '{{ csrf_token }}');
 
@@ -843,16 +838,20 @@ function saveContent(isReady=true){
     })
     .then(res=>res.json())
     .then(res=>{
-        console.log(res);
         if(res.id){
-            alert(res.id);
             saveFAQs(res.id, last_save=true);
-            saveResources(res.id);
-      
-            
+            return res;
         }
-
     })
+        .then(res=>{
+            saveResources(res.id);
+            return res;
+        })
+        .then(res=>{
+            var url = `/education/onlines/${res.redirect_id}/`
+            window.location.assign(url);
+        })
+
     .catch(err=>{
         console.log(err);
         alert(err);

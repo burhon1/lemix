@@ -681,20 +681,15 @@ function SaveContent(is_ready){
     .then(res => res.json())
     .then(res => {
         saveFAQs(res.id, last_save=true);
+        return res;
+
+    }).then(res=>{
         saveResources(res.id);
-
-        
-        alert("Amaliyot muvaffaqiyotli yakunlandi")
-        //funcs = [saveFAQs(res.id, last_save=true), saveResources(res.id), window.location.assign(url)]
-        //var sequence = (funcs) => {
-        //     if (funcs.length == 0) return
-        //    let f = funcs.shift()
-        //    f.call( () => {
-        //      sequence(funcs, scope)
-        //    })
-        //  }
-
-         // sequence(funcs, scope)
+        return res;
+    })
+    .then(res=>{
+        var url = `/education/onlines/${res.redirect_id}/`
+        window.location.assign(url);
     })
     .catch(err=>{
         console.log(err);

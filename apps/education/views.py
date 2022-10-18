@@ -3,10 +3,13 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from admintion.models import Course
+from admintion.models import Course, GroupStudents, Teacher, Group
 from education.models import FAQ, Lessons, Modules, Contents, Resources
-from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data
+from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents
 from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm
+from student.models import Homeworks
+from user.models import CustomUser
+
 from django.db.models import Q
 def test2_view(request):
     return render(request,'education/test.html')     
@@ -26,7 +29,9 @@ def lid_arxiv_view(request):
 @login_required
 def onlin_view(request):
     context = dict()
+    teacher = Teacher.objects.filter(user=request.user).first()
     context['courses'] = get_courses(request.user)
+    context['courses'] = get_courses_data(context['courses'], teacher=teacher)
     context['groups'] = get_groups(request.user)
     return render(request,'education/onlin.html', context) 
 
@@ -47,7 +52,7 @@ def onlin_video_view(request, pk):
                 data['video'] = {'name':content.video.name, 'url': content.video.url}
             if data['video_link'] is None:
                 data['video_link'] = ''
-            print("update: ", data)
+            data['redirect_id'] = content.lesson.module.course.id
             return JsonResponse(data, status=200)
         else:
             return JsonResponse({'errors': form.non_field_errors()}, status=400, safe=False)
@@ -66,7 +71,9 @@ def onlin_video_create_view(request, lesson_id):
             content.lesson = lesson 
             content.author = request.user
             content.save()
-            return JsonResponse(model_to_dict(content, fields=('id', 'title')), status=201)
+            data = model_to_dict(content, fields=('id', 'title'))
+            data['redirect_id'] = content.lesson.module.course.id
+            return JsonResponse(data, status=201)
         else:
             return JsonResponse({'message':form.non_field_errors()}, status=400)
     # return JsonResponse({'message':'so\'rov metodi to\'g\'ri emas.'}, status=400)
@@ -85,7 +92,10 @@ def onlin_text_view(request, lesson_id):
             content.lesson = lesson
             content.save()
             print(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
-            return JsonResponse(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
+            context = dict()
+            context = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
+            context['redirect_id'] = content.lesson.module.course.id
+            return JsonResponse(context)
         else:
             print(form.non_field_errors())
             return JsonResponse({'form': form, 'status':400})
@@ -106,7 +116,7 @@ def onlin_text_update_view(request, pk):
             form.save()
         else:
             print(form.non_form_errors())
-        print(context['content'])
+        context['content']['redirect_id'] = content.lesson.module.course.id
         return JsonResponse(context['content'], status=200)
 
     return render(request,'education/onlin_text.html', context) 
@@ -132,6 +142,7 @@ def onlin_hwork_view(request, pk):
         if form.is_valid():
             content = form.save()
             context = get_content_data(content)
+            context['redirect_id'] = content.lesson.module.course.id
             return JsonResponse(context, status=200)
         else:
             print(form.non_field_errors())
@@ -150,8 +161,9 @@ def onlin_hwork_create_view(request, lesson_id):
             content.content_type = 4 # CONTENT_CHOICES
             content.lesson = lesson
             content.save()
-            print(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
-            return JsonResponse(model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status')))
+            data = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
+            data['redirect_id'] = content.lesson.module.course.id
+            return JsonResponse(data)
         else:
             print(form.non_field_errors())
             return JsonResponse({'form': form, 'status':400})
@@ -443,11 +455,14 @@ def set_content_order(request, pk: int, order: int):
     content.save()
     return JsonResponse({'status': 200})
 
-
+@login_required
 def online_course_contents_view(request, id):
     lesson = get_object_or_404(Lessons, pk=id)
-
-    contents = lesson.contents.values('id', 'title', 'content_type', 'status')
+    if request.user.is_superuser:
+        contents = lesson.contents.all().values('id', 'title', 'content_type', 'status')
+    else:
+        admins = CustomUser.objects.filter(is_superuser=True)
+        contents = lesson.contents.filter(Q(author=request.user)|Q(author__in=admins)).values('id', 'title', 'content_type', 'status')
     CONTENT_TYPES = {
         1: "Video", 2: "File", 3:"Test", 4:"Vazifa"
     }
@@ -461,7 +476,6 @@ def online_content_resources_view(request):
         resources = request.FILES.getlist('resources')
         pk = request.GET.get('content')
         content = get_object_or_404(Contents, pk=int(pk))
-        print(resources)
         for resource in resources:
             res, created = Resources.objects.get_or_create(content=content, file=resource)
             res.save()
@@ -473,7 +487,11 @@ def online_content_resources_view(request):
 @login_required
 def modules_detail_view(request, pk):
     module = get_object_or_404(Modules, pk=pk)
-    lessons = module.lessons.values('id', 'title', 'order')
+    if request.user.is_superuser:
+        lessons = module.lessons.all().values('id', 'title', 'order')
+    else:
+        admins = CustomUser.objects.filter(is_superuser=True)
+        lessons = module.lessons.filter(Q(author=request.user)|Q(author__in=admins)).values('id', 'title', 'order')
     data = dict()
     data['lessons'] = list(lessons)
     data['status'] = bool(Contents.objects.filter(lesson__module=module, status=True).count())
@@ -487,3 +505,48 @@ def online_content_resource_delete_view(request, pk):
         resource.delete()
         message = "O'chirildi."
     return JsonResponse({'method':request.method, 'message':message})
+
+@login_required
+def homeworks_view(request):
+    context = dict()
+    courses = get_courses(user=request.user)
+    context['courses'] = get_courses_via_hws(courses, user=request.user)
+    context['groups'] = get_groups_via_hws(courses, request.user)
+    return render(request, 'education/uyga_vazifa_teacher.html', context)
+
+def group_homeworks_detail_view(request, pk):
+    context = dict()
+    group = get_object_or_404(Group, pk=pk)
+    context['group'] = model_to_dict(group, fields=('id', 'title'))
+    context['group']['course'] = model_to_dict(group.course, fields=('id', 'title'))
+    context['students'] = get_students_data(group=group)
+
+    return render(request, 'education/uyga_vazifa_ichki_teacher.html', context)
+
+
+def student_homeworks_in_group(request, pk, group):
+    student = get_object_or_404(GroupStudents, pk=pk).student
+    course = get_object_or_404(Group, pk=pk).course
+
+    contents = get_contents(course, content_type=4)
+
+    data = []
+    for content in list(contents):
+        dct = dict()
+        dct = model_to_dict(content, fields=('id', 'title', 'text'))
+        if content.file:
+            dct['content']['file'] = {'name':content.file, 'url': content.file.url}
+        homeworks = content.homeworks.filter(student=student)
+        dct['homeworks'] = []
+        for homework in homeworks:
+            hw = model_to_dict(homework, fields=('id', 'text', 'ball', 'date_created', 'date_modified', 'comment', 'status', ))
+            if homework.file:
+                hw['file'] = {'name':homework.file.name, 'url':homework.file.url}
+            if homework.comment_file:
+                hw['comment_file'] = {'name':homework.comment_file.name, 'url':homework.comment_file.url}
+
+            dct['homeworks'].append(hw)
+        dct['status'] = homeworks.last()
+        data.append(dct)
+    
+    return JsonResponse(data, safe=False)
