@@ -63,4 +63,6 @@ urlpatterns = [
 
     path('homeworks/', homeworks_view, name='homeworks'),
     path('homeworks/groups/<int:pk>/', group_homeworks_detail_view, name='group-homeworks-detail'),
+    path('homeworks/student/<int:pk>/', student_homeworks_in_group, name='student_homeworks'),
+    path('homeworks/<str:action>/<int:pk>/', homework_edit_view, name="homework-edit"),
 ]

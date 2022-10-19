@@ -38,7 +38,7 @@ def get_lesson_contents_data(lesson_obj: Lessons=None, lesson_id:int=None, stude
                 'title': content.title,
                 'content_type': content.content_type,
                 'viewed': bool(student in content.students.all()),
-                'open': bool(content.opened_at and content.opened_at < timezone.now())
+                'open': bool(content.opened_at and content.opened_at < timezone.now() or content.is_ready)
             })
     elif user:
         teacher = Teacher.objects.filter(user=user)
@@ -126,7 +126,7 @@ def get_need_content(lesson: Lessons, last_order=None):
         return get_need_content(lesson) if lesson else None
 
 def get_courses_data(courses, teacher: Teacher=None):
-    if type(courses) not in [list, QuerySet]:
+    if type(courses) not in [set, list, QuerySet]:
         return []
     data = list()
     admins: List[CustomUser] = CustomUser.objects.filter(is_superuser=True)
@@ -153,18 +153,18 @@ def get_courses(user: CustomUser):
     teacher = Teacher.objects.filter(user=user).first()
     courses = list()
     if teacher and teacher.group_teacher.count() > 0:
-        courses = [ group.course for group in teacher.group_teacher.all()]
-    elif teacher and teacher.trainer.count() > 0:
-        courses = [ group.course for group in teacher.trainer.all()]
+        courses += [ group.course for group in teacher.group_teacher.all()]
+    if teacher and teacher.trainer.count() > 0:
+        courses += [ group.course for group in teacher.trainer.all()]
     
     # Admin roli qanday?
     else:
         courses = Course.objects.all()
     print(courses)
-    return courses
+    return set(courses)
 
 def get_groups_data(groups, teacher: Teacher=None):
-    if type(groups) not in [List, QuerySet]:
+    if type(groups) not in [set, list, QuerySet]:
         return []
     data = list()
     admins: List[CustomUser] = CustomUser.objects.filter(is_superuser=True)
@@ -248,7 +248,7 @@ def get_lessons(course:Course, user:CustomUser, **filter_kwargs):
 
 
 def get_courses_via_hws(courses, user:CustomUser):
-    if type(courses) not in [List, QuerySet]:
+    if type(courses) not in [set, list, QuerySet]:
         return []
     admins = CustomUser.objects.filter(is_superuser=True)
     data = list()
@@ -257,7 +257,10 @@ def get_courses_via_hws(courses, user:CustomUser):
         dct['groups'] = len(course.group_set.all())
         dct['students'] = len(GroupStudents.objects.filter(group__course=course))
         modules = course.modules.all()
-        homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4)
+        if user.teacher_set.exists():
+            homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4)
+        else:
+            homeworks = Contents.objects.filter(lesson__module__in=modules, content_type=4)
         dct['homeworks'] = len(homeworks)
         dct['unseen'] = len(Homeworks.objects.filter(content__in=homeworks, status=1))
         dct['unchecked'] = len(Homeworks.objects.filter(content__in=homeworks, status=2))
@@ -269,7 +272,7 @@ def get_courses_via_hws(courses, user:CustomUser):
 
 
 def get_groups_via_hws(courses, user:CustomUser):
-    if type(courses) not in [List, QuerySet]:
+    if type(courses) not in [set, list, QuerySet]:
         return []
     data = list()
     groups = Group.objects.filter(course__in=courses)

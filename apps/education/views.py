@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -6,7 +7,7 @@ from django.forms.models import model_to_dict
 from admintion.models import Course, GroupStudents, Teacher, Group
 from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents
-from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm
+from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm
 from student.models import Homeworks
 from user.models import CustomUser
 
@@ -512,6 +513,7 @@ def homeworks_view(request):
     courses = get_courses(user=request.user)
     context['courses'] = get_courses_via_hws(courses, user=request.user)
     context['groups'] = get_groups_via_hws(courses, request.user)
+    print(context)
     return render(request, 'education/uyga_vazifa_teacher.html', context)
 
 def group_homeworks_detail_view(request, pk):
@@ -524,9 +526,10 @@ def group_homeworks_detail_view(request, pk):
     return render(request, 'education/uyga_vazifa_ichki_teacher.html', context)
 
 
-def student_homeworks_in_group(request, pk, group):
-    student = get_object_or_404(GroupStudents, pk=pk).student
-    course = get_object_or_404(Group, pk=pk).course
+def student_homeworks_in_group(request, pk):
+    group_student = get_object_or_404(GroupStudents, pk=pk)
+    student = group_student.student
+    course = group_student.group.course
 
     contents = get_contents(course, content_type=4)
 
@@ -534,19 +537,66 @@ def student_homeworks_in_group(request, pk, group):
     for content in list(contents):
         dct = dict()
         dct = model_to_dict(content, fields=('id', 'title', 'text'))
-        if content.file:
-            dct['content']['file'] = {'name':content.file, 'url': content.file.url}
-        homeworks = content.homeworks.filter(student=student)
+        if content.homework:
+            dct['homework'] = {'name':content.homework.name, 'url': content.homework.url}
+        homeworks = content.homeworks.filter(student=student).order_by('date_created')
         dct['homeworks'] = []
         for homework in homeworks:
             hw = model_to_dict(homework, fields=('id', 'text', 'ball', 'date_created', 'date_modified', 'comment', 'status', ))
-            if homework.file:
-                hw['file'] = {'name':homework.file.name, 'url':homework.file.url}
-            if homework.comment_file:
-                hw['comment_file'] = {'name':homework.comment_file.name, 'url':homework.comment_file.url}
+            hw['date_created'] = homework.date_created.strftime('%d/%m/%Y - %H:%M') if homework.date_created else ''
+            hw['date_modified'] = homework.date_modified.strftime('%d/%m/%Y - %H:%M') if homework.date_modified else ''
 
+            if homework.file:
+                hw['homework'] = {'name':homework.file.name.split('/')[-1], 'url':homework.file.url}
+            
+            if homework.comment_file:
+                hw['comment_file'] = {'name':homework.comment_file.name.split('/')[-1], 'url':homework.comment_file.url}
+            hw['commented'] = homework.commented.full_name() if homework.commented else ''
+            if Teacher.objects.filter(user=homework.commented).exists():
+                hw['commenter'] = 'O\'qituvchi'
+            else:
+                hw['commenter'] = 'Admin' if homework.commented and homework.commented.is_superuser else 'Mas\'ul'
             dct['homeworks'].append(hw)
-        dct['status'] = homeworks.last()
+        if homeworks.last():
+            dct['status'] = homeworks.last().status
+        else:
+            dct['status'] = 1   
         data.append(dct)
-    
+    print(data)
     return JsonResponse(data, safe=False)
+
+
+def check_permission(request, homework):
+    if request.user.is_superuser is False:
+        teacher = request.user.teacher_set.first()
+        groups = [group.group for group in homework.student.ggroups.all()]
+        for group in groups:
+            if group.teacher == teacher or group.trainer == teacher:
+                return True
+        return False
+
+@login_required
+def homework_edit_view(request, action, pk):
+    ACTIONS = {
+        'give-ball':3,
+        'reject': 4
+    }
+    homework = get_object_or_404(Homeworks, pk=pk)
+    
+    permitted = check_permission(request, homework)
+    if permitted:
+        return JsonResponse({'status':'permitted'}, status=403)
+
+    if request.method == 'POST':
+        form = HomeworkActionForm(request.POST, request.FILES, instance=homework)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.status = ACTIONS[action]
+            homework.commented = request.user
+            homework.date_modified = timezone.now()
+            homework.save()
+            return JsonResponse({'status':"ok"}, status=200)
+        else:
+            print(form.errors())
+            return JsonResponse({'status':'ok'}, safe=False)
+    return JsonResponse({}, status=200)

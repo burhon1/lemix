@@ -13,6 +13,7 @@ from student.selectors import (
     get_student_courses, get_student_homeworks, get_student_tests, get_test_data,
     get_questions_for_student,
 )
+from student.forms import HomeworkForm
 
 @login_required
 def student_view(request):
@@ -100,6 +101,7 @@ def lesson_detail_view(request, type:str, pk):
     student = Student.objects.filter(user=request.user).first()
     if student and student not in content.students.all():
         set_student_viewed_content(student, content)
+    print(context)
     return render(request, template_name, context)
 
 
@@ -122,19 +124,15 @@ def student_homework_view(request, pk: int):
     status = 400
 
     if request.method == 'POST':
-        text = request.POST.get('text', None)
-        file = request.FILES.get('file', None)
-
-        if text is None and file is None:
-            pass
-        else:
-            homework = Homeworks.objects.create(
-                student=student, 
-                content=content, 
-                text=text, 
-                file=file
-                )
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.student=student 
+            homework.content=content
+            homework.status = 2
+            homework.save()
             status = 200
-
+        else:
+            print(form.errors())
     return JsonResponse({'status': status})
     

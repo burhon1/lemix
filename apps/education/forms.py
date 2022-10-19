@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.formsets import formset_factory
+from student.models import Homeworks
 from user.models import CustomUser
 
 from education.models import Modules, Lessons, Contents, FAQ
@@ -38,3 +39,8 @@ class ModuleForm(forms.ModelForm):
     class Meta:
         model = Modules
         fields = ('id', 'title', 'comment', 'course')
+
+class HomeworkActionForm(forms.ModelForm):
+    class Meta:
+        model = Homeworks
+        fields = ('id', 'comment', 'ball', 'comment_file', )
