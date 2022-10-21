@@ -94,10 +94,15 @@ def lesson_detail_view(request, type:str, pk):
         context['content'] = model_to_dict(content, exclude=['lesson', 'students'])
         context['content']['value'] = content.get_value
     context['modules'] = Modules.modules.course_modules(lesson.module.course_id)
+    if request.GET.get('group', None):
+        context['modules'] = context['modules'].filter(status=True, groups__in=[int(request.GET.get('group'))])
     context['modules'] = get_updated_modules(context['modules'], request.user, with_lesson_contents=True)
     context['resources'] = content.content_resources.all()
     context['faqs'] = content.faqs.all().values('question', 'answer')
-    
+    context['homeworks'] = content.homeworks.filter(student__user=request.user)
+    if len(context['homeworks']) and context['homeworks'].last().status==3:
+        context['balled'] = True
+    context['lesson'] = content.lesson
     student = Student.objects.filter(user=request.user).first()
     if student and student not in content.students.all():
         set_student_viewed_content(student, content)
@@ -111,7 +116,7 @@ def homework_detail_view(request, id):
 def homeworks_view(request):
     student = get_object_or_404(Student, user=request.user)
     context = dict()
-    context['homeworks'] = get_student_homeworks(student)
+    context['homeworks'] = get_student_homeworks(student) 
     return render(request, 'student/uyga_vazifa.html', context)
 
 def help_view(request):

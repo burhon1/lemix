@@ -80,14 +80,14 @@ Uyga vazifa- Lemix
                                                                     {% for homework in homeworks %}
                                                                     <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
                                                                         <div class="card-body">
-                                                                            <div class="card-content row d-flex flex-nowrap align-items-start ">
+                                                                            <div class="card-content row d-flex flex-nowrap align-items-start justify-content-around">
                                                                                 <div>
                                                                                    <h3 class="mb-3"> {{ homework.title }}</h3>
                                                                                 </div>
                                                                                 
-                                                                                    {% if homework.ball and  homework.closed is False %}
+                                                                                {% if homework.homework and  homework.closed is False %}
                                                                                     <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
-                                                                                {% elif homework.closed is False %}
+                                                                                {% elif homework.homework is None %}
                                                                                     <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</a>
                                                                                 {% else %}
                                                                                     <button class="btn border-light btn-block" style="max-width: 150px;" disabled>Yopiq</button>
@@ -95,10 +95,10 @@ Uyga vazifa- Lemix
                                                                                 
                                                                             </div>
                                                                             <span class="text-muted mt-3 fs-12   "> 
-                                                                                {% if homework.ball %}<span class="color-info">baholangan </span>
+                                                                                {% if homework.homework.ball or homework.ball %}<span class="color-info">baholangan </span>
                                                                                 {% elif homework.closed %}<span class="color-danger">Yopiq </span>
                                                                                 {% else %}<span class="color-info">Ochiq </span>
-                                                                                {% endif %} / {{ homework.opened_at|date:'d.m.Y'}}, {{ homework.opened_at|date:'H:i'}} - {{ homework.closed_at|date:'H:i'}}    / <b> 90 </b>ta savol  /  0%</span>
+                                                                                {% endif %} / {{ homework.homework.date_created|date:'d.m.Y'}}, {{ homework.homework.date_created|date:'H:i'}} - {{ homework.homework.date_modified|date:'H:i'}}   /  {{ homework.homework.ball|default:'-'}}</span>
                                                                             </div>
                                                                     </div>
                                                                     {% endfor %}
@@ -113,15 +113,15 @@ Uyga vazifa- Lemix
                                                                 
                                                                 {% if homeworks %}
                                                                     {% for homework in homeworks %}
-                                                                    {% if homework.closed %}
+                                                                    {% if homework.closed or homework.homework.ball %}
                                                                     <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
                                                                         <div class="card-body">
-                                                                            <div class="card-content row d-flex flex-nowrap align-items-start ">
+                                                                            <div class="card-content row d-flex flex-nowrap  align-items-start justify-content-around">
                                                                                 <div>
                                                                                    <h3 class="mb-3"> {{ homework.title }}</h3>
                                                                                 </div>
                                                                                 
-                                                                                    {% if homework.ball and  homework.closed is False %}
+                                                                                    {% if homework.homework or   homework.closed is False %}
                                                                                     <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
                                                                                 {% elif homework.closed is False %}
                                                                                     <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</a>
@@ -133,7 +133,7 @@ Uyga vazifa- Lemix
                                                                             <span class="text-muted mt-3 fs-12   "> 
                                                                                 {% if homework.ball %}<span class="color-info">baholangan </span>
                                                                                 {% elif homework.closed %}<span class="color-danger">Yopiq </span>
-                                                                                {% endif %} / {{ homework.opened_at|date:'d.m.Y'}}, {{ homework.opened_at|date:'H:i'}} - {{ homework.closed_at|date:'H:i'}}    / <b> 90 </b>ta savol  /  0%</span>
+                                                                                {% endif %} / {{ homework.homework.date_created|date:'d.m.Y'}}, {{ homework.homework.date_created|date:'H:i'}} - {{ homework.homework.date_modified|date:'H:i'}}     /  {{ homework.homework.ball|default:'-'}} </span>
                                                                             </div>
                                                                     </div>
                                                                     {% endif %}
@@ -152,12 +152,12 @@ Uyga vazifa- Lemix
                                                                     {% if homework.closed is False %}
                                                                     <div class="card col-lg-6 col-sm-12 col-md-12 card-default card-md bg-white card-bordered">
                                                                         <div class="card-body">
-                                                                            <div class="card-content row d-flex flex-nowrap align-items-start ">
+                                                                            <div class="card-content row d-flex flex-nowrap  align-items-start justify-content-around">
                                                                                 <div>
                                                                                    <h3 class="mb-3"> {{ homework.title }}</h3>
                                                                                 </div>
                                                                                 
-                                                                                    {% if homework.ball or homework.homework and  homework.closed is False %}
+                                                                                    {% if homework.homework and  homework.closed is False %}
                                                                                     <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn border-primary btn-block" style="max-width: 150px;">Davom etish</a>
                                                                                 {% elif homework.closed is False %}
                                                                                     <a href="{% url 'student:lesson' 'content' homework.id %}" class="btn btn-primary btn-block" style="max-width: 150px;">Boshlash</a>
@@ -170,7 +170,7 @@ Uyga vazifa- Lemix
                                                                                 {% if homework.ball %}<span class="color-info">baholangan </span>
                                                                                 {% else %}<span class="color-info">Ochiq </span>
 
-                                                                                {% endif %} / {{ homework.opened_at|date:'d.m.Y'}}, {{ homework.opened_at|date:'H:i'}} - {{ homework.closed_at|date:'H:i'}}    / <b> 90 </b>ta savol  /  0%</span>
+                                                                                {% endif %} / {{ homework.homework.date_created|date:'d.m.Y'}}, {{ homework.homework.date_created|date:'H:i'}} - {{ homework.homework.date_modified|date:'H:i'}}    /  {{ homework.homework.ball|default:'-'}}</span>
                                                                             </div>
                                                                     </div>
                                                                     {% endif %}

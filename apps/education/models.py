@@ -4,11 +4,12 @@ from django.conf import settings
 
 from user.models import CustomUser
 from education.chooses import COURSES_CHOICES, LESSONS_CHOICES, CONTENT_CHOICES
-from admintion.models import Course, Student
+from admintion.models import Course, Student, Group
 from education.querysets import modules, lessons, contents, resources, tests, questions, answers
 
 class Modules(models.Model):
     course = models.ForeignKey(Course, models.CASCADE, verbose_name="Kurs", related_name="modules")
+    groups = models.ManyToManyField(Group, blank=True)
     title  = models.CharField("Modul sarlavhasi", max_length=300)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     order  = models.IntegerField("Dars o'rni", default=0)
@@ -25,6 +26,7 @@ class Modules(models.Model):
 
 class Lessons(models.Model):
     module = models.ForeignKey(Modules, models.CASCADE, verbose_name="Modul", related_name="lessons")
+    groups = models.ManyToManyField(Group, blank=True)
     title  = models.CharField("Mavzu sarlavhasi", max_length=300)
     order  = models.IntegerField("Dars o'rni", default=0)
     content_type = models.SmallIntegerField("Content Type", choices=LESSONS_CHOICES, default=1)
@@ -41,6 +43,7 @@ class Lessons(models.Model):
         return '%s-%s' %(self.title, self.module.title)
 class Contents(models.Model):
     lesson       = models.ForeignKey(Lessons, models.CASCADE, verbose_name="Dars", related_name="contents")
+    groups       = models.ManyToManyField(Group, blank=True)
     title        = models.CharField("Sarlavha", max_length=300)
     content_type = models.SmallIntegerField("Content Type", choices=CONTENT_CHOICES, default=1)
     video        = models.FileField("Video Material", validators=[FileExtensionValidator(['mp4'])], null=True, blank=True)

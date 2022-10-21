@@ -516,12 +516,12 @@ fileInput.click();
 fileInput.onchange = ({target})=>{
 let file = target.files[0];
 if(file){
-    fileList.push(file);     
+    fileList.push({file: file, id: counter1});     
 let fileName = file.name;
-if(fileName.length >= 12){
-  let splitName = fileName.split('.');
-  fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
-}
+//if(fileName.length >= 12){
+//  let splitName = fileName.split('.');
+//  fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+//}
 uploadFile(fileName);
 }
 }
@@ -588,7 +588,13 @@ let data = new FormData(form);
 xhr.send(data);
 }
 var completed = false;
-function saveResources(id){
+
+function assignfunction(url){
+    window.location.assign(url);
+}
+
+
+function saveResources(id, redirect_id){
     console.log("saveResources");
     if(id != null || id != ''){
         var url = `/education/onlines/resources/?content=${id}`;
@@ -596,7 +602,7 @@ function saveResources(id){
         var formData = new FormData();
         
         for(var i=0;i<fileList.length;i++){
-            formData.append('resources', fileList[i], fileList[i].name);
+            formData.append('resources', fileList[i].file, fileList[i].file.name);
         }
         formData.append('csrftokenmiddleware','{{ csrf_token }}')
         fetch(url, {
@@ -607,8 +613,8 @@ function saveResources(id){
             body: formData,
         })
         .then(res=>res.json()).then(res=>{
-            url = `/education/online_text/update/${id}/`;
-            window.location.assign(url);
+            var url = `/education/onlines/${redirect_id}/${window.location.search}`
+            assignfunction(url);
         })
         .catch(err=>{
             console.log(err);
@@ -624,14 +630,17 @@ function deleteResource(id, counter){
         console.log("delete Resource : ", id)
 
         var divs = document.getElementsByClassName(`counter1-id-${counter}`);
-        var name = divs[0].getElementsByClassName('fileM-excerpt')[0].value;
+        var name = divs[0].getElementsByClassName('fileM-excerpt')[0].textContent;
+        
         for(var i=0;i< fileList.length; i++){
-            if(fileList[i].name == name){
+            
+            if( counter==fileList[i].id){
                 fileList.splice(i, 1);
+                divs[0].remove();
                 break;
             }
         }
-        divs[0].remove();
+       
 
     } else{
         var url = `/education/onlines/resources/delete/${id}/`;
@@ -669,7 +678,7 @@ function SaveContent(is_ready){
     formData.append('status', is_ready);
     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
     var url = window.location.href;
-
+    
     fetch(url, {
         method: 'post',
         headers:{
@@ -684,12 +693,8 @@ function SaveContent(is_ready){
         return res;
 
     }).then(res=>{
-        saveResources(res.id);
+        saveResources(res.id, res.redirect_id);
         return res;
-    })
-    .then(res=>{
-        var url = `/education/onlines/${res.redirect_id}/`
-        window.location.assign(url);
     })
     .catch(err=>{
         console.log(err);

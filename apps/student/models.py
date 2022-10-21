@@ -16,6 +16,7 @@ class Homeworks(models.Model):
     comment = models.TextField("O'quvchiga xabar", max_length=5000, blank=True)
     status  = models.PositiveSmallIntegerField("Uy vazifasining statusi", choices=choices.HOMEWORK_STATUS, default=1)
     commented = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    last_res  = models.BooleanField("Bu o'quvchining oxirgi javobimi?", default=True)
     class Meta:
         verbose_name = "Uy vazifasi"
         verbose_name_plural = "Uy vazifalari"

@@ -1,9 +1,11 @@
 from django.db.models import Q
 from django.utils import timezone
+from django.forms.models import model_to_dict
 from typing import List
 from admintion.models import Student, GroupStudents
 from education.models import Modules, Lessons, Contents, Questions, Tests
 from student.models import Homeworks, TestResults, StudentAnswers
+from user.models import CustomUser
 
 import random
 
@@ -13,21 +15,31 @@ def get_student_courses(student_id: int):
     courses = [group.course.id for group in groups ]
     return courses
 
-def get_homeworks(courses: List[int]):
+def get_homeworks(courses: List[int], authors: List[CustomUser]):
     modules = Modules.objects.filter(course_id__in=courses).values('id')
     lessons = Lessons.objects.filter(module_id__in=modules).values('id')
-    homeworks = Contents.objects.filter(lesson_id__in=lessons, content_type=4).order_by('lesson__module__order').values('id', 'title', 'opened_at', 'closed_at', 'order')
+    homeworks = Contents.objects.filter(lesson_id__in=lessons, content_type=4, status=True, author__in=authors).order_by('lesson__module__order').values('id', 'title', 'opened_at', 'closed_at', 'order')
     
     return homeworks
 
+def get_content_authors_for_student(student: Student):
+    groups = [ggroup.group for ggroup in student.ggroups.all()]
+    teachers = [group.teacher.user for group in groups if group.teacher]
+    trainers = [group.trainer.user for group in groups if group.trainer]
+    admins = CustomUser.objects.filter(is_superuser=True)
+
+    return list(admins)+teachers+trainers
+
 def get_student_homeworks(student: Student):
+    authors = get_content_authors_for_student(student)
     courses = get_student_courses(student)
-    homeworks = list(get_homeworks(courses))
+    homeworks = list(get_homeworks(courses, authors=authors))
     
     for content in homeworks:
         homework = Homeworks.objects.filter(student=student, content_id=content['id']).last()
         if homework:
-            content.setdefault('homework', homework.id)
+            content.setdefault('homework', model_to_dict(homework, fields=('id', 'ball', 'status', 'date_created', 'date_modified')))
+            
             content.setdefault('ball', homework.ball)
         if content['opened_at']:
             content['times']: content['opened_at'].strftime("%d.%m.%Y")+ content['opened_at'].strftime("%H:%M - ") + content['closed_at'].strftime("%H:%M")

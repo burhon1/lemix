@@ -527,11 +527,11 @@ uploadedArea = document.querySelector(".uploaded-area");
 form.addEventListener("click", () =>{
 fileInput.click();
 });
-
+var counter1 = 0;
 fileInput.onchange = ({target})=>{
 let file = target.files[0];
 if(file){
-fileList.push(file); 
+fileList.push({file: file, id:counter1}); 
 let fileName = file.name;
 if(fileName.length >= 12){
   let splitName = fileName.split('.');
@@ -540,7 +540,7 @@ if(fileName.length >= 12){
 uploadFile(fileName);
 }
 }
-var counter1 = 0;
+
 function uploadFile(name){
 let xhr = new XMLHttpRequest();
 xhr.open("POST", "");
@@ -605,9 +605,9 @@ xhr.send(data);
 var counter =0;
 function addFAQ(){
 
-    var question = document.getElementById('a10').value;
-    var answer = document.getElementById('a11').value;
-    if (question != "" && answer != ""){
+    var question = document.getElementById('a10');
+    var answer = document.getElementById('a11');
+    if (question.value != "" && answer.value != ""){
         const faq_cards = document.getElementById('accordion');
         
         const div = document.createElement('div');
@@ -616,14 +616,14 @@ function addFAQ(){
             <div class="panel-heading" role="tab" id="headingOne-${counter}">
                 <h4 class="panel-title">
                     <a class="faq question" data-toggle="collapse" data-parent="#accordion" href="#collapseOne-${counter}" aria-expanded="true" aria-controls="collapseOne-${counter}">
-                        ${question}
+                        ${question.value}
                     </a>
                 </h4>
 
             </div>
             <div id="collapseOne-${counter}" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne-${counter}">
                 <div class="panel-body">
-                    <p class="mb-sm-35 mb-20 faq answer">${ answer }</p>
+                    <p class="mb-sm-35 mb-20 faq answer">${ answer.value }</p>
                     
                     </div>
                 </div>
@@ -632,7 +632,9 @@ function addFAQ(){
         counter++;
         div.innerHTML = element;
         faq_cards.appendChild(div);
-        console.log("FAQ Added");
+        question.value = "";
+        answer.value = "";
+        console.log(question)
     }
     
     console.log("AddFaq()");
@@ -743,7 +745,11 @@ function deleteFAQ(id){
     }
 }
 
-function saveResources(id){
+function assignfunction(url){
+    window.location.assign(url);
+}
+
+function saveResources(id, redirect_id){
     console.log("saveResources");
     if(id != null || id != ''){
         var url = `/education/onlines/resources/?content=${id}`;
@@ -751,7 +757,7 @@ function saveResources(id){
         var formData = new FormData();
         
         for(var i=0;i<fileList.length;i++){
-            formData.append('resources', fileList[i], fileList[i].name);
+            formData.append('resources', fileList[i].file, fileList[i].file.name);
         }
         formData.append('csrftokenmiddleware','{{ csrf_token }}')
         fetch(url, {
@@ -761,13 +767,18 @@ function saveResources(id){
             },
             body: formData,
         })
-        .then(res=>res.json())
+        .then(res=>res.json()).then(res=>{
+            var url = `/education/onlines/${redirect_id}/${window.location.search}`
+            assignfunction(url);
+        })
         .catch(err=>{
             console.log("error: ", err)
         })
     } else{
         console.log("No id");
     }
+
+
 }
 
 function deleteResource(id, counter){
@@ -775,14 +786,14 @@ function deleteResource(id, counter){
         console.log("delete Resource : ", id)
 
         var divs = document.getElementsByClassName(`counter1-id-${counter}`);
-        var name = divs[0].getElementsByClassName('fileM-excerpt')[0].value;
         for(var i=0;i< fileList.length; i++){
-            if(fileList[i].name == name){
+            if(fileList[i].id == counter){
                 fileList.splice(i, 1);
+                divs[0].remove();
                 break;
             }
         }
-        divs[0].remove();
+        
 
     } else{
         var url = `/education/onlines/resources/delete/${id}/`;
@@ -804,6 +815,8 @@ function deleteResource(id, counter){
         })
     }
 }
+
+
 
 function saveContent(isReady=true){
     var url = window.location.href;
@@ -843,15 +856,14 @@ function saveContent(isReady=true){
             return res;
         }
     })
-        .then(res=>{
-            saveResources(res.id);
+    .then(res=>{
+            saveResources(res.id, res.redirect_id);
             return res;
-        })
-        .then(res=>{
-            var url = `/education/onlines/${res.redirect_id}/`
-            window.location.assign(url);
-        })
-
+    })
+    .then(res=>{
+        //var url = `/education/onlines/${res.redirect_id}/`
+        //assignfunction(url);
+    })
     .catch(err=>{
         console.log(err);
         alert(err);
@@ -878,7 +890,7 @@ function deleteBtn(){
         console.log(err);
     })
 }
-    window.location.assign('/education/online/');
+    window.location.assign(`/education/online/${window.location.search}`);
 }
 
 document.getElementById('ContentSaveBtn').addEventListener('click', function(){

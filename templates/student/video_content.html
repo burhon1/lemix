@@ -42,6 +42,9 @@
             <a class="nav-link " id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="false">Savol javob</a>
         </li> {% endcomment %}
         <li class="nav-item">
+            <a class="nav-link" id="tab-v-4-tab" data-toggle="tab" href="#tab-v-4" role="tab" aria-controls="tab-v-4" aria-selected="false">Dars haqida</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Qo'llanma</a>
         </li>
         <li class="nav-item">
@@ -50,7 +53,21 @@
     </ul>
     <div class="tab-content">
 
+        <div class="tab-pane fade" id="tab-v-4" role="tabpanel" aria-labelledby="tab-v-4-tab">
+            <div class="row">
+           
+                {% if lesson %}
+                <p>{{ lesson.comment }}</p>
+                    <div class="fileM-single mb-25 mr-2 ml-2">
+                        
 
+
+                    </div>
+                {% endif %}
+                    
+                
+            </div>
+        </div>
 
         <div class="tab-pane fade  " id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
             <form action="#">

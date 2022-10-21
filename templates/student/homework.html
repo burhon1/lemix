@@ -1,4 +1,5 @@
 {% load static %}
+{% load education_tags %}
 <div class="row">
     <div class="col-12">
         <div class="about-projects__details">
@@ -7,50 +8,78 @@
                 <div class="fileM-single mb-25 mr-2 ml-2">
 
                     <div class="fileM-card ">
-                                <div class="fileM-img mb-0">
-                                    <img class="wh-50" src="{% static 'img/pdf.png' %}" alt="">
-                                </div>
-                                <a class="btn btn-primary" href="{{ content.homework.url }}" download>Yuklab olish </a>
+                        <div class="fileM-img mb-0">
+                            <img class="wh-50" src="{% static 'img/pdf.png' %}" alt="">
+                        </div>
+                        <a class="btn btn-primary" href="{{ content.homework.url }}" download>Yuklab olish </a>
                     </div>
 
                 </div>
             {% else %}
                 <p class="fs-15 mb-25">{{ content.text|safe }}</p>
             {% endif %}
-            
-            
 
                 <!-- file yuklash -->
-                <div>
-                <textarea class="form-control border-primary mb-25" id="text-homework" name="text-homework" rows="3" placeholder="Sizning javobingiz..."></textarea>
-             
-                <div class="atbd-upload">
-        <div class="atbd-upload__button mb-2">
-            <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#uploadhomework').click()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Faylni yuklash uchun shu yerga bosing yoki faylni shu yerga keltirib tashang</a>
-            <input type="file" multiple="true" name="uploadhomework" class="upload-one" id="uploadhomework">
-        </div>
+            <div>
+                {% if balled is True %}
+                {% else %}
+                <textarea class="form-control border-primary mb-25" id="text-homework" name="text-homework" rows="3" placeholder="Sizning javobingiz..."></textarea>                <div class="atbd-upload">
+                    <div class="atbd-upload__button mb-2">
+                    <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#uploadhomework').click()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Faylni yuklash uchun shu yerga bosing yoki faylni shu yerga keltirib tashang</a>
+                    <input type="file" multiple="true" name="uploadhomework" class="upload-one" id="uploadhomework">
+                {% endif %}
+            </div>
         <div class="atbd-upload__file">
             <ul></ul>
+            </div>
         </div>
-    </div>
-    <button class="btn btn-primary mt-3" onclick="sendHomework({{content.id}})">Yuborish</button>              
+        {% if balled is True %}
+        {% else %}
+        <button class="btn btn-primary mt-3" onclick="sendHomework({{content.id}})">Yuborish</button>              
+        {% endif %}
+        <div class="about-projects__details">
+            
+                <div>
+                    {% if homeworks %}
+                        {% for homework in homeworks %}
+                        <div class="card-body">
+                            <p >
+                            <b class="fw-bold" style="margin-bottom: 0;">  Sizning javobingiz({{homework.date_created}}): </b><small>{% if homework.status is 4 %}Rad etilgan{% elif homework.status is 3 %}Baholangan{% elif homework.status is 2 %}Tekshirilmagan{% endif %}</small>
+                                <p>{{ homework.text }}</p>
+                            </p>
+                            {% if homework.file %}
+                            <ul>
+                                <li>
+                                    <a href="{{homework.file.url}}" class="file-name"><i class="las la-paperclip"></i> <span class="name-text">{{ homework.file.name}}<span></span></span></a>
+                                </li>
+                            </ul>
+                            {% endif %}
+                
+                            
+                
+                            {% if homework.comment %}
+                            <h6 class="fs-14 mb-2">Izoh</h6>
+                            <div class="note-action__left   mt-2 ">
+                                <p>{{homework.comment}}</p><br>
+                            </div>
+                                <div class="note-action__right mt-2 d-flex justify-content-between">
+                                    <p class="fs-12 mb-0"> {% if homework.commented.is_superuser %}Admin{% else %}O'qituvchi{% endif %} : {{ homework.commented.full_name }}</p>
+                                    <p class=" mb-0"> {{ homework.date_modified|date:'d/m/Y - H:i'}}</p>
+                            </div>
+
+                            {% endif %}
+                            {% if homework.ball %}
+                            <p class="border-bottom"></p>
+                            <h5 class="fs-14 mb-2">Baho : {{ homework.ball }}</h5>
+                
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+
+                </div>
     </div>
     <div class="response-message"></div>
-                <!-- file yuklanib bo'lgandan keyin chiqadi  (code : 200) -->
-                <!-- <div class=" alert alert-success p-30" role="alert">
-
-
-                    <div class="alert-content">
-
-
-                        <p>Javobingiz muvaffaqiyatli yuborildi! <br>
-                            Tez orada ball qo‘yiladi!</p>
-
-
-                    </div>
-                </div> -->
-        </div>
-
     </div>
-  
-</div>
+

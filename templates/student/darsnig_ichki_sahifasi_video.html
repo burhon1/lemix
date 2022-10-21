@@ -102,12 +102,13 @@ Darsing Ichki Sahifasi - Lemix
 
                                                     <div id="collapse-module-{{ module.id }}" class="collapse" aria-labelledby="heading-module-{{ module.id }}" data-parent="#accordion-module-{{ module.id }}">
                                                             <div class="tab-content" id="v-pills-tabContent">
-                                                                <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                                <div class="tab-pane fade  active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                                                     <!-- Edit Profile -->
                                 
                                                                             <div class="application-faqs">
                                                                                 <div class="panel-group" id="accordion-module-{{ module.id }}" role="tablist" aria-multiselectable="true">
                                                                                     <!-- panel 1 -->
+                                                                                    
                                                                                     {% for lesson in module.lessons %}
                                                                                         <div class="panel panel-default">
                                                                                             <div class="panel-heading" role="tab" id="headingOne">
@@ -141,7 +142,11 @@ Darsing Ichki Sahifasi - Lemix
                                                                                                                 {% endif %}
                                                                                                             
                                                                                                                 <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
+                                                                                                                    {% if content.open is False %}
+                                                                                                                    <a href="#">{{ content.title }}</a>
+                                                                                                                    {% else %}
                                                                                                                     <a href="{% url 'student:lesson' 'content' content.id %}">{{ content.title }}</a>
+                                                                                                                    {% endif %}
                                                                                                                 </label>
                                                                                                             </div>
                                                                                                         </div>
@@ -243,7 +248,7 @@ Darsing Ichki Sahifasi - Lemix
                                 Tez orada ball qo‘yiladi!`;
             div.appendChild(div2);
             res_message.appendChild(div);
-            
+            window.location.assign(window.location.href)
         }
      })
      .catch(err=>{

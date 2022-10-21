@@ -77,7 +77,7 @@
                                                         {% else %}
                                                             <div class="col-xxl-3 col-lg-4 col-md-6 mb-25" >
                                                                 <div class="feature-cards feature-card--1 border">
-                                                                    <a href="{% url 'student:course-modules' group.course_id %}">
+                                                                    <a href="{% url 'student:course-modules' group.course_id %}?group={{group.group_id}}">
                                                                     <figure class="feather-cards__figure  ">
                                                                         <img src="{% static 'img/blog-single4.png' %}" alt="">
                                                                         <figcaption>

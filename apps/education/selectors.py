@@ -24,11 +24,17 @@ def get_opening_status(lesson_obj):
             return False
     return True
 
-def get_lesson_contents_data(lesson_obj: Lessons=None, lesson_id:int=None, student:Student=None, user:CustomUser=None):
+def get_lesson_contents_data(lesson_obj: Lessons=None, lesson_id:int=None, student:Student=None, user:CustomUser=None, authors=[], group:Group=None):
+    query = dict()
+    if len(authors):
+        query['author__in'] = authors
     if lesson_obj:
-        contents = lesson_obj.contents.all()
-    elif lesson_id:
-        contents = Contents.objects.filter(lesson_id=lesson_id)
+        query['lesson_id'] = lesson_obj.id
+    if lesson_id:
+        query['lesson_id'] = lesson_id
+    if group:
+        query['groups__in'] = [group]
+    contents = Contents.objects.filter(**query)
     
     data = list()
     if student:
@@ -38,7 +44,7 @@ def get_lesson_contents_data(lesson_obj: Lessons=None, lesson_id:int=None, stude
                 'title': content.title,
                 'content_type': content.content_type,
                 'viewed': bool(student in content.students.all()),
-                'open': bool(content.opened_at and content.opened_at < timezone.now() or content.is_ready)
+                'open': bool(content.opened_at and content.opened_at < timezone.now() or content.status)
             })
     elif user:
         teacher = Teacher.objects.filter(user=user)
@@ -57,27 +63,38 @@ def get_lesson_contents_data(lesson_obj: Lessons=None, lesson_id:int=None, stude
 
 def get_updated_modules(modules, user:CustomUser, with_lesson_contents=False):
     student = Student.objects.filter(user=user).first()
+    authors = CustomUser.objects.filter(is_superuser=True)
+    group = None
+    if len(modules):
+        module = Modules.objects.filter(id=modules[0]['id']).first()
+        course = module.course if module else None 
+        group = student.ggroups.filter(group__course=course).first().group
+        authors = list(authors)
+        authors.append(group.teacher.user)
+        authors.append(group.trainer.user)
 
     for module in modules:
         lessons = list()
-        for lesson in module['lessons']:
-            lesson_obj = Lessons.objects.filter(id=lesson).first()
-            if lesson_obj:
-                if with_lesson_contents:
-                    lessons.append({
-                        'id': lesson, 
-                        'title': lesson_obj.title, 
-                        'viewed': get_viewed_status(student, lesson_obj),
-                        'open': get_opening_status(lesson_obj),
-                        'contents': get_lesson_contents_data(lesson_obj, student)
-                    })
-                else:
-                    lessons.append({
-                        'id': lesson, 
-                        'title': lesson_obj.title, 
-                        'viewed': get_viewed_status(student, lesson_obj),
-                        'open': get_opening_status(lesson_obj)
-                    })
+        lessons_qs = Lessons.objects.filter(module_id=module['id'], author__in=authors)
+        if group:
+            lessons_qs = lessons_qs.filter(groups__in=[group])
+        for lesson in lessons_qs: 
+            
+            if with_lesson_contents:
+                lessons.append({
+                    'id': lesson.id, 
+                    'title': lesson.title, 
+                    'viewed': get_viewed_status(student, lesson),
+                    'open': get_opening_status(lesson),
+                    'contents': get_lesson_contents_data(lesson_obj=lesson, student=student, authors=authors, group=group)
+                })
+            else:
+                lessons.append({
+                    'id': lesson.id, 
+                    'title': lesson.title, 
+                    'viewed': get_viewed_status(student, lesson),
+                    'open': get_opening_status(lesson)
+                })
         if len(lessons):
             module['lessons'] = lessons
         else:
@@ -96,6 +113,8 @@ def get_updated_modules(modules, user:CustomUser, with_lesson_contents=False):
 
 
 def get_next_module(course:Course, last_order=None):
+    if course is None:
+        return None
     if last_order:
         module = course.modules.filter(order__gt=last_order).first()
     else:
@@ -103,6 +122,8 @@ def get_next_module(course:Course, last_order=None):
     return module
 
 def get_next_lesson(module:Modules, last_order=None):
+    if module is None:
+        return None
     if last_order:
         lesson = module.lessons.filter(order__gt=last_order).first()
     else:
@@ -114,6 +135,8 @@ def get_next_lesson(module:Modules, last_order=None):
         return get_next_lesson(module) if module else None
 
 def get_need_content(lesson: Lessons, last_order=None):
+    if lesson is None:
+        return None
     if last_order:
         content = lesson.contents.filter(order__gt=last_order).first()
     else:
@@ -123,7 +146,10 @@ def get_need_content(lesson: Lessons, last_order=None):
         return content
     else:
         lesson = get_next_lesson(lesson.module, lesson.order)
-        return get_need_content(lesson) if lesson else None
+        if lesson:
+            return get_need_content(lesson)
+        else:
+            return None
 
 def get_courses_data(courses, teacher: Teacher=None):
     if type(courses) not in [set, list, QuerySet]:
@@ -172,17 +198,23 @@ def get_groups_data(groups, teacher: Teacher=None):
         dct = model_to_dict(group, fields=('id', 'title', 'teacher'))
         dct['teacher'] = f"{group.teacher.user.full_name()}"
         dct['trainer'] = f"{group.trainer.user.full_name()}"
-        dct['course'] = group.course.title
-        lessons = Lessons.objects.filter(module__course=group.course)
-        contents = Contents.objects.filter(Q(author__in=admins)|Q(author=group.teacher.user), lesson__in=lessons)
+        dct['course'] = {
+            'title': group.course.title, 'id': group.course.id
+        }
+
+        lessons = Lessons.objects.filter(groups__id=group.id) #module__course=group.course
+        query = Q(author__in=admins)|Q(author=group.teacher.user)
+        if group.trainer:
+            query = query|Q(author=group.trainer.user)
+        contents = Contents.objects.filter((query), lesson__in=lessons, groups__id=group.id)
         if teacher:
             contents = contents.filter(Q(author=teacher.user)|Q(author__in=admins))
-        dct['video_contents'] = contents.filter(content_type=1).count()
-        dct['text_contents'] = contents.filter(content_type=2).count()
-        dct['test_contents'] = contents.filter(content_type=3).count()
-        dct['homework_contents'] = contents.filter(content_type=4).count()
-        dct['contents'] = contents.count()
-
+        dct['video_contents'] = len(contents.filter(content_type=1))
+        dct['text_contents'] = len(contents.filter(content_type=2))
+        dct['test_contents'] = len(contents.filter(content_type=3))
+        dct['homework_contents'] = len(contents.filter(content_type=4))
+        dct['contents'] = len(contents)
+        print(group, dct)
         data.append(dct)
     return data
 
@@ -199,7 +231,7 @@ def get_groups(user: CustomUser):
     return get_groups_data(groups, teacher=teacher)
 
 
-def get_modules_data(modules):
+def get_modules_data(modules, group=None, authors=[]):
     data = list()
     for module in list(modules):
         dct = dict()
@@ -208,18 +240,27 @@ def get_modules_data(modules):
             dct['author_name'] = module.author.full_name()
         except:
             dct['author_name'] = ''
-        dct['lessons'] = list(module.lessons.all().values('id', 'title', 'order','author'))
-        dct['status'] =  bool(Contents.objects.filter(lesson__module=module, status=True).count())
+        lessons = module.lessons.all()
+        query = dict()
+        if group:
+            query.update({'groups__id': group.id })
+        if authors and len(authors)>0:
+            query.update({'author__in':authors})
+            # dct['lessons'] = list(module.lessons.filter(groups__id=group.id).values('id', 'title', 'order','author'))
+        dct['lessons'] = list(lessons.filter(**query).values('id', 'title', 'order','author'))
+        dct['status'] =  bool(Contents.objects.filter(lesson__module=module, status=True).exists())
         data.append(dct)
     return data
 
-def get_modules(course:Course, user:CustomUser):
+def get_modules(course:Course, user:CustomUser, group:Group=None):
     teacher = Teacher.objects.filter(user=user).first()
     if teacher:
         admins = CustomUser.objects.filter(is_superuser=True)
         modules = course.modules.filter(Q(author=user)|Q(author__in=admins))
     else:
         modules = course.modules.all()
+    if group:
+        return modules.filter(groups__id=group.id)
     return modules
 
 def get_lessons_data(lessons):
@@ -263,9 +304,9 @@ def get_courses_via_hws(courses, user:CustomUser):
             homeworks = Contents.objects.filter(lesson__module__in=modules, content_type=4)
         dct['homeworks'] = len(homeworks)
         dct['unseen'] = len(Homeworks.objects.filter(content__in=homeworks, status=1))
-        dct['unchecked'] = len(Homeworks.objects.filter(content__in=homeworks, status=2))
-        dct['checked'] = len(Homeworks.objects.filter(content__in=homeworks, status=3))
-        dct['rejected'] = len(Homeworks.objects.filter(content__in=homeworks, status=4))
+        dct['unchecked'] = len(Homeworks.objects.filter(content__in=homeworks, status=2, last_res=True))
+        dct['checked'] = len(Homeworks.objects.filter(content__in=homeworks, status=3, last_res=True))
+        dct['rejected'] = len(Homeworks.objects.filter(content__in=homeworks, status=4, last_res=True))
         data.append(dct)
 
     return data
@@ -275,7 +316,12 @@ def get_groups_via_hws(courses, user:CustomUser):
     if type(courses) not in [set, list, QuerySet]:
         return []
     data = list()
+
     groups = Group.objects.filter(course__in=courses)
+    if user.is_superuser is False and user.teacher_set.first():
+        query = Q(teacher=user.teacher_set.first())|Q(trainer=user.teacher_set.first())
+        groups = groups.filter(query)
+    
     admins = CustomUser.objects.filter(is_superuser=True)
     for group in groups:
         dct = model_to_dict(group, fields=('id', 'title',))
@@ -284,12 +330,12 @@ def get_groups_via_hws(courses, user:CustomUser):
         dct['students'] = len(group.students.all())
         dct['course'] = group.course.title
         modules = group.course.modules.all()
-        homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4)
+        homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4, groups__in=[group])
         dct['homeworks'] = len(homeworks)
-        dct['unseen'] = len(Homeworks.objects.filter(content__in=homeworks, status=1))
-        dct['unchecked'] = len(Homeworks.objects.filter(content__in=homeworks, status=2))
-        dct['checked'] = len(Homeworks.objects.filter(content__in=homeworks, status=3))
-        dct['rejected'] = len(Homeworks.objects.filter(content__in=homeworks, status=4))
+        dct['unseen'] = len(Homeworks.objects.filter(content__in=homeworks, status=1, last_res=True))
+        dct['unchecked'] = len(Homeworks.objects.filter(content__in=homeworks, status=2, last_res=True))
+        dct['checked'] = len(Homeworks.objects.filter(content__in=homeworks, status=3, last_res=True))
+        dct['rejected'] = len(Homeworks.objects.filter(content__in=homeworks, status=4, last_res=True))
         data.append(dct)
     return data
 

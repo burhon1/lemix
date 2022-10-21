@@ -183,15 +183,15 @@
         <div class="row mt-3 px-3">
             <div class="card col-12">
                 <div class="card-header  border-bottom-0" style="padding: 0.75rem 0rem;">
-                    <h4 class="fw-500" style="text-transform: none; font-size: 20px;">{{ course.title }} kursidagi barcha bo'limlardagi darslar: 
-                        {{ course.contents }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-                        {{ course.video_contents }} ta, 
+                    <h4 class="fw-500" style="text-transform: none; font-size: 20px;">{% if group %}{{ group.title}}({{group.course.title}})guruhi{% else %}{{ course.title }} kursi{% endif %}dagi barcha bo'limlardagi darslar: 
+                        {% if group %}{{group.contents}}{% else %}{{ course.contents }}{% endif %} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                        {% if group %}{{group.video_contents}}{% else %}{{ course.video_contents }}{% endif %} ta, 
                         <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                        {{ course.text_contents }}ta, 
+                        {% if group %}{{group.text_contents}}{% else %}{{ course.text_contents }}{% endif %}ta, 
                          <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 
-                         {{ course.homework_contents }}ta,
+                         {% if group %}{{group.homework_contents}}{% else %}{{ course.homework_contents }}{% endif %}ta,
                           <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> 
-                          {{ course.test_contents }}ta)
+                          {% if group %}{{group.test_contents}}{% else %}{{ course.test_contents }}{% endif %}ta)
                     </h4>
                     <div class="buttons d-flex ">
                         {% if course.status %}
@@ -569,13 +569,13 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-between">
-                    <a href="{% url 'education:onlin_video_create' lesson.id %}" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                    <a href="{% url 'education:onlin_video_create' lesson.id %}{% if request.GET.group %}?group={{request.GET.group}}{% endif %}" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
                       Video </a>
-                       <a href="{% url 'education:onlin_text' lesson.id %}"  class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                       <a href="{% url 'education:onlin_text' lesson.id %}{% if request.GET.group %}?group={{request.GET.group}}{% endif %}"  class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
                      Matnli </a>
-                       <a href="{% url 'education:onlin_test' %}" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                       <a href="{% url 'education:onlin_test' %}{% if request.GET.group %}?group={{request.GET.group}}{% endif %}" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
                        Test </a>
-                       <a href="{% url 'education:onlin_hwork_create' lesson.id %}" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                       <a href="{% url 'education:onlin_hwork_create' lesson.id %}{% if request.GET.group %}?group={{request.GET.group}}{% endif %}" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
                         Uyga vazifa </a>
                        </div>
             </div>
@@ -789,7 +789,7 @@
                                         '<svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> '
                                         : ""
                         }
-                                                <h5 class="ml-1 d-flex  align-items-center" style="font-size:14px;">${person.name} &nbsp; <div class="text-small text-light">${person.type} </div></h5>
+                                                <h5 class="ml-1 d-flex  align-items-center" style="font-size:14px;">${person.name} &nbsp; <div class="text-small text-light">${person.type=='File'?'Maqola':person.type} </div></h5>
                                             </div>
                                             <div class="col-lg-6  d-flex  justify-content-end align-items-center">
                                                ${person.status==false ? '<span class="selling-badge order-bg-opacity-danger color-danger mr-3">Muzlatilgan</span>':''}
@@ -935,7 +935,7 @@
 
 
         function getContents(id, lesson=true){
-            var url = `/education/onlines/${id}/contents/`;
+            var url = `/education/onlines/${id}/contents/${window.location.search}`;
 
             fetch(url, {
                 method: 'get',
@@ -1085,16 +1085,8 @@
 
 
 
-
-
-
-
-
-
-
-
         function CreateModule(id){
-            var url = `/education/onlines/modules/`;
+            var url = `/education/onlines/modules/${window.location.search}`;
             var formData = new FormData();
             formData.append('title', document.getElementById('a10').value);
             formData.append('comment', document.getElementById('a11').value);
@@ -1153,7 +1145,7 @@
         }
 
         function getModules(id){
-            var url = `/education/onlines/${id}/modules/`;
+            var url = `/education/onlines/${id}/modules/${window.location.search}`;
             fetch(url, {
                 method: 'get',
                 header: {
@@ -1180,7 +1172,7 @@
         
 
         function CreateLesson(){
-            var url = `/education/onlines/lessons/create/`;
+            var url = `/education/onlines/lessons/create/${window.location.search}`;
             var formData = new FormData();
             var module = document.getElementById('module_select').value;
             formData.append('module', module );
