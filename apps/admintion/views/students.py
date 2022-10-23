@@ -23,6 +23,7 @@ def students_view(request):
                 user=obj
             )
             student.save()
+            StudentBalance.objects.create(student=student, title="Balans")
             return redirect('admintion:students')
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
