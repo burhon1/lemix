@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
+from finance.models import StudentBalance,Paid
 from user.services.users import user_add
 from django.contrib.auth.models import Group
 import json
@@ -39,12 +40,13 @@ def student_detail_view(request,id):
     if request.method == "POST":
         post = request.POST.get('student')
         update_student(id, json.loads(post))
-
     context['student'] = Student.students.student_detail(id)
     context['parent'] = Parents.parents.parent(id)
     context['courses'] = get_student_courses(id)
     context['groups'] = get_student_groups(id)
     context['attendaces'], context['attendace_results'] = get_student_attendaces(id)
+    context['balances'] = StudentBalance.objects.filter(student=context['student']['id'])
+    context['paids'] = Paid.objects.filter(student__id=context['student']['id'])
     return render(request,'admintion/student_detail.html',context)
 
 

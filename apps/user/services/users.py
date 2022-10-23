@@ -7,19 +7,34 @@ def user_add(groups,post):
     birthday = post.get('birthday',False)
     gender = post.get('gender',False)
     location = post.get('location',False)
-    print(phone)
-    if first_name and last_name and phone and birthday and gender and groups:
-        custom_user = CustomUser.objects.create(
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            birthday=birthday,
-            gender=gender,
-            password=phone
-        )
-        if location:
-            custom_user.location=location
-        custom_user.save()
-        custom_user.groups.add(*groups)
-        return {'status':200,'obj':custom_user}
-    return {'status':1,'obj':None}   
+    user = CustomUser.objects.filter(phone=phone)
+    if not user.exists():
+        if first_name and last_name and phone and birthday and gender and groups:
+            custom_user = CustomUser.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                phone=phone,
+                birthday=birthday,
+                gender=gender,
+                password=phone
+            )
+            if location:
+                custom_user.location=location
+            custom_user.save()
+            custom_user.groups.add(*groups)
+            return {'status':200,'obj':custom_user}
+        return {'status':1,'obj':None}   
+    else:
+        user = user.first()
+        if first_name:
+            user.first_name=first_name
+        if last_name:
+            user.last_name=last_name
+        if phone:
+            user.phone=phone
+        if birthday:
+            user.birthday=birthday
+        if gender:
+            user.gender=gender                
+        user.groups.add(*groups)
+        return {'status':200,'obj':user}    
