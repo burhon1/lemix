@@ -1,0 +1,382 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+
+{% block title %}
+Uyga Vazifa Teacher- Lemix
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+    .v-num{
+        font-size: 14px;
+    }
+    .application-faqs .panel-title a{
+        font-size: 12px !important;
+    }
+    .forms-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .forms-view > .form-group{
+        display: flex;
+        align-items: center;
+    }
+    .table-responsive tr td>div{
+        text-transform: none;
+    }
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single{
+        height: 1.875rem;
+padding: 0;
+font-size: 12px;
+line-height: 1.5;
+-webkit-border-radius: 0.2rem;
+border-radius: 0.2rem;
+margin-right: 7px;
+    }
+    .userDatatable-title{
+        text-transform: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mt-3">
+
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+                <div class="card-header color-dark fw-500">
+                  <div class="row align-items-center justify-content-center">
+                   <h2 class="mr-30" style="text-transform: none;">Uyga vazifalar ro'yxati</h2>
+                 
+                  </div>
+                  
+                </div>
+                <div class="card-body">
+                    <div class="tab-wrapper">
+
+                        <div class="atbd-tab tab-horizontal">
+                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">Kurslar</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Guruhlar</a>
+                                </li>
+                             
+
+
+
+                            </ul>
+                            <div class="tab-content">
+
+
+
+                                <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
+                                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 table-borderless">
+                                                <thead>
+                                                    <tr class="userDatatable-header">
+                                                        <th>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="custom-checkbox  check-all">
+                                                                    <!-- <input class="checkbox" type="checkbox" id="check-3"> -->
+                                                                    <label for="check-3">
+                                                                        <span class="checkbox-text userDatatable-title">#</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Kurs nomi </span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Guruhlar</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">O'quvchilar</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Vazifalar</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">
+                                                                Tekshirilmagan
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">
+                                                                Baholangan
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">
+                                                                Rad etilgan
+                                                            </span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+    
+                                                {% for course in courses %}
+                                                <tr >
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                            </div>
+                                                            <div class="userDatatable-inline-title">
+                                                                {{ forloop.counter }}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <a href="{% url 'education:course_detail' course.id %}">
+                                                                {{ course.title }}
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content d-inline-block">
+                                                           {{ course.groups|default:'0'}}ta
+                                                        </div>
+                                                       
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            {{ course.students|default:'0'}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            {{ course.homeworks|default:'0'}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <span class="selling-badge order-bg-opacity-info color-info">{{ course.unchecked|default:'0'}}</span> 
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <span class="selling-badge order-bg-opacity-success color-success">{{ course.checked|default:'0'}}</span>  
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <span class="selling-badge order-bg-opacity-danger color-danger">{{ course.rejected|default:'0'}}</span>  
+                                                        </div>
+                                                    </td>
+                                                </tr
+                                                {% endfor %}
+    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 table-borderless">
+                                                <thead>
+                                                    <tr class="userDatatable-header">
+                                                        <th>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="custom-checkbox  check-all">
+                                                                    <!-- <input class="checkbox" type="checkbox" id="check-3"> -->
+                                                                    <label for="check-3">
+                                                                        <span class="checkbox-text userDatatable-title">#</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Guruh </span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Kurs</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Ma'sul o'qituvchi</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">O'quvchilar</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">Vazifalar</span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">
+                                                                Tekshirilmagan
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">
+                                                                Baholangan
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <span class="userDatatable-title">
+                                                                Rad etilgan
+                                                            </span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+    
+                                                {% for group in groups %}
+                                                <tr >
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                </div>
+                                                            <div class="userDatatable-inline-title">
+                                                                {{ forloop.counter }}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                        <a href="{% url 'education:group-homeworks-detail' group.id %}">
+                                                            {{ group.title }}
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content d-inline-block">
+                                                           {{ group.course }}
+                                                        </div>
+                                                       
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            {{group.teacher}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            {{ group.students }}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            {{ group.homeworks }}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <span class="selling-badge order-bg-opacity-info color-info">{{ group.unchecked|default:0 }}</span> 
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <span class="selling-badge order-bg-opacity-success color-success">{{ group.checked|default:0 }}</span>  
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <span class="selling-badge order-bg-opacity-danger color-danger">{{ group.rejected|default:0 }}</span>  
+                                                        </div>
+                                                    </td>
+                                                   
+                                                  
+                                                </tr>
+    
+                                                {% endfor %}
+    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+<div id="overlayer">
+<span class="loader-overlay">
+<div class="atbd-spin-dots spin-lg">
+    <span class="spin-dot badge-dot dot-primary"></span>
+    <span class="spin-dot badge-dot dot-primary"></span>
+    <span class="spin-dot badge-dot dot-primary"></span>
+    <span class="spin-dot badge-dot dot-primary"></span>
+</div>
+</span>
+</div>
+<div class="overlay-dark-sidebar"></div>
+<div class="customizer-overlay"></div>
+
+<div class="overlay-dark"></div>
+ 
+
+    {% block script %}
+    <script>
+        var forms = document.querySelectorAll('.forms-view')
+        for (let i = 0; i < forms.length; i++) {
+             forms[i].style.display='none'
+            }
+        var array=[]
+        function handleClickIcon(x) {
+            if(array.includes(x)){
+            forms[array[array.indexOf(x)]].style.display='none';
+            array = array.filter(e=>e!=x);
+            }
+            else {
+            forms[x].style.display='flex';
+            array.push(x)
+            }
+           console.log(array)
+        //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+        }
+    </script>
+    {% endblock %}

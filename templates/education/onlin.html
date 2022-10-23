@@ -95,9 +95,11 @@ margin-right: 7px;
                             <div class="atbd-tab tab-horizontal">
                                 <ul class="nav nav-tabs vertical-tabs" role="tablist">
 
+                                    {% if is_teacher is False %}
                                     <li class="nav-item">
                                         <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">Kurslar</a>
                                     </li>
+                                    {% endif %}
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Guruhlar</a>
                                     </li>
@@ -110,6 +112,7 @@ margin-right: 7px;
 
 
 
+                                    {% if is_teacher is False %}
                                     <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
                                         <div class="userDatatable global-shadow border-0 bg-white w-100">
                                             <div class="table-responsive">
@@ -210,7 +213,8 @@ margin-right: 7px;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                    {% endif %}
+                                    <div class="tab-pane fade {% if is_teacher %}show active{% endif %}" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
                                         <div class="userDatatable global-shadow border-0 bg-white w-100">
                                             <div class="table-responsive">
                                                 <table class="table mb-0 table-borderless">
@@ -271,14 +275,14 @@ margin-right: 7px;
                                                         </td>
                                                         <td>
                                                             <div class="userDatatable-content">
-                                                            <a href="{% url 'education:group-detail' group.id %}">
+                                                            <a href="{% url 'education:onlins' group.course.id %}?group={{group.id}}">
                                                                 {{ group.title }}
                                                                 </a>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="userDatatable-content d-inline-block">
-                                                               {{ group.course }}
+                                                               {{ group.course.title }}
                                                             </div>
                                                            
                                                         </td>

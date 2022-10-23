@@ -13,6 +13,7 @@ from student.selectors import (
     get_student_courses, get_student_homeworks, get_student_tests, get_test_data,
     get_questions_for_student,
 )
+from student.forms import HomeworkForm
 
 @login_required
 def student_view(request):
@@ -93,16 +94,19 @@ def lesson_detail_view(request, type:str, pk):
         context['content'] = model_to_dict(content, exclude=['lesson', 'students'])
         context['content']['value'] = content.get_value
     context['modules'] = Modules.modules.course_modules(lesson.module.course_id)
+    if request.GET.get('group', None):
+        context['modules'] = context['modules'].filter(status=True, groups__in=[int(request.GET.get('group'))])
     context['modules'] = get_updated_modules(context['modules'], request.user, with_lesson_contents=True)
-    context['resources'] = lesson.resources.all()
+    context['resources'] = content.content_resources.all()
     context['faqs'] = content.faqs.all().values('question', 'answer')
-    print("\n\n", context['content'], "\n\n")
-    print("\n\n", context['modules'], "\n\n")
-    print("\n\n", context['resources'], "\n\n")
-    
+    context['homeworks'] = content.homeworks.filter(student__user=request.user)
+    if len(context['homeworks']) and context['homeworks'].last().status==3:
+        context['balled'] = True
+    context['lesson'] = content.lesson
     student = Student.objects.filter(user=request.user).first()
     if student and student not in content.students.all():
         set_student_viewed_content(student, content)
+    print(context)
     return render(request, template_name, context)
 
 
@@ -112,7 +116,7 @@ def homework_detail_view(request, id):
 def homeworks_view(request):
     student = get_object_or_404(Student, user=request.user)
     context = dict()
-    context['homeworks'] = get_student_homeworks(student)
+    context['homeworks'] = get_student_homeworks(student) 
     return render(request, 'student/uyga_vazifa.html', context)
 
 def help_view(request):
@@ -125,19 +129,15 @@ def student_homework_view(request, pk: int):
     status = 400
 
     if request.method == 'POST':
-        text = request.POST.get('text', None)
-        file = request.FILES.get('file', None)
-
-        if text is None and file is None:
-            pass
-        else:
-            homework = Homeworks.objects.create(
-                student=student, 
-                content=content, 
-                text=text, 
-                file=file
-                )
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.student=student 
+            homework.content=content
+            homework.status = 2
+            homework.save()
             status = 200
-
+        else:
+            print(form.errors())
     return JsonResponse({'status': status})
     

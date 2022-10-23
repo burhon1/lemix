@@ -1,0 +1,1096 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% load education_tags %}
+
+{% block title %}
+Online darslar ichki sahifasi teacher- Lemix
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+
+    .v-num {
+        font-size: 14px;
+    }
+
+    .application-faqs .panel-title a {
+        font-size: 12px !important;
+    }
+
+    .forms-view {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .forms-view>.form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .table-responsive tr td>div {
+        text-transform: none;
+    }
+
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single {
+        height: 1.875rem;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        margin-right: 7px;
+    }
+
+    #drag_item {
+        cursor: move;
+    }
+
+    :root {
+        --border-color: #e3e5e4;
+        --background-color: #c3c7ca;
+        --text-color: #34444f;
+    }
+
+    .draggable-list {
+        /* border: 1px solid var(--border-color); */
+        color: var(--text-color);
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .draggable-list li {
+        background-color: #fff;
+        display: flex;
+        flex: 1;
+    }
+
+    .draggable-list li:not(:last-of-type) {
+        /* border-bottom: 1px solid var(--border-color); */
+    }
+
+    .draggable-list .number {
+        background-color: var(--background-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .draggable-list li.over .draggable {
+        background-color: #eaeaea;
+    }
+
+    .draggable-list .person-name {
+        margin: 0 20px 0 0;
+    }
+
+    .draggable-list li.right .person-name {
+        color: #3ae374;
+    }
+
+    .draggable-list li.wrong .person-name {
+        color: #ff3838;
+    }
+
+    .draggable {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        flex: 1;
+    }
+
+    .check-btn {
+        background-color: var(--background-color);
+        border: none;
+        color: var(--text-color);
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .check-btn:active {
+        transform: scale(0.98);
+    }
+
+    .check-btn:focus {
+        outline: none;
+    }
+    .application-faqs .panel-heading{
+        padding: 10px 14px !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+            <div class="container-fluid">
+                <div class="row mt-3 px-3">
+                    <div class="card col-12">
+                        <div class="card-header  border-bottom-0" style="padding: 0.75rem 0rem;">
+                            <h4 class="fw-500" style="text-transform: none; font-size: 20px;">Uyga vazifalar / {{ group.title }} ({{ group.course.title }})
+                            </h4>
+                            <div class="buttons d-flex ">
+                                <span role="button" class="selling-badge order-bg-opacity-primary color-primary mx-1 cursor-pointer" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">...</span>
+                              
+                                <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                   <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                         <span class="text-success">Aktivlashtirish</span>/
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
+                                        muzlatish</a>
+                                    <a class="dropdown-item" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                           Tahrirlash</a>
+                                    <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                          O'chirish</a>
+
+                              
+                            </div>
+                               
+                              
+                                <!-- <button class="btn btn-primary mx-1" >Publish <span style="transform: rotate(90deg);margin-left: 5px;"> ></span></button> -->
+                              </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="row mt-3">
+                    <div class="col-xl-3 col-sm-5">
+                        <!-- Card 1 -->
+                        <div class="card shadow-lg">
+                            <div class="card-body p-0">
+                                <div class="faqs-wrapper">
+                                    <div class="px-30 pt-35 ">
+                                        <span class="px-20 py-2 fs-14 rounded-pill bg-normal color-light">O'quvchilar:</span>
+                                    </div>
+                                    <div class="faqs-wrapper-tab p-15 pt-25 pb-30">
+                                        <div class="nav flex-column text-left mb-2" id="v-pills-tab" role="tablist"
+                                            aria-orientation="vertical">
+                                            
+                                                {% for student in students %}
+                                            
+                                                    <a class="nav-link" id="student-id-{{student.id}}-tab" data-toggle="pill" onclick="getHomeworks({{student.id}})"
+                                                    href="#student-id-{{student.id}}" role="tab" aria-controls="student-id-{{student.id}}"
+                                                    aria-selected="false">
+                                                    <span class="dot bg-{{student.last_homework|homework_status}}"></span>{{ student.full_name }}</a>
+
+                                                {% endfor %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- ends: col -->
+                    <div class="col-xl-9 col-sm-7">
+                    
+                        <div class="mb-30">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
+                                    aria-labelledby="v-pills-home-tab">
+                                    <!-- Edit Profile -->
+
+                                    <div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
+                                        <div class="card-header px-30 pt-0 pb-0 border-bottom-0" style="min-height: 20px;">
+                                    
+                                        </div>
+                                        <div class="card-body pt-0">
+
+                                            <div class="tab-wrapper">
+
+                                                <div class="atbd-tab tab-horizontal">
+                                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                            
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="false">Tekshirilmagan</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link " id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="true">Baholangan</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link " id="tab-v-4-tab" data-toggle="tab" href="#tab-v-4" role="tab" aria-controls="tab-v-4" aria-selected="true">Rad etilgan</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link " id="tab-v-5-tab" data-toggle="tab" href="#tab-v-5" role="tab" aria-controls="tab-v-5" aria-selected="true">Ko'rilmagan</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">Hammasi</a>
+                                                        </li>
+                                                        
+                            
+                            
+                                                    </ul>
+                                                </div>
+                            
+                                            </div>
+                                            
+
+                                    </div>
+                                </div>
+                            </div>
+            
+                            {% for student in students %}
+                            <div class="tab-pane fade  show" id="student-id-{{student.id}}" role="tabpanel"
+                                    aria-labelledby="student-id-{{student.id}}-tab">
+                                    <!-- Edit Profile -->                                
+                            </div>
+
+                            {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="tab-pane fade  show" id="v-pills-messages" role="tabpanel"
+                                aria-labelledby="v-pills-messages-tab">
+                                <!-- Edit Profile -->
+
+                                    3
+                        </div>
+                    </div>
+
+                        <!-- Edit Profile End -->
+                    </div>
+                    
+                    {% for student in students%}
+                        <div class="tab-pane fade" id="student-id-{{student.id}}" role="tabpanel"
+                            aria-labelledby="student-id-{{student.id}}-tab">
+                        </div>
+                    {% endfor %}
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                        aria-labelledby="v-pills-messages-tab">
+                    </div>
+                    <div class="tab-pane fade " id="v-pills-settings" role="tabpanel"
+                        aria-labelledby="v-pills-settings-tab">
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-notification" role="tabpanel"
+                        aria-labelledby="v-pills-notification-tab">
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-support" role="tabpanel"
+                        aria-labelledby="v-pills-support-tab">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+            
+            
+            
+                            <h6 class="modal-title"> Vazifani rad etish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#">
+                            
+                                
+                                <div class="form-group form-element-textarea mb-20">
+                                    <label for="inputRejectComment" class="il-gray fs-14 fw-500 align-center">
+                                        Yuborilgan javobga izoh</label>
+                                    <textarea class="form-control" id="inputRejectComment" rows="3"></textarea>
+                                </div>
+                                <div class="form-group form-element-textarea mb-20">
+                                    <label for="fileupload2" class="il-gray fs-14 fw-500 align-center">
+                                        Fileni yuklang</label>
+                                    <input class="form-control" id="fileupload2"  type="file">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                            <button type="button" class="btn btn-primary btn-sm" id="rejectBtn">Saqlash</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+            <div class="modal-basic modal fade show" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+        
+        
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+            
+            
+            
+                            <h6 class="modal-title"> Vazifani baholash</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#">
+                            
+                                <div class="form-group form-element-textarea mb-20">
+                                    <label for="inputbaho" class="il-gray fs-14 fw-500 align-center">
+                                        Bahosini kiriting</label>
+                                    <input class="form-control" type="text" id="inputbaho" rows="3">
+                                </div>
+                                <div class="form-group form-element-textarea mb-20">
+                                    <label for="inputComment" class="il-gray fs-14 fw-500 align-center">
+                                        Bahoga izoh</label>
+                                    <textarea class="form-control" id="inputComment" rows="3"></textarea>
+                                </div>
+                                <div class="form-group form-element-textarea mb-20">
+                                    <label for="fileupload1" class="il-gray fs-14 fw-500 align-center">
+                                        Fileni yuklang</label>
+                                    <input class="form-control" id="fileupload1"  type="file">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"  onclick="closeModal()">O'chirish</button>
+                            <button type="button" class="btn btn-primary btn-sm" id="saveBtn">Saqlash</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+          
+            <div class="modal-basic modal fade show" id="modal-basic-active" tabindex="-1" role="dialog" aria-hidden="true">
+        
+        
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+            
+            
+            
+                            <h6 class="modal-title"> Faollashtirish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem, tempore adipisci maxime id quo quia nesciunt consequuntur. Architecto doloribus quam eveniet ex, rerum sunt.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Yopish</button>
+                            <button type="button" class="btn btn-primary btn-sm">Faollashtirish</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+            <div class="modal-basic modal fade show" id="modal-basic-delete" tabindex="-1" role="dialog" aria-hidden="true">
+        
+        
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+            
+            
+            
+                            <h6 class="modal-title"> O'chirish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem, tempore adipisci maxime id quo quia nesciunt consequuntur. Architecto doloribus quam eveniet ex, rerum sunt.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Bekor qilish</button>
+                            <button type="button" class="btn btn-secondary btn-sm">O'chirish</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+
+        <div class="drawer-basic-wrap">
+            <div class="atbd-drawer drawer-account d-none" style="overflow: scroll;">
+                <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                    <h6 class="drawer-title">Yangi lid qo’shish</h6>
+                    <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+                </div><!-- ends: .atbd-drawer__header -->
+                <div class="atbd-drawer__body">
+                </div><!-- ends: .atbd-drawer__body -->
+            </div><!-- ends: .atbd-drawer -->
+
+
+            <div class="overlay-dark"></div>
+            <div class="overlay-dark-l2"></div>
+        </div>
+
+        {% endblock %}
+
+   
+    <div id="overlayer">
+        <span class="loader-overlay">
+            <div class="atbd-spin-dots spin-lg">
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+            </div>
+        </span>
+    </div>
+    <div class="overlay-dark-sidebar"></div>
+    <div class="customizer-overlay"></div>
+
+    <div class="overlay-dark"></div>
+
+{% block script %}
+    <script>
+        var forms = document.querySelectorAll('.forms-view')
+        for (let i = 0; i < forms.length; i++) {
+            forms[i].style.display = 'none'
+        }
+        var array = []
+        function handleClickIcon(x) {
+            if (array.includes(x)) {
+                forms[array[array.indexOf(x)]].style.display = 'none';
+                array = array.filter(e => e != x);
+            }
+            else {
+                forms[x].style.display = 'flex';
+                array.push(x)
+            }
+            console.log(array)
+            //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+        }
+
+
+        const draggable_list = document.getElementById('draggable-list');
+        const check = document.getElementById('check');
+
+        const richestPeople = [
+            { name: 'HTML tushunchasi', type: 'Video' },
+            { name: 'HTML sheets', type: 'File' },
+            { name: 'HTML Savollar', type: 'Vazifa' },
+            { name: 'HTML question', type: 'Test' }
+        ];
+
+        // Store listitems
+        const listItems = [];
+
+        let dragStartIndex;
+
+        createList();
+
+        // Insert list items into DOM
+        function createList() {
+            [...richestPeople]
+                // .map(a => ({ value: a, sort: Math.random() }))
+                // .sort((a, b) => a.sort - b.sort)
+                // .map(a => a.value)
+                .forEach((person, index) => {
+                    const listItem = document.createElement('li');
+
+                    listItem.setAttribute('data-index', index);
+
+                    listItem.innerHTML = `
+      <!--  <span class="number">${index + 1}</span>--> 
+      <div class="d-flex justify-content-between draggable"  draggable="true">
+                                            <div class="col-lg-6 d-flex align-items-center">
+                                                <svg id="drag_item" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                                              ${person.type == "Video" ?
+                            ' <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>'
+                            : person.type == "File" ?
+                                ' <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+                                : person.type == "Vazifa" ?
+                                    '<svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> '
+                                    : person.type == "Test" ?
+                                        '<svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> '
+                                        : ""
+                        }
+                                                <h5 class="ml-1 d-flex  align-items-center" style="font-size:14px;">${person.name} &nbsp; <div class="text-small text-light">${person.type} </div></h5>
+                                            </div>
+                                            <div class="col-lg-6  d-flex  justify-content-end align-items-center">
+                                               ${person.type=='File' ? '<span class="selling-badge order-bg-opacity-danger color-danger mr-3">Muzlatilgan</span>':''}
+                                               <span role="button" class="selling-badge order-bg-opacity-primary color-primary  mr-2 cursor-pointer" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">...</span>
+                              
+                              <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                  <a class="dropdown-item" style="text-transform: none;" href="#">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"/></svg>
+                                        Yuqoriga ko'tarish</a>
+                                  <a class="dropdown-item" style="text-transform: none;" href="#">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
+                                           Pastga tushirish</a>
+                                  <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                       <span class="text-success">Aktivlashtirish</span>/
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
+                                      muzlatish</a>
+                                  <a class="dropdown-item" href="#">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                         Tahrirlash</a>
+                                  <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                        O'chirish</a>
+
+                            
+                          </div>  
+                                                <svg id="drag_item" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                                              
+                                            </div>
+                                        </div> 
+       
+      `;
+
+                    listItems.push(listItem);
+
+                    draggable_list.appendChild(listItem);
+                });
+
+            addEventListeners();
+        }
+
+        function dragStart() {
+            // console.log('Event: ', 'dragstart');
+            dragStartIndex = +this.closest('li').getAttribute('data-index');
+        }
+
+        function dragEnter() {
+            // console.log('Event: ', 'dragenter');
+            this.classList.add('over');
+        }
+
+        function dragLeave() {
+            // console.log('Event: ', 'dragleave');
+            this.classList.remove('over');
+        }
+
+        function dragOver(e) {
+            // console.log('Event: ', 'dragover');
+            e.preventDefault();
+        }
+
+        function dragDrop() {
+            // console.log('Event: ', 'drop');
+            const dragEndIndex = +this.getAttribute('data-index');
+            swapItems(dragStartIndex, dragEndIndex);
+
+            this.classList.remove('over');
+        }
+
+        // Swap list items that are drag and drop
+        function swapItems(fromIndex, toIndex) {
+            const itemOne = listItems[fromIndex].querySelector('.draggable');
+            const itemTwo = listItems[toIndex].querySelector('.draggable');
+
+            listItems[fromIndex].appendChild(itemTwo);
+            listItems[toIndex].appendChild(itemOne);
+        }
+
+        // Check the order of list items
+        function checkOrder() {
+            listItems.forEach((listItem, index) => {
+                const personName = listItem.querySelector('.draggable').innerText.trim();
+
+                if (personName !== richestPeople[index]) {
+                    listItem.classList.add('wrong');
+                } else {
+                    listItem.classList.remove('wrong');
+                    listItem.classList.add('right');
+                }
+            });
+        }
+
+        function addEventListeners() {
+            const draggables = document.querySelectorAll('.draggable');
+            const dragListItems = document.querySelectorAll('.draggable-list li');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', dragStart);
+            });
+
+            dragListItems.forEach(item => {
+                item.addEventListener('dragover', dragOver);
+                item.addEventListener('drop', dragDrop);
+                item.addEventListener('dragenter', dragEnter);
+                item.addEventListener('dragleave', dragLeave);
+            });
+        }
+
+        check.addEventListener('click', checkOrder);
+
+
+        function printHomeworks(id, res, div){
+            function noteCards(){
+                var note = `<div class="note-card note-social mb-3">
+                    <div class="card border-0 p-2">
+                        <div class="card-body p-2">
+                            <p class="note-excerpt">Lorem Ipsum is simply dummy text of the printing</p>
+                            <div class="note-action border-top">
+                                <div class="note-action__left   mt-2 ">
+                                    <p class="fs-12 mb-0"> O'qituvchi : Shaxzod Hamroyev</p>
+                                    </div>
+                                    <div class="note-action__right mt-2">
+                                    <p class=" mb-0"> 17/10/2022 - 01:20</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="note-card note-social mb-3">
+                    <div class="card border-0 p-2">
+                        <div class="card-body p-2">
+                            <p class="note-excerpt">Lorem Ipsum is simply dummy text of the printing</p>
+                            <div class="note-action border-top">
+                                <div class="note-action__left   mt-2 ">
+                                    <p class="fs-12 mb-0"> O'qituvchi : Shaxzod Hamroyev</p>
+                                    </div>
+                                    <div class="note-action__right mt-2">
+                                    <p class=" mb-0"> 17/10/2022 - 01:20</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            }
+
+            function setContents(res, id, status){
+                var result = "";
+                var filter = 1;
+                if(status=='unchecked'){
+                    filter = 2;
+                } else if(status=='checked'){
+                    filter = 3;
+                } else if(status=='rejected'){
+                    filter = 4;
+                } else if (status=='unseen'){
+                    filter = 1;
+                }
+                
+                function setStatus(status){
+                    if(status==undefined){
+                        status = 1;
+                    }
+                    if(status == 1){
+                        return  '<span class="selling-badge order-bg-opacity-dark color-dark mr-3">Ko\'rilmagan</span>'
+                    } else if(status==2){
+                        return  '<span class="selling-badge order-bg-opacity-info color-info mr-3">Tekshirilmagan</span>'
+                    } else if(status==3){
+                        return  '<span class="selling-badge order-bg-opacity-success color-success mr-3">Baholangan</span>'
+                    } else if(status==4){
+                        return  '<span class="selling-badge order-bg-opacity-danger color-danger mr-3">Rad etilgan</span>'
+                    }
+                }
+
+                function addButton(homework){
+                    if(homework.status == 2){
+                        var buttons = `<div class="d-flex mt-3">
+                            <a href="#" class="btn btn-primary mr-2 btn-xs btn-small " data-toggle="modal" data-target="#modal-basic2" onclick="setsaveBtn(${homework.id})"> Baholash</a>
+                            <a href="#" class="btn btn-danger btn-xs btn-small  " data-toggle="modal" data-target="#modal-basic"  onclick="setrejectBtn(${homework.id})"> Rad etish</a>
+                          </div>`
+                        return buttons;
+                        }
+
+                    return ''
+                }
+
+
+                function setStudentHomework(homeworks){
+                    var results = "<ul>";
+                    for(var i=0;i<homeworks.length;i++){
+                        var result = `<b class="fw-bold" style="margin-bottom: 0;">  O'quvchi yuborgan javob(${homeworks[i].date_created}): </b>
+                            <br>
+                            ${homeworks[i].text}
+                            
+                            ${homeworks[i].homework? `<li>
+                                <a href="${homeworks[i].homework.url}" class="file-name"><i class="las la-paperclip"></i> <span class="name-text">${homeworks[i].homework.name}<span></span></span></a>
+                            </li>`: ''}
+                        `
+                        results = results + result; 
+                        results = results + `<br>`;    
+                    }
+                    
+                    for(var i=homeworks.length; i>0; i--){
+                        if(homeworks[i-1].status != 3 || homeworks[i-1].status != 1){    
+                            results += addButton(homeworks[i-1])
+                            break;
+                    }}
+                    results += '</ul>';
+                    
+                    for(var i=homeworks.length;i>0;i--){
+                        if(homeworks[i-1].ball){
+                            results = results + `<p class="border-bottom"></p>
+                            <h5 class="fs-14 mb-2">Baho : ${homeworks[i-1].ball}</h5>
+                            `
+                            break;
+                            }
+                    }
+                    for(var i=0;i<homeworks.length;i++){
+                        if(homeworks[i].status==3 || homeworks[i].status==4 ){
+                            results += `<h6 class="fs-14 mb-2">Izohlar</h6>
+                            <div class="note-single">`
+                            break;
+                        }
+                    }    
+                    for(var i=0;i<homeworks.length;i++){
+                        if(homeworks[i].status==3){
+                            var stat = 'work'
+                        } else{
+                            var stat = 'social'
+                        }
+                        if(homeworks[i].status==3 || homeworks[i].status==4 ){
+                            var note = `<div class="note-card note-${stat} mb-3">
+                                            <div class="card border-0 p-2">
+                                                <div class="card-body p-2">
+                                                    <p class="note-excerpt">${homeworks[i].comment }</p>
+                                                    <div class="note-action border-top">
+                                                        <div class="note-action__left   mt-2 ">
+                                                            <p class="fs-12 mb-0"> ${homeworks[i].commenter} : ${homeworks[i].commented}</p>
+                                                        </div>
+                                                        <div class="note-action__right mt-2">
+                                                            <p class=" mb-0"> ${homeworks[i].date_modified}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+    
+                            results+=note;
+                        }
+                    }
+                    for(var i=0;i<homeworks.length;i++){
+                        if(homeworks[i].status==3 || homeworks[i].status==4 ){
+                            results = results + '</div>'
+                            break;
+                        }
+                    }  
+                    
+
+                    return results
+                    }
+
+
+                
+
+                function setContentHomeworks(homework){
+                    var result = '';
+                    if(homework && homework!=undefined){
+                    result = `
+                    <li>
+                        <a href="${content.homework.url}" download class="file-name"><i class="las la-paperclip"></i> <span class="name-text">${content.homework.name}<span></span></span></a>
+                    </li>
+                    `}
+                    return result;
+                }
+
+                var results = ""
+                var counter = 0;
+                for(var i=0;i<res.length;i++){
+                    var content = res[i];
+                     if (status=='all' || content.status == filter){
+                        counter++;
+                    var result = `
+                
+                    <!-- panel 2 -->
+                    <div class="panel panel-default">
+                        
+                        
+                        <div class="panel-heading" role="tab" id="heading-content-${content.id}">
+                            <h4 class="panel-title d-flex">
+                                <a class="collapsed" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapse-content-${content.id}"
+                                    aria-expanded="false" aria-controls="collapse-content-${content.id}"  style="font-size: 16px !important;">
+                                    ${counter}. ${content.title}
+                                </a>
+                                
+                                ${setStatus(content.status)}
+                                
+
+
+                                <span role="button" class="selling-badge order-bg-opacity-primary color-primary  mr-5 cursor-pointer" id="todo-content-${id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">...</span>
+    
+                                <div class="dropdown-menu" aria-labelledby="todo-content-${id}" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" style="text-transform: none;" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"/></svg>
+                                            Yuqoriga ko'tarish</a>
+                                    <a class="dropdown-item" style="text-transform: none;" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
+                                            Pastga tushirish</a>
+                                    <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                                        <svg style="transform: scale(3.5);margin-right: 7px;"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                        <span class="text-success">Aktivlashtirish</span>/
+                                        <svg style="transform: scale(3.5);margin: 0 7px;"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
+                                        muzlatish</a>
+                                    <a class="dropdown-item" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                            Tahrirlash</a>
+                                    <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                            O'chirish</a>
+    
+                                
+                              </div>  
+                            
+                            </h4>
+    
+                        </div>
+
+
+                        <div id="collapse-content-${content.id}" class="panel-collapse collapse"
+                            role="tabpanel" aria-labelledby="heading-content-${content.id}">
+                            <div class="panel-body">
+    
+                                <p class="fs-20"><b >Vazifa nomi:</b> ${content.title} </p>
+                                <p>
+                                <b class="fw-bold" style="margin-bottom: 0;">Vazifa matni: </b>
+                                    ${content.text}
+                                <ul>
+                                    ${setContentHomeworks(content.homework)}
+
+                                </ul>
+                                <p class="border-bottom"></p>
+                                </p>
+                                
+                                <p >
+                                ${setStudentHomework(content.homeworks)}
+                            </div>
+                        </div>
+
+
+                    </div>
+                    `
+                    results =results+result;
+                    }
+                }
+                return results;
+                
+            }
+
+
+            var card_body = `<div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
+                <div class="card-header px-30 pt-0 pb-0 border-bottom-0" style="min-height: 20px;">         
+                </div>
+                <div class="card-body pt-0">
+                    <div class="tab-wrapper">
+                        <div class="atbd-tab tab-horizontal">
+                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab-v-${id}-1-tab" data-toggle="tab" href="#tab-v-${id}-1" role="tab" aria-controls="tab-v-${id}-1" aria-selected="false">Tekshirilmagan</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link " id="tab-v-${id}-2-tab" data-toggle="tab" href="#tab-v-${id}-2" role="tab" aria-controls="tab-v-${id}-2" aria-selected="true">Baholangan</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-v-${id}-4-tab" data-toggle="tab" href="#tab-v-${id}-4" role="tab" aria-controls="tab-v-${id}-4" aria-selected="false">Rad etilgan</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link " id="tab-v-${id}-5-tab" data-toggle="tab" href="#tab-v-${id}-5" role="tab" aria-controls="tab-v-${id}-5" aria-selected="true">Ko'rilmagan</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-v-${id}-3-tab" data-toggle="tab" href="#tab-v-${id}-3" role="tab" aria-controls="tab-v-${id}-3" aria-selected="false">Hammasi</a>
+                                </li>
+                                
+    
+    
+                            </ul>
+                            <div class="tab-content">
+    
+                                <div class="tab-pane fade active show" id="tab-v-${id}-1" role="tabpanel" aria-labelledby="tab-v-${id}-1-tab">
+                                    <div class="application-faqs">
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+                                            ${setContents(res, id, 'unchecked')}
+                                    </div></div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-v-${id}-2" role="tabpanel" aria-labelledby="tab-v-${id}-2-tab">
+                                    <div class="application-faqs">
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+                                            ${setContents(res, id, 'checked')}
+                                        </div>    
+                                </div></div>
+                                <div class="tab-pane fade" id="tab-v-${id}-3" role="tabpanel" aria-labelledby="tab-v-${id}-3-tab">
+                                    <div class="application-faqs">
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+                                            ${setContents(res, id, 'all')}
+                                        </div>    
+                                </div></div>
+                                <div class="tab-pane fade" id="tab-v-${id}-5" role="tabpanel" aria-labelledby="tab-v-${id}-5-tab">
+                                    <div class="application-faqs">
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+                                            ${setContents(res, id, 'unseen')}
+                                        </div>    
+                                </div></div>
+                                <div class="tab-pane fade" id="tab-v-${id}-4" role="tabpanel" aria-labelledby="tab-v-${id}-4-tab">
+                                    <div class="application-faqs">
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+                                            ${setContents(res, id, 'rejected')}
+                                            
+                                </div></div></div>
+                            </div>
+                        </div>  
+                    </div>
+            </div>`
+
+
+            div.innerHTML += card_body;
+            return div;
+        }
+
+
+
+
+
+
+        function getHomeworks(id){
+            var div = document.getElementById(`student-id-${id}`);
+            div.innerHTML = "";
+            var url = `/education/homeworks/student/${id}/`;
+            fetch(url, {
+                method:'get',
+                headers: {
+                    'Accept':'application/json',
+                }
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                printHomeworks(id, res, div);
+            })
+            
+        }
+
+        function setsaveBtn(id){
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.setAttribute('onclick', `giveBall(${id})`);
+            console.log(saveBtn)
+           // $('#modal-basic2').show();
+        }
+
+
+        function setrejectBtn(id){
+            var rejectBtn = document.getElementById('rejectBtn');
+            rejectBtn.setAttribute('onclick', `rejectHomework(${id})`)
+
+        }
+
+
+        function giveBall(id){
+            var url = `/education/homeworks/give-ball/${id}/`;
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('ball', document.getElementById('inputbaho').value);
+            
+            formData.append('comment', document.getElementById('inputComment').value);
+
+            var file = document.getElementById('fileupload1').files[0];
+            if (file){
+                formData.append('comment_file', file, file.name);
+            }
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body:formData,
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                document.getElementById('inputComment').value="";
+                document.getElementById('inputbaho').value = "";
+                console.log(res);
+            }).then(()=>{
+                window.location.assign(window.location.href);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+            //closeModal();
+        }
+
+        function rejectHomework(id){
+            var url = `/education/homeworks/reject/${id}/`;
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('comment', document.getElementById('inputRejectComment').value);
+            var file = document.getElementById('fileupload2').files[0];
+            if (file){
+                formData.append('comment_file', file, file.name);
+            }
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body:formData,
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                console.log(res);
+            }).then(()=>{
+                window.location.assign(window.location.href);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+
+        function  closeModal(){
+            //$('#modal-basic2').hide();
+        }
+
+    </script>
+{% endblock %}
