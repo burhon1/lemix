@@ -4,10 +4,11 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from admintion.models import Course, GroupStudents, Teacher, Group
+from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes
+from admintion.selectors import set_tasks_status
 from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data
-from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm
+from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm, TaskForm
 from student.models import Homeworks
 from user.models import CustomUser
 
@@ -417,8 +418,30 @@ def groupslist_view(request):
 def roomslist_view(request):
     return render(request,'education/roomslist.html')
 
+@login_required
 def task_view(request):
-    return render(request,'education/task.html')    
+    context = dict()
+    context['tasks'] = Tasks.objects.all().order_by('-created_at')
+    context['tasks'] = set_tasks_status(tasks=context['tasks'])
+    context['whom'] = UserTaskStatus.objects.all()
+    context['task_types'] = TaskTypes.objects.all()
+    context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
+    return render(request,'education/task.html', context=context)    
+
+@login_required
+def task_create_view(request):
+    status=200
+    form = TaskForm(request.POST or None, request.FILES)
+    if request.method == 'POST' and form.is_valid():
+        task = form.save(commit=False)
+        task.author = request.user
+        task.status = 1
+        task.save()
+        form.save_m2m()
+        status = 201
+    else:
+        return JsonResponse(form.errors, safe=False, status=400)
+    return JsonResponse({'message':'ok'}, status=status)
 
 def employees_view(request):
     return render(request,'education/employees.html') 
@@ -514,6 +537,8 @@ def online_course_contents_view(request, id):
         contents = lesson.contents.all()
         if group:
             contents = contents.filter(groups__in=[group]).values('id', 'title', 'content_type', 'status')
+        else:
+            contents = contents.values('id', 'title', 'content_type', 'status')
     else:
         admins = CustomUser.objects.filter(is_superuser=True)
         contents = lesson.contents.filter(Q(author=request.user)|Q(author__in=admins), groups__id=group).values('id', 'title', 'content_type', 'status')
@@ -551,7 +576,7 @@ def modules_detail_view(request, pk):
     data['status'] = bool(Contents.objects.filter(lesson__module=module, status=True).count())
     return JsonResponse(data, safe=False)
 
-# @login_required
+@login_required
 def online_content_resource_delete_view(request, pk):
     resource = get_object_or_404(Resources, pk=int(pk))
     message = "Siz GET so'rov yubordingiz."

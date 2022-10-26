@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.forms.models import model_to_dict
 from typing import List
-from admintion.models import Student, GroupStudents
+from admintion.models import Group, LeadDemo, Student, GroupStudents, FormLead, Course
 from education.models import Modules, Lessons, Contents, Questions, Tests
 from student.models import Homeworks, TestResults, StudentAnswers
 from user.models import CustomUser
@@ -145,3 +145,49 @@ def get_questions_for_student(test:Tests, student:Student):
             used_questions.append(question)
             counter -= 1
     return get_questions_data(questions)
+
+def get_lead_viewing_content(contents, lead):
+    data = []
+    for content in contents:
+        dct = model_to_dict(content, fields=('id', 'title', 'content_type'))
+        dct['viewed'] = bool(lead in content.leads.all())
+        data.append(dct)
+
+    return data
+
+def get_lead_updated_modules(course_id:int, modules:Modules, user:CustomUser, with_contents=False):
+    lead = FormLead.objects.filter(user=user).first()
+    groups = Group.objects.filter(course_id=course_id)
+    demos = len(LeadDemo.objects.filter(lead=lead, group__in=groups))
+
+    for module in modules:
+        module['lessons'] = []
+        lesson_objs = Lessons.objects.filter(module_id=module['id']).order_by('order')
+        for lesson in lesson_objs:
+            dct = model_to_dict(lesson, fields=('id', 'title', 'order'))
+            if demos:
+                dct['open'], demos = True, demos-1
+            else:
+                dct['open'] = False
+            contents = lesson.contents.filter(status=True).order_by('order')
+            dct['viewed'] = contents.filter(leads__in=[lead]).exists()
+            dct['content'] = contents[0].id if len(contents)>0 else None
+            if with_contents:
+                dct['contents'] = get_lead_viewing_content(contents, lead)
+            
+            module['lessons'].append(dct)
+
+    return modules
+
+
+def check_lead_to_content_view_permision(lead:FormLead, content:Contents):
+    course = content.lesson.module.course
+    groups = Group.objects.filter(course=course)
+    demos = len(LeadDemo.objects.filter(lead=lead, group__in=groups))
+    modules = course.modules.all()
+    lessons = Lessons.objects.filter(module__in=modules).order_by('module', 'order')[:demos]
+    for lesson in lessons:
+        if content in lesson.contents.filter(status=True):
+            return True
+
+    return False

@@ -1,10 +1,9 @@
-from calendar import Calendar
-from datetime import timezone
 from django.db import models
 from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager
 from admintion.data import chooses
 from user.models import CustomUser
-
+from user.data.chooses import COURSES_SEXES
+from admintion.data.chooses import TASK_STATUS
 # Create your models here.
 class Room(models.Model):
     title = models.CharField(max_length=50)
@@ -92,15 +91,36 @@ class Payment(models.Model):
     payment_type = models.SmallIntegerField("To'lov turi", choices=chooses.PAYMENT_TYPE, default=1)
     comment = models.CharField("Izoh", max_length=500, null=True)
     payments = payment_manager.PaymentManager()
+
+
+class LeadStatus(models.Model):
+    status = models.CharField("Status nomi", max_length=200)
 class FormLead(models.Model):
-    fio = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
-    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
-    status = models.PositiveSmallIntegerField(choices=chooses.LEAD_FORM_STATUS,null=True,blank=True)
+    # fio = models.CharField(max_length=100)
+    # phone = models.CharField(max_length=100)
+    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
+    status = models.ForeignKey(LeadStatus, models.SET_NULL, null=True, blank=True)
     comment = models.TextField()
+    telegram = models.CharField("Telegramdagi nomeri", max_length=100, null=True)
+    parents = models.CharField("Ota-onasi", max_length=150, null=True)
+    p_phone = models.CharField(max_length=100, null=True)
+    # address = models.CharField("Manzili", max_length=500, null=True)
+    # email = models.EmailField(null=True)
+    passport = models.CharField("Passport seriya va raqami", max_length=10, null=True)
+    file = models.FileField(upload_to="leads", null=True)
+    # gender = models.PositiveSmallIntegerField(choices=COURSES_SEXES,null=True,blank=True)
+    # birthday = models.DateField(null=True,blank=True)
+    days = models.ManyToManyField(GroupsDays, blank=True)
+    course = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True, related_name="created_leads")
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=False, null=True)
+    activity = models.PositiveSmallIntegerField("Lidning statusi", choices=chooses.LEAD_FORM_STATUS, default=1)
+    purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
+    user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
 
     def __str__(self) -> str:
-        return self.fio
+        return str(self.id)
 
 
 class GroupStudents(models.Model):
@@ -121,3 +141,34 @@ class Parents(models.Model):
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
     
     parents = parents_manager.ParentsManager()
+
+
+class LeadDemo(models.Model):
+    lead = models.ForeignKey(FormLead, models.CASCADE)
+    group = models.ForeignKey(Group, models.CASCADE)
+    date = models.DateField('Demo dars sanaga belgilandi:', auto_now_add=False, auto_now=False)
+
+
+class TaskTypes(models.Model):
+    task_type = models.CharField("Topshiriq turi", max_length=150)
+
+
+class UserTaskStatus(models.Model):
+    whom = models.CharField("Kim uchun?", max_length=25)
+    
+
+class Tasks(models.Model):
+    task_type = models.ForeignKey(TaskTypes, models.SET_NULL, null=True)
+    responsibles = models.ManyToManyField(CustomUser, related_name='user_tasks')
+    deadline = models.DateTimeField("Deadline:", auto_now_add=False, auto_now=False)
+    comment = models.CharField(max_length=500, null=True)
+    whom = models.ManyToManyField(CustomUser, related_name="my_tasks")
+    user_status = models.ForeignKey(UserTaskStatus, models.SET_NULL, null=True)
+    status = models.PositiveSmallIntegerField("Statusi", choices=TASK_STATUS, default=1)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    groups = models.ManyToManyField(Group, blank=True)
+    leads = models.ManyToManyField(FormLead, blank=True)
+    students = models.ManyToManyField(Student, blank=True)
+    courses = models.ManyToManyField(Course, blank=True)
+    parents = models.ManyToManyField(Parents, blank=True) 

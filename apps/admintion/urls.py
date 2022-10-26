@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import employes,rooms,courses,teachers,groups,students,forms,leads
+from .views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks
 app_name = 'admintion'
 
 urlpatterns = [
@@ -24,5 +24,12 @@ urlpatterns = [
     path('student/<int:id>/remove-in-group/', students.student_remove_view, name='remove-student-in-group'),
     path('student/<int:id>/activate-in-group/', students.student_activate_view, name='activate-student-in-group'),
     path('forms/',forms.forms_view,name='forms'),
-    path('leads/',leads.leads_view,name='lead-list')
+    path('leads/',leads.leads_view,name='lead-list'),
+    path('leads/create/', leads.lead_create_view, name='lead-create'),
+    path('leads/<int:pk>/',leads.lead_detail_view, name='lead-detail'),
+    path('leads/<int:pk>/update/',leads.lead_edit_view, name='lead-update'),
+    path('leads/<int:pk>/add-group/', leads.addto_group, name='lead-add-to-group'),
+    path('leads/<int:pk>/<str:action>/', leads.lead_activity_change, name='lead-activity-change'),
+    path('leads/add-demo/', leads.add_demo, name='add-demo'),
+    path('tasks/create/', tasks.add_task, name='add-task'),
 ]

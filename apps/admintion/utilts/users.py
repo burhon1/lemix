@@ -24,7 +24,7 @@ def get_days(start_date,finis_date=None,days=[1,3,5]):
         6:6,
         7:0
     }
-    if finis_date.year==start_date.year and finis_date.month==start_date.month:
+    if finis_date and start_date and finis_date.year==start_date.year and finis_date.month==start_date.month:
         for week in data:
             for day in days:
                 day = int(day)

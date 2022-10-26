@@ -910,7 +910,7 @@
                                                                         05.03.2022 10:45</p>
                                                                     <p> Kurs narxi: {{ group.group.course.price|readable_soums }} so'm</p>
                                                                     <p> O'quvchi uchun: {{ group.group.course.price|readable_soums }} so'm</p>
-                                                                    <p> Chegirma: {{ group.group.course.price|readable_soums}} so'm</p>
+                                                                    <p> Chegirma: 0 so'm</p>
                                                                     <p class="d-flex align-items-center">
                                                                         O'quvchi holati:<span
                                                                             class="selling-badge order-bg-opacity-{{ group.status|get_status}} color-{{ group.status|get_status}}">{{group.status|get_status_name}}</span>
@@ -1576,11 +1576,10 @@
                         <div class="atbd-select mb-2">
 
                             <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
-                                <option value="01">Option 1</option>
-                                <option value="02">Option 2</option>
-                                <option value="03">Option 3</option>
-                                <option value="04">Option 4</option>
-                                <option value="05">Option 5</option>
+                                {% for res in responsibles %}
+                                    <option value="{{ res.id }}">{{ res.full_name }}</option>
+                                {% endfor %}
+                                
                             </select>
 
                         </div>
@@ -1590,20 +1589,18 @@
                         <div class="atbd-select mb-2">
 
                             <select name="select-search" id="select-search" class="form-control ">
-                                <option value="01">Option 1</option>
-                                <option value="02">Option 2</option>
-                                <option value="03">Option 3</option>
-                                <option value="04">Option 4</option>
-                                <option value="05">Option 5</option>
+                                {% for type in task_types %}
+                                    <option value="{{ type.id }}">{{type.task_type }}</option>
+                                {% endfor %}
                             </select>
 
                         </div>
 
                         <p class="col-12 p-0 mb-1">*Topshiriq muddati:</p>
-                        <input type="datetime-local" name="date" id="date"
+                        <input type="datetime-local" name="date" id="id_date"
                             class="form-control form-control-sm border-light mb-2">
                         <p class="col-12 p-0 mb-1">Topshiriq matni:</p>
-                        <textarea name="description" id="description" class="form-control form-control-sm"
+                        <textarea name="description" id="id_description" class="form-control form-control-sm"
                             placeholder="Xabar matnini kiriting..."></textarea>
 
                     </div>
@@ -1611,7 +1608,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="addTask()">Saqlash</button>
             </div>
         </div>
     </div>
@@ -2292,5 +2289,46 @@
                 console.log(err);
             })
         }
+
+        function addTask(){
+            var url = `/admintion/tasks/create/`;
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+            var responsibles = document.getElementById('select-tag');
+            for(var i=0;i<responsibles.selectedOptions.length;i++){
+                formData.append('responsibles', responsibles.selectedOptions[i].value);
+            }
+            
+            formData.append('user_status', 2);
+    
+            var taskType = document.getElementById('select-search');
+            formData.append('task_type', taskType.value);
+    
+            var deadline = document.getElementById('id_date');
+            formData.append('deadline',deadline.value);
+    
+            var comment = document.getElementById('id_description');
+            formData.append('comment', comment.value);
+    
+            var group = window.location.pathname.split('/')[3];
+            formData.append('students', group);
+    
+            fetch(url, {
+                method: 'post',
+                headers:{
+                    'X-CSRFToken':'{{ csrf_token }}'
+                },
+                body: formData,
+            })
+            .then(res=>{
+                if (res.status == 201){
+                    window.location.reload()
+                }
+            })
+    
+        }
+    
+
+
 </script>
 {% endblock %}

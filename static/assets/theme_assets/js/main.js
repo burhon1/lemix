@@ -857,10 +857,21 @@
   $("#select-tag,#select-tag2").select2({
     placeholder: "Tags Mode",
     dropdownCssClass: "tag",
-    tags: ["red", "green", "blue"],
+    tags: [],
     allowClear: true,
   });
-
+  $("#select-tag-days,#select-tag2").select2({
+    placeholder: "Hafta kunlari",
+    dropdownCssClass: "tag",
+    tags: [],
+    allowClear: true,
+  });
+  $("#select-tag-group-days,#select-tag2").select2({
+    placeholder: "Dars kunlari",
+    dropdownCssClass: "tag",
+    tags: [],
+    allowClear: true,
+  });
 
   $('#mail-message, #mail-reply-message')
     .trumbowyg({

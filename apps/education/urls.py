@@ -9,6 +9,7 @@ urlpatterns = [
     
     path('test/',test2_view,name='test'),
     path('task/',task_view,name='task'),
+    path('task/add/', task_create_view, name='task-add'),
     path('online/',onlin_view,name='onlin'),
     path('online_test/',onlin_test_view,name='onlin_test'),
     path('online_text/create/<int:lesson_id>/',onlin_text_view,name='onlin_text'),

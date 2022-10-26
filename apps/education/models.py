@@ -1,10 +1,9 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from django.conf import settings
 
 from user.models import CustomUser
 from education.chooses import COURSES_CHOICES, LESSONS_CHOICES, CONTENT_CHOICES
-from admintion.models import Course, Student, Group
+from admintion.models import Course, FormLead, Student, Group
 from education.querysets import modules, lessons, contents, resources, tests, questions, answers
 
 class Modules(models.Model):
@@ -54,6 +53,7 @@ class Contents(models.Model):
 
     order        = models.IntegerField("Material o'rni", default=0)
     students     = models.ManyToManyField(Student, verbose_name="Talabalar", blank=True)
+    leads        = models.ManyToManyField(FormLead, verbose_name="Lidlar", blank=True)
     opened_at    = models.DateTimeField("O'quvchiga ochilish vaqti",null=True, blank=True)
     closed_at    = models.DateTimeField("Yopilish vaqti",null=True, blank=True)
     author       = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
