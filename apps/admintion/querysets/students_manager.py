@@ -87,7 +87,7 @@ class StudentQueryset(QuerySet):
             birthday = F('user__birthday'),
             location = F('user__location'),
             payment = Sum(F('payment__paid'), distinct=True),
-            picture = F('user__picture'),
+            picture = F('user__picture')
         ).filter(id=id).first()
 
     def setudent_list(self):

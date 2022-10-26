@@ -11,6 +11,7 @@ from admintion.models import GroupStudents, Room, TaskTypes, Teacher,Course,Grou
 from admintion.utilts.users import get_days,get_month
 from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
+from finance.models import StudentBalance
 
 def groups_view(request):
     context = {}
@@ -65,8 +66,10 @@ def group_detail_view(request,id):
     context['group'] = Group.groups.group(id)
     context = context | get_attendace(id,context['group']['start_date'])
     context['student_list'] = Student.students.studet_list()
+
     context['task_types'] = TaskTypes.objects.all()
     context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
+    context['balances'] = StudentBalance.objects.filter(title=context['group']['title'])
     return  render(request,'admintion/group.html',context)
 
 def get_attendace_view(request):

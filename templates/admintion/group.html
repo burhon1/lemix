@@ -398,23 +398,27 @@
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
+                                                                                        {% for balance in balances %}
                                                                                         <tr class="text-center">
-                                                                                            <td>1. Jabborov Murod</td>
+                                                                                            <td>{{forloop.counter}}. {{balance.student.user.first_name}} {{balance.student.user.last_name}}</td>
                                                                                             <td>
-                                                                                                (99) 123-45-67
+                                                                                                {{balance.student.user.phone}}
                                                                                             </td>
                                                                                             <td class="text-center">
-                                                                                                <span class="badge badge-round badge-success badge-lg">
-                                                                                                    120
-                                                                                                    000
-                                                                                           </span>
-                                                                                                
-                                                                                             
+                                                                                                {% if balance.balance > 0 %}
+                                                                                                <span class="badge badge-round badge-success badge-lg" id="pay_student_{{balance.student.id}}">
+                                                                                                    {{balance.balance}}
+                                                                                                </span>
+                                                                                                {% else %}
+                                                                                                <span class="badge badge-round badge-danger badge-lg" id="pay_student_{{balance.student.id}}">
+                                                                                                    {{balance.balance}}
+                                                                                                </span>
+                                                                                                {% endif %}
                                                                                             </td>
-                                                                                            <td >
+                                                                                            <td>
                                                                                                 <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                                                                                     <li>
-                                                                                                        <a href="#" class="edit" data-toggle="modal" data-target="#modal-basic1">
+                                                                                                        <a href="#" class="edit" data-toggle="modal" data-target="#modal-basic1" onclick="localStorage.setItem('pay_student','{{balance.student.id}}')">
                                                                                                             <span data-feather="credit-card" ></span></a>
                                                                                                     </li>
                                                                                                     <li>
@@ -429,57 +433,10 @@
                                                                                                         <a href="#" class="remove"  data-toggle="modal" data-target="#modal-basic">
                                                                                                             <span data-feather="trash-2"></span></a>
                                                                                                     </li>
-                                                                                            </ul>
-                                                                                             
-                                                                                            </td>
-
-                                                                                        </tr>
-                                                                                        <tr class="text-center">
-                                                                                            <td>2. Akramov
-                                                                                                Sunnat</td>
-                                                                                            <td>
-                                                                                                (99) 123-45-67
-                                                                                            </td>
-                                                                                            <td class="text-center">
-                                                                                                <span class="badge badge-round badge-danger badge-lg">
-                                                                                                    -100
-                                                                                                    000
-                                                                                           </span>
-                                                                                          
-                                                                                              
-                                                                                            </td>
-                                                                                            <td >
-                                                                                                <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                                                                    <li>
-                                                                                                        <a href="#" class="edit" data-toggle="modal" data-target="#modal-basic1">
-                                                                                                            <span data-feather="credit-card" ></span></a>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <a href="#" class="view drawer-trigger" data-drawer="account">
-                                                                                                            <span data-feather="mail"></span></a>
-                                                                                                    </li>
-                                                                                                    <li>
-                                                                                                        <a href="#" class="edit" data-toggle="modal" data-target="#modal-basic3">
-                                                                                                            <span data-feather="phone"></span></a>
-                                                                                                    </li>
-                                                                                                  
-                                                                                                    <!-- <li>
-                                                                                                        <a href="#" class="view"  data-toggle="modal" data-target="#modal-basic1">
-                                                                                                            <span data-feather="rotate-ccw"></span></a>
-                                                                                                    </li> -->
-                                                                                                    <!-- <li>
-                                                                                                        <a href="#" class="edit">
-                                                                                                            <span data-feather="edit"></span></a>
-                                                                                                    </li> -->
-                                                                                                    <li>
-                                                                                                        <a href="#" class="remove"  data-toggle="modal" data-target="#modal-basic">
-                                                                                                            <span data-feather="trash-2"></span></a>
-                                                                                                    </li>
-                                                                                            </ul>
-                                                                                             
+                                                                                                </ul>
                                                                                             </td>
                                                                                         </tr>
-
+                                                                                        {% endfor %}
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>
@@ -522,8 +479,6 @@
                 
                                                                 </div>
                                                                 <div class=" card-single mb-3">
-
-
                                                                     <div class="card card-default card-sm bg-normal card-bordered">
                                                                         <div class="card-header" style="min-height: 34px;">
                                                                             <h6 style="font-size: 12px;"><svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
@@ -1313,27 +1268,32 @@
             </div>
             <div class="modal-body">
                 <div class="forms w-100">
-                    <div class="atbd-tag-mode ">
-                        <p  class="col-12 p-0 mb-1">To'lov summasini kiriting:</p>
-                        <input type="text" name="date" id="date" class="form-control form-control-sm border-light mb-2">
-                        <p  class="col-12 p-0 mb-1">To'lov turi:</p>
-                            <div class="atbd-select mb-2">
-                                <select class="form-control  form-control-sm border-light select2-hidden-accessible" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="5" selected>Naqt</option>
-                                    <option>Terminal</option>
-                                    <option>Bank</option>
-                                    <option>Click</option>
-                                    <option>Payme</option>
-                                </select>
-                            </div>        
-                         <p  class="col-12 p-0 mb-1">Izoh:</p>
-                        <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Izoh matnini kiriting..."></textarea>
-                </div>
+                    <form action="{% url 'finance:group-pay' %}" method="post" id="modal-pay">
+                        <div class="atbd-tag-mode ">
+                            <p  class="col-12 p-0 mb-1">To'lov summasini kiriting:</p>
+                            <input type="text" name="price" id="date" class="form-control form-control-sm border-light mb-2">
+                            <p  class="col-12 p-0 mb-1">To'lov turi:</p>
+                                <div class="atbd-select mb-2">
+                                    <select name="pay-type" class="form-control  form-control-sm border-light select2-hidden-accessible" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="5" selected value="1">Naqt</option>
+                                        <option value="2">Terminal</option>
+                                        <option value="3">Plastik karta</option>
+                                        <option value="4">Bank orqali</option>
+                                        <option value="5">Click</option>
+                                        <option value="6">Payme</option>
+                                        <option value="7">Apelsin</option>
+                                        <option value="8">Stripe</option>
+                                    </select>
+                                </div>        
+                             <p  class="col-12 p-0 mb-1">Izoh:</p>
+                            <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Izoh matnini kiriting..."></textarea>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="add_paid()">Saqlash</button>
             </div>
         </div>
     </div>
@@ -1524,6 +1484,37 @@
 {% endblock %}
 {% block script %}
 <script>
+    function add_paid(){
+        
+        var price=document.querySelector('input[name="price"]').value
+        document.querySelector('input[name="price"]').value=""
+        var pay_type=document.querySelector('select[name="pay-type"]').value
+        document.querySelector('select[name="pay-type"]').value="1"
+        var description=document.querySelector('textarea[name="description"]').value
+        document.querySelector('textarea[name="description"]').value=""
+        
+        
+        fetch(`{% url 'finance:group-pay' %} `, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "X-CSRFToken": "{{csrf_token}}",
+            },
+            body: JSON.stringify({
+                id:localStorage.getItem('pay_student'),
+                price,
+                goal_type:"{{group.id}}",
+                pay_type,
+                description
+            })
+        }).then(res => res.json()).then(res => {
+            console.log(res.balance)
+            document.querySelector(`#pay_student_${localStorage.getItem('pay_student')}`).textContent=res.balance;
+            // localStorage.setItem('pay_student','')
+            document.querySelector('#modal-basic1').style.display="none";
+            document.querySelector('.modal-backdrop').remove()
+        })
+    }
     function dateToYMD(date) {
     var d = date.getDate();
     var m = date.getMonth() + 1; //Month from 0 to 11
