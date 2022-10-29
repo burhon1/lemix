@@ -98,15 +98,19 @@ def readable_days(value):
         return result[:-1]
     return result
 
-def readable_days2(values):
+def readable_days2(values): # values GroupDays modelining obyektlari
     result: str = ''
     for value in values:
         result+=str(dict(chooses.GROUPS_DAYS)[value.days])+ "/"
     return result
-  
+
+def readable_days3(values): # values -> hafta kunining raqami.
+    result: str = ''
+    for value in values:
+        result+=str(dict(chooses.GROUPS_DAYS)[int(value)])+ "/"
+    return result
 
 def get_week_day(value):
-    print(type(value), "datetime")
     if value is None or type(value) != datetime.date:
         return ''
     day = value.weekday()
@@ -121,5 +125,6 @@ register.filter('get_status_name', get_status_name)
 register.filter('get_type_name', get_type_name)
 register.filter('readable_days', readable_days)
 register.filter('readable_days2', readable_days2)
+register.filter('readable_days3', readable_days3)
 register.filter('get_week_day', get_week_day)
 register.filter('get_status2', get_status2)

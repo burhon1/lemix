@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.http.response import JsonResponse
 from django.urls import reverse
-from admintion.models import GroupStudents, Student, Payment, Course, FormLead, LeadDemo
+from admintion.models import GroupStudents, Student, Payment, Course, FormLead, LeadDemo, Group
 from education.models import Modules, Lessons, Contents, Tests
 from education.selectors import get_updated_modules, get_need_content
 from education.services import set_student_viewed_content
@@ -15,6 +15,7 @@ from student.selectors import (
 from student.services import set_lead_content_viewed_status
 from student.forms import HomeworkForm
 from user.models import CustomUser
+from user.utils import get_admins
 
 @login_required
 def student_view(request):
@@ -22,9 +23,6 @@ def student_view(request):
     context = {
         'student': model_to_dict(student)
     }
-    if request.method == 'POST':
-        # set student payments
-        pass
     context.setdefault('balance', student.balance )
     payments = Payment.payments.student_payments(student.id)
     context.setdefault('payments', payments)
@@ -141,26 +139,23 @@ def student_homework_view(request, pk: int):
             homework.content=content
             homework.status = 2
             homework.save()
-            status = 200
+            status = 201
         else:
-            print(form.errors())
+            return JsonResponse(form.errors, safe=False, status=400)
     return JsonResponse({'status': status})
     
 
 @login_required
 def lead_view(request):
     lead = get_object_or_404(FormLead, user=request.user)
-    context = dict()
-    context['lead'] = lead
-
+    context = {'lead': lead}
     return render(request, 'student/student.html', context)
 
 
 @login_required
 def lead_demos_view(request):
     lead = get_object_or_404(FormLead, user=request.user, activity=1)
-    context = dict()
-    context['demos'] = LeadDemo.objects.filter(lead=lead)
+    context = {'demos': LeadDemo.objects.filter(lead=lead)}
     groups = set([demo.group for demo in context['demos']])
     context['demos2'] = []
     for group in groups:
@@ -172,9 +167,12 @@ def lead_demos_view(request):
 def lead_course_modules_view(request, pk):
     course = Course.courses.course(id=pk)
     context = {'course': course}
-
-    authors = [ user.id for user in CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))]
-    demo = request.user.lead.leaddemo_set.filter(group__course_id=course['id']).first()
+    group = request.GET.get('group', False)
+    authors = list(get_admins())
+    if group:
+        demo = request.user.lead.leaddemo_set.filter(group_id=group).first()    
+    else:
+        demo = request.user.lead.leaddemo_set.filter(group__course_id=course['id']).first()
     if demo and demo.group and demo.group.teacher:
         authors.append(demo.group.teacher.id)
     if demo and demo.group and demo.group.trainer:
@@ -182,13 +180,25 @@ def lead_course_modules_view(request, pk):
 
     context['modules'] = Modules.modules.course_modules(pk).filter(author_id__in=authors)
     context['modules'] = get_lead_updated_modules(course['id'], context['modules'], request.user)
-    print(context['modules'])
+    context['group'] = group
     return render(request, 'student/lead_content_royxati.html', context)
 
 @login_required
 def lead_course_content_view(request, pk, lesson_id, module_id, course_id):
     lead = get_object_or_404(FormLead, user=request.user, activity=1)
-    content = get_object_or_404(Contents, pk=pk)
+    group = request.GET.get('group', False)
+    authors = list(get_admins())
+    if group:
+        group = Group.objects.filter(id=group).first()
+    else:
+        demo = LeadDemo.objects.filter(lead=lead, group__in=Group.objects.filter(course_id=course_id)).first()
+        if demo:
+            group = demo.group
+    if group:
+        authors.append(group.teacher.user)
+        authors.append(group.trainer.user) if group.trainer else authors
+
+    content = get_object_or_404(Contents, pk=pk, author__in=authors, status=True)
     if check_lead_to_content_view_permision(lead, content) is False:
         return redirect('student:lead-demos')
     content = set_lead_content_viewed_status(content, lead)
@@ -198,11 +208,39 @@ def lead_course_content_view(request, pk, lesson_id, module_id, course_id):
     context['lesson'] = content.lesson
     context['resources'] = content.content_resources.all()
     context['faqs'] = content.faqs.all()
-    next = Contents.objects.filter(lesson_id=lesson_id, order__gt=content.order).first() 
-
+    
+    next = Contents.objects.filter(lesson_id=lesson_id, order__gt=content.order, status=True, author__in=authors).first()
+    if next is None:
+        lesson = get_object_or_404(Lessons, module_id=module_id, id=lesson_id, author__in=authors)
+        lesson = Lessons.objects.filter(module_id=module_id, author__in=authors, order__gt=lesson.order).first()
+        if lesson:
+            print(lesson.contents.all().order_by('order'))
+            next =lesson.contents.filter(status=True).order_by('order').first()
+       
     if next:
         context['course_id'] = course_id
         context['module_id'] = module_id
         context['lesson_id'] = lesson_id
         context['next'] = next.id
+    context['group'] = group.id if group else ''
     return render(request, 'student/lead_darsnig_ichki_sahifasi_video.html', context)
+
+
+@login_required
+def lead_homework_view(request, pk: int):
+    student = get_object_or_404(FormLead, user=request.user)
+    content = get_object_or_404(Contents, pk=pk)
+    status = 400
+
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST, request.FILES)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            homework.lead=student 
+            homework.content=content
+            homework.status = 2
+            homework.save()
+            status = 201
+        else:
+            return JsonResponse(form.errors, safe=False, status=400)
+    return JsonResponse({'status': status})

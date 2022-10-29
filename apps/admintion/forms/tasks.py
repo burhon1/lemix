@@ -17,3 +17,4 @@ class TaskForm(forms.ModelForm):
         self.fields['students'].required=False
         self.fields['courses'].required=False 
         self.fields['parents'].required=False
+        self.fields['comment'].required=False

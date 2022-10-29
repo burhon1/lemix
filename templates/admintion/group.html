@@ -1,6 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load user_tags %}
 {% block style %}
 <style>
     .cardPay {
@@ -1351,7 +1352,7 @@
 
                                 <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
                                     {% for type in responsibles %}
-                                        <option value="{{type.id}}">{{ type.first_name}} {{type.last_name }}</option>
+                                        <option value="{{type.id}}">{{ type.first_name}} {{type.last_name }} | {{type.id|user_role}}</option>
                                     {% endfor %}
                                     
                                 </select>

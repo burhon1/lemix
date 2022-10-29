@@ -146,11 +146,18 @@ def get_questions_for_student(test:Tests, student:Student):
             counter -= 1
     return get_questions_data(questions)
 
-def get_lead_viewing_content(contents, lead):
+def get_lead_viewing_content(contents, lead, is_open_one=True):
+    print(is_open_one)
     data = []
     for content in contents:
         dct = model_to_dict(content, fields=('id', 'title', 'content_type'))
         dct['viewed'] = bool(lead in content.leads.all())
+        if dct['viewed'] is True:
+            dct['open'] = True
+        elif is_open_one:
+            dct['open'], is_open_one = True, False
+        else:
+            dct['open'] = False
         data.append(dct)
 
     return data
@@ -159,25 +166,31 @@ def get_lead_updated_modules(course_id:int, modules:Modules, user:CustomUser, wi
     lead = FormLead.objects.filter(user=user).first()
     groups = Group.objects.filter(course_id=course_id)
     demos = len(LeadDemo.objects.filter(lead=lead, group__in=groups))
-
+    module_data = []
+    
     for module in modules:
+        initial = True
         module['lessons'] = []
         lesson_objs = Lessons.objects.filter(module_id=module['id']).order_by('order')
         for lesson in lesson_objs:
             dct = model_to_dict(lesson, fields=('id', 'title', 'order'))
+            contents = lesson.contents.filter(status=True).order_by('order')
+            dct['content'] = contents[0].id if len(contents)>0 else None
+            dct['viewed'] = bool(contents.filter(leads__in=[lead]))
             if demos:
-                dct['open'], demos = True, demos-1
+                dct['open'], demos = initial, demos-1
             else:
                 dct['open'] = False
-            contents = lesson.contents.filter(status=True).order_by('order')
-            dct['viewed'] = contents.filter(leads__in=[lead]).exists()
-            dct['content'] = contents[0].id if len(contents)>0 else None
             if with_contents:
-                dct['contents'] = get_lead_viewing_content(contents, lead)
-            
-            module['lessons'].append(dct)
+                dct['contents'] = get_lead_viewing_content(contents, lead, initial)
+            if dct['content'] is not None:
+                module['lessons'].append(dct)
+            if dct['viewed'] is False:
+                initial = False
+        if module['lessons'] != []:
+            module_data.append(module)
 
-    return modules
+    return module_data
 
 
 def check_lead_to_content_view_permision(lead:FormLead, content:Contents):

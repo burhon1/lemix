@@ -4,6 +4,7 @@ from django.forms.models import model_to_dict
 from django.utils import timezone
 from student.models import Homeworks 
 from user.models import CustomUser
+from user.utils import get_user_role, get_admins
 from education.models import Contents, Lessons, Modules
 from admintion.models import Course, GroupStudents, Student, Teacher, Group
 
@@ -176,25 +177,30 @@ def get_courses_data(courses, teacher: Teacher=None):
     return data
 
 def get_courses(user: CustomUser):
-    teacher = Teacher.objects.filter(user=user).first()
+    user_role = get_user_role(user)
     courses = list()
-    if teacher and teacher.group_teacher.count() > 0:
+    if user_role is None:
+        return set()
+    if user_role.name == 'Teacher':
+        teacher = Teacher.objects.filter(user=user).first()
         courses += [ group.course for group in teacher.group_teacher.all()]
-    if teacher and teacher.trainer.count() > 0:
-        courses += [ group.course for group in teacher.trainer.all()]
-    
-    # Admin roli qanday?
-    else:
+    elif user_role.name == 'Asistent':
+        trainer = Teacher.objects.filter(user=user).first()
+        courses += [ group.course for group in trainer.trainer.all()]
+    elif user_role.name in ['Manager', 'Admin']:
         courses = Course.objects.all()
-    print(courses)
+    elif user_role.name == 'Student':
+        courses = Course.objects.filter(status=True)
     return set(courses)
 
 def get_groups_data(groups, teacher: Teacher=None):
     if type(groups) not in [set, list, QuerySet]:
         return []
+    elif type(groups)!=set:
+        groups = set(groups)
     data = list()
-    admins: List[CustomUser] = CustomUser.objects.filter(is_superuser=True)
-    for group in set(groups):
+    admins = get_admins()
+    for group in groups:
         dct = model_to_dict(group, fields=('id', 'title', 'teacher'))
         dct['teacher'] = f"{group.teacher.user.full_name()}"
         dct['trainer'] = f"{group.trainer.user.full_name()}"
@@ -202,39 +208,39 @@ def get_groups_data(groups, teacher: Teacher=None):
             'title': group.course.title, 'id': group.course.id
         }
 
-        lessons = Lessons.objects.filter(groups__id=group.id) #module__course=group.course
         query = Q(author__in=admins)|Q(author=group.teacher.user)
         if group.trainer:
             query = query|Q(author=group.trainer.user)
+        lessons = Lessons.objects.filter(Q(groups__id=group.id)|Q(module__course=group.course)&query) #module__course=group.course
         contents = Contents.objects.filter((query), lesson__in=lessons, groups__id=group.id)
-        if teacher:
-            contents = contents.filter(Q(author=teacher.user)|Q(author__in=admins))
+
         dct['video_contents'] = len(contents.filter(content_type=1))
         dct['text_contents'] = len(contents.filter(content_type=2))
         dct['test_contents'] = len(contents.filter(content_type=3))
         dct['homework_contents'] = len(contents.filter(content_type=4))
         dct['contents'] = len(contents)
-        print(group, dct)
         data.append(dct)
     return data
 
 def get_groups(user: CustomUser):
-    teacher = Teacher.objects.filter(user=user).first()
     groups = list()
-    if teacher and teacher.group_teacher.count() > 0:
+    user_role = get_user_role(user)
+    if user_role is None:
+        return groups
+    elif user_role.name in ['Teacher', 'Asistent']:
+        teacher = Teacher.objects.filter(user=user).first()
         groups = Group.objects.filter(Q(teacher=teacher)|Q(trainer=teacher))
-
-    # Admin roli qanday?
-    else:
+    elif user_role.name in ['Manager', 'Admin']:
         groups = Group.objects.all()
+    else:
+        groups = Group.objects.none()
     
-    return get_groups_data(groups, teacher=teacher)
+    return groups
 
 
 def get_modules_data(modules, group=None, authors=[]):
     data = list()
     for module in list(modules):
-        dct = dict()
         dct = model_to_dict(module, fields=('id', 'title', 'author'))
         try:
             dct['author_name'] = module.author.full_name()
@@ -242,49 +248,53 @@ def get_modules_data(modules, group=None, authors=[]):
             dct['author_name'] = ''
         lessons = module.lessons.all()
         query = dict()
-        if group:
-            query.update({'groups__id': group.id })
         if authors and len(authors)>0:
             query.update({'author__in':authors})
-            # dct['lessons'] = list(module.lessons.filter(groups__id=group.id).values('id', 'title', 'order','author'))
         dct['lessons'] = list(lessons.filter(**query).values('id', 'title', 'order','author'))
-        dct['status'] =  bool(Contents.objects.filter(lesson__module=module, status=True).exists())
+        dct['status'] =  Contents.objects.filter(lesson__module=module, status=True).exists()
         data.append(dct)
     return data
 
 def get_modules(course:Course, user:CustomUser, group:Group=None):
-    teacher = Teacher.objects.filter(user=user).first()
-    if teacher:
-        admins = CustomUser.objects.filter(is_superuser=True)
-        modules = course.modules.filter(Q(author=user)|Q(author__in=admins))
-    else:
-        modules = course.modules.all()
+    user_role = get_user_role(user)
+    query = dict()
     if group:
-        return modules.filter(groups__id=group.id)
+        query.update({'groups__id': group.id})
+    if user_role and user_role.name in ['Teacher', 'Asistent'] and course.status is True:
+        modules = course.modules.filter(Q(author=user)|Q(author__in=get_admins()), **query)   
+    elif user_role and user_role.name in ['Manager', 'Admin']:
+        modules = course.modules.filter(**query)
+    else:
+        return Modules.objects.none()
     return modules
 
 def get_lessons_data(lessons):
     data = list()
     for lesson in lessons:
-        dct = dict()
         dct = model_to_dict(lesson, fields=('id', 'title', 'author', 'order', 'module'))
         try:
             dct['author_name'] = lesson.author.full_name()
         except:
             dct['author_name'] = ''
-        dct['status'] = bool(Contents.objects.filter(lesson=lesson, status=True).count())
+        dct['status'] = Contents.objects.filter(lesson=lesson, status=True).exists()
         data.append(dct)
 
     return data
 
 def get_lessons(course:Course, user:CustomUser, **filter_kwargs):
-    teacher = Teacher.objects.filter(user=user).first()
-    print(filter_kwargs)
-    if teacher:
-        admins = CustomUser.objects.filter(is_superuser=True)
-        lessons = Lessons.objects.filter(Q(author=user)|Q(author__in=admins), module__course=course, **filter_kwargs)
-    else:
+    user_role = get_user_role(user)
+    if user_role and user_role.name in ['Teacher', 'Asistent']:
+        if filter_kwargs['groups__id']:
+            group = Group.objects.filter(id=filter_kwargs['groups__id']).first()
+            authors = [group.teacher.user ] if group and group.teacher else []
+            authors.append(group.trainer.user) if group and group.trainer else authors
+        else:
+            authors = [user]
+        lessons = Lessons.objects.filter(Q(author__in=authors)|Q(author__in=get_admins()), module__course=course, **filter_kwargs)
+    elif user_role and user_role.name in ['Manager', 'Admin']:
         lessons = Lessons.objects.filter(module__course=course, **filter_kwargs)
+    else:
+        return Lessons.objects.none()
     return lessons.order_by('module', 'order')
 
 

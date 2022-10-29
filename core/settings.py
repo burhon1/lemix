@@ -67,6 +67,7 @@ TEMPLATES = [
             'libraries':{
             'admintion_tags': 'admintion.templatetags.custom_tags',
             'education_tags': 'education.templatetags.education_tags',
+            'user_tags': 'user.templatetags.user_tags',
             }
 
         },

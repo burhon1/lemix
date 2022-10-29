@@ -23,10 +23,10 @@ def login_view(request):
                         return redirect('education:onlin')
                     elif request.user.student_set.first():
                         return redirect('student:student')
-                    elif request.user.lead:
-                        return redirect('student:lead')
                     elif request.user.teacher_set.first():
                         return redirect('education:onlin')
+                    elif request.user.lead:
+                        return redirect('student:lead')
                 else:
                     context['error'] = "Parol xato kiritildi"   
             else:

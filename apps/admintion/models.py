@@ -3,7 +3,7 @@ from admintion.querysets import rooms_manager,groups_manager,students_manager,at
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
-from admintion.data.chooses import TASK_STATUS
+from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE
 # Create your models here.
 class Room(models.Model):
     title = models.CharField(max_length=50)

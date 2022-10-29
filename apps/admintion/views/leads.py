@@ -23,7 +23,8 @@ def leads_view(request):
     context['sources'] = [ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
     context['lead_statuses'] = LeadStatus.objects.values('id', 'status')
     context['courses'] = Course.objects.filter(status=True).values('id', 'title')
-    context['groups'] = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
+    groups = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
+    context['groups'] = select_groups_by_limit(groups)
     context['task_types'] = TaskTypes.objects.values('id', 'task_type')
     context['days'] = GroupsDays.objects.values('id', 'days')
     context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
@@ -34,7 +35,6 @@ def leads_view(request):
 def lead_create_view(request):
     if request.method == 'POST':
         form = LeadForm(request.POST, request.FILES)
-        print(request.POST)
         if form.is_valid():
             lead = form.save(commit=False)
             lead.author = request.user
@@ -43,9 +43,8 @@ def lead_create_view(request):
             lead_data = convert_to_json(lead, fields=('id', 'user', 'source', 'comment'))
             return JsonResponse(lead_data, status=201)
         else:
-            print(form.errors)
             return JsonResponse({'message': 'error occured'}, safe=False, status=400)
-    return JsonResponse({'method':'get'})
+    return JsonResponse({'method':'get'}, status=400)
 
 
 def lead_detail_view(request, pk):
@@ -73,7 +72,6 @@ def lead_detail_view(request, pk):
     for day in context['days']:
         day['day_name'] = dict(GET_GROUPS_DAYS)[day['days']]
         day['selected'] = lead.days.filter(id__in=[int(day['id'])]).exists()
-    print(context['tasks'], context['today_tasks'])
     return render(request, 'admintion/lidlar_edit.html', context)
 
 @login_required
@@ -128,7 +126,7 @@ def add_demo(request):
                 form.save() 
             return JsonResponse({"status":"Created"}, status=201)
         else:
-            print(formset.errors)
+            return JsonResponse(formset.errors, safe=False, status=400)
     return JsonResponse({})
 
 

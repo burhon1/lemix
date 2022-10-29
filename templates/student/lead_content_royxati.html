@@ -82,7 +82,7 @@ Content ro’yxati
                                                                                     {% if lesson %}
                                                                                     <li class="list-box__item d-flex  justify-content-between"> 
                                                                                         {% if lesson.open or lesson.viewed and lesson.content %}
-                                                                                            <a href="{% url 'student:lead-demo-lessons' module.course module.id lesson.id lesson.content %}"><p class="mb-0"><b>{{ module.order }}.{{ forloop.counter }}</b> {{ lesson.title }} </p></a>
+                                                                                            <a href="{% url 'student:lead-demo-lessons' module.course module.id lesson.id lesson.content %}?group={{group}}"><p class="mb-0"><b>{{ module.order }}.{{ forloop.counter }}</b> {{ lesson.title }} </p></a>
                                                                                         {% else %}
                                                                                             <p class="mb-0"><b>{{ module.order }}.{{ forloop.counter }}</b> {{ lesson.title }}</p>
                                                                                         {% endif %}

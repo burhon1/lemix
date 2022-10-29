@@ -72,3 +72,8 @@ TASK_STATUS = (
     (2, 'Bajarildi'),
     (3, 'Kechikkan'),
 )
+
+TEACHER_TYPE = (
+    (1, "O'qituvchi"),
+    (2, "Yordamchi(support)"),
+)

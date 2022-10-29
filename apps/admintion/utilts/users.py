@@ -41,7 +41,6 @@ def get_days(start_date,finis_date=None,days=[1,3,5]):
 def get_attendace_days(start_date,finis_date=None,days=[1,3,5]):
     data = calendar.monthcalendar(finis_date.year,finis_date.month) 
     datas = []
-    print(finis_date)
     if finis_date.year==start_date.year and finis_date.month==start_date.month:
         for week in data:
             for day in days:

@@ -1,7 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
-
+{% load user_tags %}
 {% block title %}
 Lidlar Ro'yxati- Lemix
 {% endblock %}
@@ -540,7 +540,7 @@ margin-right: 7px;
                                                                     <select name="select-tag" id="select-tag" class="form-control-sm " multiple="multiple">
                                                                         <option value="0">---------</option>
                                                                         {% for res in task_responsibles %}
-                                                                            <option value="{{res.id}}">{{ res.first_name}} {{res.last_name}}</option>
+                                                                            <option value="{{res.id}}">{{ res.first_name}} {{res.last_name}} | {{res.id|user_role}}</option>
                                                                         {% endfor %}
                                                                         
                                                                         
@@ -679,16 +679,18 @@ margin-right: 7px;
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
 
         var taskSelected = document.querySelector('.tasksID');
-        formData.append('task_type', taskSelected.value);
-
+        if (taskSelected.value!=0){
+            formData.append('task_type', taskSelected.value);
+        }
         var responsibles = document.querySelector('#select-tag');
         for(var i=0;i<responsibles.selectedOptions.length;i++){
             formData.append('responsibles', responsibles.selectedOptions[i].value);
         }
 
         var deadline = document.querySelector('#deadline');
-        formData.append('deadline', deadline.value);
-
+        if(deadline.value!=undefined || deadline.value !=null){
+            formData.append('deadline', deadline.value);
+        }
         var comment = document.querySelector('#id_comment');
         formData.append('comment', comment.value);
 

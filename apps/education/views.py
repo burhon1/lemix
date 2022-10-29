@@ -34,7 +34,8 @@ def onlin_view(request):
     teacher = Teacher.objects.filter(user=request.user).first()
     context['courses'] = get_courses(request.user)
     context['courses'] = get_courses_data(context['courses'], teacher=teacher)
-    context['groups'] = get_groups(request.user)
+    groups = get_groups(request.user)
+    context['groups'] = get_groups_data(groups, teacher)
     context['is_teacher'] = bool(teacher)
     return render(request,'education/onlin.html', context) 
 
@@ -87,7 +88,6 @@ def onlin_video_create_view(request, lesson_id):
             return JsonResponse(data, status=201)
         else:
             return JsonResponse({'message':form.non_field_errors()}, status=400)
-    # return JsonResponse({'message':'so\'rov metodi to\'g\'ri emas.'}, status=400)
     return render(request,'education/onlin_video.html')
 
 @login_required
@@ -113,7 +113,6 @@ def onlin_text_view(request, lesson_id):
             context['redirect_id'] = content.lesson.module.course.id
             return JsonResponse(context)
         else:
-            print(form.non_field_errors())
             return JsonResponse({'form': form, 'status':400})
     return render(request,'education/onlin_text.html') 
 
@@ -224,7 +223,6 @@ def onlins_view(request,id):
         if module_id:
             filter_kwargs = {'module_id': module_id}
             filter_kwargs.update({'groups__id': group.id}) if group else dict()
-            print(filter_kwargs)
             context['lessons'] = get_lessons(course, request.user,**filter_kwargs)
             context['lessons'] = get_lessons_data(context['lessons'])
         return JsonResponse(context)

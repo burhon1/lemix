@@ -14,6 +14,7 @@ urlpatterns = [
     path('rating/', views.rating_view, name='rating'),
     path('exams/', views.exams_view, name='exams'),
     path('homework/<int:pk>/', views.student_homework_view, name='homework'),
+    path('lead/homework/<int:pk>/', views.lead_homework_view, name="lead-homework-view"),
     path('lead/demos/', views.lead_demos_view, name='lead-demos'),
     path('lead/demos/<int:pk>/modules/', views.lead_course_modules_view, name="lead-demo-modules"),
     path('lead/demos/<int:course_id>/<int:module_id>/<int:lesson_id>/<int:pk>/', views.lead_course_content_view, name="lead-demo-lessons"),

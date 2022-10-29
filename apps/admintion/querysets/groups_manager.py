@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,CharField,TextField,Exists,OuterRef
+from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,CharField,TextField,Exists,OuterRef,Count
 from django.contrib.postgres.aggregates import ArrayAgg
 # from django.contrib.postgres.functions import ToArray
 from django.db.models.functions import Concat,Substr,Cast
@@ -22,15 +22,14 @@ class GroupQueryset(QuerySet):
                 'course__price',
                 'title',
                 'room__title',
-                'start_date'
+                'start_date',
+                'limit',
             ).annotate(
                 course=F("course__title"),
                 teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
                 times = Concat(Substr(Cast(F('start_time'), TextField()),1,5),Value('-'),Substr(Cast(F('end_time'), TextField()),1,5),output_field=CharField()),
-                total_student=ArrayAgg(Cast('student__id', TextField()),distinct=True),
-                days = ArrayAgg(Cast('days__days', TextField()),distinct=True)
-                ).annotate(
-                   total_student=Func(F('total_student'), 1, function='array_length',output_field=IntegerField())
+                total_student=Count('students'),
+                days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
                 )
             for item in datas:
                 item['days'] = 'as'   
@@ -48,6 +47,7 @@ class GroupQueryset(QuerySet):
                 'total_student',
                 'course__price',
                 'days',
+                'limit',
             )
 
     def group(self,id):

@@ -1,6 +1,6 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block content %}
 <div class="container-fluid">
     <div class="row">
@@ -84,7 +84,7 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                Du/Se/Chor
+                                                {{group.days|readable_days3}}
                                             </div>
                                         </td>
                                         <td>
@@ -99,7 +99,7 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                {{group.course__price}}
+                                                {{group.course__price|readable_soums}}
                                             </div>
                                         </td>
                                         <td>
@@ -260,6 +260,15 @@
                                                 vaqti</label>
                                             <input type="time" name="end_time"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                                placeholder="soni">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_limit" class="il-gray fs-14 fw-500 align-center">O'quvchilarning soniga chegara o'rnatish
+                                                </label>
+                                            <input type="number" name="limit"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_limit"value="15"
                                                 placeholder="soni">
                                         </div>
                                     </div>

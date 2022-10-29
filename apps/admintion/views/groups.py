@@ -28,6 +28,7 @@ def groups_view(request):
         start_time = post.get('start_time',False)
         end_time = post.get('end_time',False)
         comments = post.get('comments',False)
+        limit = post.get('limit', False)
         if title and course and status and teacher and room and trainer and days and pay_type and start_time and end_time and comments:
             course = Course.objects.filter(id=course).first()
             teacher = Teacher.objects.filter(id=teacher).first()
@@ -44,12 +45,13 @@ def groups_view(request):
                 pay_type=pay_type,
                 status=status,
                 start_time=start_time,
-                end_time=end_time
+                end_time=end_time,
+                limit=limit
             )
             group.save()
             group.days.add(*days)
             return redirect('admintion:groups')
-        else:
+        else: 
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
     context['teachers'] = Teacher.objects.filter(teacer_type=True) 
@@ -118,7 +120,6 @@ def group_detail_data(request, id: int):
     context = dict()
     context['group'] = Group.groups.group(id)
     context['group']['dates'] = get_next_n_group_dates(10, context['group'])
-    print(context['group'])
     return JsonResponse(context)
 
 
@@ -127,7 +128,6 @@ def add_student_view(request,id):
     if request.method == "POST":
         student = request.POST.get('student',False)
         if student:
-            print(student)
             return redirect('admintion:group-detail',id=id)
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  

@@ -142,10 +142,10 @@ Darsing Ichki Sahifasi - Lemix
                                                                                                                 {% endif %}
                                                                                                             
                                                                                                                 <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
-                                                                                                                    {% if content.open is False or lesson.open is False %}
+                                                                                                                    {% if content.open is False %}
                                                                                                                         <a href="#">{{ content.title }}</a>
                                                                                                                     {% else %}
-                                                                                                                        <a href="{% url 'student:lead-demo-lessons' module.course module.id lesson.id content.id %}">{{ content.title }}</a>
+                                                                                                                        <a href="{% url 'student:lead-demo-lessons' module.course module.id lesson.id content.id %}?group={{group}}">{{ content.title }}</a>
                                                                                                                     {% endif %}
                                                                                                                 </label>
                                                                                                             </div>

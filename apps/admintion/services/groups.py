@@ -10,7 +10,6 @@ def get_attendace(id,start_date,day_today=date.today()):
     context['students'] = Student.students.student_balances(id)
     context['students_attendace'] = Student.students.students_attendace(id)
     context['days'] = get_days(start_date,day_today)
-    print(start_date)
     context['months'] = get_month(start_date,day_today)
     context['after_month'] = get_month(start_date,day_today)
     datas = []

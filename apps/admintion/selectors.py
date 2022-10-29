@@ -103,7 +103,6 @@ def get_lead_tasks(lead:FormLead=None, tasks:Tasks=None):
         dct['created_at'] = task.created_at
         dct['status'] = dict(TASK_STATUS)[task.status]
         data.append(dct)
-    print(data)
     return data
 
 
@@ -129,7 +128,6 @@ def check_group_limit(group):
     students = len(GroupStudents.objects.filter(group=group))
     demos = LeadDemo.objects.filter(group=group)
     leads = len(set([demo.lead for demo in demos if demo.lead.activity==1])) #  bu guruhga qo'shilgan lidlar soni
-    print(students, leads, group.limit)
     return group.limit > students+leads
 
 def select_groups_by_limit(groups):

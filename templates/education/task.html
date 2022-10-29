@@ -1,6 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load user_tags %}
 {% block content %}
 
 <div class="container-fluid p-2">
@@ -105,7 +106,7 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content  d-flex justify-content-between align-center">
-                                                <div>{% for user in task.responsibles.all %}<a href="#" style="color: black;"> {{user.full_name }}<br></a>{% endfor %}</div>
+                                                <div>{% for user in task.responsibles.all %}<a href="{% if user.id|user_role == 'Manager' or user.id|user_role == 'Admin' %}#{% else %}{% url 'education:teacher_detail' user.id %}{% endif %}" style="color: black;"> {{user.full_name }}| {{user|user_role}}<br></a>{% endfor %}</div>
                                             </div>
                                         </td>
                                     </tr>
@@ -176,7 +177,7 @@
                                             <select name="url" id="select-tag"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15" multiple="multiple">
                                                 {% for res in responsibles %}
-                                                    <option value="{{res.id}}">{{res.first_name}} {{res.last_name}}</option>
+                                                    <option value="{{res.id}}">{{res.first_name}} {{res.last_name}} | {{res.id|user_role}}</option>
                                                 {% endfor %}
 
                                             </select>

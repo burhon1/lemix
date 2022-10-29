@@ -1,7 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
-
+{% load user_tags %}
 {% block title %}
 Lidlar Tahrirlash- Lemix
 {% endblock %}
@@ -946,7 +946,7 @@ margin-right: 7px;
 
                                 <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
                                     {% for res in task_responsibles %}
-                                        <option value="{{res.id}}">{{ res.first_name }} {{ res.last_name }}</option>
+                                        <option value="{{res.id}}">{{ res.first_name }} {{ res.last_name }} | {{res.id|user_role}}</option>
                                     {% endfor %}
                                 </select>
 
@@ -1438,9 +1438,6 @@ margin-right: 7px;
                     window.location.assign('/admintion/leads/');
                 } else {
                     window.location.reload()
-                    //alert(`${ action=='activate'? 'Aktivlashtirish': 'Muzlatish'} amalga oshirildi.`)
-                    
-                    //action=='activate'? document.getElementById('leadActivity').innerHTML = "Aktivlashtirish": document.getElementById('leadActivity').innerHTML = "Muzlatish"
                 }
             })
             .catch(err=>{
