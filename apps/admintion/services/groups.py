@@ -42,7 +42,6 @@ def get_attendace(id,start_date,day_today=date.today()):
           
             datas[count]['attendaces'] =dats
     context['students_attendace']=datas
-    print(context['students_attendace'])
     return context
 
 def get_days_attendace(id,start_date,day_today=date.today()):

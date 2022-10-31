@@ -15,7 +15,6 @@ class LessonAddForm(forms.ModelForm):
         self.instance = super().save(commit=False)
         self.instance.author = author
         self.instance.save()
-        print(self.instance, "in form")
         return self.instance
 
 class ContentForm(forms.ModelForm):
