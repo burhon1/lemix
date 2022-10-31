@@ -1,5 +1,5 @@
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager
+from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager,lead_manager
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
@@ -78,7 +78,7 @@ class Attendace(models.Model):
     group_student = models.ForeignKey("GroupStudents", models.SET_NULL, null=True,related_name='attendance')
     created = models.DateTimeField(auto_now_add=True, null=True)
     creator = models.ForeignKey(CustomUser, models.SET_NULL, related_name="created_attendaces", null=True)
-    
+    lead_demo = models.ForeignKey("LeadDemo", models.SET_NULL, null=True, related_name='lead_attendance')
     objects = models.Manager()
     attendaces = attendace_manager.AttendaceManager()
 
@@ -96,20 +96,14 @@ class Payment(models.Model):
 class LeadStatus(models.Model):
     status = models.CharField("Status nomi", max_length=200)
 class FormLead(models.Model):
-    # fio = models.CharField(max_length=100)
-    # phone = models.CharField(max_length=100)
     source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
     status = models.ForeignKey(LeadStatus, models.SET_NULL, null=True, blank=True)
     comment = models.TextField()
     telegram = models.CharField("Telegramdagi nomeri", max_length=100, null=True)
     parents = models.CharField("Ota-onasi", max_length=150, null=True)
     p_phone = models.CharField(max_length=100, null=True)
-    # address = models.CharField("Manzili", max_length=500, null=True)
-    # email = models.EmailField(null=True)
     passport = models.CharField("Passport seriya va raqami", max_length=10, null=True)
     file = models.FileField(upload_to="leads", null=True)
-    # gender = models.PositiveSmallIntegerField(choices=COURSES_SEXES,null=True,blank=True)
-    # birthday = models.DateField(null=True,blank=True)
     days = models.ManyToManyField(GroupsDays, blank=True)
     course = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True, related_name="created_leads")
@@ -118,7 +112,8 @@ class FormLead(models.Model):
     activity = models.PositiveSmallIntegerField("Lidning statusi", choices=chooses.LEAD_FORM_STATUS, default=1)
     purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
     user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
-
+    objects = models.Manager()
+    leads = lead_manager.LeadManager()
     def __str__(self) -> str:
         return str(self.id)
 
@@ -139,15 +134,15 @@ class Parents(models.Model):
     students = models.ManyToManyField(Student)
     passport = models.CharField("Passport", max_length=10, null=True)
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
-    
+    objects = models.Manager()
     parents = parents_manager.ParentsManager()
 
 
 class LeadDemo(models.Model):
-    lead = models.ForeignKey(FormLead, models.CASCADE)
+    lead = models.ForeignKey(FormLead, models.CASCADE, related_name="demo")
     group = models.ForeignKey(Group, models.CASCADE)
     date = models.DateField('Demo dars sanaga belgilandi:', auto_now_add=False, auto_now=False)
-
+    
 
 class TaskTypes(models.Model):
     task_type = models.CharField("Topshiriq turi", max_length=150)

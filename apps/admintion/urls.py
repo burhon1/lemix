@@ -14,6 +14,7 @@ urlpatterns = [
     path('group/<int:id>/detail/',groups.group_detail_view,name='group-detail'),
     path('group/<int:id>/data/',groups.group_detail_data,name='group-data'),
     path('group/change/attendace/',groups.change_attendace_view,name='change-attendace'),
+    path('group/change/lead-attendace/',groups.change_lead_attendace_view,name='change-lead-attendace'),
     path('group/change/get-attendace/',groups.get_attendace_view,name='get-attendace'),
     path('group/<int:id>/add/student/',groups.add_student_view,name='add-student'),
     path('students/',students.students_view,name='students'),

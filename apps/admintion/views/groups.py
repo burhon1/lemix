@@ -7,7 +7,7 @@ from django.db.models import Q
 import json
 from admintion.selectors import get_next_n_group_dates
 from user.models import CustomUser
-from admintion.models import GroupStudents, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace
+from admintion.models import GroupStudents, LeadDemo, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace
 from admintion.utilts.users import get_days,get_month
 from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
@@ -76,7 +76,6 @@ def get_attendace_view(request):
     context = {}
     data = json.loads(request.body)
     year_month = data['date']
-    
     take_date = datetime.strptime(year_month+'-01','%Y-%m-%d') 
     context['group'] = Group.groups.group(data['group_id'])
     context = context | get_attendace(data['id'],context['group']['start_date'],take_date)
@@ -98,14 +97,30 @@ def change_attendace_view(request):
         attendace.status=data['status']
         attendace.save()
     else:
-        # student=Student.objects.filter(id=data['id']).first()
-        # attendace = Attendace(
-        #    student=student,
-        #    status=data['status'],
-        #    date=data['date']
-        # )
         attendace = Attendace(
            group_student=gr_student,
+           status=data['status'],
+           date=data['date'],
+           creator=request.user
+        )
+        attendace.save() 
+
+    return JsonResponse({'status':201,'count':0})
+
+def change_lead_attendace_view(request):
+    data = json.loads(request.body)
+    data['status'] = int(data['status'])
+    lead_demo, created = LeadDemo.objects.get_or_create(
+        lead_id=data['id'],group_id=data['group_id'], date=data['date'])
+    attendace = Attendace.objects.filter(lead_demo=lead_demo,date=data['date'])
+    
+    if attendace.exists():
+        attendace=attendace.first()
+        attendace.status=data['status']
+        attendace.save()
+    else:
+        attendace = Attendace(
+           lead_demo=lead_demo,
            status=data['status'],
            date=data['date'],
            creator=request.user

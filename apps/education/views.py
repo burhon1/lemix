@@ -294,7 +294,6 @@ def online_delete2_view(request, type:str, pk: int):
 @login_required
 def online_activate_view(request, action:str, type: str, pk:int):
     ACTIONS = {'activate':True, 'draft':False}
-    print(action, type, pk)
     if request.method == 'POST':
         if type == 'course':
             obj = get_object_or_404(Course, pk=pk)
@@ -312,7 +311,6 @@ def online_activate_view(request, action:str, type: str, pk:int):
         if type == 'content':
             objs = Contents.objects.filter(pk=pk)
             objs.update(status=ACTIONS[action])
-        print(action, type, pk)
         return JsonResponse({'status':'ok'})
     return JsonResponse({'status':'get request'})    
 
@@ -588,7 +586,6 @@ def homeworks_view(request):
     courses = get_courses(user=request.user)
     context['courses'] = get_courses_via_hws(courses, user=request.user)
     context['groups'] = get_groups_via_hws(courses, request.user)
-    print(context)
     return render(request, 'education/uyga_vazifa_teacher.html', context)
 
 def group_homeworks_detail_view(request, pk):

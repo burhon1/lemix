@@ -2,7 +2,7 @@ from django import template
 from django.shortcuts import get_object_or_404
 
 import datetime
-from admintion.models import Attendace, GroupStudents
+from admintion.models import Attendace, GroupStudents, LeadDemo
 from ..data import chooses
 from user.data import chooses as user_chooses
 register = template.Library()
@@ -19,6 +19,15 @@ def take_attendance_status(value,day):
 def attendance_result(value):
     gr_student_ids = [_.id for _ in GroupStudents.objects.filter(student_id=value)]
     attendace = Attendace.objects.filter(group_student_id__in=gr_student_ids)
+    count=0
+    if attendace.exists():
+        goal = attendace.filter(status=1)
+        count = goal.count()/attendace.count()
+    return int(count*100)
+
+def lead_attendance_result(value):
+    gr_student_ids = [_.id for _ in LeadDemo.objects.filter(lead_id=value)]
+    attendace = Attendace.objects.filter(lead_demo_id__in=gr_student_ids)
     count=0
     if attendace.exists():
         goal = attendace.filter(status=1)
@@ -128,3 +137,4 @@ register.filter('readable_days2', readable_days2)
 register.filter('readable_days3', readable_days3)
 register.filter('get_week_day', get_week_day)
 register.filter('get_status2', get_status2)
+register.filter('lead_attendance_result', lead_attendance_result) 

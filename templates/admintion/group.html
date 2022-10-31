@@ -290,6 +290,11 @@
                                                                                         {% for student_attendace in students_attendace %}
                                                                                         <tr class="text-center attendace_status">
                                                                                             <td>{{forloop.counter}}.
+                                                                                                {% if student_attendace.is_lead %}
+                                                                                                <span style="display:inline;"
+                                                                                                    class="selling-badge order-bg-opacity-primary color-primary">Lid
+                                                                                                </span>
+                                                                                                {% endif %}
                                                                                                 {{student_attendace.full_name}}
                                                                                             </td>
                                                                                             <td>
@@ -297,7 +302,11 @@
                                                                                                     class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
                                                                                                     id="prosent_attendace"
                                                                                                     >
+                                                                                                    {% if student_attendace.is_lead %}
+                                                                                                    {{student_attendace.id|lead_attendance_result}}%
+                                                                                                    {% else %}
                                                                                                     {{student_attendace.id|attendance_result}}%
+                                                                                                    {% endif %}
                                                                                                 </span>
                                                                                             </td>
                                                                                             {% for attendace in student_attendace.attendaces %}
@@ -340,9 +349,9 @@
                                                                                                         {% with date=attendace.attendaces|date:"Y-m-d" %}  
                                                                                                         <select
                                                                                                             name="select-search"
-                                                                                                            id="{{student_attendace.id}}-{{attendace.attendaces|date:'Y-m-d'}}"
+                                                                                                            id="{{student_attendace.id}}-{{attendace.attendaces|date:'Y-m-d'}}" {% if is_lead and enabled is False %}disabled=true{% endif %}
                                                                                                             class="form-control atbd-select-day{{student_attendace.id}}"
-                                                                                                            onchange='handleChange("{{student_attendace.id}}","{{date}}")'>
+                                                                                                            {% if student_attendace.is_lead %}onchange='handleChange("{{student_attendace.id}}","{{date}}",true)'{% else %}onchange='handleChange("{{student_attendace.id}}","{{date}}")'{% endif %}>
                                                                                                             <option
                                                                                                                 value="0">
                                                                                                                 Tanlang
@@ -1522,10 +1531,31 @@
     var y = date.getFullYear();
     return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
     }
-    function handleChange(id, date) {
+    function handleChange(id, date, is_lead=false) {
         var status = document.getElementById(`${id.toString()}-${date.toString()}`)
         var group_id = window.location.pathname.split('/')[3]; // need to optimize some points
         console.log(group_id);
+
+        if(is_lead==true){
+            fetch(`{% url 'admintion:change-lead-attendace' %}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    "X-CSRFToken": "{{csrf_token}}",
+                },
+                body: JSON.stringify({
+                    id,
+                    date,
+                    group_id: group_id,
+                    status:status.value
+                })
+            }).then(res => res.json()).then(res => {
+                status.disabled = true;
+                document.getElementById('prosent_attendace').textContent=''+res.count+'%';
+            }) 
+        } else{
+
+
         fetch(`{% url 'admintion:change-attendace' %}`, {
             method: 'POST',
             headers: {
@@ -1542,6 +1572,7 @@
             status.disabled = true;
             document.getElementById('prosent_attendace').textContent=''+res.count+'%';
         })
+        }
     }
 
     function handleChangeMonth(id,date,group_id){
@@ -1566,15 +1597,6 @@
             })
         }).then(res => res.json()).then(res => {
             var day_parent = document.querySelector(".day_parent");
-            // while (day_parent.childElementCount>2) {
-            //     if(child.className=="day_title"){
-            //         day_parent.removeChild(day_parent.lastElementChild);
-            //     }
-            // }
-            //old_lists = document.querySelectorAll('.day_list').forEach((e,index) => {
-            //    console.log(e, index);
-             //   e.remove()
-            // });
             old_lists = document.querySelectorAll('.day_list');
             for (let i=0; i< old_lists.length; i++){
                 old_lists[i].remove();

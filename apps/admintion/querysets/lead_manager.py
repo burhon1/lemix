@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef
+from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef,Count,Sum
 from django.db.models.functions import Concat,Substr,Cast
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models.query import QuerySet
@@ -8,33 +8,61 @@ class LeadQueryset(QuerySet):
         if not self.exists():
             return self.all()
         return self.values(
-        'student__id',
-        'student__user__first_name',
-        'student__user__last_name',
-    )
+            'id',
+            'user__first_name',
+            'user__last_name',
+        ).annotate(
+            full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
+        )
+
 
     def lead_list(self,id):
-        return self.get_info().filter(student__group__id=id).annotate(
-        id=F('student__id'),
-        full_name=Concat(F('student__user__first_name'),Value(' '),F('student__user__last_name')),
-        date=ArrayAgg(
-                Cast('date', TextField()),
-                filter=Q(date__isnull=False
+        return self.get_info().values(
+            'id',
+            'user__first_name',
+            'user__last_name',
+            'user__phone',
+            # 'groups',
+            'status'
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                ),
+            demo_count = Count(F('demo'), distinct=True),
+            payment = Sum(F('payment__paid'), distinct=True),
+            attendace = ArrayAgg(F('demo__lead_attendance'), distinct=True)
+        )
+    def leads_attendace(self,id):
+        return self.get_info().filter(demo__group__id=id,activity__lt=3).values(
+            'id',
+            'full_name'
+        ).annotate(
+            attendace_status=ArrayAgg(
+                Cast('demo__lead_attendance__status', TextField()),
+                filter=Q(demo__lead_attendance__status__isnull=False
+            ))
+        ).annotate(
+            attendace=ArrayAgg(
+                Cast('demo__lead_attendance__date', TextField()),
+                filter=Q(demo__lead_attendance__date__isnull=False
             )),
-        status=ArrayAgg(
-                Cast('status', TextField()),
-                filter=Q(status__isnull=False
-            ))  
-    ).values(
-        'id',
-        'status',
-        'full_name',
-        'date'
-    )
+        )
 
-class AttendaceManager(Manager):
+class LeadManager(Manager):
     def get_query_set(self):
-        return AttendaceQueryset(self.model)
+        return LeadQueryset(self.model) 
     
-    def attendaces(self,id):
-        return self.get_query_set().attendaces(id) 
+    def leads(self):
+        return self.get_query_set().leads() 
+
+    def leads_attendace(self,id):
+        return self.get_query_set().leads_attendace(id)
