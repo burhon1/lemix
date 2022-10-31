@@ -9,6 +9,7 @@ import json
 from admintion.models import Student, Group as GroupModel, Parents, TaskTypes
 from ..selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups
 from ..services.student import set_student_group, set_student_group_status, update_student
+
 def students_view(request):
     context = {}
     if request.method == "POST":
@@ -54,6 +55,9 @@ def student_detail_view(request,id):
     context['paids'] = Paid.objects.filter(student__id=context['student']['id'])
     return render(request,'admintion/student_detail.html',context)
 
+def student_view(request,id):
+    context = {}
+    return render(request,'admintion/student.html',context)
 
 def student_add_group_view(request, id):
     student = get_object_or_404(Student, pk=id)

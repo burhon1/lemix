@@ -18,6 +18,7 @@ urlpatterns = [
     path('group/<int:id>/add/student/',groups.add_student_view,name='add-student'),
     path('students/',students.students_view,name='students'),
     path('student/<int:id>/detail/',students.student_detail_view,name='student-detail'),
+    path('student/<int:id>/',students.student_view,name='student'),
     path('student/<int:id>/delete/',students.student_delete_view,name='student-delete'),
     path('student/<int:id>/add-group/', students.student_add_group_view, name='add-student-to-group'),
     path('student/<int:id>/deactivate-in-group/', students.student_deactivate_view, name='deactivate-student-in-group'),
@@ -31,5 +32,5 @@ urlpatterns = [
     path('leads/<int:pk>/add-group/', leads.addto_group, name='lead-add-to-group'),
     path('leads/<int:pk>/<str:action>/', leads.lead_activity_change, name='lead-activity-change'),
     path('leads/add-demo/', leads.add_demo, name='add-demo'),
-    path('tasks/create/', tasks.add_task, name='add-task'),
+    path('tasks/create/', tasks.add_task, name='add-task')
 ]
