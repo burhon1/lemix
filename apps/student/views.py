@@ -170,9 +170,9 @@ def lead_course_modules_view(request, pk):
     group = request.GET.get('group', False)
     authors = list(get_admins())
     if group:
-        demo = request.user.lead.leaddemo_set.filter(group_id=group).first()    
+        demo = request.user.lead.demo.filter(group_id=group).first()    
     else:
-        demo = request.user.lead.leaddemo_set.filter(group__course_id=course['id']).first()
+        demo = request.user.lead.demo.filter(group__course_id=course['id']).first()
     if demo and demo.group and demo.group.teacher:
         authors.append(demo.group.teacher.id)
     if demo and demo.group and demo.group.trainer:

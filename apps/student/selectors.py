@@ -99,7 +99,6 @@ def get_student_tests(student: Student):
         else:
             dct['available'] = False # Test savollari soni yetarli emas.
         data.append(dct)
-    print(data)
     return data
 
 def get_test_data(test):
