@@ -11,7 +11,7 @@ class Modules(models.Model):
     groups = models.ManyToManyField(Group, blank=True)
     title  = models.CharField("Modul sarlavhasi", max_length=300)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
-    order  = models.IntegerField("Dars o'rni", default=0)
+    order  = models.IntegerField("Dars o'rni", default=1)
     comment= models.TextField(null=True,blank=True)
     objects = models.Manager()
     modules = modules.ModulesManager()
@@ -27,7 +27,7 @@ class Lessons(models.Model):
     module = models.ForeignKey(Modules, models.CASCADE, verbose_name="Modul", related_name="lessons")
     groups = models.ManyToManyField(Group, blank=True)
     title  = models.CharField("Mavzu sarlavhasi", max_length=300)
-    order  = models.IntegerField("Dars o'rni", default=0)
+    order  = models.IntegerField("Dars o'rni", default=1)
     content_type = models.SmallIntegerField("Content Type", choices=LESSONS_CHOICES, default=1)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     comment= models.TextField(null=True,blank=True)
@@ -51,7 +51,7 @@ class Contents(models.Model):
     
     homework     = models.FileField("Uy vazifa uchun topshiriq", null=True, blank=True)
 
-    order        = models.IntegerField("Material o'rni", default=0)
+    order        = models.IntegerField("Material o'rni", default=1)
     students     = models.ManyToManyField(Student, verbose_name="Talabalar", blank=True)
     leads        = models.ManyToManyField(FormLead, verbose_name="Lidlar", blank=True)
     opened_at    = models.DateTimeField("O'quvchiga ochilish vaqti",null=True, blank=True)

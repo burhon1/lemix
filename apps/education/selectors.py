@@ -6,7 +6,7 @@ from student.models import Homeworks
 from user.models import CustomUser
 from user.utils import get_user_role, get_admins
 from education.models import Contents, Lessons, Modules
-from admintion.models import Course, GroupStudents, Student, Teacher, Group
+from admintion.models import Course, GroupStudents, Student, Teacher, Group, LeadDemo
 
 from typing import List
 def get_viewed_status(student, lesson_obj):
@@ -368,3 +368,40 @@ def get_contents(course, content_type):
     contents = Contents.objects.filter(lesson__module__in=modules,content_type=content_type)
 
     return contents
+
+def get_leads_data(group:Group):
+    leads = LeadDemo.objects.filter(group=group, lead__activity__in=[1, 2]).annotate(
+        full_name=Concat(F('lead__user__first_name'),Value(' '),F('lead__user__last_name')),
+    ).values('id', 'lead_id','full_name')
+
+    temp_leads = [list(leads)[0]] if len(leads) else []
+    for lead in leads:
+        for tl in temp_leads:
+            if lead['lead_id'] != tl['lead_id']:
+                temp_leads.append(lead)
+    
+    leads = temp_leads
+
+    for lead in list(leads):
+        lead['last_homework'] = Homeworks.objects.filter(lead_id=lead['lead_id']).order_by('date_created').last()
+        if lead['last_homework']:
+            lead['last_homework'] = lead['last_homework'].status
+        else:
+            lead['last_homework'] = 1
+    print(leads, len(leads))
+    return leads
+
+
+def get_lead_homework_contents(lead, group, content_type):
+    demos = LeadDemo.objects.filter(lead=lead, group=group)
+    count = len(demos)
+    authors = list(get_admins())
+    authors.append(group.teacher.user)
+    authors.append(group.trainer.user)
+
+    course = group.course
+    lessons = Lessons.objects.filter(module__course=course).order_by('order', 'module',)[:count]
+    contents = Contents.objects.filter(lesson__in=lessons, content_type=content_type, author__in=authors).order_by('lesson', 'order')
+
+    return contents
+

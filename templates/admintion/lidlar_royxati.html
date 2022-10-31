@@ -512,12 +512,20 @@ margin-right: 7px;
                                                                 <select class="form-control-sm  select2-hidden-accessible demoID" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
                                                                     <option value="0">--------</option>
                                                                     {% for group in groups %}
-                                                                    <option value="{{group.id}}">{{group.title}}({{group.course__title}})</option>
+                                                                        <option value="{{group.id}}">{{group.title}}({{group.course__title}})</option>
                                                                     {% endfor %}
                                                                    
                                                                 </select>
+                                                                
                         
                                                                 <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(7)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                                            </div>
+                                                            <div class="atbd-select w-100">
+
+                                                                <select name="select-tag-group-days" id="select-tag-group-days" class="form-control" multiple>
+                                                                    
+                                                                </select>
+                                        
                                                             </div>
                                                         </div>
                                                     
@@ -714,14 +722,46 @@ margin-right: 7px;
             console.log(err);
         })
     }
+    var group = document.getElementsByClassName('demoID')[0];
+    group.addEventListener('change', (event)=>{
+        var url = `/admintion/group/${event.target.value}/data/`
+        fetch(url, {
+            method: 'get',
+            headers: {
+                'Accept':'application/json',
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            var group_days = document.getElementById('select-tag-group-days');
+            group_days.options.length = 0;
+            for(var i=0;i<res.group.dates.length;i++){
+                var option = new Option(`${res.group.dates[i].date}| ${res.group.dates[i].day}`, `${res.group.dates[i].date}`);
+                group_days.add(option);
+            }
+        })
+        .catch(err=>{
+            alert(err);
+        })
+    })
 
     function createDemo(lead, user){
         var url = `/admintion/leads/add-demo/`;
         var formData = new FormData();
-        if (document.querySelectorAll(".demoID")[0].value && document.querySelectorAll(".demoID")[0].value != 0){
-            formData.append('group', document.querySelectorAll(".demoID")[0].value);
+        var dates = document.getElementById('select-tag-group-days').selectedOptions;
+        
+        formData.append('form-INITIAL_FORMS', 0);
+        formData.append('form-TOTAL_FORMS', dates.length);
+
+
+        for (var i=0;i<dates.length;i++){
+            if (document.querySelectorAll(".demoID")[0].value && document.querySelectorAll(".demoID")[0].value != 0){
+                formData.append(`form-${i}-group`, document.querySelectorAll(".demoID")[0].value);
+            }
+            formData.append(`form-${i}-lead`, lead);
+            formData.append(`form-${i}-date`, dates[i].value)
         }
-        formData.append('lead', lead);
+        
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
         fetch(url, {
             method: 'post',

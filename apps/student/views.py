@@ -9,7 +9,7 @@ from education.models import Modules, Lessons, Contents, Tests
 from education.selectors import get_updated_modules, get_need_content
 from education.services import set_student_viewed_content
 from student.selectors import (
-    get_student_courses, get_student_homeworks, get_student_tests, get_test_data,
+    get_student_courses, get_student_homeworks, get_student_tests, get_test_data,get_lead_homeworks,
     get_questions_for_student,get_lead_updated_modules,check_lead_to_content_view_permision
 )
 from student.services import set_lead_content_viewed_status
@@ -179,7 +179,7 @@ def lead_course_modules_view(request, pk):
         authors.append(demo.group.trainer.id)
 
     context['modules'] = Modules.modules.course_modules(pk).filter(author_id__in=authors)
-    context['modules'] = get_lead_updated_modules(course['id'], context['modules'], request.user)
+    context['modules'] = get_lead_updated_modules(course['id'], context['modules'], request.user,authors=authors)
     context['group'] = group
     return render(request, 'student/lead_content_royxati.html', context)
 
@@ -204,27 +204,45 @@ def lead_course_content_view(request, pk, lesson_id, module_id, course_id):
     content = set_lead_content_viewed_status(content, lead)
     context = {'content': content, }
     context['modules'] = Modules.modules.course_modules(course_id)
-    context['modules'] = get_lead_updated_modules(course_id, context['modules'], request.user, with_contents=True)
+    context['modules'] = get_lead_updated_modules(course_id, context['modules'], request.user, authors=authors, with_contents=True)
     context['lesson'] = content.lesson
     context['resources'] = content.content_resources.all()
     context['faqs'] = content.faqs.all()
-    
+    context['homeworks'] = content.homeworks.filter(lead__user=request.user)
+    if len(context['homeworks']) and context['homeworks'].last().status==3:
+        context['balled'] = True
     next = Contents.objects.filter(lesson_id=lesson_id, order__gt=content.order, status=True, author__in=authors).first()
     if next is None:
-        lesson = get_object_or_404(Lessons, module_id=module_id, id=lesson_id, author__in=authors)
+        lesson = Lessons.objects.filter(module_id=module_id, id=lesson_id, author__in=authors).first()
         lesson = Lessons.objects.filter(module_id=module_id, author__in=authors, order__gt=lesson.order).first()
         if lesson:
-            print(lesson.contents.all().order_by('order'))
-            next =lesson.contents.filter(status=True).order_by('order').first()
-       
-    if next:
-        context['course_id'] = course_id
-        context['module_id'] = module_id
-        context['lesson_id'] = lesson_id
+            next =lesson.contents.filter(author__in=authors, status=True).order_by('order').first()
+        else:
+            module = Modules.objects.filter(id=module_id, author__in=authors).first()
+            module = Modules.objects.filter(order__gt=module.order, author__in=authors).first()
+            if module:
+                lessons = module.lessons.filter(author__in=authors)
+                next = Contents.objects.filter(lesson__in=lessons, status=True).order_by('lesson__module', 'lesson', 'order').first()
+
+    if next and check_lead_to_content_view_permision(lead, next):
+        context['course_id'] = next.lesson.module.course_id
+        context['module_id'] = next.lesson.module.id
+        context['lesson_id'] = next.lesson.id
         context['next'] = next.id
+    elif next is None:
+        context['last'] = True
     context['group'] = group.id if group else ''
     return render(request, 'student/lead_darsnig_ichki_sahifasi_video.html', context)
 
+@login_required
+def lead_homeworks_view(request):
+    lead = get_object_or_404(FormLead, user=request.user)
+    demos = LeadDemo.objects.filter(lead=lead)
+
+    context = {
+        'homeworks': get_lead_homeworks(lead)
+    }
+    return render(request, "student/lead_uyga_vazifa.html", context)
 
 @login_required
 def lead_homework_view(request, pk: int):

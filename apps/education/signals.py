@@ -6,7 +6,7 @@ from education.models import Modules, Lessons, Contents
 
 @receiver(pre_save, sender=Modules)
 def set_module_order(sender, instance, **kwargs):
-    if instance and instance.order == 0:
+    if instance and instance.order == 1:
         if instance.course:
             last_module = instance.course.modules.last()
             if last_module:
@@ -15,7 +15,7 @@ def set_module_order(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Lessons)
 def set_module_order(sender, instance, **kwargs):
-    if instance and instance.order == 0:
+    if instance and instance.order == 1:
         if instance.module:
             last_lesson = instance.module.lessons.last()
             if last_lesson:
@@ -24,7 +24,7 @@ def set_module_order(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Contents)
 def set_module_order(sender, instance, **kwargs):
-    if instance and instance.order == 0:
+    if instance and instance.order == 1:
         if instance.lesson:
             last_content = instance.lesson.contents.last()
             if last_content:

@@ -63,12 +63,10 @@ def groups_view(request):
 
 def group_detail_view(request,id):
     context = {}
-    if request.method == "POST":
-        pass
     context['group'] = Group.groups.group(id)
     context = context | get_attendace(id,context['group']['start_date'])
     context['student_list'] = Student.students.studet_list()
-
+    
     context['task_types'] = TaskTypes.objects.all()
     context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
     context['balances'] = StudentBalance.objects.filter(title=context['group']['title'])

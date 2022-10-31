@@ -4,10 +4,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes
+from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes, FormLead, LeadDemo
 from admintion.selectors import set_tasks_status
 from education.models import FAQ, Lessons, Modules, Contents, Resources
-from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data
+from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data,get_leads_data,get_lead_homework_contents
 from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm, TaskForm
 from student.models import Homeworks
 from user.models import CustomUser
@@ -236,7 +236,6 @@ def onlins_view(request,id):
     context['lessons'] = get_lessons_data(context['lessons'])
     
     context['modules'] = get_modules_data(context['modules'], group=group, authors=admins)
-    print("\n\n", context, "\n\n")
     return render(request,'education/onlins.html', context) 
 
 @login_required
@@ -598,7 +597,8 @@ def group_homeworks_detail_view(request, pk):
     context['group'] = model_to_dict(group, fields=('id', 'title'))
     context['group']['course'] = model_to_dict(group.course, fields=('id', 'title'))
     context['students'] = get_students_data(group=group)
-
+    context['leads'] = get_leads_data(group=group)
+    context['general'] = list(context['students'])+context['leads'] 
     return render(request, 'education/uyga_vazifa_ichki_teacher.html', context)
 
 
@@ -611,7 +611,6 @@ def student_homeworks_in_group(request, pk):
 
     data = []
     for content in list(contents):
-        dct = dict()
         dct = model_to_dict(content, fields=('id', 'title', 'text'))
         if content.homework:
             dct['homework'] = {'name':content.homework.name, 'url': content.homework.url}
@@ -638,7 +637,6 @@ def student_homeworks_in_group(request, pk):
         else:
             dct['status'] = 1   
         data.append(dct)
-    print(data)
     return JsonResponse(data, safe=False)
 
 
@@ -676,3 +674,39 @@ def homework_edit_view(request, action, pk):
             print(form.errors())
             return JsonResponse({'status':'ok'}, safe=False)
     return JsonResponse({}, status=200)
+
+
+def lead_homeworks_in_group(request, pk):
+    demo = get_object_or_404(LeadDemo, pk=pk)
+    lead = demo.lead
+    group = demo.group
+    contents = get_lead_homework_contents(lead=lead, group=group, content_type=4)
+    data = []
+    for content in list(contents):
+        dct = model_to_dict(content, fields=('id', 'title', 'text'))
+        if content.homework:
+            dct['homework'] = {'name':content.homework.name, 'url': content.homework.url}
+        homeworks = content.homeworks.filter(lead=lead).order_by('date_created')
+        dct['homeworks'] = []
+        for homework in homeworks:
+            hw = model_to_dict(homework, fields=('id', 'text', 'ball', 'date_created', 'date_modified', 'comment', 'status', ))
+            hw['date_created'] = homework.date_created.strftime('%d/%m/%Y - %H:%M') if homework.date_created else ''
+            hw['date_modified'] = homework.date_modified.strftime('%d/%m/%Y - %H:%M') if homework.date_modified else ''
+
+            if homework.file:
+                hw['homework'] = {'name':homework.file.name.split('/')[-1], 'url':homework.file.url}
+            
+            if homework.comment_file:
+                hw['comment_file'] = {'name':homework.comment_file.name.split('/')[-1], 'url':homework.comment_file.url}
+            hw['commented'] = homework.commented.full_name() if homework.commented else ''
+            if Teacher.objects.filter(user=homework.commented).exists():
+                hw['commenter'] = 'O\'qituvchi'
+            else:
+                hw['commenter'] = 'Admin' if homework.commented and homework.commented.is_superuser else 'Mas\'ul'
+            dct['homeworks'].append(hw)
+        if homeworks.last():
+            dct['status'] = homeworks.last().status
+        else:
+            dct['status'] = 1   
+        data.append(dct)
+    return JsonResponse(data, safe=False)

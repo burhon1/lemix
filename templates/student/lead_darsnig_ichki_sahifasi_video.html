@@ -143,7 +143,40 @@ Darsing Ichki Sahifasi - Lemix
                                                                                                             
                                                                                                                 <label for="check-grp-td3" class="fs-14 color-primary strikethrough">
                                                                                                                     {% if content.open is False %}
-                                                                                                                        <a href="#">{{ content.title }}</a>
+                                                                                                                    <div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                                                                                                                        <div class="modal-dialog modal-md" role="document">
+                                                                                                                            <div class="modal-content modal-bg-white ">
+                                                                                                                                <div class="modal-header">
+                                                                                                                    
+                                                                                                                    
+                                                                                                                    
+                                                                                                                                    <h6 class="modal-title"></h6>
+                                                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                                                        <span data-feather="x"></span></button>
+                                                                                                                                </div>
+                                                                                                                                <div class="modal-body">
+                                                                                                                                    <div class="forms w-100">
+                                                                                                                                        <div class="atbd-tag-mode ">
+                                                                                                                                            <p  class="col-12 p-0 mb-1">
+                                                                                                                                                Keyingi darslarni ko'rish uchun siz o'quvchi bo'lishingiz kerak.
+                                                                                                                                                Bu borada admin bilan bog'laning.
+                                                                                                                                                
+                                                                                                                                            </p>  
+                                                                                                                                           
+                                                                                                                                    </div>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                                <div class="modal-footer">
+                                                                                                                                    <button type="button" class="btn btn-primary btn-sm"  data-dismiss="modal">Ortga</button>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    
+                                                                                                                    
+                                                                                                                    </div>
+                                                                                                                        <a href="#" data-toggle="modal" data-target="#modal-basic1">{{ content.title }}</a>
                                                                                                                     {% else %}
                                                                                                                         <a href="{% url 'student:lead-demo-lessons' module.course module.id lesson.id content.id %}?group={{group}}">{{ content.title }}</a>
                                                                                                                     {% endif %}
@@ -217,6 +250,48 @@ Darsing Ichki Sahifasi - Lemix
 {% block script %}
 
 <script>
+
+    function sendLeadHomework(id){
+        let url = `/student/lead/homework/${id}/`;
+        const formData = new FormData();
+        
+        input = document.getElementById('uploadhomework');
+        text_input = document.getElementById('text-homework');
+        formData.append('text', text_input.value);
+        formData.append('file', input.files[0]);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'multipart/form-data',
+            "X-CSRFToken": "{{csrf_token}}",
+        },
+        body: formData,
+     }).then(res=>{
+        console.log(res);
+        if (res.status == 200){
+            res_message = document.getElementsByClassName('response-message')[0];
+            div = document.createElement('div');
+            div.classList = "alert alert-success p-30";
+            div.role = "alert";
+
+            div2 = document.createElement('div');
+            div2.classList = "alert-content";
+            div2.textContent = `Javobingiz muvaffaqiyatli yuborildi!
+                                Tez orada ball qo‘yiladi!`;
+            div.appendChild(div2);
+            res_message.appendChild(div);
+            window.location.assign(window.location.href)
+        }
+     })
+     .catch(err=>{
+        console.log("Error", err);
+     })
+
+
+    }
+
+
     function sendHomework(id){
         let url = `/student/homework/${id}/`;
         
