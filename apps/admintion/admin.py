@@ -1,7 +1,9 @@
 from django.contrib import admin
 
-from admintion.models import Room,Course,Teacher,Group,Student,GroupsDays,Payment,Attendace, GroupStudents, Parents, LeadDemo, TaskTypes, Tasks, FormLead,LeadStatus,UserTaskStatus
-
+from admintion.models import (Room,Course,Teacher,Group,Student,GroupsDays,Payment,Attendace, GroupStudents, 
+                              Parents, LeadDemo, TaskTypes, Tasks, FormLead,LeadStatus,UserTaskStatus,
+                              SmsIntegration,Messages,
+                            )
 # Register your models here.
 admin.site.register(Room)
 admin.site.register(Course)
@@ -26,3 +28,5 @@ admin.site.register(Tasks)
 admin.site.register(FormLead)
 admin.site.register(LeadStatus)
 admin.site.register(UserTaskStatus)
+admin.site.register(SmsIntegration)
+admin.site.register(Messages)

@@ -3,7 +3,7 @@ from admintion.querysets import rooms_manager,groups_manager,students_manager,at
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
-from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE
+from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE
 # Create your models here.
 class Room(models.Model):
     title = models.CharField(max_length=50)
@@ -167,3 +167,22 @@ class Tasks(models.Model):
     students = models.ManyToManyField(Student, blank=True)
     courses = models.ManyToManyField(Course, blank=True)
     parents = models.ManyToManyField(Parents, blank=True) 
+
+
+class SmsIntegration(models.Model):
+    limit = models.PositiveIntegerField("Smslar soniga cheklov", default=100)
+    used = models.PositiveIntegerField("Foydalanilgan bonus smslar soni", default=0)
+    email = models.EmailField("Sms Integratsiya qilingan email", blank=True, null=True)
+    password = models.CharField("Sms Integratsiya qilingan parol", blank=True, null=True, max_length=128)
+    main = models.BooleanField("Asosiymi?", help_text="Agar bu firmaning(o'quv markazniki emas) ma'lumotlari bo'lsa, belgilang", default=False)
+    class Meta:
+        verbose_name = "Sms Integratsiya"
+        verbose_name_plural = "Sms Integratsiya"
+
+class Messages(models.Model):
+    text = models.CharField("Xabar matni", max_length=5000)
+    user = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='messages')
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='author_messages')
+    message_type = models.PositiveSmallIntegerField(choices=MESSAGE_TYPE, default=1)
+

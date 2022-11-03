@@ -516,7 +516,7 @@ margin-right: 7px;
                                                         <polyline points="22,6 12,13 2,6"></polyline>
                                                     </svg></span>
                                                     </span>
-                                                    <span class="atbd-menu__text view drawer-trigger" data-drawer="account">SMS yuborish</span>
+                                                    <span class="atbd-menu__text view drawer-trigger" data-drawer="account" onclick="checkedLeads()">SMS yuborish</span>
                                                 </a>
     
                                             </li>
@@ -1083,11 +1083,12 @@ margin-right: 7px;
             <div class="drawer-content">
                 <div class="drawer-account-form form-basic">
                     <form action="#">
+                        
                         <div class="form-row">
-                         
+                            <div><div class="sms-status-message"></div></div>
                             <div class="form-group col-12">
                                 <label for="description">Xabar matni</label>
-                                <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
+                                <textarea name="description" id="message_description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
                             </div>
                             
                             <div class="form-group col-12">
@@ -1097,7 +1098,7 @@ margin-right: 7px;
                                 <a href="./sms_yoriqnoma.html">SMSda simvollarni ishlatish bo'yicha yo'riqnoma</a>
                             </div>
                             <div class="form-group col-12">
-                                <div class="btn btn-primary">Yuborish</div>
+                                <div class="btn btn-primary" id="sendSMS">Yuborish</div>
                             </div>
                         </div>
                     </form>
@@ -1515,7 +1516,68 @@ margin-right: 7px;
         })
     
 
-       
+        function checkedLeads(){
+            var leads = []
+            
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('leads', window.location.pathname.split('/')[3]);
+            // var url = "{% url 'admintion:check-sms-availability' %}";
+            fetch("{% url 'admintion:check-sms-availability' %}", {
+                method:'post',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                var div = document.getElementsByClassName('sms-status-message')[0];
+                //div.classList.add('d-flex m-2 p-2')
+                div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                                 Sizda jami ${res.sms_limit} miqdorida tekin smslar mavjud. Bu limit tugagach,
+                                sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+                `
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+
+        
+
+    var sendSMS = document.getElementById('sendSMS');
+    sendSMS.addEventListener('click', ()=>{
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        var input = document.getElementById('message_description');
+        formData.append('message', input.value);
+        formData.append('leads', window.location.pathname.split('/')[3]);
+        
+        var url = `{% url 'admintion:send_sms_to_lead' %}`
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            var status = res.status
+            return res;
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            if(status==200 || status==201){
+                alert("Xabar Lidga yuborildi.");
+            } else {
+                alert(res);
+            } 
+        })
+    })
+
+
     
 
         

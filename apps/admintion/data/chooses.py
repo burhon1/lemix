@@ -77,3 +77,16 @@ TEACHER_TYPE = (
     (1, "O'qituvchi"),
     (2, "Yordamchi(support)"),
 )
+
+MESSAGE_TYPE = (
+    (1, 'Foydalanuvchiga'),
+    (2, 'O\'qituvchilarga'),
+    (3, 'O\'quvchilarga'),
+    (4, 'Ota-onalarga'),
+    (5, 'Adminlarga'),
+    (6, 'Managerlarga'),
+    (7, 'O\'quvchilarga'),
+    (8, 'Guruhga'),
+    (9, 'Kursga'),
+    (10, 'Lidlarga'),
+)

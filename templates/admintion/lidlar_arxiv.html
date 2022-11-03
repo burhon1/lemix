@@ -82,7 +82,43 @@ margin-right: 7px;
                         <div class="card">
                             <div class="card-header color-dark fw-500">
                                <h2 class="mr-30">Arxivlangan Lidlar</h2>
+                                
+                               <div class="buttons row">
+                                    <button class="btn btn-primary btn-xs ml-3 drawer-trigger" data-toggle="modal" data-target="#modal-basic3" onclick="checkedLeads()">SMS jo'natish</button>
+                                    <div class="modal-basic modal fade show" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                                        <div class="modal-dialog modal-md" role="document">
+                                            <div class="modal-content modal-bg-white ">
+                                                <div class="modal-header">
                             
+                            
+                            
+                                                    <h6 class="modal-title">Sms matni.</h6>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span data-feather="x"></span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="sms-status-message"></div>
+                                                    <form action="#">
+                                                        <div class="form-row">
+                                                            <div class="form-group col-lg-12">
+                                                                <label for="id_message">Xabar matni</label>
+                                                                <textarea type="text" name="id_message" id="id_message" class="form-control form-control-sm border-light" placeholder="Xabar matni..." required="true"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary btn-sm" id="sendSMS">Jo'natish</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS", data-dismiss="modal">Bekor qilish</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                            
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
 
@@ -133,8 +169,8 @@ margin-right: 7px;
                                                                 <div class="checkbox-group-wrapper">
                                                                     <div class="checkbox-group d-flex">
                                                                         <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                            <input class="checkbox" type="checkbox" id="check-grp-12">
-                                                                            <label for="check-grp-12"></label>
+                                                                            <input class="checkbox leadCheckBox" type="checkbox" id="check-grp-{{lead.id}}">
+                                                                            <label for="check-grp-{{lead.id}}"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -453,6 +489,86 @@ margin-right: 7px;
             btn.setAttribute('onclick', `changeLeadStatus('${id}', '${action}')`)
             console.log(btn);
         }
+        var cancelBtn = document.getElementById('cancelSMS');
+    cancelBtn.addEventListener('click', ()=>{
+        var input = document.getElementById('id_message');
+        input.value = '';
+    })
+
+    var sendSMS = document.getElementById('sendSMS');
+    sendSMS.addEventListener('click', ()=>{
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        var input = document.getElementById('id_message');
+        if(input.value || input.value!=undefined || input.value!=''){
+            formData.append('message', input.value);
+        }
+        
+        var checkboxes = document.getElementsByClassName('leadCheckBox');
+        var leads = []
+        for(var i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].checked == true) {
+                formData.append('leads', checkboxes[i].id.split('-')[2]);
+            }
+        }
+
+        var url = `{% url 'admintion:send_sms_to_lead' %}`
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            var status = res.status
+            return res;
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            if(status==200){
+                alert("Xabar Lidlarga yuborildi.");
+            } else {
+                alert(res);
+            } 
+        })
+    })
+
+    function checkedLeads(){
+        var checkboxes = document.getElementsByClassName('leadCheckBox');
+        var leads = []
+        for(var i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].checked == true) {
+                leads.push(checkboxes[i].id.split('-')[2]);
+            }
+        }
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        for(var i=0;i< leads.length;i++){
+            formData.append('leads', leads[i]);
+        }
+        // var url = "{% url 'admintion:check-sms-availability' %}";
+        fetch("{% url 'admintion:check-sms-availability' %}", {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            var div = document.getElementsByClassName('sms-status-message')[0];
+            //div.classList.add('d-flex m-2 p-2')
+            div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                             Sizda jami ${res.sms_limit} miqdorida tekin smslar mavjud. Bu limit tugagach,
+                            sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+            `
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
 
     </script>
 {% endblock %}

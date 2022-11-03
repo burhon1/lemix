@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks
+from .views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms
 app_name = 'admintion'
 
 urlpatterns = [
@@ -33,5 +33,10 @@ urlpatterns = [
     path('leads/<int:pk>/add-group/', leads.addto_group, name='lead-add-to-group'),
     path('leads/<int:pk>/<str:action>/', leads.lead_activity_change, name='lead-activity-change'),
     path('leads/add-demo/', leads.add_demo, name='add-demo'),
-    path('tasks/create/', tasks.add_task, name='add-task')
+    path('tasks/create/', tasks.add_task, name='add-task'),
+
+    path('sms/check/', sms.check_sms_availability, name='check-sms-availability'),
+    path('sms/send/lead/', sms.send_sms_to_lead, name='send_sms_to_lead'),
+    path('sms/send/student/', sms.send_sms_to_students, name='send_sms_to_student'),
+    path('sms/send/group/', sms.send_sms_to_group, name='send_sms_to_group'),
 ]

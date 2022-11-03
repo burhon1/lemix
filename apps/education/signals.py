@@ -8,7 +8,7 @@ from education.models import Modules, Lessons, Contents
 def set_module_order(sender, instance, **kwargs):
     if instance and instance.order == 1:
         if instance.course:
-            last_module = instance.course.modules.last()
+            last_module = instance.course.modules.order_by('order').last()
             if last_module:
                 instance.order = last_module.order + 1 
 
@@ -17,7 +17,7 @@ def set_module_order(sender, instance, **kwargs):
 def set_module_order(sender, instance, **kwargs):
     if instance and instance.order == 1:
         if instance.module:
-            last_lesson = instance.module.lessons.last()
+            last_lesson = instance.module.lessons.order_by('order').last()
             if last_lesson:
                 instance.order = last_lesson.order + 1
 
@@ -26,6 +26,6 @@ def set_module_order(sender, instance, **kwargs):
 def set_module_order(sender, instance, **kwargs):
     if instance and instance.order == 1:
         if instance.lesson:
-            last_content = instance.lesson.contents.last()
+            last_content = instance.lesson.contents.order_by('order').last()
             if last_content:
                 instance.order = last_content.order + 1

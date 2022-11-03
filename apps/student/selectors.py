@@ -189,6 +189,7 @@ def get_lead_updated_modules(course_id:int, modules:Modules, user:CustomUser, au
             dct = model_to_dict(lesson, fields=('id', 'title', 'order'))
             contents = lesson.contents.filter(status=True, author__in=authors).order_by('order')
             in_demos = bool(demos)
+            print(contents)
             dct['content'] = contents[0].id if len(contents)>0 else None
             dct['viewed'] = bool(contents.filter(leads__in=[lead]))
             if demos:
@@ -211,6 +212,7 @@ def check_lead_to_content_view_permision(lead:FormLead, content:Contents=None, c
     if content is None and content_id:
         content = Contents.objects.filter(id=content_id).first()
     elif content is None and content_id is None:
+        print("2 tasi ham none")
         return False
 
     course = content.lesson.module.course
@@ -219,15 +221,15 @@ def check_lead_to_content_view_permision(lead:FormLead, content:Contents=None, c
     modules = course.modules.all()
     lessons = Lessons.objects.filter(module__in=modules).order_by('module', 'order')[:demos]
     contents = Contents.objects.filter(lesson__in=lessons, status=True).order_by('lesson', 'order')
-    contents = list(contents)
-    if content in contents:
-        index = contents.index(content)
-        if index == 0:
-            return True
-        if contents[index-1] and lead in contents[index-1].leads.all():
-            return True
-    return False
+    if content is contents.first():
+        return True
+    seen_contents = contents.filter(order__lt=content.order)
+    for cnt in seen_contents:
+        if lead not in cnt.leads.all():
+            False
+    return True 
 
+    
 def get_lead_homeworks(lead: FormLead):
     authors = get_content_authors_for_student(lead=lead)
     demos = LeadDemo.objects.filter(lead=lead)
