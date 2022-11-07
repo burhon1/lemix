@@ -17,7 +17,7 @@ DEBUG = os.environ.get('DEBUG', True)
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['5.8.248.139','t.lemix.uz','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*'] # '5.8.248.139','t.lemix.uz','localhost', '127.0.0.1'
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
 CSRF_TRUSTED_ORIGINS = ['http://5.8.248.139','http://lemix.uz/','https://lemix.uz','https://*.lemix.uz','http://*.lemix.uz','http://lemix.uz','https://lemix.uz','http://*','https://*',]
 
@@ -117,9 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 PAYCOM_SETTINGS = {
-    "KASSA_ID": "63452de97b01e577996326ac",
-    "TOKEN": "63452de97b01e577996326ac",  # token
-    "SECRET_KEY": "6UB9hX18VweJHPdGBa#cz8TxfnAmPEBPd4kE",  # password
+    "KASSA_ID": "635795929fd41bc3daf5019c",
+    "TOKEN": "635795929fd41bc3daf5019c",  # token
+    "SECRET_KEY": "HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d",  # password
     "ACCOUNTS": {
         "KEY": "order_id"
     }

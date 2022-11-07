@@ -34,8 +34,8 @@ def group_students_pay(request):
 def check_paid(request,id):
     paycom = Paycom()
     url = paycom.create_initialization(amount=5.00, order_id='197', return_url='https://example.com/success/')
-    print(url)
-    return JsonResponse({'status':201,'balance':url}) 
+    # print(url)
+    return redirect(url)  
 
 class CheckOrder(Paycom):
     # order = 'bu yerda Order ID buladi'
