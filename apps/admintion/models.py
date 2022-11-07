@@ -1,5 +1,5 @@
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager,lead_manager
+from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager,lead_manager,task_manager
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
@@ -167,7 +167,8 @@ class Tasks(models.Model):
     students = models.ManyToManyField(Student, blank=True)
     courses = models.ManyToManyField(Course, blank=True)
     parents = models.ManyToManyField(Parents, blank=True) 
-
+    objects = models.Manager()
+    tasks = task_manager.TasksManager()
 
 class SmsIntegration(models.Model):
     limit = models.PositiveIntegerField("Smslar soniga cheklov", default=100)

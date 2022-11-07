@@ -39,4 +39,6 @@ urlpatterns = [
     path('sms/send/lead/', sms.send_sms_to_lead, name='send_sms_to_lead'),
     path('sms/send/student/', sms.send_sms_to_students, name='send_sms_to_student'),
     path('sms/send/group/', sms.send_sms_to_group, name='send_sms_to_group'),
+    path('sms/send/teacher/', sms.send_sms_to_teacher, name='send_sms_to_teacher'),
+    path('sms/send/parent/', sms.send_sms_to_parent, name='send_sms_to_parent'),
 ]

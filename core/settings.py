@@ -140,3 +140,4 @@ MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 LOGIN_URL = '/user/login/'
+SPOTLIGHTR_vooKEY = 'Oyp3soAFRuYIul8iH93P8Rum1'

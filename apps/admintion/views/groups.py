@@ -2,12 +2,12 @@ from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.http import JsonResponse
 from datetime import date,datetime
-from django.core import serializers
+from django.utils import timezone
 from django.db.models import Q
 import json
 from admintion.selectors import get_next_n_group_dates
 from user.models import CustomUser
-from admintion.models import GroupStudents, LeadDemo, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace
+from admintion.models import GroupStudents, LeadDemo, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace,Tasks
 from admintion.utilts.users import get_days,get_month
 from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
@@ -66,7 +66,8 @@ def group_detail_view(request,id):
     context['group'] = Group.groups.group(id)
     context = context | get_attendace(id,context['group']['start_date'])
     context['student_list'] = Student.students.studet_list()
-    
+    context['tasks'] = Tasks.tasks.group_tasks(id=id)
+    context['today_tasks'] = len([task for task in context['tasks'] if task['deadline'].date() == timezone.now().date()])
     context['task_types'] = TaskTypes.objects.all()
     context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
     context['balances'] = StudentBalance.objects.filter(title=context['group']['title'])

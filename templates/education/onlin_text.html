@@ -594,7 +594,7 @@ function assignfunction(url){
 }
 
 
-function saveResources(id, redirect_id){
+function saveResources(id, redirect_id, group){
     console.log("saveResources");
     if(id != null || id != ''){
         var url = `/education/onlines/resources/?content=${id}`;
@@ -693,7 +693,7 @@ function SaveContent(is_ready){
         return res;
 
     }).then(res=>{
-        saveResources(res.id, res.redirect_id);
+        saveResources(res.id, res.redirect_id, res.group);
         return res;
     })
     .catch(err=>{

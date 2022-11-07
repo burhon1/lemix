@@ -183,12 +183,7 @@
                                     <tr class="userDatatable-header">
                                         <th>
                                             <div class="d-flex align-items-center">
-                                                <div class="custom-checkbox  check-all">
-                                                    <input class="checkbox" type="checkbox" id="check-3">
-                                                    {% comment %} <label for="check-3">
-                                                       
-                                                    </label> {% endcomment %}
-                                                </div>
+                                                
                                             </div>
                                         </th>
                                         <th>
@@ -312,9 +307,18 @@
                                     </tr>
                                     {% endfor %}
                                 </tbody>
+
+                                
                             </table>
 
-
+                            <div class="d-flex align-items-center m-4">
+                                <div class="custom-checkbox  check-all">
+                                    <input class="checkbox" type="checkbox" id="check-3">
+                                    <label for="check-3">
+                                        Barchani tanlash
+                                    </label>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -673,15 +677,13 @@
             body: formData,
         })
         .then(res=>{
-            var status = res.status
-            return res;
-        })
-        .then(res=>res.json())
-        .then(res=>{
-            if(status==200){
+            
+            if(res.status==200){
                 alert("Xabar O'quvchilarga yuborildi.");
+                var input = document.getElementById('id_message');
+                input.value = '';
             } else {
-                alert(res);
+                alert("Ma'lumotlar to'liq kiritilmadi");;
             } 
         })
     })
@@ -713,7 +715,7 @@
             var div = document.getElementsByClassName('sms-status-message')[0];
             //div.classList.add('d-flex m-2 p-2')
             div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
-                             Sizda jami ${res.sms_limit} miqdorida tekin smslar mavjud. Bu limit tugagach,
+                             Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
                             sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
             `
         })

@@ -306,7 +306,9 @@ def get_courses_via_hws(courses, user:CustomUser):
     for course in list(courses):
         dct = model_to_dict(course, fields=('id', 'title',))
         dct['groups'] = len(course.group_set.all())
-        dct['students'] = len(GroupStudents.objects.filter(group__course=course))
+        dct['students'] = len(GroupStudents.objects.filter(group__course=course))+len(
+            set([demo.lead for demo in LeadDemo.objects.filter(group__in=course.group_set.all())])
+        )
         modules = course.modules.all()
         if user.teacher_set.exists():
             homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4)
@@ -326,21 +328,26 @@ def get_groups_via_hws(courses, user:CustomUser):
     if type(courses) not in [set, list, QuerySet]:
         return []
     data = list()
-
-    groups = Group.objects.filter(course__in=courses)
-    if user.is_superuser is False and user.teacher_set.first():
+    admins = list(get_admins())
+    if user in admins:
+        groups = Group.objects.filter(course__in=courses)
+    if user.teacher_set.first():
         query = Q(teacher=user.teacher_set.first())|Q(trainer=user.teacher_set.first())
-        groups = groups.filter(query)
+        groups = Group.objects.filter(query)
     
-    admins = CustomUser.objects.filter(is_superuser=True)
     for group in groups:
         dct = model_to_dict(group, fields=('id', 'title',))
         if group.teacher:
             dct['teacher'] = group.teacher.user.full_name()
-        dct['students'] = len(group.students.all())
+        dct['students'] = len(group.students.all())+len(
+            set([demo.lead for demo in LeadDemo.objects.filter(group=group)])
+        )
         dct['course'] = group.course.title
         modules = group.course.modules.all()
-        homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4, groups__in=[group])
+        if user not in admins:
+            homeworks = Contents.objects.filter(Q(author=user)|Q(author__in=admins), lesson__module__in=modules, content_type=4, groups__in=[group])
+        else:
+            homeworks = Contents.objects.filter(lesson__module__in=modules, content_type=4, groups__in=[group])
         dct['homeworks'] = len(homeworks)
         dct['unseen'] = len(Homeworks.objects.filter(content__in=homeworks, status=1, last_res=True))
         dct['unchecked'] = len(Homeworks.objects.filter(content__in=homeworks, status=2, last_res=True))

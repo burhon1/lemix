@@ -4,16 +4,23 @@ from admintion.services import send_sms
 
 
 def get_sms_integration(main=False):
-    return SmsIntegration.objects.filter(main=main).first()
+    sms_in = SmsIntegration.objects.filter(main=main).first()
+    if sms_in:
+        return sms_in
+    else:
+        return SmsIntegration.objects.create() 
 
 def get_bonus_smses(sms_integration):
-    return sms_integration.limit - sms_integration.used
+    # if sms_integration.limit > sms_integration.used:
+    return sms_integration.limit
+    # return 0
 
 def set_used_smses(used: int):
     sms_integration = get_sms_integration()
-    sms_integration.used = sms_integration.used + used
-    sms_integration.limit = sms_integration.limit - used
-    sms_integration.save()
+    if sms_integration.limit> sms_integration.used:
+        sms_integration.used = sms_integration.used + used
+        sms_integration.limit = sms_integration.limit - used
+        sms_integration.save()
     return sms_integration
 
 def get_sms_credentials():

@@ -4,14 +4,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes, FormLead, LeadDemo
+from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes, FormLead, LeadDemo,Parents
 from admintion.selectors import set_tasks_status
 from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data,get_leads_data,get_lead_homework_contents
 from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm, TaskForm
 from student.models import Homeworks
 from user.models import CustomUser
-
+from user.utils import get_admins
 from django.db.models import Q
 def test2_view(request):
     return render(request,'education/test.html')     
@@ -57,6 +57,7 @@ def onlin_video_view(request, pk):
             if data['video_link'] is None:
                 data['video_link'] = ''
             data['redirect_id'] = content.lesson.module.course.id
+            data['group'] = request.GET.get('group', None)
             return JsonResponse(data, status=200)
         else:
             return JsonResponse({'errors': form.non_field_errors()}, status=400, safe=False)
@@ -78,6 +79,7 @@ def onlin_video_create_view(request, lesson_id):
             content.content_type = 1 
             content.lesson = lesson 
             content.author = request.user
+            
             content.save()
             if group:
                 content.groups.add(group)
@@ -85,6 +87,7 @@ def onlin_video_create_view(request, lesson_id):
                 content.groups.add(*Group.objects.filter(course=lesson.module.course))
             data = model_to_dict(content, fields=('id', 'title'))
             data['redirect_id'] = content.lesson.module.course.id
+            data['group'] = request.GET.get('group', None)
             return JsonResponse(data, status=201)
         else:
             return JsonResponse({'message':form.non_field_errors()}, status=400)
@@ -111,6 +114,7 @@ def onlin_text_view(request, lesson_id):
             context = dict()
             context = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             context['redirect_id'] = content.lesson.module.course.id
+            context['group'] = request.GET.get('group', None)
             return JsonResponse(context)
         else:
             return JsonResponse({'form': form, 'status':400})
@@ -132,6 +136,7 @@ def onlin_text_update_view(request, pk):
         else:
             print(form.non_form_errors())
         context['content']['redirect_id'] = content.lesson.module.course.id
+        context['content']['group'] = request.GET.get('group', None)
         return JsonResponse(context['content'], status=200)
 
     return render(request,'education/onlin_text.html', context) 
@@ -169,15 +174,23 @@ def onlin_hwork_create_view(request, lesson_id):
     lesson = get_object_or_404(Lessons, id=lesson_id)
     if request.method == 'POST':
         form = ContentForm(request.POST)
-        
         if form.is_valid():
             content = form.save(commit=False)
             content.author = request.user 
             content.content_type = 4 # CONTENT_CHOICES
             content.lesson = lesson
             content.save()
+            try:
+                group = request.GET.get('group',None)
+                group = Group.objects.get(id=group)
+                content.groups.add(group)
+            except:
+                if request.user in get_admins():
+                    content.groups.add(*Group.objects.filter(course=lesson.module.course))
+            
             data = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             data['redirect_id'] = content.lesson.module.course.id
+            data['group'] = request.GET.get('group', None)
             return JsonResponse(data)
         else:
             print(form.non_field_errors())
@@ -189,7 +202,7 @@ def onlin_hwork_create_view(request, lesson_id):
 @login_required
 def onlin_hwork_delete_view(request, pk):
     content = get_object_or_404(Contents, pk=pk)
-    if request.method == 'POST':
+    if request.method == 'POST' and (request.user in get_admins() or content.author == request.user):
         id = content.lesson.module.course.id
         content.delete()
         return JsonResponse({'status':"O'chirildi", 'url': f'/education/onlines/{id}/'})
@@ -445,7 +458,10 @@ def students_list_view(request):
     return render(request,'education/students_list.html') 
 
 def parents_list_view(request):
-    return render(request,'education/parents_list.html')
+    context = {
+        'parents': Parents.parents.parents()
+        }
+    return render(request,'education/parents_list.html',context)
 
 def finance_list_view(request):
     return render(request,'education/finance_list.html')    
@@ -516,10 +532,6 @@ def faq_update(request, pk):
 
 def set_content_order(request, pk: int, order: int):
     content = get_object_or_404(Contents, pk=pk)
-    if content.order > order:
-        query = Q()
-    contents = Contents.objects.filter()
-    
     content.order = order
     content.save()
     return JsonResponse({'status': 200})
@@ -561,7 +573,7 @@ def online_content_resources_view(request):
 @login_required
 def modules_detail_view(request, pk):
     module = get_object_or_404(Modules, pk=pk)
-    if request.user.is_superuser:
+    if request.user in get_admins():
         lessons = module.lessons.all().values('id', 'title', 'order')
     else:
         admins = CustomUser.objects.filter(is_superuser=True)

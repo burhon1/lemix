@@ -901,7 +901,7 @@ margin-right: 7px;
                 if(res){
                     createDemo(res.id, id);
                 } else {
-                    alert(res);
+                    alert("Ma'lumotlar to'liq kiritilmadi");;
                 }
             })
             .catch(err=>{
@@ -958,7 +958,7 @@ margin-right: 7px;
             if(res){
                 createLead(res.id);
             } else {
-                alert(res);
+                alert("Ma'lumotlar to'liq kiritilmadi");;
             }
         })
         .catch(err=>{
@@ -1034,7 +1034,7 @@ margin-right: 7px;
             if(status==200){
                 alert("Xabar Lidlarga yuborildi.");
             } else {
-                alert(res);
+                alert("Ma'lumotlar to'liq kiritilmadi");;
             } 
         })
     })
@@ -1066,7 +1066,7 @@ margin-right: 7px;
             var div = document.getElementsByClassName('sms-status-message')[0];
             //div.classList.add('d-flex m-2 p-2')
             div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
-                             Sizda jami ${res.sms_limit} miqdorida tekin smslar mavjud. Bu limit tugagach,
+                             Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
                             sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
             `
         })

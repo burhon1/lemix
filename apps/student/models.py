@@ -16,7 +16,7 @@ class Homeworks(models.Model):
     date_modified = models.DateTimeField(auto_now=True, editable=True)
     comment_file  = models.FileField(upload_to="student/homeworks/comments", null=True, blank=True)
     comment = models.TextField("O'quvchiga xabar", max_length=5000, blank=True)
-    status  = models.PositiveSmallIntegerField("Uy vazifasining statusi", choices=choices.HOMEWORK_STATUS, default=1)
+    status  = models.PositiveSmallIntegerField("Uy vazifasining statusi", choices=choices.HOMEWORK_STATUS, default=2)
     commented = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     last_res  = models.BooleanField("Bu o'quvchining oxirgi javobimi?", default=True)
     class Meta:

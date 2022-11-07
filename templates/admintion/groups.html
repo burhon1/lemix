@@ -32,20 +32,7 @@
                                 <thead>
                                     <tr class="userDatatable-header">
                                         <th>
-                                            <div class="d-flex">
-                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                    <div class="checkbox-group-wrapper">
-                                                        <div class="checkbox-group d-flex">
-                                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                <input class="checkbox" type="checkbox" id="check-grp-12">
-                                                                {% comment %} <label for="check-grp-12"></label> {% endcomment %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
-                                                </div>
-                                                
-                                            </div>
+                                            
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">#</span>
@@ -153,6 +140,22 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="d-flex m-2">
+                            <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                <div class="checkbox-group-wrapper">
+                                    <div class="checkbox-group d-flex">
+                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                            <input class="checkbox" type="checkbox" id="check-grp-all">
+                                            <label for="check-grp-all">Barcha guruhlarni tanlash</label> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                            </div>
+                            
+                        </div>
+
                     </div>
 
                 </div>
@@ -399,7 +402,7 @@ function checkSMS(){
         var div = document.getElementsByClassName('sms-status-message')[0];
         //div.classList.add('d-flex m-2 p-2')
         div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
-                         Sizda jami ${res.sms_limit} miqdorida tekin smslar mavjud. Bu limit tugagach,
+                         Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
                         sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
         `
     })
@@ -426,7 +429,7 @@ sendSMS.addEventListener('click', ()=>{
         if(checkboxes[i].checked == true){
             formData.append('groups', checkboxes[i].id.split("-")[2]);
         }
-    }
+    } 
     var url = "{% url 'admintion:send_sms_to_group' %}"
     fetch(url, {
         method:'post',
@@ -444,9 +447,18 @@ sendSMS.addEventListener('click', ()=>{
         if(status==200){
             alert("Xabar Lidlarga yuborildi.");
         } else {
-            alert(res);
+            alert("Ma'lumotlar to'liq kiritilmadi");;
         } 
     })
 })
+
+    var checkAllBtn = document.getElementById('check-grp-all');
+    checkAllBtn.addEventListener('change', ()=>{
+        var checkBoxes = document.getElementsByClassName('group-checkboxes');
+        for(var i=0;i<checkBoxes.length;i++){
+            checkBoxes[i].checked = checkAllBtn.checked
+        }
+    })
+
 </script>
 {% endblock %}
