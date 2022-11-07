@@ -1,6 +1,9 @@
 from admintion.models import Group
 from finance.models import StudentBalance,Paid
+from datetime import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
 
+sched = BlockingScheduler()
 
 def student_paid(student,price,paid_type,goal_type,description,user):
     paid = Paid(
@@ -23,3 +26,13 @@ def student_paid(student,price,paid_type,goal_type,description,user):
     paid.save()
     student_balance.save()
     return student_balance.balance
+
+def pay_take():
+    pass
+
+@sched.scheduled_job('interval', minutes=1)
+def start():
+	# scheduler = BackgroundScheduler()
+	# scheduler.add_job(pay_take, 'interval', min=1)
+	# scheduler.start()
+    print('Take value')

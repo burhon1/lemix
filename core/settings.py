@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework',
+    'paycomuz',
     'user',
     'education',
     'admintion',
@@ -114,6 +115,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PAYCOM_SETTINGS = {
+    "KASSA_ID": "63452de97b01e577996326ac",
+    "TOKEN": "63452de97b01e577996326ac",  # token
+    "SECRET_KEY": "6UB9hX18VweJHPdGBa#cz8TxfnAmPEBPd4kE",  # password
+    "ACCOUNTS": {
+        "KEY": "order_id"
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
