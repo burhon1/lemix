@@ -1,6 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load user_tags %}
 {% block style %}
 <style>
     .cardPay {
@@ -136,7 +137,7 @@
                                                     </path>
                                                     <polyline points="22,6 12,13 2,6"></polyline>
                                                 </svg></span>
-                                            <span class="atbd-menu__text view drawer-trigger" data-drawer="account">SMS yuborish</span>
+                                            <span class="atbd-menu__text view drawer-trigger" onclick="checkSMS()" data-drawer="account">SMS yuborish</span>
                                         </a>
                                     </li>
                                     <li class="atbd-menu__item has-submenu">
@@ -278,6 +279,23 @@
                                                                                 <table class="table table--default">
                                                                                     <thead>
                                                                                         <tr class="text-center day_parent">
+
+                                                                                            <th>
+                                                                                                <div class="d-flex">
+                                                                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                                                        <div class="checkbox-group-wrapper">
+                                                                                                            <div class="checkbox-group d-flex">
+                                                                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                    <input class="checkbox" type="checkbox" id="check-grp-main-12">
+                                                                                                                    <label for="check-grp-main-12"></label>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                                                                                    </div>
+                                                                                                    
+                                                                                                </div>
+                                                                                            </th>
                                                                                             <th>FIO</th>
                                                                                             <th>Foiz</th>
                                                                                             {% for day in days %}
@@ -288,7 +306,26 @@
                                                                                     <tbody>
                                                                                         {% for student_attendace in students_attendace %}
                                                                                         <tr class="text-center attendace_status">
+                                                                                            <td>
+                                                                                                <div class="d-flex">
+                                                                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                                                        <div class="checkbox-group-wrapper">
+                                                                                                            <div class="checkbox-group d-flex">
+                                                                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                                    <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-{{student_attendace.id}} group-checkboxes" type="checkbox" id="check-grp-{{student_attendace.id}}{% if student_attendace.is_lead is True %}-lead{% endif %}">
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
                                                                                             <td>{{forloop.counter}}.
+                                                                                                {% if student_attendace.is_lead %}
+                                                                                                <span style="display:inline;"
+                                                                                                    class="selling-badge order-bg-opacity-primary color-primary">Lid
+                                                                                                </span>
+                                                                                                {% endif %}
                                                                                                 {{student_attendace.full_name}}
                                                                                             </td>
                                                                                             <td>
@@ -296,7 +333,11 @@
                                                                                                     class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
                                                                                                     id="prosent_attendace"
                                                                                                     >
+                                                                                                    {% if student_attendace.is_lead %}
+                                                                                                    {{student_attendace.id|lead_attendance_result}}%
+                                                                                                    {% else %}
                                                                                                     {{student_attendace.id|attendance_result}}%
+                                                                                                    {% endif %}
                                                                                                 </span>
                                                                                             </td>
                                                                                             {% for attendace in student_attendace.attendaces %}
@@ -339,9 +380,9 @@
                                                                                                         {% with date=attendace.attendaces|date:"Y-m-d" %}  
                                                                                                         <select
                                                                                                             name="select-search"
-                                                                                                            id="{{student_attendace.id}}-{{attendace.attendaces|date:'Y-m-d'}}"
+                                                                                                            id="{{student_attendace.id}}-{{attendace.attendaces|date:'Y-m-d'}}" {% if is_lead and enabled is False %}disabled=true{% endif %}
                                                                                                             class="form-control atbd-select-day{{student_attendace.id}}"
-                                                                                                            onchange='handleChange("{{student_attendace.id}}","{{date}}")'>
+                                                                                                            {% if student_attendace.is_lead %}onchange='handleChange("{{student_attendace.id}}","{{date}}",true)'{% else %}onchange='handleChange("{{student_attendace.id}}","{{date}}")'{% endif %}>
                                                                                                             <option
                                                                                                                 value="0">
                                                                                                                 Tanlang
@@ -447,86 +488,35 @@
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="tab-horizontal-3"
-                                                                role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
-                                                                <div class="d-flex justify-content-between w-100 mb-2">
-                                                                    <h4 class="text-dark fs-14 "> Topshiriqlar 14 | Bugun - 1</h4>
-                                                                   
+                                                        role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
+                                                        <div class="d-flex justify-content-between w-100 mb-2">
+                                                            <h4 class="text-dark fs-14 "> Topshiriqlar {{ tasks.count }} | Bugun - {{today_tasks}}</h4>
+                                                            
+                                                        </div>
+                                                        {% for task in tasks %}
+                                                            <div class="card card-default card-sm bg-normal card-bordered">
+                                                                <div class="card-header" style="min-height: 34px;">
+                                                                    <h6 style="font-size: 12px;"><svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                                                                        Nomi: {{ task.type }}
+                                                                        <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                                                        Vaqti: {{task.created_at|date:'d.m.Y H:i'}}  &nbsp; &nbsp;&nbsp;
+                                                                        <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                                                        Muddati: {{task.deadline|date:'d.m.Y H:i'}}  &nbsp; &nbsp;&nbsp;
+                                                                        <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                                                        Kim: {% for res in task.responsible_staffs %} {{ res }}, {% endfor %} </h6>
+        
                                                                 </div>
-                                                                <div class=" card-single mb-3">
-
-
-                                                                    <div class="card card-default card-sm bg-normal card-bordered">
-                                                                        <div class="card-header" style="min-height: 34px;">
-                                                                            <h6 style="font-size: 12px;"><svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-                                                                                Nomi: Telefon qilish  &nbsp; &nbsp;&nbsp;
-                                                                                <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                                                                Vaqti: 12.08.2022 14:08  &nbsp; &nbsp;&nbsp;
-                                                                                <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                                                                Muddati: 31.08.2022 12:00  &nbsp; &nbsp;&nbsp;
-                                                                                <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                                                                Kim: Burhon Baqoyev </h6>
-                
-                                                                        </div>
-                                                                        <div class="card-body" style="padding: .5rem;">
-                                                                            <div class="card-content">
-                                                                                <p>Card content</p>
-                                                                                
-                                                                            </div>
-                                                                        </div>
+                                                                <div class="card-body" style="padding: .5rem;">
+                                                                    <div class="card-content">
+                                                                        <p>{{ task.comment}}</p>
+                                                                        
                                                                     </div>
-                
-                
-                
-                                                                </div>
-                                                                <div class=" card-single mb-3">
-                                                                    <div class="card card-default card-sm bg-normal card-bordered">
-                                                                        <div class="card-header" style="min-height: 34px;">
-                                                                            <h6 style="font-size: 12px;"><svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-                                                                                Nomi: Telefon qilish  &nbsp; &nbsp;&nbsp;
-                                                                                <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                                                                Vaqti: 12.08.2022 14:08  &nbsp; &nbsp;&nbsp;
-                                                                                <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                                                                Muddati: 31.08.2022 12:00  &nbsp; &nbsp;&nbsp;
-                                                                                <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                                                                Kim: Burhon Baqoyev </h6>
-                
-                                                                        </div>
-                                                                        <div class="card-body" style="padding: .5rem;">
-                                                                            <div class="card-content">
-                                                                                <p>Card content</p>
-                                                                                
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                
-                
-                
-                                                                </div>
-                                                                <div class=" card-single mb-3">
-                                                                    <div class="card card-default card-sm bg-normal card-bordered">
-                                                                        <div class="card-header" style="min-height: 34px;">
-                                                                            <h6 style="font-size: 12px;"><svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-                                                                                 Nomi: Telefon qilish  &nbsp; &nbsp;&nbsp;
-                                                                                 <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                                                                 Vaqti: 12.08.2022 14:08  &nbsp; &nbsp;&nbsp;
-                                                                                 <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                                                                 Muddati: 31.08.2022 12:00  &nbsp; &nbsp;&nbsp;
-                                                                                 <svg style="transform:scale(.6) ;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                                                                 Kim: Burhon Baqoyev </h6>
-                
-                                                                        </div>
-                                                                        <div class="card-body" style="padding: .5rem;">
-                                                                            <div class="card-content">
-                                                                                <p>Card content</p>
-                                                                                
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                
-                
-                
                                                                 </div>
                                                             </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        
+                                                    </div>
                                                     <div class="tab-pane fade" id="tab-horizontal-4" role="tabpanel"
                                                         aria-labelledby="tab-horizontal-4-tab">
                                                         <table
@@ -1350,11 +1340,10 @@
                             <div class="atbd-select mb-2">
 
                                 <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
-                                    <option value="01">Option 1</option>
-                                    <option value="02">Option 2</option>
-                                    <option value="03">Option 3</option>
-                                    <option value="04">Option 4</option>
-                                    <option value="05">Option 5</option>
+                                    {% for type in responsibles %}
+                                        <option value="{{type.id}}">{{ type.first_name}} {{type.last_name }} | {{type.id|user_role}}</option>
+                                    {% endfor %}
+                                    
                                 </select>
 
                             </div>
@@ -1364,26 +1353,25 @@
                             <div class="atbd-select mb-2">
 
                                 <select name="select-search" id="select-search" class="form-control ">
-                                    <option value="01">Option 1</option>
-                                    <option value="02">Option 2</option>
-                                    <option value="03">Option 3</option>
-                                    <option value="04">Option 4</option>
-                                    <option value="05">Option 5</option>
+                                    {% for type in task_types %}
+                                        <option value="{{ type.id}}">{{ type.task_type }}</option>
+
+                                    {% endfor %}
                                 </select>
 
                             </div>
                             
                         <p  class="col-12 p-0 mb-1">*Topshiriq muddati:</p>
-                        <input type="datetime-local" name="date" id="date" class="form-control form-control-sm border-light mb-2">
+                        <input type="datetime-local" name="date" id="id_date" class="form-control form-control-sm border-light mb-2">
                         <p  class="col-12 p-0 mb-1">Topshiriq matni:</p>
-                        <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
+                        <textarea name="description" id="id_description" class="form-control form-control-sm" placeholder="Topshiriq matnini kiriting..."></textarea>
 
                 </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="addTask()">Saqlash</button>
             </div>
         </div>
     </div>
@@ -1452,17 +1440,17 @@
     <div class="atbd-drawer drawer-account d-none">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
             <h6 class="drawer-title">SMS yuborish</h6>
-            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            <a href="#" id="cancelSMS" class="btdrawer-close"><i class="la la-times"></i></a>
         </div><!-- ends: .atbd-drawer__header -->
         <div class="atbd-drawer__body">
             <div class="drawer-content">
                 <div class="drawer-account-form form-basic">
                     <form action="#">
                         <div class="form-row">
-                         
+                            <div class="sms-status-message"></div>
                             <div class="form-group col-12">
-                                <label for="description">Xabar matni</label>
-                                <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
+                                <label for="message-description">Xabar matni</label>
+                                <textarea name="message-description" id="message-description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
                             </div>
                             
                             <div class="form-group col-12">
@@ -1472,7 +1460,7 @@
                                 <a href="./sms_yoriqnoma.html">SMSda simvollarni ishlatish bo'yicha yo'riqnoma</a>
                             </div>
                             <div class="form-group col-12">
-                                <div class="btn btn-primary">Yuborish</div>
+                                <div class="btn btn-primary" id="sendSMS">Yuborish</div>
                             </div>
                         </div>
                     </form>
@@ -1523,10 +1511,31 @@
     var y = date.getFullYear();
     return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
     }
-    function handleChange(id, date) {
+    function handleChange(id, date, is_lead=false) {
         var status = document.getElementById(`${id.toString()}-${date.toString()}`)
         var group_id = window.location.pathname.split('/')[3]; // need to optimize some points
         console.log(group_id);
+
+        if(is_lead==true){
+            fetch(`{% url 'admintion:change-lead-attendace' %}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    "X-CSRFToken": "{{csrf_token}}",
+                },
+                body: JSON.stringify({
+                    id,
+                    date,
+                    group_id: group_id,
+                    status:status.value
+                })
+            }).then(res => res.json()).then(res => {
+                status.disabled = true;
+                document.getElementById('prosent_attendace').textContent=''+res.count+'%';
+            }) 
+        } else{
+
+
         fetch(`{% url 'admintion:change-attendace' %}`, {
             method: 'POST',
             headers: {
@@ -1543,6 +1552,7 @@
             status.disabled = true;
             document.getElementById('prosent_attendace').textContent=''+res.count+'%';
         })
+        }
     }
 
     function handleChangeMonth(id,date,group_id){
@@ -1567,15 +1577,6 @@
             })
         }).then(res => res.json()).then(res => {
             var day_parent = document.querySelector(".day_parent");
-            // while (day_parent.childElementCount>2) {
-            //     if(child.className=="day_title"){
-            //         day_parent.removeChild(day_parent.lastElementChild);
-            //     }
-            // }
-            //old_lists = document.querySelectorAll('.day_list').forEach((e,index) => {
-            //    console.log(e, index);
-             //   e.remove()
-            // });
             old_lists = document.querySelectorAll('.day_list');
             for (let i=0; i< old_lists.length; i++){
                 old_lists[i].remove();
@@ -1640,5 +1641,216 @@
             })
         })
     }
+
+
+    function addTask(){
+        var url = `/admintion/tasks/create/`;
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        var responsibles = document.getElementById('select-tag');
+        for(var i=0;i<responsibles.selectedOptions.length;i++){
+            formData.append('responsibles', responsibles.selectedOptions[i].value);
+        }
+        
+        formData.append('user_status', 3);
+
+        var taskType = document.getElementById('select-search');
+        formData.append('task_type', taskType.value);
+
+        var deadline = document.getElementById('id_date');
+        formData.append('deadline',deadline.value);
+
+        var comment = document.getElementById('id_description');
+        formData.append('comment', comment.value);
+
+        var group = window.location.pathname.split('/')[3];
+        formData.append('groups', group);
+
+        fetch(url, {
+            method: 'post',
+            headers:{
+                'X-CSRFToken':'{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            console.log(res)
+            // if (res.status == 201){
+                window.location.assign(window.location.pathname)
+            
+        })
+
+    }
+
+    function checkSMS(){
+    
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        var input = document.getElementById('message-description');
+        formData.append('message', input.value);
+
+        var students = [];
+        var leads = [];
+        var checkBoxes = document.getElementsByClassName('group-checkboxes')
+        for(var i=0;i< checkBoxes.length;i++){
+            if(checkBoxes[i].checked == true){
+                if(checkBoxes[i].id.split('-').length>2 && checkBoxes[i].id.split('-')[3] == 'lead'){
+                    leads.push(checkBoxes[i].id.split('-')[2])
+                } else {
+                    students.push(checkBoxes[i].id.split('-')[2])
+                }
+            }
+        }
+        console.log(leads)
+        if(leads.length > 0){
+            for(var i=0;i< leads.length;i++){
+                formData.append('leads', leads[i])
+            }
+        }
+        console.log(students)
+        if(students.length > 0){
+            for(var i=0;i< students.length;i++){
+                formData.append('students', students[i])
+            }
+        }
+        if(students.length==0 && leads.length==0){
+            formData.append('groups', window.location.pathname.split('/')[3]);
+        }
+        fetch("{% url 'admintion:check-sms-availability' %}", {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            var div = document.getElementsByClassName('sms-status-message')[0];
+            //div.classList.add('d-flex m-2 p-2')
+            div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                             Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
+                            sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+            `
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    
+
+    var cancelBtn = document.getElementById('cancelSMS');
+        cancelBtn.addEventListener('click', ()=>{
+            var input = document.getElementById('message-description');
+            input.value = '';
+        })
+
+var sendSMS = document.getElementById('sendSMS');
+sendSMS.addEventListener('click', ()=>{
+    var formData = new FormData();
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    var input = document.getElementById('message-description');
+    formData.append('message', input.value);
+    var students = [];
+    var leads = [];
+    var checkBoxes = document.getElementsByClassName('group-checkboxes')
+    for(var i=0;i< checkBoxes.length;i++){
+        if(checkBoxes[i].checked == true){
+            if(checkBoxes[i].id.split('-').length>2 && checkBoxes[i].id.split('-')[3] == 'lead'){
+                leads.push(checkBoxes[i].id.split('-')[2])
+            } else {
+                students.push(checkBoxes[i].id.split('-')[2])
+            }
+        }
+    }
+    if(leads.length>0){
+        var url = "{% url 'admintion:send_sms_to_lead' %}"
+        for(var i=0;i< leads.length;i++){
+            formData.append('leads',leads[i])
+        }
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            if (res.status==200){
+                console.log("Belgilangan lidlarga xabar yuborildi.")
+            } else{
+                console.log("Belgilangan lidlarga xabar yuborilmadi.", res)
+
+            }
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    if (students.length>0){
+        var url = "{% url 'admintion:send_sms_to_student' %}";
+        for(var i=0;i< students.length;i++){
+            formData.append('students', students[i])
+        }
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            if (res.status==200){
+                console.log("Belgilangan O\'quvchilarga xabar yuborildi.")
+            } else{
+                console.log("Belgilangan O\'quvchilarga xabar yuborilmadi.", res)
+
+            }
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    if(students.length==0 && leads.length==0){
+        formData.append('groups', window.location.pathname.split('/')[3]);
+    
+    // checkbox
+
+
+    var url = "{% url 'admintion:send_sms_to_group' %}"
+    fetch(url, {
+        method:'post',
+        headers:{
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: formData,
+    })
+    .then(res=>{
+        var status = res.status
+        return res;
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        if(status==200){
+            alert("Xabar Guruh talabalariga yuborildi.");
+        } else {
+            alert("Ma'lumotlar to'liq kiritilmadi");;
+        } 
+    })
+    }
+})
+
+
+var mainCheckBox = document.getElementById('check-grp-main-12');
+mainCheckBox.addEventListener('change', ()=>{
+    var checkBoxes = document.getElementsByClassName('group-checkboxes')
+    for(var i=0;i< checkBoxes.length;i++){
+        checkBoxes[i].checked = mainCheckBox.checked;
+    }
+})
+
+
 </script>
 {% endblock %}

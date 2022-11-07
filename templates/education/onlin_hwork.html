@@ -313,7 +313,7 @@ function saveBtn(is_ready){
         body: formData,
     })
     .then(res=>res.json()).then(res=>{
-            var url = `/education/onlines/${res.redirect_id}/`
+            var url = `/education/onlines/${res.redirect_id}/${window.location.search}`
             window.location.assign(url);
         })
     .catch(err=>{

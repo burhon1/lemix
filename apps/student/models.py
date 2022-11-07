@@ -1,11 +1,13 @@
 from django.db import models
+from apps.admintion.views.leads import lead_activity_change
 from user.models import CustomUser
 
 from education.models import Tests, Questions, Answers, Contents
 from student.data import choices
 
 class Homeworks(models.Model):
-    student = models.ForeignKey("admintion.Student", models.CASCADE)
+    student = models.ForeignKey("admintion.Student", models.SET_NULL, null=True)
+    lead    = models.ForeignKey("admintion.FormLead", models.SET_NULL, null=True)
     content = models.ForeignKey(Contents, models.CASCADE, related_name='homeworks')
     file    = models.FileField(upload_to="student/homeworks", null=True, blank=True)
     text    = models.TextField("O'quvchining javobi", max_length=5000, blank=True)
@@ -14,7 +16,7 @@ class Homeworks(models.Model):
     date_modified = models.DateTimeField(auto_now=True, editable=True)
     comment_file  = models.FileField(upload_to="student/homeworks/comments", null=True, blank=True)
     comment = models.TextField("O'quvchiga xabar", max_length=5000, blank=True)
-    status  = models.PositiveSmallIntegerField("Uy vazifasining statusi", choices=choices.HOMEWORK_STATUS, default=1)
+    status  = models.PositiveSmallIntegerField("Uy vazifasining statusi", choices=choices.HOMEWORK_STATUS, default=2)
     commented = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     last_res  = models.BooleanField("Bu o'quvchining oxirgi javobimi?", default=True)
     class Meta:

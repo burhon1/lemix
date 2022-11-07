@@ -45,6 +45,8 @@
                     <!-- tabs -->
                         <div class="card card-default card-md mb-4">
                           
+                            {% if is_student %}
+
                             <div class="card-body">
                                 <div class="tab-wrapper">
 
@@ -161,6 +163,78 @@
 
                                 </div>
                             </div>
+
+                            {% else %}
+                            <div class="card-body">
+                                <div class="tab-wrapper">
+
+                                    <div class="atbd-tab tab-horizontal">
+                                        <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="tab-v-4-tab" data-toggle="tab" href="#tab-v-4" role="tab" aria-controls="tab-v-4" aria-selected="true">Faol kurslar</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab-v-5-tab" data-toggle="tab" href="#tab-v-5" role="tab" aria-controls="tab-v-5" aria-selected="false">Yakunlangan kurslar</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab-v-6-tab" data-toggle="tab" href="#tab-v-6" role="tab" aria-controls="tab-v-6" aria-selected="false">Barchasi</a>
+                                            </li>
+
+
+
+                                        </ul>
+                                        <div class="tab-content">
+
+
+
+                                            <div class="tab-pane fade show active" id="tab-v-4" role="tabpanel" aria-labelledby="tab-v-4-tab">
+                                                
+                                                
+                                                <div class="row">              
+                                                    {% for group in demos %}
+                                                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25" >
+                                                        <div class="feature-cards feature-card--1 border">
+                                                            <a href="{% url 'student:lead-demo-modules' group.group.course.id %}?group={{group.group_id}}">
+                                                            <figure class="feather-cards__figure  ">
+                                                                <img src="{% static 'img/blog-single4.png' %}" alt="">
+                                                                <figcaption>
+                                                                
+                                                                    <h5 class="m-2">{{ group.group.course }}</h5>
+                                                                    <p class="mb-2"><i class="fa fa-layer-group"></i>   {{ group.group.title}}
+                                                                    </p>
+                                                                    <div class="feature-cards__top mb-2">
+                                                                        <span><i class="fa fa-calendar mr-2"></i> {{ group.group.days.all|readable_days2}}</span><span>{{ group.group.times }} </span>
+                                                                    </div>
+                                                                <div class="  feature-cards__top">
+                                                                                <span > <i class="fa fa-user mr-2"></i> {{ group.group.teacher.user.full_name }}</span><span >{{ group.group.created|date:'d.m.Y' }}</span>
+                                                                            </div>
+                                                                </figcaption>
+                                                            </figure></a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab-v-5" role="tabpanel" aria-labelledby="tab-v-5-tab">
+                                                <div class="row">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="tab-v-6" role="tabpanel" aria-labelledby="tab-v-6-tab">
+                                                <div class="row">
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endif %}
+
+
                         </div>
                         <!-- ends: .card -->
                     <!-- tabs end -->

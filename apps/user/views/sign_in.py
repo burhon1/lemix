@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 from ..models import CustomUser
 
 def login_view(request):
     context = {}
-    if request.user.is_authenticated:
-        return redirect('user:account')
+    # if request.user.is_authenticated:
+    #     return redirect('user:account')
     if request.method == "POST":
         phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
@@ -24,6 +25,8 @@ def login_view(request):
                         return redirect('student:student')
                     elif request.user.teacher_set.first():
                         return redirect('education:onlin')
+                    elif request.user.lead:
+                        return redirect('student:lead')
                 else:
                     context['error'] = "Parol xato kiritildi"   
             else:

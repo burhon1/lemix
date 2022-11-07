@@ -783,13 +783,13 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		this.teacherDefault = "O'qituvchi";
 		this.$teacher = null;
 		//day
-		this.days = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
-		this.dayDefault = 'Holati';
-		this.$day = null;
-		     //hols
-			this.hols = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
-			this.holDefault = 'Moliyaviy Holati';
-			this.$hol = null;
+		// this.days = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
+		// this.dayDefault = 'Holati';
+		// this.$day = null;
+		//      hols
+		// 	this.hols = ['dushanba','seshanba','chorshanba','payshanba','juma','shanba','yakshanba'];
+		// 	this.holDefault = 'Moliyaviy Holati';
+		// 	this.$hol = null;
 	},
 	$create: function(){
 		this._super();
@@ -857,19 +857,19 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 			self.$day.append($('<option/>').text(status));
 		});
 
-						// create the hol form group and dropdown
-						var $hol_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position '})
-						.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
-						.prependTo(self.$form);
+					// 	// create the hol form group and dropdown
+					// 	var $hol_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__position '})
+					// 	.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
+					// 	.prependTo(self.$form);
 		
-					self.$hol = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-						.on('change', {self: self}, self._onHolDropdownChanged)
-						.append($('<option/>', {text: self.holDefault}))
-						.appendTo($hol_form_grp);
+					// self.$hol = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
+					// 	.on('change', {self: self}, self._onHolDropdownChanged)
+					// 	.append($('<option/>', {text: self.holDefault}))
+					// 	.appendTo($hol_form_grp);
 		
-					$.each(self.hols, function(i, status){
-						self.$hol.append($('<option/>').text(status));
-					});
+					// $.each(self.hols, function(i, status){
+					// 	self.$hol.append($('<option/>').text(status));
+					// });
 		
 	},
 
@@ -921,16 +921,16 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 	},
 
 
-	_onHolDropdownChanged: function(e){
-		var self = e.data.self,
-			selected = $(this).val();
-		if (selected !== self.jobTitleDefault){
-			self.addFilter('status', selected, ['status']);
-		} else {
-			self.removeFilter('status');
-		}
-		self.filter();
-	},
+	// _onHolDropdownChanged: function(e){
+	// 	var self = e.data.self,
+	// 		selected = $(this).val();
+	// 	if (selected !== self.jobTitleDefault){
+	// 		self.addFilter('status', selected, ['status']);
+	// 	} else {
+	// 		self.removeFilter('status');
+	// 	}
+	// 	self.filter();
+	// },
 	
 	draw: function(){
 		this._super();

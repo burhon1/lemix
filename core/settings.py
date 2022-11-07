@@ -68,6 +68,7 @@ TEMPLATES = [
             'libraries':{
             'admintion_tags': 'admintion.templatetags.custom_tags',
             'education_tags': 'education.templatetags.education_tags',
+            'user_tags': 'user.templatetags.user_tags',
             }
 
         },
@@ -148,3 +149,4 @@ MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 LOGIN_URL = '/user/login/'
+SPOTLIGHTR_vooKEY = 'Oyp3soAFRuYIul8iH93P8Rum1'

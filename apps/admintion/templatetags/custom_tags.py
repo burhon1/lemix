@@ -1,8 +1,10 @@
 from django import template
 from django.shortcuts import get_object_or_404
-from admintion.models import Attendace, GroupStudents
+
+import datetime
+from admintion.models import Attendace, GroupStudents, LeadDemo
 from ..data import chooses
-from apps.user.data import chooses as user_chooses
+from user.data import chooses as user_chooses
 register = template.Library()
 
 def take_attendance_status(value,day):
@@ -17,6 +19,15 @@ def take_attendance_status(value,day):
 def attendance_result(value):
     gr_student_ids = [_.id for _ in GroupStudents.objects.filter(student_id=value)]
     attendace = Attendace.objects.filter(group_student_id__in=gr_student_ids)
+    count=0
+    if attendace.exists():
+        goal = attendace.filter(status=1)
+        count = goal.count()/attendace.count()
+    return int(count*100)
+
+def lead_attendance_result(value):
+    gr_student_ids = [_.id for _ in LeadDemo.objects.filter(lead_id=value)]
+    attendace = Attendace.objects.filter(lead_demo_id__in=gr_student_ids)
     count=0
     if attendace.exists():
         goal = attendace.filter(status=1)
@@ -46,6 +57,15 @@ def get_status(value):
         status = "danger"
     return status
 
+def get_status2(value):
+    status = "info"
+    if value == 2:
+        status = "success"
+    elif value == 3:
+        status = "danger"
+    return status
+
+
 def get_status_name(value):
     status = "active"
     if value == 2:
@@ -55,6 +75,11 @@ def get_status_name(value):
     return status
 
 def get_type_name(value, arg):
+    if value ==None:
+        return ''
+
+    if arg == 'task':
+        return dict(chooses.TASK_STATUS)[value] or ""
     if arg == "source":
         return dict(chooses.STUDENT_SOURCES)[value] or ""
     elif arg == "status":
@@ -82,6 +107,25 @@ def readable_days(value):
         return result[:-1]
     return result
 
+def readable_days2(values): # values GroupDays modelining obyektlari
+    result: str = ''
+    for value in values:
+        result+=str(dict(chooses.GROUPS_DAYS)[value.days])+ "/"
+    return result
+
+def readable_days3(values): # values -> hafta kunining raqami.
+    result: str = ''
+    for value in values:
+        result+=str(dict(chooses.GROUPS_DAYS)[int(value)])+ "/"
+    return result
+
+def get_week_day(value):
+    if value is None or type(value) != datetime.date:
+        return ''
+    day = value.weekday()
+    return dict(chooses.GET_GROUPS_DAYS)[day+1] or ''
+
+
 register.filter('take_attendance_status', take_attendance_status) 
 register.filter('attendance_result', attendance_result) 
 register.filter('readable_soums', readable_soums)
@@ -89,3 +133,8 @@ register.filter('get_status', get_status)
 register.filter('get_status_name', get_status_name)
 register.filter('get_type_name', get_type_name)
 register.filter('readable_days', readable_days)
+register.filter('readable_days2', readable_days2)
+register.filter('readable_days3', readable_days3)
+register.filter('get_week_day', get_week_day)
+register.filter('get_status2', get_status2)
+register.filter('lead_attendance_result', lead_attendance_result) 

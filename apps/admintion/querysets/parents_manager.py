@@ -5,7 +5,6 @@ from django.db.models.query import QuerySet
 
 class ParentsQueryset(QuerySet):
     def get_info(self):
-        print(self.count)
         if not self.exists():
             return self.all()
         return self.values(

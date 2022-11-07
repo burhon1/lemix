@@ -215,6 +215,16 @@ Online darslar ichki sahifasi teacher- Lemix
 
                                                 {% endfor %}
 
+                                                {% for lead in leads %}
+                                                    
+                                                    <a class="nav-link" id="student-id-lead-id-{{lead.id}}-tab" data-toggle="pill" onclick="getLeadHomeworks({{lead.id}})"
+                                                    href="#student-id-lead-id-{{lead.id}}" role="tab" aria-controls="student-id-lead-id-{{lead.id}}"
+                                                    aria-selected="false">
+                                                    <span class="dot bg-{{lead.last_homework|homework_status}}"></span><span style="display:inline;"
+                                                    class="selling-badge order-bg-opacity-primary color-primary">Lid</span> {{ lead.full_name }}</a>
+
+                                                {% endfor %}
+
                                         </div>
                                     </div>
                                 </div>
@@ -270,30 +280,20 @@ Online darslar ichki sahifasi teacher- Lemix
                             </div>
             
                             {% for student in students %}
-                            <div class="tab-pane fade  show" id="student-id-{{student.id}}" role="tabpanel"
+                            <div class="tab-pane fade " id="student-id-{{student.id}}" role="tabpanel"
                                     aria-labelledby="student-id-{{student.id}}-tab">
                                     <!-- Edit Profile -->                                
                             </div>
 
                             {% endfor %}
 
+                            {% for lead in leads %}
+                            <div class="tab-pane fade " id="student-id-lead-id-{{lead.id}}" role="tabpanel"
+                                    aria-labelledby="student-id-lead-id-{{lead.id}}-tab">
+                                    <!-- Edit Profile -->                                
+                            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            {% endfor %}
 
                                 <div class="tab-pane fade  show" id="v-pills-messages" role="tabpanel"
                                 aria-labelledby="v-pills-messages-tab">
@@ -311,6 +311,14 @@ Online darslar ichki sahifasi teacher- Lemix
                             aria-labelledby="student-id-{{student.id}}-tab">
                         </div>
                     {% endfor %}
+                    
+                    {% for lead in leads%}
+                        <div class="tab-pane fade" id="student-id-lead-id-{{lead.id}}" role="tabpanel"
+                            aria-labelledby="student-id-lead-id-{{lead.id}}-tab">
+                        </div>
+                    {% endfor %}
+
+
                     <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
                         aria-labelledby="v-pills-messages-tab">
                     </div>
@@ -993,7 +1001,22 @@ Online darslar ichki sahifasi teacher- Lemix
 
 
 
-
+        function getLeadHomeworks(id){
+            var div = document.getElementById(`student-id-lead-id-${id}`);
+            div.innerHTML = "";
+            var url = `/education/homeworks/lead/${id}/`;
+            fetch(url, {
+                method:'get',
+                headers: {
+                    'Accept':'application/json',
+                }
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                printHomeworks(id, res, div);
+            })
+            
+        }
 
 
         function getHomeworks(id){

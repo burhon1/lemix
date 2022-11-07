@@ -35,6 +35,7 @@ class ModulesQueryset(QuerySet):
             'id', 
             'title',
             'order',
+            'course',
         ).annotate(
             author = Concat(F('author__last_name'), Value(' '), F('author__first_name')),
             lessons = ArrayAgg(F('lessons'), distinct=True)

@@ -6,7 +6,11 @@
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
             <h4 class="text-capitalize breadcrumb-title">O'qituvchilar </h4>
-            <div class="action-btn">
+            <div class="action-btn d-flex">
+                <button class="btn btn-sm btn-default btn-primary mb-10 mr-2"
+                type="button" id="dropdownMenu2" data-toggle="modal" data-target="#modal-basic1"
+                aria-haspopup="true" aria-expanded="false"  onclick="checkSMS()">
+                <i class="la la-message"></i> SMS Jo'natish</button>
                 <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
                     + O'qituvchi qo'shish
                 </button>
@@ -31,8 +35,19 @@
                                         <thead>
                                             <tr class="userDatatable-header">
                                                 <th>
-                                                    <span class="userDatatable-title"></span>
+                                                        
+                                                            <div class="userDatatable-title checkbox-group-wrapper">
+                                                                <div class="checkbox-group d-flex">
+                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                        <input class="checkbox" type="checkbox" id="check-grp-12">
+                                                                        {% comment %} <label for="check-grp-12"></label> {% endcomment %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->  
+                                                        
                                                 </th>
+                                                
                                                 <th>
                                                     <span class="userDatatable-title">Id</span>
                                                 </th>
@@ -58,8 +73,19 @@
                                             <tr>
                                                 <td
                                                     style="margin:auto;display: flex;justify-content:center;align-content:center;height: 100%;">
-                                                    <input type="checkbox"
-                                                        style="margin:auto;display:flex;justify-content:center;align-content:center;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                            <div class="checkbox-group-wrapper">
+                                                                <div class="checkbox-group d-flex">
+                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                        <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-teacher-{{obj.id}} group-checkboxes" type="checkbox" id="check-grp-teacher-{{obj.id}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                                        </div>
+                                                        
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
@@ -142,7 +168,39 @@
 
 
 </div>
+<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
 
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">Sms matni.</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    <div class="form-row">
+                        <div class="sms-status-message"></div>
+                        <div class="form-group col-lg-12">
+                            <label for="id_message" class="modal-title">Xabar matni</label>
+                            <textarea type="text" name="id_message" id="id_message" class="form-control form-control-sm border-light" placeholder="Xabar matni..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="sendSMS">Jo'natish</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS", data-dismiss="modal">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
@@ -255,4 +313,95 @@
 
 
 
+{% endblock %}
+
+{% block script %}
+    <script>
+        var mainCheckBox = document.getElementById('check-grp-12');
+        mainCheckBox.addEventListener('change', ()=>{
+            var checkBoxes = document.getElementsByClassName('group-checkboxes')
+            if(mainCheckBox.checked == true){
+                for(var i=0;i< checkBoxes.length;i++){
+                    checkBoxes[i].checked = true;
+                }
+            } else {
+                for(var i=0;i< checkBoxes.length;i++){
+                    checkBoxes[i].checked = false;
+                }
+            }
+        })
+
+        function checkSMS(){
+    
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            var checkboxes = document.getElementsByClassName('group-checkboxes');
+            for(var i=0;i<checkboxes.length;i++){
+                if(checkboxes[i].checked == true){
+                    formData.append('teachers', checkboxes[i].id.split("-")[3]);
+                }
+            }
+            fetch("{% url 'admintion:check-sms-availability' %}", {
+                method:'post',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                var div = document.getElementsByClassName('sms-status-message')[0];
+                //div.classList.add('d-flex m-2 p-2')
+                div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                                 Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
+                                sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+                `
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+        
+        
+        var cancelBtn = document.getElementById('cancelSMS');
+        cancelBtn.addEventListener('click', ()=>{
+            var input = document.getElementById('id_message');
+            input.value = '';
+        })
+        
+        var sendSMS = document.getElementById('sendSMS');
+        sendSMS.addEventListener('click', ()=>{
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+            var input = document.getElementById('id_message');
+            formData.append('message', input.value);
+            var checkboxes = document.getElementsByClassName('group-checkboxes');
+            for(var i=0;i<checkboxes.length;i++){
+                if(checkboxes[i].checked == true){
+                    formData.append('teachers', checkboxes[i].id.split("-")[3]);
+                }
+            } 
+            var url = "{% url 'admintion:send_sms_to_teacher' %}"
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData,
+            })
+            .then(res=>{
+                var status = res.status
+                if(status==200){
+                    alert("Xabar O'qituvchilarga yuborildi.");
+                    var input = document.getElementById('id_message');
+                    input.value = '';
+                } else {
+                    console.log(status)
+                    alert("Ma'lumotlar to'liq kiritilmadi");
+                } 
+            })
+        })
+
+    </script>
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load user_tags %}
 {% block style %}
 <style>
     .cardPay {
@@ -368,7 +369,7 @@
                                                     <polyline points="22,6 12,13 2,6"></polyline>
                                                 </svg></span>
                                             </span>
-                                            <span class="atbd-menu__text view drawer-trigger"
+                                            <span class="atbd-menu__text view drawer-trigger" onclick="checkedStudents()"
                                                 data-drawer="account">SMS yuborish</span>
                                         </a>
 
@@ -901,7 +902,7 @@
                                                                         05.03.2022 10:45</p>
                                                                     <p> Kurs narxi: {{ group.group.course.price|readable_soums }} so'm</p>
                                                                     <p> O'quvchi uchun: {{ group.group.course.price|readable_soums }} so'm</p>
-                                                                    <p> Chegirma: {{ group.group.course.price|readable_soums}} so'm</p>
+                                                                    <p> Chegirma: 0 so'm</p>
                                                                     <p class="d-flex align-items-center">
                                                                         O'quvchi holati:<span
                                                                             class="selling-badge order-bg-opacity-{{ group.status|get_status}} color-{{ group.status|get_status}}">{{group.status|get_status_name}}</span>
@@ -1491,11 +1492,10 @@
                         <div class="atbd-select mb-2">
 
                             <select name="select-tag" id="select-tag" class="form-control " multiple="multiple">
-                                <option value="01">Option 1</option>
-                                <option value="02">Option 2</option>
-                                <option value="03">Option 3</option>
-                                <option value="04">Option 4</option>
-                                <option value="05">Option 5</option>
+                                {% for res in responsibles %}
+                                    <option value="{{ res.id }}">{{ res.full_name }} | {{res.id|user_role}}</option>
+                                {% endfor %}
+                                
                             </select>
 
                         </div>
@@ -1505,28 +1505,26 @@
                         <div class="atbd-select mb-2">
 
                             <select name="select-search" id="select-search" class="form-control ">
-                                <option value="01">Option 1</option>
-                                <option value="02">Option 2</option>
-                                <option value="03">Option 3</option>
-                                <option value="04">Option 4</option>
-                                <option value="05">Option 5</option>
+                                {% for type in task_types %}
+                                    <option value="{{ type.id }}">{{type.task_type }}</option>
+                                {% endfor %}
                             </select>
 
                         </div>
 
                         <p class="col-12 p-0 mb-1">*Topshiriq muddati:</p>
-                        <input type="datetime-local" name="date" id="date"
+                        <input type="datetime-local" name="date" id="id_date"
                             class="form-control form-control-sm border-light mb-2">
                         <p class="col-12 p-0 mb-1">Topshiriq matni:</p>
-                        <textarea name="description" id="description" class="form-control form-control-sm"
-                            placeholder="Xabar matnini kiriting..."></textarea>
+                        <textarea name="description" id="id_description" class="form-control form-control-sm"
+                            placeholder="Topshiriq matnini kiriting..."></textarea>
 
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
-                <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="addTask()">Saqlash</button>
             </div>
         </div>
     </div>
@@ -1875,11 +1873,13 @@
             <div class="drawer-content">
                 <div class="drawer-account-form form-basic">
                     <form action="#">
+                        <div class="sms-status-message"></div>
+
                         <div class="form-row">
 
                             <div class="form-group col-12">
                                 <label for="description">Xabar matni</label>
-                                <textarea name="description" id="description"
+                                <textarea name="description" id="message_description"
                                     class="form-control form-control-sm"
                                     placeholder="Xabar matnini kiriting..."></textarea>
                             </div>
@@ -1892,7 +1892,7 @@
                                     yo'riqnoma</a>
                             </div>
                             <div class="form-group col-12">
-                                <div class="btn btn-primary">Yuborish</div>
+                                <div class="btn btn-primary" id="sendSMS">Yuborish</div>
                             </div>
                         </div>
                     </form>
@@ -2190,5 +2190,106 @@
                 console.log(err);
             })
         }
+
+        function addTask(){
+            var url = `/admintion/tasks/create/`;
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+            var responsibles = document.getElementById('select-tag');
+            for(var i=0;i<responsibles.selectedOptions.length;i++){
+                formData.append('responsibles', responsibles.selectedOptions[i].value);
+            }
+            
+            formData.append('user_status', 2);
+    
+            var taskType = document.getElementById('select-search');
+            formData.append('task_type', taskType.value);
+    
+            var deadline = document.getElementById('id_date');
+            formData.append('deadline',deadline.value);
+    
+            var comment = document.getElementById('id_description');
+            formData.append('comment', comment.value);
+    
+            var group = window.location.pathname.split('/')[3];
+            formData.append('students', group);
+    
+            fetch(url, {
+                method: 'post',
+                headers:{
+                    'X-CSRFToken':'{{ csrf_token }}'
+                },
+                body: formData,
+            })
+            .then(res=>{
+                if (res.status == 201){
+                    window.location.reload()
+                }
+            })
+    
+        }
+        function checkedStudents(){
+            var leads = []
+            
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('students', window.location.pathname.split('/')[3]);
+            // var url = "{% url 'admintion:check-sms-availability' %}";
+            fetch("{% url 'admintion:check-sms-availability' %}", {
+                method:'post',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                var div = document.getElementsByClassName('sms-status-message')[0];
+                //div.classList.add('d-flex m-2 p-2')
+                div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                                 Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
+                                sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+                `
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+
+        
+
+    var sendSMS = document.getElementById('sendSMS');
+    sendSMS.addEventListener('click', ()=>{
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        var input = document.getElementById('message_description');
+        formData.append('message', input.value);
+        formData.append('students', window.location.pathname.split('/')[3]);
+        
+        var url = `{% url 'admintion:send_sms_to_student' %}`
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            var status = res.status
+            return res;
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            if(status==200){
+                alert("Xabar O'quvchilarga yuborildi.");
+            } else {
+                alert("Ma'lumotlar to'liq kiritilmadi");;
+            } 
+        })
+    })
+
+
+
 </script>
 {% endblock %}

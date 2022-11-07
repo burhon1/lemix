@@ -1,10 +1,9 @@
-from calendar import Calendar
-from datetime import timezone
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager
+from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager,lead_manager,task_manager
 from admintion.data import chooses
 from user.models import CustomUser
-
+from user.data.chooses import COURSES_SEXES
+from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE
 # Create your models here.
 class Room(models.Model):
     title = models.CharField(max_length=50)
@@ -79,7 +78,7 @@ class Attendace(models.Model):
     group_student = models.ForeignKey("GroupStudents", models.SET_NULL, null=True,related_name='attendance')
     created = models.DateTimeField(auto_now_add=True, null=True)
     creator = models.ForeignKey(CustomUser, models.SET_NULL, related_name="created_attendaces", null=True)
-    
+    lead_demo = models.ForeignKey("LeadDemo", models.SET_NULL, null=True, related_name='lead_attendance')
     objects = models.Manager()
     attendaces = attendace_manager.AttendaceManager()
 
@@ -92,15 +91,31 @@ class Payment(models.Model):
     payment_type = models.SmallIntegerField("To'lov turi", choices=chooses.PAYMENT_TYPE, default=1)
     comment = models.CharField("Izoh", max_length=500, null=True)
     payments = payment_manager.PaymentManager()
-class FormLead(models.Model):
-    fio = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
-    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
-    status = models.PositiveSmallIntegerField(choices=chooses.LEAD_FORM_STATUS,null=True,blank=True)
-    comment = models.TextField()
 
+
+class LeadStatus(models.Model):
+    status = models.CharField("Status nomi", max_length=200)
+class FormLead(models.Model):
+    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
+    status = models.ForeignKey(LeadStatus, models.SET_NULL, null=True, blank=True)
+    comment = models.TextField()
+    telegram = models.CharField("Telegramdagi nomeri", max_length=100, null=True)
+    parents = models.CharField("Ota-onasi", max_length=150, null=True)
+    p_phone = models.CharField(max_length=100, null=True)
+    passport = models.CharField("Passport seriya va raqami", max_length=10, null=True)
+    file = models.FileField(upload_to="leads", null=True)
+    days = models.ManyToManyField(GroupsDays, blank=True)
+    course = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True, related_name="created_leads")
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=False, null=True)
+    activity = models.PositiveSmallIntegerField("Lidning statusi", choices=chooses.LEAD_FORM_STATUS, default=1)
+    purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
+    user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
+    objects = models.Manager()
+    leads = lead_manager.LeadManager()
     def __str__(self) -> str:
-        return self.fio
+        return str(self.id)
 
 
 class GroupStudents(models.Model):
@@ -119,5 +134,56 @@ class Parents(models.Model):
     students = models.ManyToManyField(Student)
     passport = models.CharField("Passport", max_length=10, null=True)
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
-    
+    objects = models.Manager()
     parents = parents_manager.ParentsManager()
+
+
+class LeadDemo(models.Model):
+    lead = models.ForeignKey(FormLead, models.CASCADE, related_name="demo")
+    group = models.ForeignKey(Group, models.CASCADE)
+    date = models.DateField('Demo dars sanaga belgilandi:', auto_now_add=False, auto_now=False)
+    
+
+class TaskTypes(models.Model):
+    task_type = models.CharField("Topshiriq turi", max_length=150)
+
+
+class UserTaskStatus(models.Model):
+    whom = models.CharField("Kim uchun?", max_length=25)
+    
+
+class Tasks(models.Model):
+    task_type = models.ForeignKey(TaskTypes, models.SET_NULL, null=True)
+    responsibles = models.ManyToManyField(CustomUser, related_name='user_tasks')
+    deadline = models.DateTimeField("Deadline:", auto_now_add=False, auto_now=False)
+    comment = models.CharField(max_length=500, null=True)
+    whom = models.ManyToManyField(CustomUser, related_name="my_tasks")
+    user_status = models.ForeignKey(UserTaskStatus, models.SET_NULL, null=True)
+    status = models.PositiveSmallIntegerField("Statusi", choices=TASK_STATUS, default=1)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    groups = models.ManyToManyField(Group, blank=True)
+    leads = models.ManyToManyField(FormLead, blank=True)
+    students = models.ManyToManyField(Student, blank=True)
+    courses = models.ManyToManyField(Course, blank=True)
+    parents = models.ManyToManyField(Parents, blank=True) 
+    objects = models.Manager()
+    tasks = task_manager.TasksManager()
+
+class SmsIntegration(models.Model):
+    limit = models.PositiveIntegerField("Smslar soniga cheklov", default=100)
+    used = models.PositiveIntegerField("Foydalanilgan bonus smslar soni", default=0)
+    email = models.EmailField("Sms Integratsiya qilingan email", blank=True, null=True)
+    password = models.CharField("Sms Integratsiya qilingan parol", blank=True, null=True, max_length=128)
+    main = models.BooleanField("Asosiymi?", help_text="Agar bu firmaning(o'quv markazniki emas) ma'lumotlari bo'lsa, belgilang", default=False)
+    class Meta:
+        verbose_name = "Sms Integratsiya"
+        verbose_name_plural = "Sms Integratsiya"
+
+class Messages(models.Model):
+    text = models.CharField("Xabar matni", max_length=5000)
+    user = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='messages')
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='author_messages')
+    message_type = models.PositiveSmallIntegerField(choices=MESSAGE_TYPE, default=1)
+

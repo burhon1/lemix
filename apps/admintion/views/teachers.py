@@ -30,5 +30,4 @@ def teacher_detail_view(request,id):
     if request.method == "POST":
         post = request.POST
     context['obj'] = Teacher.teachers.teacher(id)
-    print(context['obj'])
     return render(request,'admintion/teacher_detail.html',context) 

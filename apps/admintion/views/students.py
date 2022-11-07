@@ -1,13 +1,15 @@
 from django.shortcuts import render,redirect, get_object_or_404
+from django.db.models import Q
 from django.urls import reverse
 from django.http import JsonResponse
 from finance.models import StudentBalance,Paid
-from user.services.users import user_add
+from user.services.users import user_add, CustomUser
 from django.contrib.auth.models import Group
 import json
-from admintion.models import Student, Group as GroupModel, Parents
+from admintion.models import Student, Group as GroupModel, Parents, TaskTypes
 from ..selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups
 from ..services.student import set_student_group, set_student_group_status, update_student
+
 def students_view(request):
     context = {}
     if request.method == "POST":
@@ -46,10 +48,16 @@ def student_detail_view(request,id):
     context['courses'] = get_student_courses(id)
     context['groups'] = get_student_groups(id)
     context['attendaces'], context['attendace_results'] = get_student_attendaces(id)
+
+    context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
+    context['task_types'] = TaskTypes.objects.all()
     context['balances'] = StudentBalance.objects.filter(student=context['student']['id'])
     context['paids'] = Paid.objects.filter(student__id=context['student']['id'])
     return render(request,'admintion/student_detail.html',context)
 
+def student_view(request,id):
+    context = {}
+    return render(request,'admintion/student.html',context)
 
 def student_add_group_view(request, id):
     student = get_object_or_404(Student, pk=id)

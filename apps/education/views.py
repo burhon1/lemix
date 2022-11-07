@@ -4,13 +4,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from admintion.models import Course, GroupStudents, Teacher, Group
+from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes, FormLead, LeadDemo,Parents
+from admintion.selectors import set_tasks_status
 from education.models import FAQ, Lessons, Modules, Contents, Resources
-from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data
-from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm
+from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data,get_leads_data,get_lead_homework_contents
+from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm, TaskForm
 from student.models import Homeworks
 from user.models import CustomUser
-
+from user.utils import get_admins
 from django.db.models import Q
 def test2_view(request):
     return render(request,'education/test.html')     
@@ -33,7 +34,8 @@ def onlin_view(request):
     teacher = Teacher.objects.filter(user=request.user).first()
     context['courses'] = get_courses(request.user)
     context['courses'] = get_courses_data(context['courses'], teacher=teacher)
-    context['groups'] = get_groups(request.user)
+    groups = get_groups(request.user)
+    context['groups'] = get_groups_data(groups, teacher)
     context['is_teacher'] = bool(teacher)
     return render(request,'education/onlin.html', context) 
 
@@ -55,6 +57,7 @@ def onlin_video_view(request, pk):
             if data['video_link'] is None:
                 data['video_link'] = ''
             data['redirect_id'] = content.lesson.module.course.id
+            data['group'] = request.GET.get('group', None)
             return JsonResponse(data, status=200)
         else:
             return JsonResponse({'errors': form.non_field_errors()}, status=400, safe=False)
@@ -76,6 +79,7 @@ def onlin_video_create_view(request, lesson_id):
             content.content_type = 1 
             content.lesson = lesson 
             content.author = request.user
+            
             content.save()
             if group:
                 content.groups.add(group)
@@ -83,10 +87,10 @@ def onlin_video_create_view(request, lesson_id):
                 content.groups.add(*Group.objects.filter(course=lesson.module.course))
             data = model_to_dict(content, fields=('id', 'title'))
             data['redirect_id'] = content.lesson.module.course.id
+            data['group'] = request.GET.get('group', None)
             return JsonResponse(data, status=201)
         else:
             return JsonResponse({'message':form.non_field_errors()}, status=400)
-    # return JsonResponse({'message':'so\'rov metodi to\'g\'ri emas.'}, status=400)
     return render(request,'education/onlin_video.html')
 
 @login_required
@@ -110,9 +114,9 @@ def onlin_text_view(request, lesson_id):
             context = dict()
             context = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             context['redirect_id'] = content.lesson.module.course.id
+            context['group'] = request.GET.get('group', None)
             return JsonResponse(context)
         else:
-            print(form.non_field_errors())
             return JsonResponse({'form': form, 'status':400})
     return render(request,'education/onlin_text.html') 
 
@@ -132,6 +136,7 @@ def onlin_text_update_view(request, pk):
         else:
             print(form.non_form_errors())
         context['content']['redirect_id'] = content.lesson.module.course.id
+        context['content']['group'] = request.GET.get('group', None)
         return JsonResponse(context['content'], status=200)
 
     return render(request,'education/onlin_text.html', context) 
@@ -169,15 +174,23 @@ def onlin_hwork_create_view(request, lesson_id):
     lesson = get_object_or_404(Lessons, id=lesson_id)
     if request.method == 'POST':
         form = ContentForm(request.POST)
-        
         if form.is_valid():
             content = form.save(commit=False)
             content.author = request.user 
             content.content_type = 4 # CONTENT_CHOICES
             content.lesson = lesson
             content.save()
+            try:
+                group = request.GET.get('group',None)
+                group = Group.objects.get(id=group)
+                content.groups.add(group)
+            except:
+                if request.user in get_admins():
+                    content.groups.add(*Group.objects.filter(course=lesson.module.course))
+            
             data = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             data['redirect_id'] = content.lesson.module.course.id
+            data['group'] = request.GET.get('group', None)
             return JsonResponse(data)
         else:
             print(form.non_field_errors())
@@ -189,7 +202,7 @@ def onlin_hwork_create_view(request, lesson_id):
 @login_required
 def onlin_hwork_delete_view(request, pk):
     content = get_object_or_404(Contents, pk=pk)
-    if request.method == 'POST':
+    if request.method == 'POST' and (request.user in get_admins() or content.author == request.user):
         id = content.lesson.module.course.id
         content.delete()
         return JsonResponse({'status':"O'chirildi", 'url': f'/education/onlines/{id}/'})
@@ -223,7 +236,6 @@ def onlins_view(request,id):
         if module_id:
             filter_kwargs = {'module_id': module_id}
             filter_kwargs.update({'groups__id': group.id}) if group else dict()
-            print(filter_kwargs)
             context['lessons'] = get_lessons(course, request.user,**filter_kwargs)
             context['lessons'] = get_lessons_data(context['lessons'])
         return JsonResponse(context)
@@ -237,7 +249,6 @@ def onlins_view(request,id):
     context['lessons'] = get_lessons_data(context['lessons'])
     
     context['modules'] = get_modules_data(context['modules'], group=group, authors=admins)
-    print("\n\n", context, "\n\n")
     return render(request,'education/onlins.html', context) 
 
 @login_required
@@ -296,7 +307,6 @@ def online_delete2_view(request, type:str, pk: int):
 @login_required
 def online_activate_view(request, action:str, type: str, pk:int):
     ACTIONS = {'activate':True, 'draft':False}
-    print(action, type, pk)
     if request.method == 'POST':
         if type == 'course':
             obj = get_object_or_404(Course, pk=pk)
@@ -314,7 +324,6 @@ def online_activate_view(request, action:str, type: str, pk:int):
         if type == 'content':
             objs = Contents.objects.filter(pk=pk)
             objs.update(status=ACTIONS[action])
-        print(action, type, pk)
         return JsonResponse({'status':'ok'})
     return JsonResponse({'status':'get request'})    
 
@@ -417,8 +426,30 @@ def groupslist_view(request):
 def roomslist_view(request):
     return render(request,'education/roomslist.html')
 
+@login_required
 def task_view(request):
-    return render(request,'education/task.html')    
+    context = dict()
+    context['tasks'] = Tasks.objects.all().order_by('-created_at')
+    context['tasks'] = set_tasks_status(tasks=context['tasks'])
+    context['whom'] = UserTaskStatus.objects.all()
+    context['task_types'] = TaskTypes.objects.all()
+    context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
+    return render(request,'education/task.html', context=context)    
+
+@login_required
+def task_create_view(request):
+    status=200
+    form = TaskForm(request.POST or None, request.FILES)
+    if request.method == 'POST' and form.is_valid():
+        task = form.save(commit=False)
+        task.author = request.user
+        task.status = 1
+        task.save()
+        form.save_m2m()
+        status = 201
+    else:
+        return JsonResponse(form.errors, safe=False, status=400)
+    return JsonResponse({'message':'ok'}, status=status)
 
 def employees_view(request):
     return render(request,'education/employees.html') 
@@ -427,7 +458,10 @@ def students_list_view(request):
     return render(request,'education/students_list.html') 
 
 def parents_list_view(request):
-    return render(request,'education/parents_list.html')
+    context = {
+        'parents': Parents.parents.parents()
+        }
+    return render(request,'education/parents_list.html',context)
 
 def finance_list_view(request):
     return render(request,'education/finance_list.html')    
@@ -498,10 +532,6 @@ def faq_update(request, pk):
 
 def set_content_order(request, pk: int, order: int):
     content = get_object_or_404(Contents, pk=pk)
-    if content.order > order:
-        query = Q()
-    contents = Contents.objects.filter()
-    
     content.order = order
     content.save()
     return JsonResponse({'status': 200})
@@ -514,6 +544,8 @@ def online_course_contents_view(request, id):
         contents = lesson.contents.all()
         if group:
             contents = contents.filter(groups__in=[group]).values('id', 'title', 'content_type', 'status')
+        else:
+            contents = contents.values('id', 'title', 'content_type', 'status')
     else:
         admins = CustomUser.objects.filter(is_superuser=True)
         contents = lesson.contents.filter(Q(author=request.user)|Q(author__in=admins), groups__id=group).values('id', 'title', 'content_type', 'status')
@@ -541,7 +573,7 @@ def online_content_resources_view(request):
 @login_required
 def modules_detail_view(request, pk):
     module = get_object_or_404(Modules, pk=pk)
-    if request.user.is_superuser:
+    if request.user in get_admins():
         lessons = module.lessons.all().values('id', 'title', 'order')
     else:
         admins = CustomUser.objects.filter(is_superuser=True)
@@ -551,7 +583,7 @@ def modules_detail_view(request, pk):
     data['status'] = bool(Contents.objects.filter(lesson__module=module, status=True).count())
     return JsonResponse(data, safe=False)
 
-# @login_required
+@login_required
 def online_content_resource_delete_view(request, pk):
     resource = get_object_or_404(Resources, pk=int(pk))
     message = "Siz GET so'rov yubordingiz."
@@ -566,7 +598,6 @@ def homeworks_view(request):
     courses = get_courses(user=request.user)
     context['courses'] = get_courses_via_hws(courses, user=request.user)
     context['groups'] = get_groups_via_hws(courses, request.user)
-    print(context)
     return render(request, 'education/uyga_vazifa_teacher.html', context)
 
 def group_homeworks_detail_view(request, pk):
@@ -575,7 +606,8 @@ def group_homeworks_detail_view(request, pk):
     context['group'] = model_to_dict(group, fields=('id', 'title'))
     context['group']['course'] = model_to_dict(group.course, fields=('id', 'title'))
     context['students'] = get_students_data(group=group)
-
+    context['leads'] = get_leads_data(group=group)
+    context['general'] = list(context['students'])+context['leads'] 
     return render(request, 'education/uyga_vazifa_ichki_teacher.html', context)
 
 
@@ -588,7 +620,6 @@ def student_homeworks_in_group(request, pk):
 
     data = []
     for content in list(contents):
-        dct = dict()
         dct = model_to_dict(content, fields=('id', 'title', 'text'))
         if content.homework:
             dct['homework'] = {'name':content.homework.name, 'url': content.homework.url}
@@ -615,7 +646,6 @@ def student_homeworks_in_group(request, pk):
         else:
             dct['status'] = 1   
         data.append(dct)
-    print(data)
     return JsonResponse(data, safe=False)
 
 
@@ -653,3 +683,39 @@ def homework_edit_view(request, action, pk):
             print(form.errors())
             return JsonResponse({'status':'ok'}, safe=False)
     return JsonResponse({}, status=200)
+
+
+def lead_homeworks_in_group(request, pk):
+    demo = get_object_or_404(LeadDemo, pk=pk)
+    lead = demo.lead
+    group = demo.group
+    contents = get_lead_homework_contents(lead=lead, group=group, content_type=4)
+    data = []
+    for content in list(contents):
+        dct = model_to_dict(content, fields=('id', 'title', 'text'))
+        if content.homework:
+            dct['homework'] = {'name':content.homework.name, 'url': content.homework.url}
+        homeworks = content.homeworks.filter(lead=lead).order_by('date_created')
+        dct['homeworks'] = []
+        for homework in homeworks:
+            hw = model_to_dict(homework, fields=('id', 'text', 'ball', 'date_created', 'date_modified', 'comment', 'status', ))
+            hw['date_created'] = homework.date_created.strftime('%d/%m/%Y - %H:%M') if homework.date_created else ''
+            hw['date_modified'] = homework.date_modified.strftime('%d/%m/%Y - %H:%M') if homework.date_modified else ''
+
+            if homework.file:
+                hw['homework'] = {'name':homework.file.name.split('/')[-1], 'url':homework.file.url}
+            
+            if homework.comment_file:
+                hw['comment_file'] = {'name':homework.comment_file.name.split('/')[-1], 'url':homework.comment_file.url}
+            hw['commented'] = homework.commented.full_name() if homework.commented else ''
+            if Teacher.objects.filter(user=homework.commented).exists():
+                hw['commenter'] = 'O\'qituvchi'
+            else:
+                hw['commenter'] = 'Admin' if homework.commented and homework.commented.is_superuser else 'Mas\'ul'
+            dct['homeworks'].append(hw)
+        if homeworks.last():
+            dct['status'] = homeworks.last().status
+        else:
+            dct['status'] = 1   
+        data.append(dct)
+    return JsonResponse(data, safe=False)

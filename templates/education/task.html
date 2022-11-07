@@ -1,5 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% load custom_tags %}
+{% load user_tags %}
 {% block content %}
 
 <div class="container-fluid p-2">
@@ -48,51 +50,67 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for task in tasks %}
                                     <tr>
                                         <td>
-                                            <div class="userDatatable-content">01</div>
+                                            <div class="userDatatable-content">{{ forloop.counter }}</div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                Telefon qilish
+                                                {{ task.task_type.task_type }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                10:00da telefon qilish kerak
+                                                {{ task.comment|default:'' }}
                                             </div>
                                         </td>
 
                                         <td>
                                             <div class="userDatatable-content">
                                                 <span
-                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
-                                                    active</span>
+                                                    class="bg-opacity-{{ task.status|get_status2}}  color-{{ task.status|get_status2}} rounded-pill userDatatable-content-status active">
+                                                    {{task.status|get_type_name:'task'}}</span>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                01.01.2022 14:11
+                                                {{ task.created_at|date:'d.m.Y H:i'}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                01.01.2022 22:22
+                                                {{ task.deadline|date:'d.m.Y H:i'}}
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content d-flex justify-content-between align-center">
                                                 <span style="display:inline;"
-                                                    class="selling-badge order-bg-opacity-primary color-primary">Lid</span>
-                                                <a>Hoshimov Daler</a>
+                                                    class="selling-badge order-bg-opacity-primary color-primary">{{ task.user_status.whom }}</span>
+                                                    <div>{% if task.user_status.id == 1 %}
+                                                        {% for user in task.leads.all %}<a href="{% url 'admintion:lead-detail' user.id %}" style="color: black;"> {{user.user.full_name }}<br></a>{% endfor %}
+                                                        {% elif task.user_status.id == 3 %}
+                                                        {% for user in task.groups.all %}<a href="{% url 'admintion:group-detail' user.id %}" style="color: black;"> {{user.title }}<br></a>{% endfor %}
+                                                        {% elif task.user_status.id == 2 %}
+                                                        {% for user in task.students.all %}<a href="{% url 'admintion:student-detail' user.id %}" style="color: black;"> {{user.user.full_name }}<br></a>{% endfor %}
+                                                        {% elif task.user_status.id == 6 %}
+                                                        {% for user in task.courses.all %}<a href="{% url 'admintion:course-detail' user.id %}" style="color: black;"> {{user.title }}<br></a>{% endfor %}
+                                                        {% elif task.user_status.id == 8 %}
+                                                        {% for user in task.parents.all %}<a href="#" style="color: black;"> {{user.title }}<br></a>{% endfor %}
+                                                        {% elif task.user_status.id == 7 %}
+                                                        {% for user in task.courses.all %}<a href="{% url 'admintion:course-detail' user.id %}" style="color: black;"> {{user.title }}<br></a>{% endfor %}
+                                                        
+                                                        {% endif %}
+                                                    </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
-                                                Burhon Baqoyev
+                                            <div class="userDatatable-content  d-flex justify-content-between align-center">
+                                                <div>{% for user in task.responsibles.all %}<a href="{% if user.id|user_role == 'Manager' or user.id|user_role == 'Admin' %}#{% else %}{% url 'education:teacher_detail' user.id %}{% endif %}" style="color: black;"> {{user.full_name }}| {{user|user_role}}<br></a>{% endfor %}</div>
                                             </div>
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -120,11 +138,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Kim uchun</label>
-                                            <select name="url" id="owner"
+                                            <select name="url" id="selectWhom"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">Burhon Baqoyev</option>
-                                                <option value="">Aziz Saidmurodov</option>
-                                                <option value="">Shaxzod Erkinov</option>
+                                                {% for user_status in whom %}
+                                                    <option value="{{user_status.id}}">{{user_status.whom}}</option>
+                                                {% endfor %}
 
                                             </select>
                                         </div>
@@ -133,10 +151,11 @@
 									<div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Mavzu</label>
-                                            <select name="url" id="owner"
+                                            <select name="url" id="taskType"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">M1</option>
-                                                <option value="">M2</option>
+                                                {% for type in task_types %}
+                                                    <option value="{{type.id}}">{{type.task_type}}</option>
+                                                {% endfor %}
                                                 
                                             </select>
                                         </div>
@@ -146,20 +165,20 @@
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">
                                                 Vaqti</label>
-                                            <input type="time"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                            <input type="datetime-local"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="Deadline"
                                                 placeholder="soni">
                                         </div>
                                     </div>
 
 									<div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Mas'ul</label>
-                                            <select name="url" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="">Burhon Baqoyev</option>
-                                                <option value="">Aziz Saidmurodov</option>
-                                                <option value="">Shaxzod Erkinov</option>
+                                            <label for="select-tag" class="il-gray fs-14 fw-500 align-center">Mas'ul</label>
+                                            <select name="url" id="select-tag"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" multiple="multiple">
+                                                {% for res in responsibles %}
+                                                    <option value="{{res.id}}">{{res.first_name}} {{res.last_name}} | {{res.id|user_role}}</option>
+                                                {% endfor %}
 
                                             </select>
                                         </div>
@@ -167,16 +186,16 @@
 
 
                                     <div class="col-md-12">
-                                        <label for="exampleFormControlTextarea1"
+                                        <label for="id_comment"
                                             class="il-gray fs-14 fw-500 align-center">Matni</label>
-                                        <textarea class="form-control form-row" id="exampleFormControlTextarea1"
+                                        <textarea class="form-control form-row" id="id_comment"
                                             rows="2"></textarea>
                                     </div>
 
 
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-primary btn-sm  "
-                                            style="margin-top:20px ;">Saqlash</button>
+                                            style="margin-top:20px ;" onclick="saveBtn()">Saqlash</button>
 
                                     </div>
 
@@ -381,5 +400,46 @@ FooTable.MyFiltering = FooTable.Filtering.extend({
 		}
 	}
 });
+
+function saveBtn(){
+    var url = `/education/task/add/`;
+    var formData = new FormData();
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    
+    var user_status = document.getElementById('selectWhom');
+    formData.append('user_status', user_status.value);
+
+    var task_type = document.getElementById('taskType');
+    formData.append('task_type', task_type.value);
+
+    var deadline = document.getElementById('Deadline');
+    formData.append('deadline', deadline.value);
+
+    var responsibles = document.getElementById('select-tag');
+    for (var i=0;i< responsibles.selectedOptions.length;i++){
+        formData.append('responsibles', responsibles.selectedOptions[i].value);
+    }
+    
+    var comment = document.getElementById('id_comment');
+    formData.append('comment', comment.value);
+
+    fetch(url, {
+        method: 'post',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: formData
+    })
+    .then(res=>{
+        var status = res.status
+
+        if(status==201){
+            window.location.reload();
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
 </script>
 {% endblock %}

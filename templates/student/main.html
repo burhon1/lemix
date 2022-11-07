@@ -1097,24 +1097,24 @@
             <div class="sidebar__menu-group">
                 <ul class="sidebar_nav mt-2">
                     <li>
-                        <a href="{% url 'student:student' %}" class="">
+                        <a href="{% if is_student %}{% url 'student:student' %}{% else %}{% url 'student:lead' %}{% endif %}" class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid nav-icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                             <span class="menu-text">Asosiy </span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'student:my-courses' %}" class="">
+                        <a href="{% if is_student %}{% url 'student:my-courses' %}{% else %}{% url 'student:lead-demos' %}{% endif %}" class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder  nav-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                             <span class="menu-text">Darslar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'student:homeworks' %}" class="">
+                        <a href="{% if is_student %}{% url 'student:homeworks' %}{% else %}{% url 'student:lead-homeworks' %}{% endif %}" class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark nav-icon"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>                            <span class="menu-text">Uyga vazifa</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'student:exams' %}" class="">
+                        <a href="{% if is_student %}{% url 'student:exams' %}{% else %}#{% endif %}" class="">
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square nav-icon"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                             <span class="menu-text">Imtihonlar</span>
@@ -1132,12 +1132,14 @@
                             <span class="menu-text">Kutubxona</span>
                         </a>
                     </li>    {% endcomment %}   
-                    <li>
-                        <a href="#" class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card  nav-icon"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                            <span class="menu-text">To'lovlar</span>
-                        </a>
-                    </li>  
+                    {% if is_student %}
+                        <li>
+                            <a href="#" class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card  nav-icon"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                <span class="menu-text">To'lovlar</span>
+                            </a>
+                        </li> 
+                    {% endif %}
                     {% comment %} <li>
                         <a href="{% url 'student:my-courses' %}" class="">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers nav-icon"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>

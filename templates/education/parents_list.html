@@ -5,8 +5,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4 class="text-capitalize breadcrumb-title">Ota_onalar-10ta  </h4> 
-                <div class="action-btn">
+            <h4 class="text-capitalize breadcrumb-title">Ota-onalar-10ta  </h4> 
+                <div class="action-btn d-flex">
                   <button
                     class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
                     Ota-ona qo'shish
@@ -36,6 +36,12 @@
     
                                                     <div class="has-subMenu-left  d-flex ">
                                                         <ul class="subMenu mr-2">
+                                                            <button class="btn btn-sm btn-default btn-primary dropdown-toggle"
+                                                            type="button" data-toggle="modal" data-target="#modal-basic1"
+                                                            aria-haspopup="true" aria-expanded="false"  onclick="checkSMS()">
+                                                            <i class="la la-message"></i> SMS Jo'natish</button>
+                                                        </ul>
+                                                        <ul class="subMenu mr-2">
                                                             <button class="btn btn-sm btn-default btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="la la-download"></i> Export </button>
                                                         </ul>
@@ -54,6 +60,9 @@
                                             <thead>
                                                 <tr class="userDatatable-header">
                                                     <th>
+                                                        <span class="userDatatable-title"></span>
+                                                    </th>
+                                                    <th>
                                                         <span class="userDatatable-title">id</span>
                                                     </th>
                                                     <th>
@@ -69,7 +78,7 @@
                                                     </th>
                                                  
                                                     <th>
-                                                        <span class="userDatatable-title ">Ota-onasi</span>
+                                                        <span class="userDatatable-title ">Farzandi</span>
                                                     </th>
 
                                                     <th data-type="html" data-name='position'>
@@ -84,42 +93,57 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                {% for parent in parents %}
                                                 <tr>
+                                                    <td style="margin:auto;display: flex;justify-content:center;align-content:center;height: 100%;">
+                                                        <div class="d-flex">
+                                                            <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                <div class="checkbox-group-wrapper">
+                                                                    <div class="checkbox-group d-flex">
+                                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                            <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-teacher-{{parent.id}} group-checkboxes" type="checkbox" id="check-grp-teacher-{{parent.id}}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
                                                     <td>
-                                                        <div class="userDatatable-content">01</div>
+                                                        <div class="userDatatable-content">{{ forloop.counter }}</div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex">
                                                             <div class="userDatatable-inline-title">
                                                                 <a href="#" class="text-dark fw-500">
-                                                                    <h6>Jack loin </h6>
+                                                                    <h6>{{ parent.full_name}} </h6>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                           998 54645564
+                                                           {{ parent.phone_number }}
                                                         </div>
                                                     </td>
                                                    
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                            Scratch
+                                                            -
                                                         </div>
                                                     </td>
 
 
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                            S.jorayev
+                                                        -
                                                         </div>
                                                     </td>
 
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                            998 54645564
+                                                            -
                                                         </div>
                                                     </td>
                                                     
@@ -130,145 +154,12 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
+                                                        ...
+                                                        
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">02</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>Kell </h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           998 54645564
-                                                        </div>
-                                                    </td>
-                                                   
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Scratch
-                                                        </div>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Burhon Baqoyev
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            998 54645564
-                                                        </div>
-                                                    </td>
-                                                    
-                                                  
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                            
-                                                  <tr>
-                                                    <td>
-                                                        <div class="userDatatable-content">06</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>Keluot </h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           998 54645564
-                                                        </div>
-                                                    </td>
-                                                   
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Scratch
-                                                        </div>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            Burhon Baqoyev
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            998 54645564
-                                                        </div>
-                                                    </td>
-                                                    
                                                  
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                            <li>
-                                                                <a href="#" class="view">
-                                                                    <span data-feather="eye"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="edit">
-                                                                    <span data-feather="edit"></span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="remove">
-                                                                    <span data-feather="trash-2"></span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>   
+                                                {% endfor %}
                                             
                                             
                                            
@@ -276,7 +167,15 @@
                                             </tbody>
                                         </table>
                               
-                                     
+                                        <div class="d-flex align-items-center m-4">
+                                            <div class="custom-checkbox  check-all">
+                                                <input class="checkbox" type="checkbox" id="check-3">
+                                                <label for="check-3">
+                                                    Barchani tanlash
+                                                </label>
+                                            </div>
+                                        </div>
+            
                                         
                                     </div>
                                 </div>
@@ -288,7 +187,41 @@
             </div>
 
 
-<div class="drawer-basic-wrap">
+            <div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+            
+            
+            
+                            <h6 class="modal-title">Sms matni.</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#">
+                                <div class="form-row">
+                                    <div class="sms-status-message"></div>
+                                    <div class="form-group col-lg-12">
+                                        <label for="id_message" class="modal-title">Xabar matni</label>
+                                        <textarea type="text" name="id_message" id="id_message" class="form-control form-control-sm border-light" placeholder="Xabar matni..."></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-sm" id="sendSMS">Jo'natish</button>
+                            <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS", data-dismiss="modal">Bekor qilish</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+
+            <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
       <div
         class="atbd-drawer__header d-flex aling-items-center justify-content-between"
@@ -384,10 +317,90 @@
 <div class="overlay-dark"></div>
 <div class="overlay-dark-l2"></div>
 
+{% endblock %}
 
+{% block script %}
+<script>
+    function checkSMS(){
+    
+    var formData = new FormData();
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    var checkboxes = document.getElementsByClassName('group-checkboxes');
+    for(var i=0;i<checkboxes.length;i++){
+        if(checkboxes[i].checked == true){
+            formData.append('parents', checkboxes[i].id.split("-")[3]);
+        }
+    }
+    fetch("{% url 'admintion:check-sms-availability' %}", {
+        method:'post',
+        headers:{
+            'Accept':'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: formData
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        var div = document.getElementsByClassName('sms-status-message')[0];
+        //div.classList.add('d-flex m-2 p-2')
+        div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                         Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
+                        sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+        `
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+var cancelBtn = document.getElementById('cancelSMS');
+        cancelBtn.addEventListener('click', ()=>{
+            var input = document.getElementById('id_message');
+            input.value = '';
+        })
+        
+        var sendSMS = document.getElementById('sendSMS');
+        sendSMS.addEventListener('click', ()=>{
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+            var input = document.getElementById('id_message');
+            formData.append('message', input.value);
+            var checkboxes = document.getElementsByClassName('group-checkboxes');
+            for(var i=0;i<checkboxes.length;i++){
+                if(checkboxes[i].checked == true){
+                    formData.append('parents', checkboxes[i].id.split("-")[3]);
+                }
+            } 
+            var url = "{% url 'admintion:send_sms_to_parent' %}"
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData,
+            })
+            .then(res=>{
+                var status = res.status
+                if(status==200){
+                    alert("Xabar Ota-onalarga yuborildi.");
+                    var input = document.getElementById('id_message');
+                    input.value = '';
+                } else {
+                    console.log(status)
+                    alert("Ma'lumotlar to'liq kiritilmadi");
+                } 
+            })
+        })
 
+        var checkAllBtn = document.getElementById('check-3');
+        console.log(checkAllBtn, checkAllBtn.checked)
+        checkAllBtn.addEventListener('click', ()=>{
+            var checkboxes = document.getElementsByClassName('group-checkboxes')
+            for(var i=0;i<checkboxes.length;i++){
+                checkboxes[i].checked = checkAllBtn.checked;
+            }
+            
+        })
 
-
-
-
+    
+</script>
 {% endblock %}

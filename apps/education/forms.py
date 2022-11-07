@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.formsets import formset_factory
+from admintion.models import Tasks
 from student.models import Homeworks
 from user.models import CustomUser
 
@@ -14,7 +15,6 @@ class LessonAddForm(forms.ModelForm):
         self.instance = super().save(commit=False)
         self.instance.author = author
         self.instance.save()
-        print(self.instance, "in form")
         return self.instance
 
 class ContentForm(forms.ModelForm):
@@ -44,3 +44,17 @@ class HomeworkActionForm(forms.ModelForm):
     class Meta:
         model = Homeworks
         fields = ('id', 'comment', 'ball', 'comment_file', )
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Tasks
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['whom'].required=False
+        self.fields['author'].required=False
+        self.fields['comment'].required=False
+        self.fields['status'].required = False

@@ -39,7 +39,9 @@ STUDENT_ATTANDENCE_TYPE = (
 
 
 LEAD_FORM_STATUS = (
-    (1,'Telefon qilish'),
+    (1,'Aktiv'),
+    (2,'Muzlatilgan'),
+    (3, "O'chirilgan")
 )
 
 STUDENT_STATUS = (
@@ -53,4 +55,38 @@ PAYMENT_TYPE = (
     (3, 'Click'),
     (4, 'Apelsin'),
     (5, 'Visa Card'),
+)
+
+GET_GROUPS_DAYS = (
+    (1, "Dushanba"),
+    (2, "Seshanba"),
+    (3, "Chorshanba"),
+    (4, "Payshanba"),
+    (5, "Juma"),
+    (6, "Shanba"),
+    (7, "Yakshanba"),
+)
+
+TASK_STATUS = (
+    (1, 'Aktiv'),
+    (2, 'Bajarildi'),
+    (3, 'Kechikkan'),
+)
+
+TEACHER_TYPE = (
+    (1, "O'qituvchi"),
+    (2, "Yordamchi(support)"),
+)
+
+MESSAGE_TYPE = (
+    (1, 'Foydalanuvchiga'),
+    (2, 'O\'qituvchilarga'),
+    (3, 'O\'quvchilarga'),
+    (4, 'Ota-onalarga'),
+    (5, 'Adminlarga'),
+    (6, 'Managerlarga'),
+    (7, 'O\'quvchilarga'),
+    (8, 'Guruhga'),
+    (9, 'Kursga'),
+    (10, 'Lidlarga'),
 )
