@@ -42,14 +42,14 @@ class CheckOrder(Paycom):
     # account = 'bu yerga qaysi account ni yozish kerak?'
 
     def check_order(self, amount, account, *args, **kwargs):
-        print(amount)
+        print(amount,2)
         return self.ORDER_FOUND
         
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        print(account)
+        print(account,1)
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
-        print(account)
+        print(account,3)
       
     # result = check_order(amount=1, account=2222)
 
