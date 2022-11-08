@@ -121,7 +121,7 @@ PAYCOM_SETTINGS = {
     "TOKEN": "635795929fd41bc3daf5019c",  # token
     "SECRET_KEY": "HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d",  # password
     "ACCOUNTS": {
-        "KEY": "order_id"
+        "KEY": "Lemix_kassa"
     }
 }
 
