@@ -3,7 +3,7 @@ from admintion.querysets import rooms_manager,groups_manager,students_manager,at
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
-from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE
+from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES
 # Create your models here.
 class Room(models.Model):
     title = models.CharField(max_length=50)
@@ -187,3 +187,45 @@ class Messages(models.Model):
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='author_messages')
     message_type = models.PositiveSmallIntegerField(choices=MESSAGE_TYPE, default=1)
 
+class EduCenters(models.Model):
+    name = models.CharField(max_length=150, verbose_name="O'quv markazi")
+    parent = models.ForeignKey('self', models.SET_NULL, null=True, blank=True, related_name='filiallar')
+
+    def __str__(self):
+        return self.name
+class LeadForms(models.Model):
+    name  = models.CharField(max_length=150, verbose_name="Forma nomi", null=True, blank=True)
+    title = models.CharField(max_length=150, verbose_name="Forma sarlavhasi")
+    image = models.ImageField(upload_to='forms',null=True,blank=True)
+    comment = models.CharField(max_length=2000, null=True)
+    educenters = models.ManyToManyField(EduCenters)
+    courses = models.ManyToManyField(Course)
+    sources = models.ManyToManyField('Sources')
+    link    = models.URLField(verbose_name="Havola",null=True,blank=True)
+    russian = models.BooleanField(default=False)
+    english = models.BooleanField(default=False)
+    seen    = models.PositiveIntegerField(default=0)
+    qrcode  = models.ImageField(upload_to='formleads', null=True)
+
+class Sources(models.Model):
+    title = models.CharField(max_length=150, unique=True)
+    def __str__(self):
+        return self.title
+class Contacts(models.Model):
+    contact_type = models.PositiveSmallIntegerField("Aloqa turi", choices=CONTACT_TYPES)
+    value        = models.CharField(max_length=150)
+    leadform     = models.ForeignKey(LeadForms, models.CASCADE)
+
+class FormFields(models.Model):
+    title    = models.CharField(max_length=150)
+    key      = models.CharField(max_length=50, null=True)
+    leadform = models.ForeignKey(LeadForms, models.CASCADE)
+    order    = models.PositiveIntegerField(default=1)
+    required = models.BooleanField("Talab qilinadimi?", default=False)
+
+class FormUniversalFields(models.Model):
+    title    = models.CharField(max_length=150)
+    key      = models.CharField(max_length=50, null=True)
+    order    = models.PositiveIntegerField(default=1)
+    required = models.BooleanField("Talab qilinadimi?", default=False)
+ 

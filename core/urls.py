@@ -13,6 +13,7 @@ urlpatterns = [
     path('education/', include('education.urls')),
     path('student/', include('student.urls')),
     path('finance/', include('finance.urls')),
+    path('register/',include('admintion.form_urls')),
 ]
 
 if settings.DEBUG:

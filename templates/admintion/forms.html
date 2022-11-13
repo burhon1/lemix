@@ -1,205 +1,1538 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+
+{% block title %}
+    Lidlar formalar- Lemix
+{% endblock %}
+
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+    .v-num{
+        font-size: 14px;
+    }
+    .application-faqs .panel-title a{
+        font-size: 12px !important;
+    }
+    .forms-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .forms-view > .form-group{
+        display: flex;
+        align-items: center;
+    }
+    .table-responsive tr td>div{
+        text-transform: none;
+    }
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single{
+        height: 1.875rem;
+padding: 0;
+font-size: 12px;
+line-height: 1.5;
+-webkit-border-radius: 0.2rem;
+border-radius: 0.2rem;
+margin-right: 7px;
+    }
+    .form-group svg{
+        color: black;
+    }
+    
+    .draggable-list {
+        /* border: 1px solid var(--border-color); */
+        color: var(--text);
+        padding: 0;
+        list-style-type: none;
+    }
+    .draggable svg{
+        overflow: visible;
+        color: var(--text);
+    }
+    .draggable-list li {
+        background-color: #fff;
+        display: flex;
+        flex: 1;
+    }
+
+    .draggable-list li:not(:last-of-type) {
+        /* border-bottom: 1px solid var(--border-color); */
+    }
+
+    .draggable-list .number {
+        background-color: var(--background-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .draggable-list li.over .draggable {
+        background-color: #eaeaea;
+    }
+
+    .draggable-list .person-name {
+        margin: 0 20px 0 0;
+    }
+
+    .draggable-list li.right .person-name {
+        color: #3ae374;
+    }
+
+    .draggable-list li.wrong .person-name {
+        color: #ff3838;
+    }
+
+    .draggable {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0px;
+        flex: 1;
+    }
+
+    .check-btn {
+        background-color: var(--background-color);
+        border: none;
+        color: var(--text-color);
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .check-btn:active {
+        transform: scale(0.98);
+    }
+
+    .check-btn:focus {
+        outline: none;
+    }
+    .application-faqs .panel-heading{
+        padding: 10px 14px !important;
+    }
+    /* @media only screen and (max-width: 2048px){
+.atbd-drawer {
+width: 570px !important;
+
+}} */
+.addinputinfo .form-group{
+display: flex;
+align-items: center;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4 class="text-capitalize breadcrumb-title">Formalarlar-3ta </h4>
-            <div class="action-btn">
-                <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
-                    Formalar qo'shish
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 mb-1">
-            <div class="card px-20">
-                <div class="card-body p-1">
-                    <div
-                        class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-employees-list">
+    <div class="row mt-3">
+
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+                <div class="card-header color-dark fw-500">
+                  <div class="row align-items-center justify-content-center">
+                   <h2 class="mr-30"> Formalar</h2>
+                    <div class="tab-wrapper">
+
+
+                    </div>
+                  </div>
+                    <div class="buttons row">
+                        
+                        <button class="btn btn-primary btn-xs btn-default btn-squared drawer-multiTrigger" onclick="AddForm()" data-drawer="level-one">+ Forma qo'shish</button>
+                   
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
                         <div class="table-responsive">
-                            <div id="filter-form-container" style="display:inline;"></div>
-                            <table class="table mb-0 table-borderless adv-table-employees-list" data-sorting="true"
-                                data-filter-container="#filter-form-container" data-paging-current="1"
-                                data-paging-position="left" data-paging-size="20">
+                            <table class="table mb-0 table-borderless">
                                 <thead>
                                     <tr class="userDatatable-header">
                                         <th>
+                                            <span class="userDatatable-title">№</span>
+                                        </th>
+                                     
+                                        <th>
+                                            <span class="userDatatable-title">Nomi</span>
+                                        </th>
+                                        <th class="text-center">
+                                            <span class="userDatatable-title ">Havola</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title">Id</span>
+                                            <span class="userDatatable-title">Ko'rilgan</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title">FIO</span>
+                                            <span class="userDatatable-title">Yuborilgan</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title">Manbasi</span>
+                                            <span class="userDatatable-title">Konversiya</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title">Izoh</span>
-                                        </th>
-                                        <th>
-                                            <span
-                                                class="userDatatable-title orderDatatable_actions  d-flex ">Amallar</span>
+                                            <span class="userDatatable-title float-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for obj in objs %}
-                                    <tr style=" border-radius: 40px; padding: 15px; ">
-                                        <td
-                                            style="margin:auto;display: flex;justify-content:center;align-content:center;height: 100%;">
-                                            <input type="checkbox"
-                                                style="margin:auto;display:flex;justify-content:center;align-content:center;">
+                                    <tr >
+                                    
+                                        <td>
+                                            <div class="userDatatable-content">
+                                               {{ forloop.counter }}
+                                            </div>
+                                        </td>
+                                        
+                                        <td>
+                                            <div class="userDatatable-content">
+                                               {{ obj.name }}
+                                            </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">{{forloop.counter}}</div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="userDatatable-inline-title">
-                                                    <a href=""
-                                                        class="text-dark fw-500">
-                                                        <h6>{{obj.fio}}</h6>
+                                            <div class="userDatatable-content d-flex justify-content-around">
+                                                <button class="btn btn-icon btn-squared btn-outline-primary btn-xs"   onclick="setModalData('{{obj.id}}')" data-toggle="modal" data-target="#modal-basic1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>  
+                                                </button>                                                           
+                                                    <a href="{{ obj.link }}" target="_blank" class="btn btn-icon btn-squared btn-outline-primary btn-xs">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                                                     </a>
-                                                </div>
+                                            </div>
+                                           
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                1000
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                {% if obj.source == 1 %}
-                                                Telegram
-                                                {% elif obj.source == 2 %}
-                                                Banner
-                                                {% elif obj.source == 2 %}
-                                                Seminar
-                                                {% elif obj.source == 2 %}
-                                                Tik-tok
-                                                {% endif %}
+                                              780
                                             </div>
                                         </td>
-
                                         <td>
-                                            <div class="userDatatable-content">
-                                                {{obj.comment}}
+                                            <div class="userDatatable-content d-inline-block">
+                                                <span class="selling-badge order-bg-opacity-success color-success">90%</span>
+                                                <!-- <span class="selling-badge order-bg-opacity-warning color-warning">78%</span>
+                                                <span class="selling-badge order-bg-opacity-danger color-danger">78%</span> -->
                                             </div>
+                                           
                                         </td>
                                         <td>
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                <li>
-                                                    <a href="#" class="edit">
-                                                        <span data-feather="edit"></span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="edit">
-                                                        <span data-feather="trash-2" data-toggle="modal"
-                                                            data-target="#modal-basic"></span></a>
-                                                </li>
+                                            
+                                                   
+                                                    <li>
+                                                        <a href="#" class="view"  data-toggle="modal" data-target="#modal-">
+                                                            <span data-feather="eye"></span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="edit drawer-multiTrigger" data-drawer="level-one" onclick="editForm('{{obj.id}}')">
+                                                            <span data-feather="edit"></span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#"  onclick="deleteFormModal('{{obj.id}}','{{obj.title}}')"  class="remove"  data-toggle="modal" data-target="#modal-basic">
+                                                            <span data-feather="trash-2"></span></a>
+                                                    </li>
                                             </ul>
                                         </td>
                                     </tr>
+                                    
                                     {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
+                    <!-- <div class="d-flex justify-content-sm-end justify-content-start pt-25">
+                        <nav class="atbd-page ">
+                            <ul class="atbd-pagination d-flex">
+                                <li class="atbd-pagination__item">
+                                    <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                                    <a href="#" class="atbd-pagination__link"><span class="page-number">1</span></a>
+                                    <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
+                                    <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
+                                    <a href="#" class="atbd-pagination__link pagination-control"><span class="page-number">...</span></a>
+                                    <a href="#" class="atbd-pagination__link"><span class="page-number">12</span></a>
+                                    <a href="#" class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                                    <a href="#" class="atbd-pagination__option">
+                                    </a>
+                                </li>
+                                <li class="atbd-pagination__item">
+                                    <div class="paging-option">
+                                        <select name="page-number" class="page-selection">
+                                            <option value="20">20/page</option>
+                                            <option value="40">40/page</option>
+                                            <option value="60">60/page</option>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> -->
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-body">
-                <h4>Siz haqiqattan ushbu xodimni o'chirmoqchimisiz?</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="drawer-basic-wrap">
-    <div class="atbd-drawer drawer-account d-none">
-        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
-            <h3>Forma qo'shish</h3>
-            <h6 class="drawer-title"></h6>
-            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
-        </div>
-        <!-- ends: .atbd-drawer__header -->
-        <div class="atbd-drawer__body">
-            <div class="drawer-content">
-                <div class="drawer-account-form form-basic">
-                    <form class="was-validated" action="{% url 'admintion:forms' %}" method="post">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-12 col-12">
-                                <div class="form-group">
-                                    <label for="validationServer01"
-                                        class="il-gray fs-14 fw-500 align-center">FIO</label>
-                                    <input name="fio" type="text"
-                                        class="form-control is-invalid ih-medium ip-light radius-xs b-light"
-                                        id="validationServer01" required>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-12">
-                                <div class="form-group">
-                                    <label for="validationServer01"
-                                        class="il-gray fs-14 fw-500 align-center">Telefon</label>
-                                    <div class="w-100 d-flex ">
-                                        <a for="validationServer01" style="margin:auto;margin-right: 15px;">+998</a>
-                                        <input name="phone" type="text" style="display:inlinle;"
-                                            class="form-control is-invalid ih-medium ip-light radius-xs b-light"
-                                            id="validationServer01" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-12">
-                                <label for="validationServer04" class="il-gray fs-14 fw-500 align-center">Manbasi</label>
-                                <select
-                                    name="source"
-                                    class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
-                                    id="validationServer04" aria-describedby="validationServer04Feedback" required>
-                                    <option selected disabled value="">Tanlang</option>
-                                    <option value="1">Telegram</option>
-                                    <option value="2">Banner</option>
-                                    <option value="3">Seminar</option>
-                                    <option value="4">Tik-tok</option>
-                                </select>
-                            </div>
-                            <div class="form-group form-element-textarea mb-20 col-md-12">
-                                <label for="exampleFormControlTextarea1"
-                                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
-                                <textarea name="comment" class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light" id="exampleFormControlTextarea1"
-                                    rows="3"></textarea>
-                            </div>
-                            <div class="col-md-12 col-12">
-                                <div class="col-md-12 mt-2 pl-0 ">
-                                    <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
-                                </div>
-                            </div>
-                        </div>
-                </div>
+<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title"></h6>
+                
+            </div>
+            <div class="modal-body">
+               Rostan ham ushbu formani o'chirib yubormoqchimisiz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Ortga</button>
+                <button type="button" class="btn btn-danger btn-sm" id="FormdeleteBtn">O'chirish</button>
             </div>
         </div>
     </div>
-    <!-- ends: .atbd-drawer__body -->
+
+
 </div>
+
+
+<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+
+
+                <h6 class="modal-title">Mobile qurilmada ochish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+               <div class="row d-flex justify-content-center">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="row d-flex justify-content-center mb-30">
+                      <div class="col-lg-8 col-sm-12">
+                        <img src="{% static '/img/165.png' %}" alt="" class="w-100 mb-2" id="modalQrCode">
+                        <p>Havolani ochish uchun telefon kamerangizni QR kodga qarating</p>
+                      </div>
+                    </div>
+                    <div class=" row d-flex justify-content-between mt-2">
+                        
+                        <p class="fs-12" id="modalURL">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                              
+                        </p>
+                        <a href="#" class="fs-14 text-dark" type="button" id="copyLink">Linkdan nusxa olish</a>
+                        <input value="" hidden="true" />
+                    </div>
+                </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" type="button" target="_blank" id="openLink" class="btn btn-primary btn-sm">Havolani ochish      </a>
+                <a href="#" id="saveQRCode" download="true" type="button" class="btn btn-primary btn-sm" data-dismiss="modal">QR kodni yuklash(.png)</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="drawer-multiLevel" style="overflow-y: scroll;">
+
+
+    <div class="atbd-drawer drawer-level-one" style="overflow-y: scroll;">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h6 class="drawer-title">Forma qo'shish</h6>
+            <!-- <a href="#" class="btdrawer-close"><i class="la la-times"></i></a> -->
+        </div><!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body">
+            <div class="drawer-content" >
+                <div class="drawer-account-form form-basic">
+                <form action="#" >
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label for="id_name">Forma nomini kiriting</label>
+                            <input type="text" name="name" id="id_name" class="form-control form-control-sm border-light" placeholder="forma nomi...">
+                        </div>
+                        <div class="form-group col-lg-6 custom-file ">
+
+                            <label for="id_image">Rasm yuklang</label>
+                            <div id="downloadImage"></div>
+                            <input  class="form-control form-control-sm border-light align-items-center" type="file" id="id_image" name="image">
+                            
+
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="id_title"><b class="text-danger">*</b>Sarlavha</label>
+                            <input type="text" name="title" id="id_title" class="form-control form-control-sm border-light" placeholder="sarlavha...">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="id_comment">Izoh</label>
+                            <textarea name="comment" id="id_comment" style="min-height: 50px !important;" class="form-control border-light form-control-sm" placeholder="Izoh qoldiring"></textarea>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <div class="mb-3">
+
+
+                                <div class="checkbox-theme-default custom-checkbox ">
+                                    <input class="checkbox" type="checkbox" id="id_russian" name="russian">
+                                    <label for="id_russian">
+                                        <span class="checkbox-text">
+                                            Rus tilida kiritish
+                                        </span>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            <div class="mb-3">
+
+
+                                <div class="checkbox-theme-default custom-checkbox ">
+                                    <input class="checkbox" type="checkbox" id="id_english">
+                                    <label for="id_english">
+                                        <span class="checkbox-text">
+                                            Ingliz tilida kiritish
+
+                                        </span>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            
+                        
+                        </div>
+                    <div class="form-group col-lg-12">
+                        <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
+                        <select name="educenters" id="id_educenters" class="form-control-sm">
+                            <option value="">Hammasi</option>
+                            {% for option in form.fields.educenters.queryset %}
+                                <option value="{{option.id}}">{{ option.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="id_courses"><b class="text-danger">*</b>Kurslarni tanlang</label>
+                        <select name="courses" id="id_courses" class="form-control-sm border-light">
+                            <option value="">Hammasi</option>
+                            {% for option in form.fields.courses.queryset %}
+                                <option value="{{ option.id }}">{{ option.title }}</option>
+                            {% endfor %}
+                            <!-- <option value="">Jack Ma</option>
+                            <option value="">Tom liu</option> -->
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="id_sources"><b class="text-danger">*</b>Manba(kanal)</label>
+                        <select name="sources" id="id_sources" class="form-control-sm border-light">
+                            <option value="">Hammasi</option>
+                            {% for option in form.fields.sources.queryset %}
+                                <option value="{{option.id}}">{{ option.title}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-12 mb-2">
+                        <label for="id_form_fields" ><b class="text-danger">*</b> So'raladigan ma'lumotlar</label>
+                        <div class="panel-body">
+                        <ul class="draggable-list" id="draggable-list"></ul>
+                        <button type="button" class="btn btn-primary col-12 ml-3 btn-xs btn-default btn-squared drawer-multiTrigger" data-drawer="level-two" onclick="getUniversalFields()">Maydon qo'shish</button>
+        
+                    </div>
+                </div>
+                      
+          <div class="col-12 mb-2">
+            
+            <label for="owner" >Kontakt tugmachalarini qo'yish</label>
+            <div class="forms w-100">
+                <div class="forms-view" id="parent">
+                    <label for="id_instagram" class="col-6 p-1">Instagram username</label>
+                    
+                    <div class="form-group col-6 p-0">
+                        <input type="text" name="name" id="id_instagram" class="form-control form-control-sm border-light mr-2 contacts" placeholder="@instagram" value="" onchange="formContacts('id_instagram')">
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(0)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                </div>
+                <div class="forms-view " id="telegram">
+                    <label for="id_facebook" class="col-6 p-1">Facebook username</label>
+                    <div class="form-group col-6 p-0">
+                        <input type="text" name="name" id="id_facebook"  onchange="formContacts('id_facebook')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="@facebook"  value="">
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(1)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                </div>
+                <div class="forms-view " id="manzil">
+                    <label for="id_youtube" class="col-6 p-1">Youtube link</label>
+                        <div class="form-group col-6 p-0">
+                            <input type="text" name="name" id="id_youtube" onchange="formContacts('id_youtube')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="https://www.youtube.com/"  value="">
+                            <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(2)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </div>
+
+                
+                </div>
+                <div class="forms-view " id="email">
+                    <label for="id_telegram" class="col-6 p-1">Telegram link</label>
+                    <div class="form-group col-6 p-0">
+                        <input type="text" name="name" id="id_telegram" onchange="formContacts('id_telegram')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="http://t.me/username" value="">
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(3)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                 
+                </div>
+                <div class="forms-view " id="passport">
+                    <label for="id_phone_number" class="col-6 p-1">Telefon raqam</label>
+                    <div class="form-group col-6 p-0">
+                        <input type="text" name="name" id="id_phone_number" onchange="formContacts('id_phone_number')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="+99899634567" value="">
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(4)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                </div>
+                <div class="forms-view " id="file">
+                    <label for="id_link" class="col-6 p-1">Sayt havolasi</label> 
+                    <div class="form-group col-6 p-0">
+                        <input type="text" name="name" id="id_link" onchange="formContacts('id_link')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="https://lemix.uz/" value="">
+                        <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(5)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                </div>
+            </div>
+<div class="buttons d-flex flex-wrap  w-100">
+
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(0)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(1)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(2)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(3)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+</button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(4)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                 </button>
+<button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(5)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>    
+</button>
+</div>
+          </div>
+                                        
+                    </div>
+                    <button class="btn btn-primary" onclick="saveBtn()" id="savebtn">Saqlash</button>
+                </form>
+                </div>
+               </div>
+        </div><!-- ends: .atbd-drawer__body -->
+    </div><!-- ends: .atbd-drawer -->
+
+
+
+    <div class="atbd-drawer drawer-level-two" style="">
+        <div class="atbd-drawer__header">
+            <h6 class="drawer-title">Yangi maydon qo'shish</h6>
+        </div><!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body" style="position: relative;overflow-y: scroll;height: 85vh;">
+            <div class="drawer-content row" >
+             
+                <div class="columns-2 col-lg-12 p-0  pl-md-0">
+                    <div class="bookmark-page__list p-0">
+                        <div class="bookmark-single p-0">
+                            <div class="bookmark-card card p-0 " style="border: none;" >
+                              
+                                <div class="card-body p-0" >
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                            <div class="p-3">
+                                                <div class="addinputinfo">
+                                                    <div class="form-group mb-2" id="0">
+
+                                                        <input type="text" class="form-control form-control-default border-info" placeholder="" id="fieldInput">
+                                                        <!-- <svg id="0" class="deleteinputInfo" onclick="handledeleteinfo(0)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> -->
+                
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="btn btn-xs btn-primary mt-2" onclick="createUniversalFields()">Yangi ma'lumot qo'shish</div>
+                                            </div>
+                                            <div class="todo-task table-responsive todo-task1">
+                                                <table class="table table-borderless">
+                                                    <tbody id="genTableBody">
+            
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                            
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                                          
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-deleted" role="tabpanel" aria-labelledby="pills-deleted-tab">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+           
+        </div><!-- ends: .atbd-drawer__body -->
+        <div class="atbd-drawer__footer col-lg-12 text-right d-flex justify-content-end bg-white border-top py-2" style="position: fixed;bottom: 0px;right: 0;">
+            <div class="btn btn-xs btn-secondary mr-2" id="bekorqilish">Ortga</div>
+            <div class="btn btn-xs btn-primary" onclick="createList()">Saqlash</div>
+        </div>
+    </div><!-- ends: .atbd-drawer -->
+
+</div>
+
 <!-- ends: .atbd-drawer -->
 </div>
 <div class="overlay-dark"></div>
 <div class="overlay-dark-l2"></div>
 
 
+{% endblock %}
 
 
+{% block script %}
+<script>
+    // // addinputinfo
+    // var addinputinfo =document.querySelector('.addinputinfo')
+    // document.querySelector('#addinputinfo').addEventListener('click', function(e){
+    //     e.preventDefault();
+    //     addinputinfo.innerHTML+=`<div class="form-group mb-2" id="${document.querySelectorAll('.addinputinfo > .form-group').length}">
+    // <input type="text" class="form-control form-control-default border-info" placeholder="">
+    // <svg id="${document.querySelectorAll('.addinputinfo > .form-group').length}" onclick = "handledeleteinfo(${document.querySelectorAll('.addinputinfo > .form-group').length})" class="deleteinputInfo" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    // </div>`
+    // })
+    // // addinputinfo and
+    // // deleteinputInfo
+    // function handledeleteinfo(e){
+    //     document.querySelectorAll('.addinputinfo > .form-group').forEach(function (elem) {
+    //     if(elem.id==e)
+    //    {
+    //     elem.remove();
+    //    }
+    // });
+       
+    // }
+    
+    // deleteinputInfo end
+    const richestPeople = [];
+    // variables
+    var deletedFields = []; // bu yerda formadan chiqarib tashlangan sohalar.
+    var createdFields = []; // bu yerda formaga qo'shiladigan sohalar.
+    var genFields = []; // bu yerda barcha yaratilgan sohalar.
+    var contacts = []; // bu yerda kontaktlar.
+    var deletedContacts = [];
+    function clearDrawer(){
+        document.getElementById('id_name').value = "";
+        document.getElementById('id_title').value = "";
+        document.getElementById('id_image').value = "";
+        // document.getElementById('id_image').files.length = 0;
+        document.getElementById('id_comment').value = "";
+        document.getElementById('id_russian').checked = false;
+        document.getElementById('id_english').checked = false;
+        document.getElementById('id_educenters').value = "";
+        document.getElementById('id_courses').value = "";
+        document.getElementById('id_sources').value = "";
+        document.getElementById('id_instagram').value = "";
+        document.getElementById('id_telegram').value = "";
+        document.getElementById('id_phone_number').value = "";
+        document.getElementById('id_link').value = "";
+        document.getElementById('id_facebook').value = "";
+        document.getElementById('id_youtube').value = "";
+        richestPeople.length = 0;
+        deletedFields.length = 0;
+        createdFields.length = 0;
+        genFields.length = 0;
+        contacts.length = 0;
+        deletedContacts.length = 0;
+    }
+    function deleteFormModal(id, title){
+            console.log(id, title);
+            var btn = document.getElementById('FormdeleteBtn');
+            btn.setAttribute('onclick',`deleteForm(${id})`);
 
+            var modal = document.getElementById('modal-basic')
+            modalTitle = modal.getElementsByClassName('modal-title')[0]
+            modalTitle.textContent = title
+        
+            return ;
+        }
+
+    document.querySelectorAll('form').forEach(e=>e.addEventListener('submit', j=>j.preventDefault()))
+            document.querySelector('.overlay-dark').addEventListener('click', (e)=>{
+                document.querySelector(".drawer-multiLevel").classList.remove('show');
+                e.target.classList.remove('show');
+                
+            })
+            document.querySelector('#bekorqilish').addEventListener('click', (e)=>{
+                e.preventDefault();
+                document.querySelector(".drawer-multiLevel").classList.remove('level-two');
+                document.querySelector('.overlay-dark-l2').classList.remove('show');
+            })
+            var forms = document.querySelectorAll('.forms-view')
+    
+            for (let i = 0; i < forms.length; i++) {
+                 forms[i].style.display='none'
+                }
+               
+            var buttons =document.querySelectorAll('.buttons > .btn.btn-icon.btn-circle.btn-outline-primary');
+            for (let i = 0; i < buttons.length; i++) {
+                 buttons[i].style.display='flex'
+                }
+            var array=[]
+            var arrayb=[]
+            function handleClickIcon(x) {
+                if(array.includes(x)){
+                forms[array[array.indexOf(x)]].style.display='none';
+                buttons[arrayb[arrayb.indexOf(x)]].style.display='flex';
+                array = array.filter(e=>e!=x);
+                arrayb = arrayb.filter(e=>e!=x);
+                
+                }
+                else {
+                forms[x].style.display='flex';
+                // forms[x].getElementsByTagName('input')[0].value = "";
+                inputId = forms[x].getElementsByTagName('input')[0].id;
+                addToDelContactsList(inputId)
+                buttons[x].style.display='none';
+                array.push(x)
+                arrayb.push(x)
+                
+                }
+            //    console.log(buttons)
+            //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+            }
+    
+            const draggable_list = document.getElementById('draggable-list');
+            const check = document.getElementById('check');
+    
+            
+    
+            // Store listitems
+            const listItems = [];
+    
+            let dragStartIndex;
+    
+            createList();
+    
+            // Insert list items into DOM
+            function createList() {
+                draggable_list.innerHTML='';
+                [...richestPeople]
+                    // .map(a => ({ value: a, sort: Math.random() }))
+                    // .sort((a, b) => a.sort - b.sort)
+                    // .map(a => a.value)
+                    .forEach((person, index) => {
+                        const listItem = document.createElement('li');
+    
+                        listItem.setAttribute('data-index', index);
+    
+                        listItem.innerHTML = `
+          <!--  <span class="number">${index + 1}</span>--> 
+          <div class="d-flex justify-content-between draggable"  draggable="true">
+                                                <div class="col-lg-6 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                                                                 <h5 class="ml-1 d-flex  align-items-center" style="font-size:14px;">${person.title} &nbsp; <div class="text-small text-light">${person.key=="undefined"|| person.key=="null"|| person.key==null?'':person.key} </div></h5>
+                                                </div>
+                                              <div class="col-lg-6  d-flex  justify-content-end align-items-center">
+                                                   <span role="button" class="selling-badge order-bg-opacity-primary color-primary  mr-2 cursor-pointer" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                                                     </span>
+                                  
+                                  <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                      <a class="dropdown-item" style="text-transform: none;" href="#">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"/></svg>
+                                            Yuqoriga ko'tarish</a>
+                                      <a class="dropdown-item" style="text-transform: none;" href="#">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
+                                               Pastga tushirish</a>
+                                      <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                           <span class="text-success">Aktivlashtirish</span>/
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg> 
+                                          muzlatish</a>
+                                      <a class="dropdown-item" href="#">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                             Tahrirlash</a>
+                                      <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                            O'chirish</a>
+    
+                                
+                              </div>  
+                              ${person.required==false? `<svg onclick="handleRemoveItem(${index})" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`:''}
+                                    </div>
+                                            </div> 
+           
+          `;
+    
+                        listItems.push(listItem);
+    
+                        draggable_list.appendChild(listItem);
+                    });
+    
+                addEventListeners();
+            }
+    
+            function dragStart() {
+                // console.log('Event: ', 'dragstart');
+                dragStartIndex = +this.closest('li').getAttribute('data-index');
+            }
+    
+            function dragEnter() {
+                // console.log('Event: ', 'dragenter');
+                this.classList.add('over');
+            }
+    
+            function dragLeave() {
+                // console.log('Event: ', 'dragleave');
+                this.classList.remove('over');
+            }
+    
+            function dragOver(e) {
+                // console.log('Event: ', 'dragover');
+                e.preventDefault();
+            }
+    
+            function dragDrop() {
+                // console.log('Event: ', 'drop');
+                const dragEndIndex = +this.getAttribute('data-index');
+                swapItems(dragStartIndex, dragEndIndex);
+    
+                this.classList.remove('over');
+            }
+            function handleRemoveItem(index) {
+                deletedFields.push(
+                    richestPeople.splice(index, 1)[0]
+                )
+               createList();
+    
+            }
+            // Swap list items that are drag and drop
+            function swapItems(fromIndex, toIndex) {
+                const itemOne = listItems[fromIndex].querySelector('.draggable');
+                const itemTwo = listItems[toIndex].querySelector('.draggable');
+    
+                listItems[fromIndex].appendChild(itemTwo);
+                listItems[toIndex].appendChild(itemOne);
+            }
+    
+            // Check the order of list items
+            function checkOrder() {
+                listItems.forEach((listItem, index) => {
+                    const personName = listItem.querySelector('.draggable').innerText.trim();
+    
+                    if (personName !== richestPeople[index]) {
+                        listItem.classList.add('wrong');
+                    } else {
+                        listItem.classList.remove('wrong');
+                        listItem.classList.add('right');
+                    }
+                });
+            }
+    
+            function addEventListeners() {
+                const draggables = document.querySelectorAll('.draggable');
+                const dragListItems = document.querySelectorAll('.draggable-list li');
+    
+                draggables.forEach(draggable => {
+                    draggable.addEventListener('dragstart', dragStart);
+                });
+    
+                dragListItems.forEach(item => {
+                    item.addEventListener('dragover', dragOver);
+                    item.addEventListener('drop', dragDrop);
+                    item.addEventListener('dragenter', dragEnter);
+                    item.addEventListener('dragleave', dragLeave);
+                });
+            }
+            if(check!=undefined){
+                check.addEventListener('click', checkOrder);
+            }
+
+        
+            
+            function InRichestPeopleList(obj){
+                for(var i=0;i<richestPeople.length;i++){
+                    if(richestPeople[i].title==obj || richestPeople[i].title==obj.title){
+                        console.log(i, richestPeople[i].title, obj)
+                        return i;
+                    }
+                }
+                return false;
+            }
+
+
+            function IngenFieldsList(id){
+                for(var i=0;i<genFields.length;i++){
+                    if(genFields[i].id==id){
+                        return i;
+                    }
+                }
+                return false;
+            }
+
+            // function IncreatedFieldsList(obj){
+            //     for(var i=0;i<createdFields.length;i++){
+            //         if(createdFields[i].title==obj.title){
+            //             return i;
+            //         }
+            //     }
+            //     return false;
+            // }
+
+            function IndeletedFieldsList(obj){
+                for(var i=0;i<deletedFields.length;i++){
+                    if(deletedFields[i].title==obj||obj.title && deletedFields[i].id!=null){
+                        return i;
+                    }
+                }
+                return false;
+            }
+
+            function addTorichestPeople(obj){
+                if (InRichestPeopleList(obj)===false){
+                    richestPeople.push(
+                        {id:null, title: obj.title, key:obj.key, required:obj.required}
+                    )
+                }
+            }
+
+            function createGenList(){
+                var genTableBody = document.getElementById('genTableBody');
+                genTableBody.innerHTML = "";
+                for(var i=0;i<genFields.length;i++){
+                    genTableBody.innerHTML+=`
+                        <tr class="todo-list  draggable rounded m-1 p-0" draggable="true" style="background-color: #f4f5f7 !important;">
+                            <td>
+                                <div class="checkbox-group d-flex">
+                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                        <input class="checkbox" type="checkbox" id="check-genfield-${genFields[i].id}" ${genFields[i].checked?'checked':''} ${genFields[i].required?'disabled':''} onchange="handleChecker('${genFields[i].id}')">
+                                        <label for="check-genfield-${genFields[i].id}" class="fs-14 color-primary ">
+                                                ${genFields[i].title}
+                                            
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    `
+                }
+                return 
+            }
+
+            function InContactsList(obj){
+                for(var i=0;i<contacts.length;i++){
+                    console.log("InContactsList(): ", contacts[i].contact_type, obj.contact_type)
+                    if(contacts[i].contact_type==obj || contacts[i].contact_type==obj.contact_type){
+                        return i;
+                    }
+                }
+                return false;
+            }
+
+            function IndelContactsList(obj){
+                for(var i=0;i<deletedContacts.length;i++){
+                    if(deletedContacts[i].contact_type==obj || deletedContacts[i].contact_type==obj.contact_type){
+                        return i;
+                    }
+                }
+                return false;
+            }
+
+
+            function getUniversalFields(){
+                // clearDrawer()
+                var url = "{% url 'admintion:universal-fields' %}";
+                fetch(url, {
+                    method:'get',
+                    headers:{
+                        'Accept':'application/json',
+                    }
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    res=res.objs;
+
+                    genFields.length = 0;
+                    for(var i=0;i<res.length;i++){
+                        var field = {
+                            id:res[i].id, title: res[i].title,key:res[i].key,required:res[i].required,checked:false
+                        }
+                        index = InRichestPeopleList(res[i])
+                        if(index){
+                            field.checked = true;
+                        }
+                        // index = IncreatedFieldsList(res[i])
+                        // if(index){
+                        //     field.checked = true;
+                        // }
+                        if(field.required){
+                            field.checked = true;
+                            addTorichestPeople(res[i]);
+                        }
+                        genFields.push(field)
+                    }
+                    createGenList()
+                    createList();
+                    return 
+                })
+            }
+
+            function handleChecker(id){
+                console.log("handleChecker", id)
+                var field = document.getElementById(`check-genfield-${id}`);
+                var index = IngenFieldsList(id);
+                if(index && field.checked==true){
+                    genFields[index].checked = true;
+                    delIndex = IndeletedFieldsList(genFields[index].title)
+                    if(delIndex){
+                        richestPeople.push(deletedFields.splice(delIndex,1)[0])
+                    } else{
+                        richestPeople.push(
+                            {id:null,title:genFields[index].title,key:genFields[index].key,required:genFields[index].required}
+                    )
+                    }
+                    
+                } else if (index && field.checked==false){
+                    genFields[index].checked = false;
+                    console.log("index: ", index, genFields[index].title);
+                    index1 = InRichestPeopleList(genFields[index].title)
+                    if(index1 > -1){
+                        
+                        deletedFields.push(
+                            richestPeople.splice(index1, 1)[0]
+                        )
+                    }
+                }
+            }
+
+            function createUniversalFields(){
+                var url = "{% url 'admintion:universal-fields' %}";
+                var formData = new FormData();
+                formData.append('csrfmiddlewaretoken','{{ csrf_token}}');
+                var fieldInput = document.getElementById('fieldInput');
+                if(fieldInput.value!=""){
+                    formData.append('title',fieldInput.value);
+                }
+                fetch(url, {
+                    method:'post',
+                    headers:{
+                        'Accept':'application/json',
+                        'X_CSRFToken':'{{ csrf_token }}',
+                    },
+                    body: formData
+                })
+                .then(res=>{
+                    if(res.status==201){
+                        fieldInput.value = "";
+                        getUniversalFields()
+                    }
+                    return res;
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+            }
+
+            var CONTACTS = {
+                id_telegram: 1,
+                id_instagram: 2,
+                id_facebook: 3,
+                id_twitter: 4,
+                id_youtube: 5,
+                id_phone_number: 6,
+                id_link: 7
+            }
+            var CONTACTS2 = {
+                1: 'id_telegram',
+                2: 'id_instagram',
+                3: 'id_facebook',
+                4: 'id_twitter',
+                5: 'id_youtube',
+                6: 'id_phone_number',
+                7: 'id_link'
+            }
+            var CONTACTS3 = {
+                'id_telegram': 3,
+                'id_instagram': 0,
+                'id_facebook': 1,
+                // 'id_twitter': 4,
+                'id_youtube': 2,
+                'id_phone_number': 4,
+                'id_link': 5
+            }
+
+            function formContacts(inputId){
+                var contactInput = document.getElementById(inputId);
+                if(contactInput.value==""){
+                    return ;
+                }
+                var contactObj = {
+                    id:null, contact_type:CONTACTS[inputId],value:contactInput.value
+                }
+                index = IndelContactsList(contactObj)
+                if(index!=false){
+                    contactObj.id = deletedContacts[index].id; 
+                    deletedContacts.splice(index, 1);
+                }
+
+
+                index = InContactsList(contactObj)
+                
+                if(index!=false){
+                    id = contacts[index].id 
+                    contacts[index] = contactObj;
+                    contacts[index].id = id
+                } else {
+                    contacts.push(contactObj)
+                }
+                return ;
+            }
+
+            function addToDelContactsList(inputId){
+                var contactInput = document.getElementById(inputId);
+                if(contactInput.value==""){
+                    return ;
+                }
+                var contactObj = {
+                    id:null, contact_type:CONTACTS[inputId],value:contactInput.value
+                }
+                index = InContactsList(contactObj)
+                if(index!=false){
+                    contactObj.id = contacts[index].id
+                    contacts.splice(index, 1)
+                } else {
+                    return ;
+                }
+
+                index = IndelContactsList(contactObj)
+                if(index==false){
+                    deletedContacts.push(contactObj)
+                }
+                return ;
+            }
+
+
+            function getFormFields(id){
+                if(id==null||id==undefined||id==""){
+                    return ;
+                }
+                var url = `/admintion/forms/${id}/fields/`;
+                fetch(url,{
+                    method:'get',
+                    headers:{
+                        'Accept':'application/json',
+                    }
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    richestPeople.length = 0;
+                    for(var i=0;i<res.length;i++){
+                        richestPeople.push(
+                            {id:res[i].id, title: res[i].title, key:res[i].key, required:res[i].required}
+                        )
+                    }
+                    createList();
+                })
+                
+                return ;
+            }
+            function getKeyByValue(object, value) {
+                return Object.keys(object).find(key => object[key] === value);
+            }
+            function createContactsList(){
+                    
+                for(var i=0;i<contacts.length;i++){
+                    inputId = CONTACTS2[contacts[i].contact_type];
+                    var input = document.getElementById(inputId)
+                    input.value = contacts[i].value
+                    var x = CONTACTS3[inputId]
+                    handleClickIcon(x)
+                }
+            }
+
+            function getFormContacts(id){
+                if(id==null||id==undefined||id==""){
+                    return ;
+                }
+
+                var url =  `/admintion/forms/${id}/contacts/`;
+                fetch(url,{
+                    method:'get',
+                    headers:{
+                        'Accept':'application/json',
+                    },
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    contacts.length = 0;
+                    for(var i=0;i<res.length;i++){
+                        contacts.push({
+                            id:res[i].id, value:res[i].value, contact_type: res[i].contact_type
+                        })
+                    }
+                    createContactsList()
+                })
+            }
+            
+            function countCreateds(){
+                createdFields.length = 0;
+                for(var i=0;i<richestPeople.length;i++){
+                    if(richestPeople[i].id==null){
+                        createdFields.push(richestPeople[i])
+                    }
+                }
+                return ;
+            }
+
+            function deleteFormFields(id){
+                if(deletedFields.length>0 && id!=null){
+                    var formData = new FormData();
+                    var counter = 0;
+                    for(var i=0;i<deletedFields.length;i++){
+                        if(deletedFields[i].id!=null){
+                            formData.append('ids', deletedFields[i].id)
+                            counter++;
+                        }
+                    }
+                    if (counter==0){
+                        return ;
+                    }
+                    formData.append('csrfmiddlewaretoken','{{csrf_token}}')
+                    var url = `/admintion/forms/${id}/fields/delete/`;
+                    fetch(url,{
+                        method:'post',
+                        headers:{
+                            'X_CSRFToken':'{{csrf_token }}',
+                        },
+                        body:formData
+                    })
+                    .then(res=>{
+                        if(res.status==204){
+                            deletedFields.length =0;
+                            console.log("Fieldlar o'chirildi.")
+
+                        }
+                        return ;
+                    })
+                }
+                return ;
+            }
+
+            function saveFormFields(id){
+                deleteFormFields(id);
+                var formData = new FormData();
+                formData.append('form-INITIAL_FORMS',0);
+                countCreateds()
+                if(createdFields.length==0){
+                    return ;
+                }
+                formData.append('form-TOTAL_FORMS',createdFields.length);
+                for(var i=0;i<createdFields.length;i++){
+                    formData.append(`form-${i}-title`, createdFields[i].title)
+                    formData.append(`form-${i}-key`, createdFields[i].key)
+                    formData.append(`form-${i}-required`, createdFields[i].required)
+                    formData.append(`form-${i}-leadform`, id)
+                }
+                formData.append('csrfmiddlewaretoken','{{csrf_token}}')
+
+                var url =`/admintion/forms/${id}/fields/`;
+                fetch(url, {
+                    method: 'post',
+                    headers:{
+                        'X_CSRFToken': '{{ csrf_token }}',
+                    },
+                    body:formData,
+                })
+                .then(res=>{
+                    if(res.status == 201){
+                        getFormFields(id);
+                        createdFields.length=0;
+                        return res 
+                    }
+                
+                })
+            }
+            
+            function refresh(){
+                window.location.assign(window.location.pathname)
+            }
+
+            function deleteContacts(id){
+                
+            }
+
+            function saveContacts(id){
+                var formData = new FormData();
+                formData.append('csrfmiddlewaretoken','{{ csrf_token }}');
+                var counter = 0
+                for(var i=0;i<contacts.length;i++){
+                    if(contacts[i].value!="" && contacts[i].id==null){
+                        formData.append(`form-${counter}-contact_type`, contacts[i].contact_type)
+                        formData.append(`form-${counter}-value`, contacts[i].value)
+                        formData.append(`form-${counter}-leadform`, id)
+                        counter++;
+                    } else{
+                        contacts.slice(i, 1)
+                }}
+                formData.append('form-INITIAL_FORMS', 0)
+                formData.append('form-TOTAL_FORMS', counter)
+                if(counter == 0){
+                    return ;
+                }
+                var url = `/admintion/forms/${id}/contacts/`;
+                fetch(url, {
+                    method:'post',
+                    headers:{
+                        'X_CSRFToken':'{{ csrf_token }}',
+                    },
+                    body:formData,
+                })
+                .then(res=>{
+                    if(res.status==201){
+                        contacts.length = 0;
+                        console.log("kontaktlar saqlandi.")
+                        return res;
+                    }else{
+                        alert('Xatolik sodir bo\'ldi');
+                    }
+                })
+                .then(res=>{
+                    
+                })
+                .catch(err=>{
+                    alert('Xatolik sodir bo\'ldi', err);
+                })
+                getFormContacts(id)
+                return ;
+            }
+
+            function saveBtn(id=null){
+            let url = '';
+            if(id===null){
+                 url = "{% url 'admintion:forms' %}";
+            } else {
+                 url = `/admintion/forms/${id}/`;
+            }
+            var res_status = false;
+            var res_id = null;
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('name', document.getElementById('id_name').value);
+            if(document.getElementById('id_image').files){
+                formData.append('image', document.getElementById('id_image').files[0]);
+            }
+            formData.append('title',document.getElementById('id_title').value);
+            formData.append('comment',document.getElementById('id_comment').value);
+            
+            var educenters = document.getElementById('id_educenters').value;
+            if(educenters==""){
+                educenters = document.getElementById('id_educenters').options;
+                for(let i=0; i<educenters.length; i++){
+                    if(educenters[i].value!=""){
+                        formData.append('educenters',educenters[i].value);
+                }}
+            } else{
+                formData.append('educenters',educenters);
+            }
+
+            var sources = document.getElementById('id_sources').value;
+            if(sources==""){
+                sources = document.getElementById('id_sources').options;
+                for(let i=0; i<sources.length; i++){
+                    if(sources[i].value!=""){
+                    formData.append('sources',sources[i].value);
+                }}
+            } else{
+                formData.append('sources',sources);
+            }
+
+            var courses = document.getElementById('id_courses').value;
+            if(courses==""){
+                courses = document.getElementById('id_courses').options;
+                console.log("Courses: ", courses);
+                for(let i=0; i<courses.length; i++){
+                    if(courses[i].value!=""){
+                        formData.append('courses',courses[i].value);
+                }}
+            } else{
+                formData.append('courses',courses);
+            }
+
+            formData.append('russian',document.getElementById('id_russian').checked);
+            formData.append('english',document.getElementById('id_english').checked);
+
+            fetch(url, {
+                method: 'post',
+                headers: {
+                    'X-CSRFToken':'{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(res=>{
+                if(res.status == 201 || res.status == 200){
+                    return res;
+                } else {
+                    alert('Xatolik yuz berdi. Kiritilgan qiymatlarni tekshiring.')
+                }
+                
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                var savebtn = document.getElementById('savebtn');
+                savebtn.setAttribute('onclick',`saveBtn(${res.id})`);
+                saveFormFields(res.id);
+                saveContacts(res.id);
+                // setTimeout(function(){
+                //     return;
+                // }, 2500)
+                // window.location.assign(window.location.pathname)                
+                // refresh()
+                alert('Ma\'lumotlar saqlandi.')
+                return res;
+            })
+            
+        }
+        function editForm(id){
+            clearDrawer();
+            var url = `/admintion/forms/${id}/`;
+            fetch(url)
+            .then(res=>res.json())
+            .then(res=>{
+                if(res.obj){
+                    document.getElementById('id_name').value = res.obj.name;
+                    document.getElementById('id_title').value = res.obj.title;
+                    if(res.obj.image){
+                        document.getElementById('id_image').files[0] = res.obj.image.url;
+                        var a = document.createElement('a');
+                        a.setAttribute('href', res.obj.image.url);
+                        a.setAttribute('download', true);
+                        a.text = 'Yuklab olish';
+                        document.getElementById('downloadImage').innerHTML = "";
+                        document.getElementById('downloadImage').appendChild(a)
+                        
+                    }
+                    document.getElementById('id_comment').value = res.obj.comment;
+                    document.getElementById('id_russian').checked = res.obj.russian;
+                    document.getElementById('id_english').checked = res.obj.english;
+                    document.getElementById('id_educenters').value = res.obj.educenters;
+                    document.getElementById('id_courses').value = res.obj.courses;
+                    document.getElementById('id_sources').value = res.obj.sources;
+                }
+            })
+
+            getFormFields(id);
+            getFormContacts(id);
+
+            var savebtn = document.getElementById('savebtn');
+            savebtn.setAttribute('onclick',`saveBtn(${id})`);
+        }
+
+
+        function deleteForm(id){
+            var url = `/admintion/forms/${id}/delete/`;
+            var status = 0
+            fetch(url)
+            .then(res=>{
+                status = res.status
+                if(re.status==204){
+                    window.location.assign(window.location.pathname)
+                }
+                return res;
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                    alert(res.message)
+            })
+        }
+
+        
+
+        function setModalData(id){
+            var url = `/admintion/forms/${id}/detail/`;
+            fetch(url)
+            .then(res=>res.json())
+            .then(res=>{
+                var modalQrCode = document.getElementById('modalQrCode');
+                modalQrCode.setAttribute('src', res.image)
+                modalQrCode.src = window.location.origin+res.image
+                var modalURL = document.getElementById('modalURL');
+                modalURL.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                              ${res.link}`
+                var copyLink = document.getElementById('copyLink')
+                copyLink.textContent = 'Linkdan nusxa olish'
+                var input = copyLink.parentElement.getElementsByTagName('input')[0]
+                input.value = res.link;
+                navigator.clipboard.writeText(input.value) 
+                document.getElementById('openLink').setAttribute('href',res.link)
+                document.getElementById('saveQRCode').setAttribute('href', res.image)
+
+            })
+        }
+
+        document.getElementById('copyLink').addEventListener('click', (event)=>{
+            event.target.textContent = 'Nusxa olindi.'
+        })
+
+        function AddForm(){
+            clearDrawer()
+            getUniversalFields()
+            
+        }
+        
+        </script>
 {% endblock %}

@@ -90,3 +90,13 @@ MESSAGE_TYPE = (
     (9, 'Kursga'),
     (10, 'Lidlarga'),
 )
+
+CONTACT_TYPES = (
+    (1, 'Telegram'),
+    (2, 'Instagram'),
+    (3, 'Facebook'),
+    (4, 'Twitter'),
+    (5, 'Youtube'),
+    (6, 'Telefon'),
+    (7, 'Havola'),
+)

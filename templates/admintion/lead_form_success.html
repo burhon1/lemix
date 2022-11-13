@@ -1,0 +1,306 @@
+{% load static %}
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Muvaffaqiyatli Registratsiya</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- inject:css-->
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/bootstrap/bootstrap.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/daterangepicker.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/fontawesome.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/footable.standalone.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/fullcalendar@5.2.0.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/jquery-jvectormap-2.0.5.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/jquery.mCustomScrollbar.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/leaflet.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/line-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/MarkerCluster.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/MarkerCluster.Default.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/select2.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/slick.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/star-rating-svg.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/trumbowyg.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor_assets/css/wickedpicker.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- endinject -->
+
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/img/favicon.png' %}">
+
+    <style>
+        .atbd-select:after {
+ 
+    top: 80%;
+    transform: translateY(-90%);}
+    label{
+        text-transform: none !important;
+    }
+    .signUp-socialBtn li svg,
+    .signUp-socialBtn li img{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .invalid-feedback{
+        font-weight:400 !important ;
+    }
+    </style>
+</head>
+
+<body>
+    <main class="main-content bg-light">
+
+        <div class="signUP-admin" >
+            <div class="container-fluid">
+                <div class="row justify-content-center " style="background-color: #f4f5f7;min-height: 100vh;">
+                  
+                    <div class="col-xl-8 col-lg-7 col-md-7 col-sm-8">
+                        <div class="signUp-admin-right  ">
+                           
+                            <div class="row justify-content-center">
+                                <div class="col-xl-7 col-lg-10 col-md-12 mt-3">
+                                    <div class="edit-profile mt-md-25 mt-3">
+                                        <div class="card border-0 mt-3" style="margin-top: 80px !important;">
+                                            <div class="card-header border-0 pt-25 ">
+                                                <div class="edit-profile__title text-center">
+                                                    <div class="content-center mb-3">
+                                                        <span class="wh-34 bg-success rounded-circle content-center">
+                                                            <span class="las la-check fs-16 color-white"></span></span>
+                                                    </div>
+                                                    <h6 style="text-transform: none;text-align: center;width: 100%;" class="mb-2 mt-3 w-100 d-inline-block">Rahmat {{first_name|default:""}} {{last_name|default:""}}</h6>
+                                                        <p style="text-transform: none;text-align: center;">
+                                                            Arizangiz qabul qilindi, menejerlarimiz siz bilan bog'lanishadi.</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-body ">
+                                                <div class="edit-profile__body">
+                                                    <p class="social-connector text-center mb-md-25 mb-15  mt-md-30  "><span>Bog'lanish uchun havolalar</span></p>
+                                                  
+                                                    <div class="button-group d-flex align-items-center justify-content-md-start justify-content-center mb-3">
+                                                        <ul class="signUp-socialBtn w-100" style="justify-content:space-between ;">
+                                                            {% for contact in contacts %}
+
+                                                            
+                                                            
+                                                            {% if contact.contact_type == 2 %} 
+                                                            <li>
+                                                                <button class="radius-md wh-48 content-center"><img class="svg" src="{% static '/img/svg/Instagram_logo_2016.svg.webp' %}" style="width: 80%;object-fit: contain; height: 80%;" alt="img" /> </button>
+                                                            </li>
+                                                            {% elif contact.contact_type == 3 %}
+                                                            <li>
+                                                                <button class="radius-md wh-48 content-center"><img class="svg" src="{% static '/img/svg/facebook.svg' %}" style="width: 80%;object-fit: contain; height: 80%;" alt="img" /> </button>
+                                                            </li>
+                                                            {% elif contact.contact_type == 5 %}
+                                                            <li>
+                                                                <button class="radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/YouTube_full-color_icon_(2017).svg.webp' %}" alt="img" /> </button>
+                                                            </li>
+                                                            {% elif contact.contact_type == 1 %}
+                                                            <li>
+                                                                <button class="radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/Telegram_logo.svg.png' %}" alt="img" /> </button>
+                                                            </li>
+                                                            {% elif contact.contact_type == 6 %}
+                                                            <li> 
+                                                                <button class=" radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/phone-call-icon.png' %}" alt="img" /></button>
+                                                            </li>
+                                                            {% elif contact.contact_type == 7 %}
+                                                            <li>
+                                                                <button class="radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/email.svg' %}" alt="img" /></button>
+                                                            </li>
+                                                            {% endif %}
+                                                            
+                                                            
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <div class="button-group d-flex m-0">
+                                                        <button 
+                                                        style="text-transform: none;margin: 0px;"
+                                                        type="submit"
+                                                        class="btn btn-light w-100 btn-default fs-bold btn-squared m-0 lh-normal px-50 py-15 signUp-createBtn signIn-createBtn">
+                                                            Ro'xatdan o'tish sahifasi
+                                                        </button>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <div id="overlayer">
+        <span class="loader-overlay">
+            <div class="atbd-spin-dots spin-lg">
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+            </div>
+        </span>
+    </div>
+ 
+
+    <!-- inject:js-->
+    <script>
+
+document.querySelector('.signIn-createBtn').addEventListener('click', function(e){
+e.preventDefault();
+document.querySelectorAll('.invalid-feedback').forEach(item=>item.style.display ="flex")
+})
+
+     window.onload  = function () {
+        console.log( document.querySelector('.select2-search__field').placeholder)
+        if(document.querySelector('.select2-search__field').placeholder)
+        {
+            // document.getElementsByName('_pass')[0].setAttribute("placeholder", "Password");
+            document.querySelector('.select2-search__field').setAttribute("placeholder", "Qulay vaqtni tanlang");
+        }
+     } 
+
+     var phoneField = document.getElementById('phoneField');
+phoneField.addEventListener('keyup', function(){
+  var phoneValue = phoneField.value;
+  var output;
+  phoneValue = phoneValue.replace(/[^0-9]/g, '');
+    var area = phoneValue.substr(0, 2);
+    var pre = phoneValue.substr(2, 3);
+    var tel = phoneValue.substr(5, 4);
+    if (area.length < 2) {
+        output = "(" + area;
+    } else if (area.length == 2 && pre.length < 3) {
+        output = "(" + area + ")" + " " + pre;
+    } else if (area.length == 2 && pre.length == 3) {
+        output = "(" + area + ")" + " " + pre + " - "+tel;
+    }
+    
+  phoneField.value = output;
+  
+});
+    </script>
+<script src="{% static 'assets/vendor_assets/js/jquery/jquery-3.5.1.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery/jquery-ui.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/bootstrap/popper.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/bootstrap/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/moment/moment.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/accordion.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/autoComplete.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/Chart.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/charts.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/daterangepicker.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/drawer.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/dynamicBadge.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/dynamicCheckbox.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/feather.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/footable.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/fullcalendar@5.2.0.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/google-chart.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery-jvectormap-2.0.5.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery-jvectormap-world-mill-en.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery.countdown.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery.filterizr.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery.magnific-popup.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery.mCustomScrollbar.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery.peity.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/jquery.star-rating-svg.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/leaflet.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/leaflet.markercluster.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/loader.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/message.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/moment.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/muuri.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/notification.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/popover.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/select2.full.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/slick.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/trumbowyg.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/trumbowyg.upload64.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor_assets/js/wickedpicker.min.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/drag-drop.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/footable.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/full-calendar.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/googlemap-init.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/icon-loader.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/jvectormap-init.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/leaflet-init.js' %}"></script>
+
+<script src="{% static 'assets/theme_assets/js/main.js' %}"></script>
+
+    <!-- endinject-->
+</body>
+
+</html>
