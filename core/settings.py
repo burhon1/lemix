@@ -17,7 +17,7 @@ DEBUG = os.environ.get('DEBUG', True)
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['5.8.248.139','t.lemix.uz','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*'] # '5.8.248.139','t.lemix.uz','localhost', '127.0.0.1'
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
 CSRF_TRUSTED_ORIGINS = ['http://5.8.248.139','http://lemix.uz/','https://lemix.uz','https://*.lemix.uz','http://*.lemix.uz','http://lemix.uz','https://lemix.uz','http://*','https://*',]
 
@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework',
+    'paycomuz',
     'user',
     'education',
     'admintion',
@@ -115,6 +116,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PAYCOM_SETTINGS = {
+    "KASSA_ID": "635795929fd41bc3daf5019c",
+    "TOKEN": "635795929fd41bc3daf5019c",  # token
+    "SECRET_KEY": "HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d",  # password
+    "ACCOUNTS": {
+        "KEY": "Lemix_kassa"
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
