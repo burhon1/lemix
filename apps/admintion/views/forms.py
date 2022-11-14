@@ -1,9 +1,9 @@
-from django.shortcuts import render,redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.forms.models import model_to_dict
 from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from admintion.models import LeadForms,FormUniversalFields,FormFields,EduCenters
+from admintion.models import LeadForms,FormUniversalFields,FormFields,EduCenters,Contacts
 from admintion.forms.leads import LeadFormClass,FieldsFormSet,ContactsFormSet,LeadFormRegisterForm
 from admintion.services.qrcode import create_qrcode
 
@@ -139,13 +139,18 @@ def contacts_view(request, pk):
     if request.method == 'POST':
         formset = ContactsFormSet(request.POST, request.FILES)
         if formset.is_valid():
+            contacts = leadform.contacts_set.all()
             for form in formset:
-                obj = form.save(commit=False)
-                obj.leadform = leadform
-                obj.save()
+                value = form.cleaned_data.get('value')
+                content_type = form.cleaned_data.get('contact_type')
+                contact = contacts.filter(contact_type=content_type).first()
+                if contact:
+                    contact.value = value
+                    contact.save()
+                else:
+                    contact = Contacts.objects.create(value=value, contact_type=content_type, leadform=leadform)
             return JsonResponse({}, status=201)
         else:
-            print(formset.errors)
             errors = dict(formset.errors)
             return JsonResponse(errors, status=400, safe=False)
     form_fields = leadform.contacts_set.all().values('id','value','contact_type',)
@@ -153,25 +158,35 @@ def contacts_view(request, pk):
     return JsonResponse(form_fields, safe=False)
  
 
+def contacts_delete_view(request, pk):
+    leadform = get_object_or_404(LeadForms, pk=pk)
+    if request.method=='POST':
+        contacts = request.POST.getlist('contacts')
+        contacts = [int(contact) for contact in contacts if contact.isnumeric()]
+        print("contacts", contacts)
+        leadform.contacts_set.filter(id__in=contacts).delete()
+        return JsonResponse({}, status=204)
+    return JsonResponse({}, status=200)
+
 def lead_registration_view(request, pk):
     leadform = get_object_or_404(LeadForms, pk=pk)
-    template_name = "admintion/lead_form.html"
     form = LeadFormRegisterForm(form=leadform)
-    context = {'pk':pk, 'main_edu': (leadform.educenters.filter(parent=None) or EduCenters.objects.filter(parent=None)).first(), 'educenters':leadform.educenters.all(), 'form':form}
-    get = request.GET
+    context = {'pk':pk, 'title':leadform.title, 'main_edu': (leadform.educenters.filter(parent=None) or EduCenters.objects.filter(parent=None)).first(), 'educenters':leadform.educenters.all(), 'form':form}
+    context['contacts'] = leadform.contacts_set.all()
     if request.method == "POST":
         form = LeadFormRegisterForm(leadform, request.POST, request.FILES)
         if form.is_valid():
-            form.clean()
             lead = form.save()
-            # print(form)
-            template_name = "admintion/lead_form_success.html"
-            context['first_name'] = lead.user.first_name
-            context['last_name'] = lead.user.last_name
+            leadform.seen += 1
+            leadform.save(update_fields=['seen'])
+            
+            fname = lead.user.first_name or ""
+            lname = lead.user.last_name or ""
+            context['first_name'] = fname if fname else ""
+            context['last_name'] = lname if lname else ""
+            return render(request, "admintion/lead_form_success.html", context)
     else:
-        context['edu_count'] = len(context['educenters'])
-    context['contacts'] = leadform.contacts_set.all()
-    request.GET['title'] = leadform.title
-    return render(request, template_name, context=context)
+        context['edu_count'] = len(context['educenters'])     
+    return render(request, "admintion/lead_form.html", context=context)
 
 

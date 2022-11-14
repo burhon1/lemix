@@ -241,7 +241,7 @@ margin-right: 7px;
                                                                             <span data-feather="edit"></span></a>
                                                                     </li> -->
                                                                     <li>
-                                                                        <a href="#" class="remove"   onclick="changeModal({{lead.id}})" data-toggle="modal" data-target="#modal-basic">
+                                                                        <a href="#" class="remove"   onclick="changeModal('{{lead.id}}')" data-toggle="modal" data-target="#modal-basic">
                                                                             <span data-feather="trash-2"></span></a>
                                                                     </li>
                                                             </ul>
@@ -378,7 +378,7 @@ margin-right: 7px;
                                         <select name="manba" id="manba" class="form-control-sm border-light">
                                             <option value="0">-----------</option>
                                             {% for source in sources %}
-                                            <option value="{{source.id}}">{{ source.source }}</option>
+                                            <option value="{{source.id}}">{{ source.title }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

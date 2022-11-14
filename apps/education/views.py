@@ -9,6 +9,7 @@ from admintion.selectors import set_tasks_status
 from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data,get_leads_data,get_lead_homework_contents
 from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm, TaskForm
+from education.utils import youtube_link_formatter
 from student.models import Homeworks
 from user.models import CustomUser
 from user.utils import get_admins
@@ -79,7 +80,9 @@ def onlin_video_create_view(request, lesson_id):
             content.content_type = 1 
             content.lesson = lesson 
             content.author = request.user
-            
+            video_url = form.cleaned_data.get('video_link', None)
+            if video_url:
+                content.video_link = youtube_link_formatter(video_url)
             content.save()
             if group:
                 content.groups.add(group)

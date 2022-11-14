@@ -6,7 +6,7 @@ from finance.models import StudentBalance,Paid
 from user.services.users import user_add, CustomUser
 from django.contrib.auth.models import Group
 import json
-from admintion.models import Student, Group as GroupModel, Parents, TaskTypes
+from admintion.models import Student, Group as GroupModel, Parents, TaskTypes, Sources
 from ..selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups
 from ..services.student import set_student_group, set_student_group_status, update_student
 
@@ -20,7 +20,7 @@ def students_view(request):
         comment=post.get('comment',False)
         if status==200 and source and comment:
             student = Student(
-                source=source,
+                source=get_object_or_404(Sources, pk=int(source)),
                 comment=comment,
                 user=obj
             )
@@ -31,6 +31,7 @@ def students_view(request):
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:students')+f"?error={context['error']}")
     context['students'] = Student.students.students()
+    context['sources'] = Sources.objects.all()
     context['students_count'] = context['students'].count()
     context['active_students'] = context['students'].students_by_status(status=1).count()
     context['nonactive_students'] = context['students'].students_by_status(status=2).count()

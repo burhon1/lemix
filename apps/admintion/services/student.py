@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 
 from finance.models import StudentBalance
-from ..models import Group, Parents, Student, GroupStudents
+from ..models import Group, Parents, Student, GroupStudents, Sources
 
 
 def set_student_group(student: Student, group: Group):
@@ -27,7 +27,8 @@ def set_student_group_status(student_id, id, status: int):
 
 def update_student(student_id, data):
     student = get_object_or_404(Student, pk=student_id)
-    student.source = int(data.get('source')) or student.source
+    source = get_object_or_404(Sources, pk=int(data.get('source')))
+    student.source = source or student.source
     student.comment = data.get('comment', student.comment)
     
     user = student.user

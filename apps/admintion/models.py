@@ -63,7 +63,7 @@ class Group(models.Model):
 class Student(models.Model):
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     status = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
-    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
+    source = models.ForeignKey('Sources', models.SET_NULL, null=True) # models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
     groups = models.ManyToManyField(Group,related_name='student')
     comment = models.TextField()
     balance = models.IntegerField("O'quvchining hisobidagi mablag'", default=0)
@@ -96,7 +96,7 @@ class Payment(models.Model):
 class LeadStatus(models.Model):
     status = models.CharField("Status nomi", max_length=200)
 class FormLead(models.Model):
-    source = models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
+    source = models.ForeignKey('Sources', models.SET_NULL, null=True) #models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
     status = models.ForeignKey(LeadStatus, models.SET_NULL, null=True, blank=True)
     comment = models.TextField()
     telegram = models.CharField("Telegramdagi nomeri", max_length=100, null=True)
@@ -112,6 +112,7 @@ class FormLead(models.Model):
     activity = models.PositiveSmallIntegerField("Lidning statusi", choices=chooses.LEAD_FORM_STATUS, default=1)
     purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
     user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
+    via_form = models.ForeignKey('LeadForms', models.SET_NULL, null=True)
     objects = models.Manager()
     leads = lead_manager.LeadManager()
     def __str__(self) -> str:

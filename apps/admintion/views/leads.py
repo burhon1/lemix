@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from admintion.forms.leads import LeadForm, DemoForm, DemoFormset
 from admintion.utils import convert_to_json
-from admintion.models import Course, FormLead, Group, GroupStudents, GroupsDays, LeadDemo, LeadStatus, TaskTypes, Tasks, Student
+from admintion.models import Course, FormLead, Group, GroupStudents, GroupsDays, LeadDemo, LeadStatus, TaskTypes, Tasks, Student,Sources
 from admintion.selectors import get_form_leads, get_demos, get_lead_tasks, get_next_lesson_date, select_groups_by_limit
 from admintion.data.chooses import GET_GROUPS_DAYS, STUDENT_SOURCES
 from user.models import CustomUser
@@ -20,7 +20,7 @@ def leads_view(request):
     context['leads'] = get_form_leads({'activity':activity}, (
         'id', 'user__first_name', 'user__last_name', 'user__phone', 'status__status', 'comment', 'source', 'author', 'author__first_name', 'author__last_name', 'created_at', 'modified_at'))
     
-    context['sources'] = [ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
+    context['sources'] = Sources.objects.all() #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
     context['lead_statuses'] = LeadStatus.objects.values('id', 'status')
     context['courses'] = Course.objects.filter(status=True).values('id', 'title')
     groups = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
@@ -40,7 +40,7 @@ def lead_create_view(request):
             lead.author = request.user
             lead.save()
             form.save_m2m()
-            lead_data = convert_to_json(lead, fields=('id', 'user', 'source', 'comment'))
+            lead_data = convert_to_json(lead, fields=('id', 'user', 'source_id', 'comment'))
             return JsonResponse(lead_data, status=201)
         else:
             return JsonResponse({'message': 'error occured'}, safe=False, status=400)
@@ -65,7 +65,7 @@ def lead_detail_view(request, pk):
             temp.append(task['id'])
     context['tasks'] = [ task for task in context['tasks'] if task['id'] not in temp]
     context['count'] = {'tasks': len(context['tasks'])+len(context['today_tasks']), 'today_tasks': len(context['today_tasks'])}
-    context['sources'] = [ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
+    context['sources'] = Sources.objects.all()#[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
     context['days'] = GroupsDays.objects.values('id', 'days')
     context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
     context['task_types'] = TaskTypes.objects.all().values('id', 'task_type')

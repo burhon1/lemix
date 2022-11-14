@@ -237,8 +237,6 @@ def lead_course_content_view(request, pk, lesson_id, module_id, course_id):
 @login_required
 def lead_homeworks_view(request):
     lead = get_object_or_404(FormLead, user=request.user)
-    demos = LeadDemo.objects.filter(lead=lead)
-
     context = {
         'homeworks': get_lead_homeworks(lead)
     }

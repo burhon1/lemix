@@ -1,6 +1,6 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block title %}
     Lidlar formalar- Lemix
 {% endblock %}
@@ -239,17 +239,17 @@ align-items: center;
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                1000
+                                                {{ obj.seen }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                              780
+                                              {{ obj.formlead_set.all.count }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content d-inline-block">
-                                                <span class="selling-badge order-bg-opacity-success color-success">90%</span>
+                                                <span class="selling-badge order-bg-opacity-{{obj.id|get_conversion_status}} color-{{obj.id|get_conversion_status}}">{{obj.id|get_conversion}}%</span>
                                                 <!-- <span class="selling-badge order-bg-opacity-warning color-warning">78%</span>
                                                 <span class="selling-badge order-bg-opacity-danger color-danger">78%</span> -->
                                             </div>
@@ -268,7 +268,7 @@ align-items: center;
                                                             <span data-feather="edit"></span></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#"  onclick="deleteFormModal('{{obj.id}}','{{obj.title}}')"  class="remove"  data-toggle="modal" data-target="#modal-basic">
+                                                        <a href="#"  onclick='deleteFormModal({{obj.id}},"{{obj.title}}")' class="remove"  data-toggle="modal" data-target="#modal-basic">
                                                             <span data-feather="trash-2"></span></a>
                                                     </li>
                                             </ul>
@@ -495,21 +495,21 @@ align-items: center;
                     <label for="id_instagram" class="col-6 p-1">Instagram username</label>
                     
                     <div class="form-group col-6 p-0">
-                        <input type="text" name="name" id="id_instagram" class="form-control form-control-sm border-light mr-2 contacts" placeholder="@instagram" value="" onchange="formContacts('id_instagram')">
+                        <input type="text" name="name" id="id_instagram" class="form-control form-control-sm border-light mr-2 contacts" placeholder="https://www.instagram.com/username" value="https://www.instagram.com/username" onchange="formContacts('id_instagram')">
                         <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(0)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </div>
                 </div>
                 <div class="forms-view " id="telegram">
                     <label for="id_facebook" class="col-6 p-1">Facebook username</label>
                     <div class="form-group col-6 p-0">
-                        <input type="text" name="name" id="id_facebook"  onchange="formContacts('id_facebook')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="@facebook"  value="">
+                        <input type="text" name="name" id="id_facebook"  onchange="formContacts('id_facebook')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="https://www.facebook.com/username"  value="https://www.facebook.com/username">
                         <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(1)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </div>
                 </div>
                 <div class="forms-view " id="manzil">
                     <label for="id_youtube" class="col-6 p-1">Youtube link</label>
                         <div class="form-group col-6 p-0">
-                            <input type="text" name="name" id="id_youtube" onchange="formContacts('id_youtube')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="https://www.youtube.com/"  value="">
+                            <input type="text" name="name" id="id_youtube" onchange="formContacts('id_youtube')" class="form-control form-control-sm border-light mr-2 contacts" placeholder="https://www.youtube.com/username"  value="">
                             <svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(2)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         </div>
 
@@ -678,6 +678,7 @@ align-items: center;
         document.getElementById('id_name').value = "";
         document.getElementById('id_title').value = "";
         document.getElementById('id_image').value = "";
+        document.getElementById('downloadImage').innerHTML = "";
         // document.getElementById('id_image').files.length = 0;
         document.getElementById('id_comment').value = "";
         document.getElementById('id_russian').checked = false;
@@ -737,16 +738,17 @@ align-items: center;
                 if(array.includes(x)){
                 forms[array[array.indexOf(x)]].style.display='none';
                 buttons[arrayb[arrayb.indexOf(x)]].style.display='flex';
+                inputId = forms[x].getElementsByTagName('input')[0].id;
+                addToDelContactsList(inputId)
                 array = array.filter(e=>e!=x);
                 arrayb = arrayb.filter(e=>e!=x);
                 
                 }
                 else {
                 forms[x].style.display='flex';
-                // forms[x].getElementsByTagName('input')[0].value = "";
-                inputId = forms[x].getElementsByTagName('input')[0].id;
-                addToDelContactsList(inputId)
                 buttons[x].style.display='none';
+                inputId = forms[x].getElementsByTagName('input')[0].id;
+                formContacts(inputId);
                 array.push(x)
                 arrayb.push(x)
                 
@@ -1013,11 +1015,11 @@ align-items: center;
                             id:res[i].id, title: res[i].title,key:res[i].key,required:res[i].required,checked:false
                         }
                         index = InRichestPeopleList(res[i])
-                        if(index){
+                        if(index!==false&&index>0){
                             field.checked = true;
                         }
                         // index = IncreatedFieldsList(res[i])
-                        // if(index){
+                        // if(index!==false&&index>0){
                         //     field.checked = true;
                         // }
                         if(field.required){
@@ -1124,17 +1126,19 @@ align-items: center;
                 var contactObj = {
                     id:null, contact_type:CONTACTS[inputId],value:contactInput.value
                 }
-                index = IndelContactsList(contactObj)
-                if(index!=false){
-                    contactObj.id = deletedContacts[index].id; 
+                index = IndelContactsList(contactObj.contact_type)
+                if(index!==false && index>=0){
+                    console.log("deletedContacts da edi.")
+                    contactObj.id = deletedContacts[index].id || contactObj.id; 
                     deletedContacts.splice(index, 1);
                 }
-
+                console.log("not in deleted_contacts: ", contactObj, index)
 
                 index = InContactsList(contactObj)
                 
-                if(index!=false){
-                    id = contacts[index].id 
+                if(index!==false && index>=0){
+                    console.log("yangilandi")
+                    id = contacts[index].id || contactObj.id
                     contacts[index] = contactObj;
                     contacts[index].id = id
                 } else {
@@ -1144,23 +1148,26 @@ align-items: center;
             }
 
             function addToDelContactsList(inputId){
+                console.log("Ishladi delcon")
                 var contactInput = document.getElementById(inputId);
                 if(contactInput.value==""){
                     return ;
                 }
+                console.log("tekshiruvda")
                 var contactObj = {
                     id:null, contact_type:CONTACTS[inputId],value:contactInput.value
                 }
                 index = InContactsList(contactObj)
-                if(index!=false){
-                    contactObj.id = contacts[index].id
+                if(index!==false&&index>0){
+                    contactObj.id = contacts[index].id || contactObj.id
                     contacts.splice(index, 1)
                 } else {
+                    console.log(inputId, contactObj, "contact listda ")
                     return ;
                 }
 
-                index = IndelContactsList(contactObj)
-                if(index==false){
+                index = IndelContactsList(contactObj.contact_type)
+                if(index===false){
                     deletedContacts.push(contactObj)
                 }
                 return ;
@@ -1313,18 +1320,52 @@ align-items: center;
             }
 
             function deleteContacts(id){
-                
+                var url = `/admintion/forms/${id}/contacts/delete/`;
+                var counter = 0;
+                var formData = new FormData();
+                for(var i=0;i<deletedContacts.length;i++){
+                    if(deletedContacts[i].id!=null){
+                        formData.append('contacts', deletedContacts[i].id)
+                        counter++;
+                    }
+                }
+
+                if(counter == 0){
+                    return ;
+                }
+                formData.append('csrfmiddlewaretoken', '{{csrf_token }}')
+                fetch(url, {
+                    method: 'post',
+                    headers: {
+                        'X_CSRFToken':'{{ csrf_token }}',
+                    },
+                    body: formData
+                })
+                .then(res=>{
+                    if(res.status==204){
+                        deletedContacts.length =0;
+                        return ;
+                    }
+                    alert("Kontaktlar o'chirilmadi.")
+                })
+                .catch(err=>{
+                    alert(err);
+                })
             }
 
             function saveContacts(id){
+                deleteContacts(id);
                 var formData = new FormData();
                 formData.append('csrfmiddlewaretoken','{{ csrf_token }}');
                 var counter = 0
                 for(var i=0;i<contacts.length;i++){
-                    if(contacts[i].value!="" && contacts[i].id==null){
+                    if(contacts[i].value!=""){
                         formData.append(`form-${counter}-contact_type`, contacts[i].contact_type)
                         formData.append(`form-${counter}-value`, contacts[i].value)
                         formData.append(`form-${counter}-leadform`, id)
+                        if(contacts[i].id!==null){
+                            formData.append(`form-${counter}-pk`, contacts[i].id)
+                        }
                         counter++;
                     } else{
                         contacts.slice(i, 1)
@@ -1443,6 +1484,7 @@ align-items: center;
                 // window.location.assign(window.location.pathname)                
                 // refresh()
                 alert('Ma\'lumotlar saqlandi.')
+                refresh()
                 return res;
             })
             
@@ -1456,6 +1498,7 @@ align-items: center;
                 if(res.obj){
                     document.getElementById('id_name').value = res.obj.name;
                     document.getElementById('id_title').value = res.obj.title;
+                    
                     if(res.obj.image){
                         document.getElementById('id_image').files[0] = res.obj.image.url;
                         var a = document.createElement('a');
@@ -1488,8 +1531,7 @@ align-items: center;
             var status = 0
             fetch(url)
             .then(res=>{
-                status = res.status
-                if(re.status==204){
+                if(res.status==204){
                     window.location.assign(window.location.pathname)
                 }
                 return res;
@@ -1531,7 +1573,8 @@ align-items: center;
         function AddForm(){
             clearDrawer()
             getUniversalFields()
-            
+            var savebtn = document.getElementById('savebtn');
+            savebtn.setAttribute('onclick',`saveBtn()`);
         }
         
         </script>

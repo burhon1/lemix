@@ -108,27 +108,27 @@
                                                             
                                                             {% if contact.contact_type == 2 %} 
                                                             <li>
-                                                                <button class="radius-md wh-48 content-center"><img class="svg" src="{% static '/img/svg/Instagram_logo_2016.svg.webp' %}" style="width: 80%;object-fit: contain; height: 80%;" alt="img" /> </button>
+                                                                <a href="{{contact.value}}" class="btn radius-md wh-48 content-center"><img class="svg" src="{% static '/img/svg/Instagram_logo_2016.svg.webp' %}" style="width: 80%;object-fit: contain; height: 80%;" alt="img" /> </a>
                                                             </li>
                                                             {% elif contact.contact_type == 3 %}
                                                             <li>
-                                                                <button class="radius-md wh-48 content-center"><img class="svg" src="{% static '/img/svg/facebook.svg' %}" style="width: 80%;object-fit: contain; height: 80%;" alt="img" /> </button>
+                                                                <a href="{{contact.value}}" class="btn radius-md wh-48 content-center"><img class="svg" src="{% static '/img/svg/facebook.svg' %}" style="width: 80%;object-fit: contain; height: 80%;" alt="img" /> </a>
                                                             </li>
                                                             {% elif contact.contact_type == 5 %}
                                                             <li>
-                                                                <button class="radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/YouTube_full-color_icon_(2017).svg.webp' %}" alt="img" /> </button>
+                                                                <a href="{{contact.value}}" class="btn radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/YouTube_full-color_icon_(2017).svg.webp' %}" alt="img" /> </a>
                                                             </li>
                                                             {% elif contact.contact_type == 1 %}
                                                             <li>
-                                                                <button class="radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/Telegram_logo.svg.png' %}" alt="img" /> </button>
+                                                                <a href="{{contact.value}}" class="btn radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/Telegram_logo.svg.png' %}" alt="img" /> </a>
                                                             </li>
                                                             {% elif contact.contact_type == 6 %}
                                                             <li> 
-                                                                <button class=" radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/phone-call-icon.png' %}" alt="img" /></button>
+                                                                <a href="tel:{{contact.value}}" class="btn radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/phone-call-icon.png' %}" alt="img" /></a>
                                                             </li>
                                                             {% elif contact.contact_type == 7 %}
                                                             <li>
-                                                                <button class="radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/email.svg' %}" alt="img" /></button>
+                                                                <a href="mail:{{contact.value}}" class="btn radius-md wh-48 content-center"><img class="svg" style="width: 80%;object-fit: contain; height: 80%;" src="{% static '/img/svg/email.svg' %}" alt="img" /></button>
                                                             </li>
                                                             {% endif %}
                                                             
@@ -137,12 +137,11 @@
                                                         </ul>
                                                     </div>
                                                     <div class="button-group d-flex m-0">
-                                                        <button 
-                                                        style="text-transform: none;margin: 0px;"
-                                                        type="submit"
-                                                        class="btn btn-light w-100 btn-default fs-bold btn-squared m-0 lh-normal px-50 py-15 signUp-createBtn signIn-createBtn">
+                                                        <a href="{% url 'lead_registration_view' pk %}?title={{title}}"
+                                                        
+                                                        class="btn btn-light w-100 btn-default fs-bold btn-squared m-0 lh-normal px-50 py-15 ">
                                                             Ro'xatdan o'tish sahifasi
-                                                        </button>
+                                                    </a>
                                                     </div>
                                                    
                                                 </div>

@@ -128,7 +128,7 @@ margin-right: 7px;
                                             <li class="w-100 mb-2"><span class="version-date">Telefon</span><span
                                                     class="version-name">{{ lead.user.phone }}</span></li>
                                             <li class="w-100 mb-2"><span class="version-date">Manbasi</span><span
-                                                    class="version-name">{{ lead.source|get_type_name:'source' }} </span></li>
+                                                    class="version-name">{{ lead.source }} </span></li>
                                             <li class="w-100 mb-2"><span class="version-date">Holati</span><span
                                                     class="version-name">{{ lead.status.status|default:'' }}</span></li>
                                             <li class="w-100 mb-2"><span class="version-date">Kurs</span><span
@@ -248,7 +248,7 @@ margin-right: 7px;
                                                     <select name="manba" id="manba" class="form-control  form-control-sm border-light">
                                                         <option value="">----</option>
                                                         {% for source in sources %}
-                                                        <option value="{{ source.id}}" {% if source.id is lead.source %}selected {% endif %}>{{ source.source }}</option>
+                                                        <option value="{{ source.id}}" {% if source.id is lead.source.id %}selected{% endif %}">{{ source.title }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>

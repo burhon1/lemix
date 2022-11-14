@@ -382,10 +382,9 @@
                                 <label for="exampleFormControlSelect3"
                                     class="il-gray fs-14 fw-500 align-center">Manbasi</label>
                                 <select name="source" class="form-control px-15" id="exampleFormControlSelect3">
-                                    <option value="1">Telegram</option>
-                                    <option value="2">Banner</option>
-                                    <option value="3">Seminar</option>
-                                    <option value="4">Tik-tok</option>
+                                    {% for source in sources %}
+                                    <option value="{{ source.id }}">{{ source.title }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group form-element-textarea mb-20 col-md-12">
@@ -601,6 +600,8 @@
     }
     var array = []
     function handleClickIcon(x) {
+        console.log("array: ", array)
+        
         if (array.includes(x)) {
             forms[array[array.indexOf(x)]].style.display = 'none';
             array = array.filter(e => e != x);
@@ -635,8 +636,10 @@
                 wrap.appendChild(input);
                 input = null;
             })
-            var img = document.createElement('img');
-            img.src = "{% static 'img/svg/ixis.svg' %}";
+            var img = document.createElement('p');
+            img.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" onclick="handleClickIcon(4)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+            // var img = document.createElement('img');
+            // img.src = "{% static 'img/svg/ixis.svg' %}";
             img.className = "ml-auto";
             img.addEventListener('click', function () {
                 document.querySelector('#' + _id).remove()

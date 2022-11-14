@@ -2,7 +2,7 @@ from django import template
 from django.shortcuts import get_object_or_404
 
 import datetime
-from admintion.models import Attendace, GroupStudents, LeadDemo
+from admintion.models import Attendace, GroupStudents, LeadDemo,LeadForms
 from ..data import chooses
 from user.data import chooses as user_chooses
 register = template.Library()
@@ -125,6 +125,31 @@ def get_week_day(value):
     day = value.weekday()
     return dict(chooses.GET_GROUPS_DAYS)[day+1] or ''
 
+def get_conversion(id):
+    leadform = LeadForms.objects.filter(id=id).first()
+    if leadform:
+        try:
+            return leadform.seen/(leadform.formlead_set.all())
+        except:
+            return 0
+    return 0
+
+
+def get_conversion_status(id):
+    leadform = LeadForms.objects.filter(id=id).first()
+    if leadform:
+        try:
+            per = leadform.seen/(leadform.formlead_set.all())
+        except:
+            per = 0  
+        if per >= 90:
+            return 'success'
+        elif per >= 70:
+            return 'warning'
+        else:
+            return 'danger'
+
+
 
 register.filter('take_attendance_status', take_attendance_status) 
 register.filter('attendance_result', attendance_result) 
@@ -138,3 +163,5 @@ register.filter('readable_days3', readable_days3)
 register.filter('get_week_day', get_week_day)
 register.filter('get_status2', get_status2)
 register.filter('lead_attendance_result', lead_attendance_result) 
+register.filter('get_conversion', get_conversion)
+register.filter('get_conversion_status', get_conversion_status)

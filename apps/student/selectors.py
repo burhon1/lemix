@@ -24,10 +24,10 @@ def get_student_courses(student_id: int=None, lead_id: int=None):
     courses = [group.course.id for group in groups ]
     return courses
 
-def get_homeworks(courses: List[int], authors: List[CustomUser]):
+def get_homeworks(courses: List[int], authors: List[CustomUser], groups:List[Group]):
     modules = Modules.objects.filter(course_id__in=courses).values('id')
     lessons = Lessons.objects.filter(module_id__in=modules).values('id')
-    homeworks = Contents.objects.filter(lesson_id__in=lessons, content_type=4, status=True, author__in=authors).order_by('lesson__module__order').values('id', 'title', 'opened_at', 'closed_at', 'order')
+    homeworks = Contents.objects.filter(lesson_id__in=lessons, content_type=4, status=True, author__in=authors, groups__in=groups).order_by('lesson__module__order').values('id', 'title', 'opened_at', 'closed_at', 'order')
     
     return homeworks
 
@@ -49,8 +49,8 @@ def get_content_authors_for_student(student: Student=None, lead:FormLead=None):
 def get_student_homeworks(student: Student):
     authors = get_content_authors_for_student(student)
     courses = get_student_courses(student)
-    homeworks = list(get_homeworks(courses, authors=authors))
-    
+    groups = [ggroup.group for ggroup in student.ggroups.all()]
+    homeworks = list(get_homeworks(courses, authors=authors, groups=groups))
     for content in homeworks:
         homework = Homeworks.objects.filter(student=student, content_id=content['id']).last()
         if homework:
@@ -241,7 +241,7 @@ def get_lead_homeworks(lead: FormLead):
         demo_count = len(LeadDemo.objects.filter(lead=lead, group=group))
         authors = authors+[group.teacher.user if group.teacher else None]+[group.trainer.user if group.trainer else None]
         lessons = Lessons.objects.filter(module__in=course.modules.all(), author__in=authors).order_by('order', 'module')[:demo_count]
-        contents = Contents.objects.filter(lesson__in=lessons, content_type=4, author__in=authors).order_by('order', 'lesson', 'lesson__module')
+        contents = Contents.objects.filter(lesson__in=lessons, content_type=4, author__in=authors, groups__in=[group]).order_by('order', 'lesson', 'lesson__module')
         
         for content in contents:
             dct = model_to_dict(content, fields=('id', 'title', 'text'))

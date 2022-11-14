@@ -17,7 +17,6 @@ class LeadForm(forms.ModelForm):
 
         for field in self.Meta.optional:
             self.fields[field].required = False
-        # self.fields['user'].required = False
 
 
 class DemoForm(forms.ModelForm):
@@ -74,10 +73,10 @@ FieldsFormSet = formset_factory(FieldsFormClass, extra=0)
 class ContactsForm(forms.ModelForm):
     class Meta:
         model = Contacts
-        fields = "__all__"
+        fields = ("id","contact_type", "value","leadform")
 
     def clean(self):
-        print(self.cleaned_data)
+        # print(self.cleaned_data)
         return self.cleaned_data
 
 ContactsFormSet = formset_factory(ContactsForm, extra=0) 
@@ -98,7 +97,7 @@ class LeadFormRegisterForm(forms.Form):
         self.fields['educenters'].queryset = form.educenters.all() 
         self.fields['courses'].queryset = form.courses.all()
         self.fields['sources'].queryset = form.sources.all()
-        
+        self.form = form
         fields = form.formfields_set.all().order_by('order')
         for field in fields:
             if field.title not in self.fields.keys() and field.title not in ('Telefon raqami', 'Telegram', 'Manbasi'):
@@ -127,7 +126,7 @@ class LeadFormRegisterForm(forms.Form):
             self.cleaned_data['user'].update({'location':self.cleaned_data.get('Manzil')})
         telegram = self.cleaned_data.get('telegram')
         self.cleaned_data.update({'lead':{'telegram': telegram} })
-        self.cleaned_data['lead'].update({'source': self.cleaned_data['sources'].id|1})
+        self.cleaned_data['lead'].update({'source': self.cleaned_data['sources']|self.fields['sources'].queryset.first()})
         self.cleaned_data['lead'].update({'comment':''})
         for field, value in self.cleaned_data.items():
             if field not in ['user', 'lead', 'phone_number', 'telegram', 'first_name', 'last_name', 'middle_name', 'birthday', 'sources']:
@@ -141,7 +140,7 @@ class LeadFormRegisterForm(forms.Form):
             user = CustomUser(**self.cleaned_data.get('user'), is_active=True)
             user.set_password(user.phone)
             user.save()
-            lead = FormLead.objects.create(**self.cleaned_data.get('lead'), user=user)
+            lead = FormLead.objects.create(**self.cleaned_data.get('lead'), user=user, via_form=self.form)
         except Exception as e:
             CustomUser.objects.filter(phone=self.cleaned_data.get('user')['phone']).delete()
             raise e

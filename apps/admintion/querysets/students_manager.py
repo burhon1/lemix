@@ -75,7 +75,7 @@ class StudentQueryset(QuerySet):
             'id',
             'groups',
             'status',
-            'source',
+            # 'source',
             'comment',
             'user__first_name', 'user__last_name', 'user__middle_name',
             'balance'
@@ -87,7 +87,9 @@ class StudentQueryset(QuerySet):
             birthday = F('user__birthday'),
             location = F('user__location'),
             payment = Sum(F('payment__paid'), distinct=True),
-            picture = F('user__picture')
+            picture = F('user__picture'),
+            source = F('source__title'),
+
         ).filter(id=id).first()
 
     def setudent_list(self):
