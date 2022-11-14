@@ -51,7 +51,10 @@ def onlin_video_view(request, pk):
     if request.method == 'POST':
         form = ContentForm(request.POST, request.FILES, instance=content)
         if form.is_valid():
-            content = form.save()
+            content = form.save(commit=False)
+            content.video_link = youtube_link_formatter(content.video_link)
+            content.save()
+            form.save_m2m()
             data = model_to_dict(content, fields=('id', 'title', 'video_link', 'text', 'required', 'status'))
             if content.video:
                 data['video'] = {'name':content.video.name, 'url': content.video.url}
