@@ -92,6 +92,18 @@ class StudentQueryset(QuerySet):
 
         ).filter(id=id).first()
 
+    def student_short_detail(self, id: int):
+        return self.get_info().values(
+            'id',
+            'ggroups',
+            'status',
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'), F('user__phone')),
+            sgroups = ArrayAgg(F('ggroups__group__title')),
+        ).filter(id=id).first()
+
     def setudent_list(self):
         return self.get_info().filter(status=1).values('id','full_name')
 

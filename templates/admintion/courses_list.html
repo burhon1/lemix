@@ -1,14 +1,18 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block content %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4>Kurslar-4ta </h4>
+            <h4>Kurslar-{{objs.count}}ta </h4>
             <h4 class="text-capitalize breadcrumb-title"></h4>
+            {% if perms.admintion.add_courses %}
             <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account"> Kurs
                 qo'shish
             </button>
+            {% endif %}
+
         </div>
     </div>
 </div>
@@ -75,29 +79,29 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                {{obj.price}}
+                                                {{obj.price|readable_soums}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                3
+                                                {{ obj.group_set.count }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                28
+                                                {{ obj|get_course_students }}
                                             </div>
                                         </td>
                                         <td>
                                             {% if obj.status %}
                                             <div class="userDatatable-content d-inline-block">
                                                 <span
-                                                    class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
                                             </div>
                                             {% else %}
                                             <div class="userDatatable-content d-inline-block">
                                                 <span
-                                                    class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                    class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
                                             </div>
                                             {% endif %}
                                         </td>
@@ -107,14 +111,19 @@
                                                     <a href="#" class="view">
                                                         <span data-feather="eye"></span></a>
                                                 </li>
+                                                {% if perms.admintion.change_course %}
                                                 <li>
-                                                    <a href="#" class="edit">
+                                                    <a href="#" class="edit" onclick="getCourseDetail('{{obj.id}}')"  data-toggle="modal" data-target="#modal-basic2">
                                                         <span data-feather="edit"></span></a>
                                                 </li>
+                                                {% endif %}
+                                                {% if perms.admintion.delete_course %} 
                                                 <li>
-                                                    <a href="#" class="remove">
+                                                    <a href="#" class="remove"  data-toggle="modal" data-target="#modal-basic1"
+                                                     onclick='setDelModal("{{ obj.id}}","{{obj.title}}")'>
                                                         <span data-feather="trash-2"></span></a>
                                                 </li>
+                                                {% endif %}
                                             </ul>
                                         </td>
                                     </tr>
@@ -132,9 +141,103 @@
 </div>
 
 <!-- ends: .modal-Basic -->
+<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <form class="form-group" method="post" id="delForm">
+                <div class="modal-header">
+                    {% csrf_token %}
+                    <h6 class="modal-title">Rostan ham kurs (<span id="courseTitle"></span> kursi) ni o'chirmoqchimisiz?</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <p>Kursni o'chirish, unga bog'langan, darslik va dars ishlanmalar, guruhlarning yo'qolishiga olib kelishi mumkin.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
+</div>
 
+<div class="modal-basic modal fade show" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <form class="form-group" method="post" id="updateForm">
+                <div class="modal-header">
+                    <h6 class="modal-title">Kurs (<span id="courseTitle2"></span> kursi) ni yangilash</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="courseName" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                    <input name="title" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="courseName"
+                                        placeholder="Nomi">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="duration" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
+                                    <input name="duration" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="duration"
+                                        placeholder="Oy">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="lesson_duration" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
+                                    <input name="lesson_duration" type="text"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="lesson_duration"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="price" class="il-gray fs-14 fw-500 align-center">Narx</label>
+                                    <input name="price" type="number"
+                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="price"
+                                        placeholder="Narx">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="comment"
+                                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                <textarea name="comment" class="form-control" id="comment"
+                                    rows="3"></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="statusID" class="checkbox">
+                                        <input name="status" type="checkbox" checked="false" value="0"
+                                        class="checkbox" id="statusID">
+                                        Aktiv holatda</label>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
 
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
@@ -166,7 +269,7 @@
                                     <label for="a1" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
                                     <input name="duration" type="text"
                                         class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                        placeholder="Nomi">
+                                        placeholder="Oy">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -182,7 +285,7 @@
                                     <label for="a2" class="il-gray fs-14 fw-500 align-center">Narx</label>
                                     <input name="price" type="number"
                                         class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="soni">
+                                        placeholder="Narx">
                                 </div>
                             </div>
 
@@ -193,13 +296,19 @@
                                     rows="3"></textarea>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="courseID" class="checkbox">
+                                        <input name="status" type="checkbox" checked="true" value="1" 
+                                        class="checkbox" id="courseID">
+                                        Aktiv holatda</label>
+                                    
+                                </div>
+                            </div>
+                            
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
-
                             </div>
-
-
-
                         </div>
                     </form>
                 </div>
@@ -216,7 +325,65 @@
 
 
 
+{% endblock %}
 
 
+{% block script %}
+<script>
 
+var courseStatus = document.getElementById('courseID');
+courseStatus.addEventListener('change', ()=>{
+    if (courseStatus.checked===true){
+        courseStatus.value = 1;
+    } else {
+        courseStatus.value = 0;
+    }
+})
+
+function getCourseDetail(id){
+    var url = `/admintion/courses/${id}/detail/`;
+    fetch(url)
+    .then(res=>{
+        if (res.status==200){
+            return res;
+        }
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        console.log(res);
+        printCourseDetail(id, res);
+    })
+}
+
+
+function printCourseDetail(id, data){
+    var form = document.getElementById('updateForm');
+    form.setAttribute('action', `/admintion/courses/${id}/update/`);
+    document.getElementById('courseTitle2').innerHTML = data.title;
+    document.getElementById('courseName').value = data.title;
+    document.getElementById('duration').value = data.duration;
+    document.getElementById('lesson_duration').value = data.lesson_duration;
+    document.getElementById('price').value = data.price;
+    document.getElementById('comment').value = data.comment;
+    var status = document.getElementById('statusID');
+    if(data.status === true){
+        status.setAttribute('checked', true);
+        status.setAttribute('value', "1");
+    } else{
+        status.setAttribute('checked', false);
+        status.setAttribute('value', "0");
+    }
+
+    return ;
+}
+
+function setDelModal(id,title){
+    var form = document.getElementById('delForm');
+    form.setAttribute('action', `/admintion/courses/${id}/delete/`);
+
+    var courseTitle = document.getElementById('courseTitle');
+    courseTitle.innerHTML = title;
+}
+
+</script>
 {% endblock %}

@@ -1,0 +1,2025 @@
+{% extends 'atomic/theme.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    Director's Dashboard
+{% endblock %}
+
+{% block style %}
+<style>
+    .overview-content p{
+        text-transform: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+        <div class="container-fluid">
+            <div class="row mt-3">
+                <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                    <!-- Card 2 End  -->
+                    <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                            <div class="overview-content text-center">
+                                <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+
+                                </span>
+                                <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                                <p class="fs-14 m-1">Faol lidlar soni</p>
+                                <h1 class="fs-18">0</h1>
+                            </div>
+
+                        
+                    </div>
+                    <!-- Card 2 End  -->
+                </div>
+            <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                <!-- Card 2 End  -->
+                <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                        <div class="overview-content text-center">
+                            <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-hexagon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+
+                            </span>
+                            <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                            <p class="fs-14 m-1">Demo(sinov) darsida</p>
+                            <h1 class="fs-18">0</h1>
+                        </div>
+
+                    
+                </div>
+                <!-- Card 2 End  -->
+            </div>
+            <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                <!-- Card 2 End  -->
+                <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                        <div class="overview-content text-center">
+                            <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+
+                            </span>
+                            <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                            <p class="fs-14 m-1">Guruhlar soni</p>
+                            <h1 class="fs-18">0</h1>
+                        </div>
+
+                    
+                </div>
+                <!-- Card 2 End  -->
+            </div>
+            <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                <!-- Card 2 End  -->
+                <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                        <div class="overview-content text-center">
+                            <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+                            </span>
+                            <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                            <p class="fs-14 m-1">O'quvchilar soni</p>
+                            <h1 class="fs-18">0</h1>
+                        </div>
+
+                    
+                </div>
+                <!-- Card 2 End  -->
+            </div>
+            <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                <!-- Card 2 End  -->
+                <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                        <div class="overview-content text-center">
+                            <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+
+                            </span>
+                            <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                            <p class="fs-14 m-1">Shu oyda to'laganlar</p>
+                            <h1 class="fs-18">0</h1>
+                        </div>
+
+                    
+                </div>
+                <!-- Card 2 End  -->
+            </div>
+            <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                <!-- Card 2 End  -->
+                <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                        <div class="overview-content text-center">
+                            <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </span>
+                            <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                            <p class="fs-14 m-1">Qarzdorlar soni</p>
+                            <h1 class="fs-18">0</h1>
+                        </div>
+
+                    
+                </div>
+                <!-- Card 2 End  -->
+            </div>
+            <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+                <!-- Card 2 End  -->
+                <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                        <div class="overview-content text-center">
+                            <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-minus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+
+                            </span>
+                            <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                            <p class="fs-14 m-1">Guruhni tark etganlar</p>
+                            <h1 class="fs-18">0</h1>
+                        </div>
+
+                    
+                </div>
+                <!-- Card 2 End  -->
+            </div>
+        <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+            <!-- Card 2 End  -->
+            <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                    <div class="overview-content text-center">
+                        <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-octagon"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        </span>
+                        <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                        <p class="fs-14 m-1">Demodan ketganlar</p>
+                        <h1 class="fs-18">0</h1>
+                    </div>
+
+                
+            </div>
+            <!-- Card 2 End  -->
+        </div>
+        <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+            <!-- Card 2 End  -->
+            <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                    <div class="overview-content text-center">
+                        <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slash"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                        </span>
+                        <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                        <p class="fs-14 m-1">Muzlatilgan o'quvchilar</p>
+                        <h1 class="fs-18">0</h1>
+                    </div>
+
+                
+            </div>
+            <!-- Card 2 End  -->
+        </div>
+        <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+            <!-- Card 2 End  -->
+            <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                    <div class="overview-content text-center">
+                        <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+
+                        </span>
+                        <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                        <p class="fs-14 m-1">Arxivdagi o'quvchilar</p>
+                        <h1 class="fs-18">0</h1>
+                    </div>
+
+                
+            </div>
+            <!-- Card 2 End  -->
+        </div>
+        <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+            <!-- Card 2 End  -->
+            <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                    <div class="overview-content text-center">
+                        <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-ccw"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+                        </span>
+                        <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                        <p class="fs-14 m-1">Jami daromad</p>
+                        <h1 class="fs-18">0</h1>
+                    </div>
+
+                
+            </div>
+            <!-- Card 2 End  -->
+        </div>
+        <div class="col-xxl-2 col-sm-2  col-ssm-6 mb-30">
+            <!-- Card 2 End  -->
+            <div class="ap-po-details ap-po-details--2 pt-2 pb-2 radius-xl bg-white ">
+
+                    <div class="overview-content text-center">
+                        <span class="avatar avatar-success avatar-sm avatar-circle  mb-1">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </span>
+                        <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
+                        <p class="fs-14 m-1">Jami qarzdorlik</p>
+                        <h1 class="fs-18">0</h1>
+                    </div>
+
+                
+            </div>
+            <!-- Card 2 End  -->
+        </div>
+        <div class="col-lg-12 col-sm-12 mb-25">
+
+            <div class="card border-0">
+                <div class="card-header">
+                    <h6 style="text-transform: none;">Kursning holati</h6>
+                    <!-- <div class="card-extra">
+                        <ul class="card-tab-links mr-3 nav-tabs nav" role="tablist">
+                            <li>
+                                <a class="active" href="#t_selling-today2" data-toggle="tab" id="t_selling-today2-tab" role="tab" aria-selected="true">Today</a>
+                            </li>
+                            <li>
+                                <a href="#t_selling-week2" data-toggle="tab" id="t_selling-week2-tab" role="tab" aria-selected="true">Week</a>
+                            </li>
+                            <li>
+                                <a href="#t_selling-month3" data-toggle="tab" id="t_selling-month3-tab" role="tab" aria-selected="true">Month</a>
+                            </li>
+                            <li>
+                                <a href="#t_selling-year4" data-toggle="tab" id="t_selling-year4-tab" role="tab" aria-selected="true">Year</a>
+                            </li>
+                        </ul>
+                        <div class="dropdown dropleft">
+                            <a href="#" role="button" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span data-feather="more-horizontal"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="todo10">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="card-body p-0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="t_selling-today2" role="tabpanel" aria-labelledby="t_selling-today2-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Kurs nomi</th>
+                                                <th>Faol o'quvchilar</th>
+                                                <th>Daromad</th>
+                                                <th>Xarajatlar (Ish haqi)</th>
+                                                <th>Qarzdorlik</th>
+                                                <th>Foyda</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                
+                                                <td>Matematika</td>
+                                                <td>339</td>
+                                                <td > <div class="d-flex justify-content-end">
+                                                    <span class="selling-badge order-bg-opacity-success color-success">45 000 000</span>
+                                                </div></td>
+                                                <td ><div class="d-flex justify-content-end">
+                                                    <span class="selling-badge order-bg-opacity-warning color-warning"> 35 000 000</span>
+                                                </div></td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">30 000 000 </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">10 000 000</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_selling-week2" role="tabpanel" aria-labelledby="t_selling-week2-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
+                                                        <span>John Mark</span>
+                                                    </div>
+                                                </td>
+                                                <td>Samsung Galaxy S8 256GB</td>
+                                                <td>$339</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
+                                                        <span>David Miller
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>Half Sleeve Shirt </td>
+                                                <td>$136</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
+                                                        <span>Chris Lein</span>
+                                                    </div>
+                                                </td>
+                                                <td>Marco Shoes</td>
+                                                <td>$448</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
+                                                        <span>Robert Philips</span>
+                                                    </div>
+                                                </td>
+                                                <td>15" Mackbook Pro</td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
+                                                        <span>Ahmad Abdullah</span>
+                                                    </div>
+                                                </td>
+                                                <td>Apple iPhone X </td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_selling-month3" role="tabpanel" aria-labelledby="t_selling-month3-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
+                                                        <span>John Mark</span>
+                                                    </div>
+                                                </td>
+                                                <td>Samsung Galaxy S8 256GB</td>
+                                                <td>$339</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
+                                                        <span>David Miller
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>Half Sleeve Shirt </td>
+                                                <td>$136</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
+                                                        <span>Chris Lein</span>
+                                                    </div>
+                                                </td>
+                                                <td>Marco Shoes</td>
+                                                <td>$448</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
+                                                        <span>Robert Philips</span>
+                                                    </div>
+                                                </td>
+                                                <td>15" Mackbook Pro</td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
+                                                        <span>Ahmad Abdullah</span>
+                                                    </div>
+                                                </td>
+                                                <td>Apple iPhone X </td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_selling-year4" role="tabpanel" aria-labelledby="t_selling-year4-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
+                                                        <span>John Mark</span>
+                                                    </div>
+                                                </td>
+                                                <td>Samsung Galaxy S8 256GB</td>
+                                                <td>$339</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
+                                                        <span>David Miller
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>Half Sleeve Shirt </td>
+                                                <td>$136</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
+                                                        <span>Chris Lein</span>
+                                                    </div>
+                                                </td>
+                                                <td>Marco Shoes</td>
+                                                <td>$448</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
+                                                        <span>Robert Philips</span>
+                                                    </div>
+                                                </td>
+                                                <td>15" Mackbook Pro</td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
+                                                        <span>Ahmad Abdullah</span>
+                                                    </div>
+                                                </td>
+                                                <td>Apple iPhone X </td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-12 col-sm-12 mb-25">
+
+            <div class="card border-0">
+                <div class="card-header">
+                    <h6 style="text-transform: none;">Asosiy ko'rsatkichlarni solishtirmasi</h6>
+                
+                </div>
+                <div class="card-body p-0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="t_selling-today2" role="tabpanel" aria-labelledby="t_selling-today2-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Nomi</th>
+                                                <th>Joriy hafta</th>
+                                                <th>O'tgan hafta</th>
+                                                <th>Joriy oy(Noyabr)</th>
+                                                <th>Kvartal(oxirgi 3oy)</th>
+                                                <th>Yarim yillik (oxirgi 6oy)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <td>Faol lidlar</td>
+                                                
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>
+                                                    1
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>Demo(sinov darsida)</td>
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Faol o'quvchilar</td>
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>To'lov qilganlar</td>
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Qarzdorlar</td>
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Demo (sinov) darsini tark etganlar</td>
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Guruhni tark etganlar</td>
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_selling-week2" role="tabpanel" aria-labelledby="t_selling-week2-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
+                                                        <span>John Mark</span>
+                                                    </div>
+                                                </td>
+                                                <td>Samsung Galaxy S8 256GB</td>
+                                                <td>$339</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
+                                                        <span>David Miller
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>Half Sleeve Shirt </td>
+                                                <td>$136</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
+                                                        <span>Chris Lein</span>
+                                                    </div>
+                                                </td>
+                                                <td>Marco Shoes</td>
+                                                <td>$448</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
+                                                        <span>Robert Philips</span>
+                                                    </div>
+                                                </td>
+                                                <td>15" Mackbook Pro</td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
+                                                        <span>Ahmad Abdullah</span>
+                                                    </div>
+                                                </td>
+                                                <td>Apple iPhone X </td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_selling-month3" role="tabpanel" aria-labelledby="t_selling-month3-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
+                                                        <span>John Mark</span>
+                                                    </div>
+                                                </td>
+                                                <td>Samsung Galaxy S8 256GB</td>
+                                                <td>$339</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
+                                                        <span>David Miller
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>Half Sleeve Shirt </td>
+                                                <td>$136</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
+                                                        <span>Chris Lein</span>
+                                                    </div>
+                                                </td>
+                                                <td>Marco Shoes</td>
+                                                <td>$448</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
+                                                        <span>Robert Philips</span>
+                                                    </div>
+                                                </td>
+                                                <td>15" Mackbook Pro</td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
+                                                        <span>Ahmad Abdullah</span>
+                                                    </div>
+                                                </td>
+                                                <td>Apple iPhone X </td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_selling-year4" role="tabpanel" aria-labelledby="t_selling-year4-tab">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
+                                                        <span>John Mark</span>
+                                                    </div>
+                                                </td>
+                                                <td>Samsung Galaxy S8 256GB</td>
+                                                <td>$339</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
+                                                        <span>David Miller
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>Half Sleeve Shirt </td>
+                                                <td>$136</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
+                                                        <span>Chris Lein</span>
+                                                    </div>
+                                                </td>
+                                                <td>Marco Shoes</td>
+                                                <td>$448</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
+                                                        <span>Robert Philips</span>
+                                                    </div>
+                                                </td>
+                                                <td>15" Mackbook Pro</td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="selling-product-img d-flex align-items-center">
+                                                        <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
+                                                        <span>Ahmad Abdullah</span>
+                                                    </div>
+                                                </td>
+                                                <td>Apple iPhone X </td>
+                                                <td>$146</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end">
+                                                        <span class="selling-badge order-bg-opacity-success color-success">paid</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 mb-30">
+
+            <div class="card border-0">
+                <div class="card-header">
+                    <h6 style="text-transform: none;">Marketing statistikasi</h6>
+                    
+                </div>
+                <div class="card-body p-0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="t_deals-today" role="tabpanel" aria-labelledby="t_deals-today-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ijtimoiy
+                                                            </div>
+                                                            <span>Instagram,Facebook,...</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>4</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Do'stlar
+                                                            </div>
+                                                            <span>Instagram,Facebook,...</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>4</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Tashqi reklama
+                                                            </div>
+                                                            <span>Instagram,Facebook,...</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>4</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Boshqalar
+                                                            </div>
+                                                            <span>Instagram,Facebook,...</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>4</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_deals-week" role="tabpanel" aria-labelledby="t_deals-week-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ahmad Musa
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/2.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                John Mark
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/3.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                David Miller
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/4.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Chris Lein
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Robert Philips
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_deals-month" role="tabpanel" aria-labelledby="t_deals-month-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ahmad Musa
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/2.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                John Mark
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/3.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                David Miller
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/4.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Chris Lein
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Robert Philips
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_deals-year" role="tabpanel" aria-labelledby="t_deals-year-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ahmad Musa
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/2.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                John Mark
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/3.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                David Miller
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/4.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Chris Lein
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Robert Philips
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 mb-30 " >
+        <div class="card" >
+            <div class="card-header">
+                <h6 style="text-transform: none;"> Guruhni holati</h6>
+            </div>
+            <div class="card-body">
+
+
+                <div>
+                    <canvas id="chartDoughnut2"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 mb-30">
+            <div class="ratio-box card">
+                <div class="card-body">
+                    <h6 class="ratio-title">Talabalar holati</h6>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point " style="font-size: 16px;">Bitirgan</h1>
+                        <span class="ratio-percentage color-primary">0%</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 0%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point" style="font-size: 16px;">O'qish</h1>
+                        <span class="ratio-percentage color-success">0</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+
+                        </div>
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point " style="font-size: 16px;">Kutish</h1>
+                        <span class="ratio-percentage color-warning">72%</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 72%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point" style="font-size: 16px;">ketgan</h1>
+                        <span class="ratio-percentage color-danger">0</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+
+                        </div>
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                </div>
+            </div>
+            <!-- ends: .ratio-box -->
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 mb-30">
+
+            <div class="card revenueChartTwo broder-0">
+                <div class="card-header">
+                    <h6 style="text-transform: none;">Oylik o'lchovlar statistikasi</h6>
+                    <div class="card-extra">
+                        <ul class="card-tab-links mr-3 nav-tabs nav" role="tablist">
+                            <li>
+                                <a class="active" href="#tl_revenue-today" data-toggle="tab" id="tl_revenue-today-tab" role="tab" aria-selected="false">Bugun</a>
+                            </li>
+                            <li>
+                                <a href="#tl_revenue-week" data-toggle="tab" id="tl_revenue-week-tab" role="tab" aria-selected="false">Hafta</a>
+                            </li>
+                            <li>
+                                <a href="#tl_revenue-month" data-toggle="tab" id="tl_revenue-month-tab" role="tab" aria-selected="false">Oy</a>
+                            </li>
+                            <li>
+                                <a href="#tl_revenue-year" data-toggle="tab" id="tl_revenue-year-tab" role="tab" aria-selected="true">Yil</a>
+                            </li>
+                        </ul>
+                        <div class="dropdown dropleft">
+                            <a href="#" role="button" id="revenue2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span data-feather="more-horizontal"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="revenue2">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ends: .card-header -->
+                <div class="card-body pt-0 px-20">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tl_revenue-today" role="tabpanel" aria-labelledby="tl_revenue-today-tab">
+                            <div class="cashflow-display cashflow-display2 d-flex">
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Jami daromad</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-success fs-14 fw-600 mr-10"><i class="las la-arrow-up"></i> <strong>15%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Jami xarajat</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-danger fs-14 fw-600 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                            </div>
+                            <!-- ends: .performance-stats -->
+
+                            <div class="wp-chart">
+                                <div class="parentContainer">
+
+
+                                    <div>
+                                        <canvas id="myChart6TExtra"></canvas>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="revenue-labels pl-15 mb-0">
+                                <div class="current">
+                                    <span>Hozirgi davr</span>
+                                </div>
+                                <div>
+                                    <span>Oldingi davr</span>
+                                </div>
+                            </div>
+                            <!-- ends: .performance-stats -->
+                        </div>
+                        <div class="tab-pane fade" id="tl_revenue-week" role="tabpanel" aria-labelledby="tl_revenue-week-tab">
+                            <div class="cashflow-display cashflow-display2 d-flex">
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Daromad</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-success fs-14 fw-600 mr-10"><i class="las la-arrow-up"></i> <strong>15%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Xarajat</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-danger fs-14 fw-600 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                            </div>
+                            <!-- ends: .performance-stats -->
+
+                            <div class="wp-chart">
+                                <div class="parentContainer">
+
+
+                                    <div>
+                                        <canvas id="myChart6WExtra"></canvas>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="revenue-labels pl-15 mb-0">
+                                <div class="current">
+                                    <span>Hozirgi davr</span>
+                                </div>
+                                <div>
+                                    <span>Oldingi davr</span>
+                                </div>
+                            </div>
+                            <!-- ends: .performance-stats -->
+                        </div>
+                        <div class="tab-pane fade" id="tl_revenue-month" role="tabpanel" aria-labelledby="tl_revenue-month-tab">
+                            <div class="cashflow-display cashflow-display2 d-flex">
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Daromad</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-success fs-14 fw-600 mr-10"><i class="las la-arrow-up"></i> <strong>15%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Xarajat</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-danger fs-14 fw-600 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                            </div>
+                            <!-- ends: .performance-stats -->
+
+                            <div class="wp-chart">
+                                <div class="parentContainer">
+
+
+                                    <div>
+                                        <canvas id="myChart6MExtra"></canvas>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="revenue-labels pl-15 mb-0">
+                                <div class="current">
+                                    <span>Hozirgi davr</span>
+                                </div>
+                                <div>
+                                    <span>Oldingi davr</span>
+                                </div>
+                            </div>
+                            <!-- ends: .performance-stats -->
+                        </div>
+                        <div class="tab-pane fade" id="tl_revenue-year" role="tabpanel" aria-labelledby="tl_revenue-year-tab">
+                            <div class="cashflow-display cashflow-display2 d-flex">
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Daromad</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-success fs-14 fw-600 mr-10"><i class="las la-arrow-up"></i> <strong>15%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                                <div class="cashflow-display__single">
+                                    <span class="cashflow-display__title">Xarajat</span>
+                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-danger fs-14 fw-600 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                </div>
+                                <!-- ends: .cashflow-display__single -->
+                            </div>
+                            <!-- ends: .performance-stats -->
+
+                            <div class="wp-chart">
+                                <div class="parentContainer">
+
+
+                                    <div>
+                                        <canvas id="myChart6Extra"></canvas>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="revenue-labels pl-15 mb-0">
+                                <div class="current">
+                                    <span>Hozirgi davr</span>
+                                </div>
+                                <div>
+                                    <span>Oldingi davr</span>
+                                </div>
+                            </div>
+                            <!-- ends: .performance-stats -->
+                        </div>
+                    </div>
+                </div>
+                <!-- ends: .card-body -->
+            </div>
+
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 mb-30">
+
+            <div class="card border-0 mb-2">
+                <div class="card-header">
+                    <h6 style="text-transform: none;">Daromas xulosasi</h6>
+                    
+                    
+                </div>
+                <div class="card-body p-0">
+                    <h3 class="p-3">5 000 000 000 so'm</h3>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="t_deals-today" role="tabpanel" aria-labelledby="t_deals-today-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 8px 25px">
+                                                    <div class="table-selling-content">
+                                                        
+                                                        <div>
+                                                            
+                                                            <span>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                                                Naqt pul</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="padding: 8px 25px">500 000 000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        
+                                                        <div>
+                                                            
+                                                            <span>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                                                Karta</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        
+                                                        <div>
+                                                            
+                                                            <span>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                                                Bank</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        
+                                                        <div>
+                                                        
+                                                            <span>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-wifi"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                                                                Online</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_deals-week" role="tabpanel" aria-labelledby="t_deals-week-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ahmad Musa
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/2.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                John Mark
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/3.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                David Miller
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/4.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Chris Lein
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Robert Philips
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_deals-month" role="tabpanel" aria-labelledby="t_deals-month-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ahmad Musa
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/2.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                John Mark
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/3.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                David Miller
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/4.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Chris Lein
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Robert Philips
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="t_deals-year" role="tabpanel" aria-labelledby="t_deals-year-tab">
+                            <div class="deals-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Ahmad Musa
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/2.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                John Mark
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/3.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                David Miller
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/4.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Chris Lein
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="table-selling-content">
+                                                        <img src="{% static 'img/author/1.jpg' %}" alt="img">
+                                                        <div>
+                                                            <div class="title">
+                                                                Robert Philips
+                                                            </div>
+                                                            <span>20 June 2020</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>$38,536.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="ratio-box card">
+                <div class="card-body">
+                    <h6 class="ratio-title" style="text-transform: none;">Xarajatlar</h6>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point " style="font-size: 16px;">Ijara</h1>
+                        <span class="ratio-percentage color-dark">0%</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: 0%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point" style="font-size: 16px;">Komunal to'lovlar</h1>
+                        <span class="ratio-percentage color-dark">0</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: 0%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+
+                        </div>
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point " style="font-size: 16px;">Office supplies</h1>
+                        <span class="ratio-percentage color-warning">72%</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 72%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point" style="font-size: 16px;">Obuna</h1>
+                        <span class="ratio-percentage color-dark">0</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: 0%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+
+                        </div>
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                    <div class="ratio-info d-flex justify-content-between align-items-center">
+                        <h1 class="ratio-point" style="font-size: 16px;">Boshqa</h1>
+                        <span class="ratio-percentage color-dark">50%</span>
+                    </div>
+                    <div class="progress-wrap mb-3">
+                        <div class="progress">
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: 50%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+
+                        </div>
+                        <!-- <span class="progress-text">
+                            <span class="color-dark dark">1 or higher</span>
+                            <span class="progress-target">quick ratio target</span>
+                        </span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        </div>
+        </div>
+      
+{% endblock %}
+    
+
+{% block script %}
+    <script>
+        
+    </script>
+{% endblock %}

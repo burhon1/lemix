@@ -1,9 +1,12 @@
 from django.contrib import admin
-
+from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin
 from admintion.models import (Room,Course,Teacher,Group,Student,GroupsDays,Payment,Attendace, GroupStudents, 
                               Parents, LeadDemo, TaskTypes, Tasks, FormLead,LeadStatus,UserTaskStatus,
                               SmsIntegration,Messages,EduCenters,FormFields, FormUniversalFields,Sources,Contacts,LeadForms,
+                              Countries, Regions, Districts, 
                             )
+from admintion.resources import admintion as resources
+
 # Register your models here.
 admin.site.register(Room)
 admin.site.register(Course)
@@ -38,3 +41,15 @@ admin.site.register(FormUniversalFields)
 admin.site.register(Sources)
 admin.site.register(LeadForms)
 admin.site.register(Contacts)
+
+
+@admin.register(Countries)
+class CountriesAdmin(ImportExportActionModelAdmin, ImportExportModelAdmin):
+    resource_class = resources.CountriesResource
+
+@admin.register(Regions)
+class RegionsAdmin(ImportExportActionModelAdmin, ImportExportModelAdmin):
+    resource_class = resources.RegionsResource
+@admin.register(Districts)
+class DistrictsAdmin(ImportExportActionModelAdmin, ImportExportModelAdmin):
+    resource_class = resources.DistrictsResource

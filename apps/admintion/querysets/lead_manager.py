@@ -44,7 +44,6 @@ class LeadQueryset(QuerySet):
     def leads_attendace(self,id):
         return self.get_info().filter(demo__group__id=id,activity__lt=3).values(
             'id',
-            'full_name'
         ).annotate(
             attendace_status=ArrayAgg(
                 Cast('demo__lead_attendance__status', TextField()),

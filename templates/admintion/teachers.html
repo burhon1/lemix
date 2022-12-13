@@ -29,6 +29,14 @@
                             <div id="filter-form-container"></div>
                             <div class="table4  p-0 bg-white mb-30">
                                 <div class="table-responsive">
+                                    <div class="userDatatable-title checkbox-group-wrapper">
+                                        <div class="checkbox-group d-flex">
+                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex ml-4 pb-1">
+                                                <input class="checkbox" type="checkbox" id="check-grp-12">
+                                                <label for="check-grp-12">Barchani tanlash</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table class="table mb-0 table-borderless adv-table-teachers-list"
                                         data-sorting="true" data-filter-container="#filter-form-container"
                                         data-paging-current="1" data-paging-position="left" data-paging-size="10">
@@ -36,21 +44,14 @@
                                             <tr class="userDatatable-header">
                                                 <th>
                                                         
-                                                            <div class="userDatatable-title checkbox-group-wrapper">
-                                                                <div class="checkbox-group d-flex">
-                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                        <input class="checkbox" type="checkbox" id="check-grp-12">
-                                                                        {% comment %} <label for="check-grp-12"></label> {% endcomment %}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                             <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->  
                                                         
                                                 </th>
-                                                
+                                                {% comment %}
                                                 <th>
                                                     <span class="userDatatable-title">Id</span>
-                                                </th>
+                                                </th>{% endcomment %}
                                                 <th>
                                                     <span class="userDatatable-title">Ism</span>
                                                 </th>
@@ -68,6 +69,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             {% for obj in objs %}
                                             <tr>
@@ -78,7 +80,8 @@
                                                             <div class="checkbox-group-wrapper">
                                                                 <div class="checkbox-group d-flex">
                                                                     <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                        <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-teacher-{{obj.id}} group-checkboxes" type="checkbox" id="check-grp-teacher-{{obj.id}}">
+                                                                        <input class=" checkbox check-grp-teacher-{{obj.id}} group-checkboxes" type="checkbox" id="check-grp-teacher-{{obj.id}}" hidden>
+                                                                        <label for="check-grp-teacher-{{obj.id}}"></label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -87,11 +90,7 @@
                                                         
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="userDatatable-content">
-                                                        {{forloop.counter}}
-                                                    </div>
-                                                </td>
+                                                
                                                 <td>
                                                     <div class="userDatatable-content">
                                                         <a href="{% url 'admintion:teacher-detail' obj.id %}">{{obj.full_name}}</a>
@@ -111,12 +110,12 @@
                                                     {% if obj.status %}
                                                     <div class="userDatatable-content d-inline-block">
                                                         <span
-                                                            class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">active</span>
+                                                            class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
                                                     </div>
                                                     {% else %}
                                                     <div class="userDatatable-content d-inline-block">
                                                         <span
-                                                            class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                            class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">Aktiv emas</span>
                                                     </div>
                                                     {% endif %}
                                                 </td>
@@ -129,7 +128,7 @@
                                                         </li>
                                                         <li>
                                                             <a href="#" class="edit">
-                                                                <span data-feather="trash-2" data-toggle="modal"
+                                                                <span data-feather="trash-2" onclick="setDeleteModal({{obj.id}})" data-toggle="modal"
                                                                     data-target="#modal-basic"></span></a>
                                                         </li>
                                                     </ul>
@@ -160,7 +159,7 @@
                 <h4>Siz haqiqattan ushbu o'qituvchini o'chirmoqchimisiz?</h4>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
+                <button type="button" class="btn btn-primary btn-sm" id="teacherDelBtn">Ha o'chirilsin</button>
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
             </div>
         </div>
@@ -280,7 +279,7 @@
                                 </select>
 
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-{% if educenters %}6{% else %}12{% endif %}">
                                 <div class="form-group">
                                     <label for="validationServer01"
                                         class="il-gray fs-14 fw-500 align-center">Manzil</label>
@@ -289,7 +288,41 @@
                                         id="validationServer01" required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
+                                {% if educenters %}
+                                    <div class="form-group">
+                                        <label for="validationServer05"
+                                            class="il-gray fs-14 fw-500 align-center">O'quv markazi</label>
+                                        <select name="educenter"
+                                            class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                            id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                            <option selected disabled value="">Tanlang</option>
+                                            {% for edu in educenters %}
+                                                <option value="{{ edu.id }}"> {{ edu.name }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                {% elif educenter %}
+                                    <div class="form-group">
+                                        <label for="validationServer05"
+                                            class="il-gray fs-14 fw-500 align-center">O'quv markazi</label>
+                                        <select name="educenter" hidden="true"
+                                            class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                            id="validationServer05" aria-describedby="validationServer04Feedback" required>
+                                                <option selected value="{{ educenter.id }}"> {{ educenter.name }} </option>
+                                        </select>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <div class="userDatatable-title checkbox-group-wrapper">
+                                    <div class="checkbox-group d-flex">
+                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex ml-4 pb-1">
+                                            <input class="checkbox" type="checkbox" id="check-grp-13"  name="status" value="1" checked="true">
+                                            <label for="check-grp-13">Holati</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
                             </div>
                         </div>
@@ -402,6 +435,56 @@
                 } 
             })
         })
+        var statusInput = document.getElementById('check-grp-13');
+        statusInput.addEventListener('change', ()=>{
+            if(statusInput.checked === true){
+                statusInput.value=1;
+            } else {
+                statusInput.value=0;
+            }
+        })
+        
+        function deleteTeacher(id){
+            var url = `/admintion/teacher/${id}/delete/`;
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{csrf_token }}');
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'Accept':'application/json',
+                    'X_CSRFToken':'{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(res=>{
+                if(res.status===204){
+                    window.location.assign(window.location.pathname)
+                }else if(res.status===401){
+                    window.location.assign(window.location.origin+'/user/login/?next=/admintion/teachers/')
+                } else if(res.status===403){
+                    alert("Sizda o'qituvchini o'chirish uchun ruhsat yo'q!")
+                }
+            })
+            .catch(err=>{
+                alert(`${err}`);
+            })
+        }
 
+        function setDeleteModal(id){
+            var modalDelBtn = document.getElementById('teacherDelBtn');
+            modalDelBtn.setAttribute('onclick', `deleteTeacher(${id})`);
+        }
+        
+        function teacherDetail(id){
+            var url =`/admintion/teacher/${id}/update/`;
+            fetch(url)
+            .then(res=>res,json())
+            .then(res=>{
+                console.log(res);
+            })  
+            .catch(err=>{
+                window.location.assign(window.location.href);
+            })
+        }
     </script>
 {% endblock %}
