@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'education',
     'admintion',
     'student',
-    'finance'
+    'finance',
+    'clickuz'
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,12 @@ PAYCOM_SETTINGS = {
     "ACCOUNTS": {
         "KEY": "Lemix_kassa"
     }
+}
+
+CLICK_SETTINGS = {
+    'service_id':'25807',
+    'merchant_id':'18147',
+    'secret_key':'HHPm2yaWiIwb'
 }
 
 # Internationalization
