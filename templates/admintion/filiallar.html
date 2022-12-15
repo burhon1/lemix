@@ -1,0 +1,725 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% load user_tags %}
+
+{% block title %}
+    Filiallar
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+    .v-num{
+        font-size: 14px;
+    }
+    .application-faqs .panel-title a{
+        font-size: 12px !important;
+    }
+    .forms-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .forms-view > .form-group{
+        display: flex;
+        align-items: center;
+    }
+    .table-responsive tr td>div{
+        text-transform: none;
+    }
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single{
+        height: 1.875rem;
+padding: 0;
+font-size: 12px;
+line-height: 1.5;
+-webkit-border-radius: 0.2rem;
+border-radius: 0.2rem;
+margin-right: 7px;
+    }
+    .select2-container .select2-selection--single .select2-selection__rendered{
+        width: auto !important;
+    }
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu > .atbd-menu__link:before {
+        margin-top: 0;
+    }
+    #infoUser{
+        overflow: hidden;
+        height: 120px;
+    }
+    #info {
+        display: none;
+    }
+    .select2-container--default .select2-selection--single{
+        height: 48px !important;
+    }
+    label,table th .userDatatable-title,.edit-profile__title h6{
+        text-transform: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="breadcrumb-main">
+                            <h4 class="text-capitalize breadcrumb-title">Filiallar (sozlamalar)</h4>
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row ">
+                    {% if messages %}
+                    <div class="col-12">
+                        <div class="card mb-1">
+                        {% for message in messages %}
+                        <div class=" col-12 alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header px-sm-25 px-3">
+                        <div class="edit-profile__title d-flex justify-content-between w-100 align-items-center">
+                            <h6>Filiallar ro'yxati</h6>
+                            {% if perms.admintion.add_educenters %}
+                            <button class="btn btn-success btn-xs btn-squared btn-block w-auto" data-toggle="modal" data-target="#modal-basic1">+ Qo'shish
+                            </button>
+                            {% endif %}
+                            <!-- <span class="fs-13 color-light fw-400">Set up your personal
+                                information</span> -->
+                        </div>
+                    </div>
+                <div class="card-body">
+                    <div class="selling-table-wrap">
+                        <div class="table-responsive">
+                            <table
+                                class="table table--default">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="text-center">T/r</th>
+                                        <th class="text-center">Nomi</th>
+                                        <th class="text-center">Hudud</th>
+                                        <th class="text-center">Guruhlar</th>
+                                        <th class="text-center">O'quvchilar</th>
+                                        <th class="text-center">Filial direktori/menejeri</th>
+                                        <th class="text-center">Telefon</th>
+                                        <th class="text-center">
+                                            Amallar
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for obj in objects %}
+                                    <tr class="text-center">
+                                        <td class="text-center">{{ forloop.counter }}</td>
+                                        <td class="text-center"><h6>
+                                            {{ obj.name }}
+                                        </h6></td>
+                                        
+                                        <td class="text-center">
+                                        <p class="mb-0">{{ obj.region }}, {{ obj.district }}, {{ obj.address }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="selling-badge order-bg-opacity-warning color-warning">{{ obj.max_groups }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="selling-badge order-bg-opacity-success color-success">{{ obj.max_students }}</span>
+                                        </td>
+                                        <td class="text-center"> {% if obj.full_name %}{{ obj.full_name }}{% else %}{{ obj.director.full_name }} {% endif %} | 
+                                            <span style="display:inline;"
+                                                    class="selling-badge order-bg-opacity-primary color-primary m-1 p-1">{{ obj.director_id|user_role}}</span>
+                                            
+                                        </td>
+                                        <td class="text-center">
+                                        {{ obj.phone }}
+                                        </td>
+                                        <td>
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                <li>
+                                                    <a href="#" class="view">
+                                                        <span data-feather="eye"></span></a>
+                                                </li>
+                                                {% if perms.admintion.change_educenters %}
+
+                                                <li>
+                                                    <a href="#" class="edit"  data-toggle="modal" data-target="#modal-basic3" onclick="setEditModal({{obj.id}})">
+                                                        <span data-feather="edit"></span></a>
+                                                </li>
+                                                {% endif %}
+
+                                                {% if perms.admintion.delete_educenters %}
+
+                                                <li>
+                                                    <a href="#" class="remove" data-toggle="modal" data-target="#modal-basic2" onclick='setDeleteModal({{obj.id}}, "{{ obj.name}}")'>
+                                                        <span data-feather="trash-2"></span></a>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+        <!-- ends: .atbd-page-content -->
+        
+        {% if perms.admintion.add_educenters %}
+            <div class="modal-basic modal  fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+                
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content modal-bg-white ">
+                        
+                        
+                        
+                        <div class="modal-header">
+
+
+
+                            <h6 class="modal-title">Qo'shish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div class="edit-profile__body mx-lg-20">
+                                <form class="row" method="post" action="{% url 'admintion:edu-centers' %}" id="form1"> {% csrf_token %}
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="names">Filial nomi</label>
+                                        <input type="text" class="form-control" id="name" placeholder=" " name="name">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="names">Filial rahbari FIOsini kiriting</label>
+                                        <input type="text" class="form-control" id="names" placeholder="Familiyasi Ismi" name="full_name">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="phoneNumber1">Telefon raqam</label>
+                                        <div class=" d-flex justify-content-start">
+                                        <label style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
+                                        <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone"
+                                            placeholder="99 704 65 99" name="phone">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="countryOption">
+                                                Davlat
+                                            </label>
+                                            <select class="form-control selectCountry1" id="countryOption" name="country">
+                                                {% for country in form.fields.country.queryset %}
+                                                {% if country.id  is 186 %}
+                                                    <option value="{{country.id}}" selected>{{ country.name}}</option>
+                                                {% elif country.name  is "O'zbekiston Respublikasi" %}
+                                                    <option value="{{country.id}}" selected>{{ country.name}}</option>
+                                                {% else %}
+                                                <option value="{{country.id}}">{{ country.name}}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="regionOption">
+                                                Viloyat
+                                            </label>
+                                            <select class="form-control selectRegion1" id="regionOption" name="region">
+                                                {% for region in form.fields.region.queryset %}
+                                                <option value="{{region.id}}">{{region.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="cityOption">
+                                                Tuman(Shaxar)
+                                            </label>
+                                            <select class="form-control selectDistrict1" id="cityOption" name="district">
+                                                {% for district in form.fields.district.queryset %}
+                                                <option value="{{ district.id }}">{{ district.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="Manzil">Manzil</label>
+                                        <input type="text" class="form-control" id="Manzil" placeholder="Ko'cha ,uy ...." name="address">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="maxguruh">Maksimal guruh sig'imi</label>
+                                        <input type="number" class="form-control" id="maxguruh" placeholder="soni" name="max_groups">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="maxuser">Maksimal o'quvchilar sig'imi</label>
+                                        <input type="number" class="form-control" id="maxuser" placeholder="soni" name="max_students">
+                                    </div>
+                                    
+
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="cityOption">
+                                                Asosiy o'quv markazi
+                                            </label>
+                                            <select class="form-control" id="cityOption" name="parent">
+                                                <option value="">----</option>
+                                                {% for parent in form.fields.parent.queryset %}
+                                                <option value="{{parent.id}}"> {{parent.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <small>Agar tanlanmasa, asosiy sifatida saqlanadi.</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group mb-20 col-sm-12">
+
+                                        <div class="checkbox-theme-default custom-checkbox ">
+                                            <input class="checkbox" type="checkbox" name="teacher_can_see_payments" id="check-un1">
+                                            <label for="check-un1">
+                                                <span class="checkbox-text">
+                                                    O'qituvchilar talaba to'lovlarini ko'rishi mumkin
+
+                                                </span>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group mb-20 col-sm-12"  >
+
+
+                                        <div class="checkbox-theme-default custom-checkbox ">
+                                            <input class="checkbox" type="checkbox" name="teacher_can_sign_contracts" id="check-un2">
+                                            <label for="check-un2">
+                                                <span class="checkbox-text">
+                                                    O'quvchilar bilan shartnoma imzolash
+
+                                                </span>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                    
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-lighten btn-sm" data-dismiss="modal">Bekor qilish</button>
+                                <button type="submit" class="btn btn-success btn-sm" form="form1">Qo'shish</button>
+                        </div>
+                    
+                    </div>
+                </div>
+            
+
+
+            </div>
+        {% endif %}
+
+
+        {% if perms.admintion.change_educenters %}
+            <div class="modal-basic modal  fade show" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
+
+                
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content modal-bg-white ">
+                        
+                        
+                        
+                        <div class="modal-header">
+
+                            <h6 class="modal-title">Filial ma'lumotlarini tahrirlash</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div class="edit-profile__body mx-lg-20">
+                                <form class="row" method="post" action="{% url 'admintion:edu-centers' %}" id="form3"> {% csrf_token %}
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="editFilialName">Filial nomi</label>
+                                        <input type="text" class="form-control" id="editFilialName" placeholder=" " name="name">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="editFilialFIO">Filial rahbari FIOsini kiriting</label>
+                                        <input type="text" class="form-control" id="editFilialFIO" placeholder="Familiyasi Ismi" name="full_name">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="editFilialPhone">Telefon raqam</label>
+                                        <div class=" d-flex justify-content-start">
+                                        <label style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
+                                        <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                                            placeholder="99 704 65 99" name="phone" id="editFilialPhone">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="countryOption">
+                                                Davlat
+                                            </label>
+                                            <select class="form-control filial-country" id="countryOption" name="country">
+                                                {% for country in form.fields.country.queryset %}
+                                                    <option value="{{country.id}}">{{ country.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="countryOption">
+                                                Viloyat
+                                            </label>
+                                            <select class="form-control selectRegion2" id="countryOption" name="region">
+                                                {% for region in form.fields.region.queryset %}
+                                                <option value="{{region.id}}">{{region.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="countryOption">
+                                                Tuman(Shaxar)
+                                            </label>
+                                            <select class="form-control selectDistrict2" id="countryOption" name="district">
+                                                {% for district in form.fields.district.queryset %}
+                                                <option value="{{ district.id }}">{{ district.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="Manzil">Manzil</label>
+                                        <input type="text" class="form-control" id="editFilialAddress" placeholder="Ko'cha ,uy ...." name="address">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="maxguruh">Maksimal guruh sig'imi</label>
+                                        <input type="number" class="form-control" id="maxguruh11" placeholder="soni" name="max_groups">
+                                    </div>
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <label for="maxuser">Maksimal o'quvchilar sig'imi</label>
+                                        <input type="number" class="form-control" id="maxuser11" placeholder="soni" name="max_students">
+                                    </div>
+                                    
+
+                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
+                                        <div class="countryOption">
+                                            <label for="countryOption">
+                                                Asosiy o'quv markazi
+                                            </label>
+                                            <select class="form-control" id="countryOption" name="parent">
+                                                <option value="">----</option>
+                                                {% for parent in form.fields.parent.queryset %}
+                                                    <option value="{{parent.id}}"> {{parent.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <small>Agar tanlanmasa, asosiy sifatida saqlanadi.</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group mb-20 col-sm-12">
+
+                                        <div class="checkbox-theme-default custom-checkbox ">
+                                            <input class="checkbox" type="checkbox" name="teacher_can_see_payments" id="check-un11">
+                                            <label for="check-un11">
+                                                <span class="checkbox-text">
+                                                    O'qituvchilar talaba to'lovlarini ko'rishi mumkin
+                                                </span>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="form-group mb-20 col-sm-12"  >
+
+
+                                        <div class="checkbox-theme-default custom-checkbox ">
+                                            <input class="checkbox" type="checkbox" name="teacher_can_sign_contracts" id="check-un21">
+                                            <label for="check-un2">
+                                                <span class="checkbox-text">
+                                                    O'quvchilar bilan shartnoma imzolash
+
+                                                </span>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                    
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-lighten btn-sm" data-dismiss="modal">Bekor qilish</button>
+                                <button type="submit" class="btn btn-success btn-sm" form="form3">Qo'shish</button>
+                        </div>
+                    
+                    </div>
+                </div>
+            
+
+
+            </div>
+        {% endif %}
+
+        {% if perms.admintion.change_educenters %}
+            <div class="modal-basic modal  fade show" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+
+                
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content modal-bg-white ">
+                        
+                        
+                        
+                        <div class="modal-header">
+
+
+
+                            <h6 class="modal-title">Filialni o'chirish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div class="edit-profile__body mx-lg-20">
+                                <form class="row" method="post" action="" id="form2"> {% csrf_token %}
+                                    
+                                    <div class="alert">
+                                        <p>Rostan ham Filial(<span id="edu_centerID"></span>) ni o'chirmoqchimisiz?
+
+                                        Bu qaroringiz filialga bog'liq ma'lumotlarning yo'qolishiga olib kelishi mumkin.
+                                    </p>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-lighten btn-sm" data-dismiss="modal">Bekor qilish</button>
+                                <button type="submit" class="btn btn-danger btn-sm" form="form2">O'chirish</button>
+                        </div>
+                    
+                    </div>
+                </div>
+            
+
+
+            </div>
+        {% endif %}
+
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        {% comment %}
+        document.querySelector('#edit').addEventListener("click", function(e){
+        e.target.style.display="none";
+            document.querySelector("#info").style.display="block"
+            document.querySelector("#info_use").style.display="none"
+        })
+        document.querySelector('#save').addEventListener("click", function(e){
+            document.querySelector("#info").style.display="none"
+            document.querySelector('#edit').style.display="block"
+            document.querySelector("#info_use").style.display="block"
+        })
+        document.querySelector('#cancel').addEventListener("click", function(e){
+            document.querySelector("#info").style.display="none"
+            document.querySelector('#edit').style.display="block"
+            document.querySelector("#info_use").style.display="block"
+        })
+        {% endcomment%}
+
+        function setDeleteModal(id, title){
+            document.querySelector('#edu_centerID').textContent = title;
+            document.querySelector('#form2').action = `/admintion/educenters/${id}/delete/`;
+        }
+        
+        function getFilialData(id){
+            
+        }
+
+        function setEditModal(id){
+            var url = `/admintion/educenters/${id}/data/`;
+            fetch(url)
+            .then(res=>res.json())
+            .then(res=>{
+                document.querySelector('#form3').action = `/admintion/educenters/${id}/update/`;
+            if (res.name){
+                document.querySelector('#editFilialName').value = res.name;
+            }
+            if (res.full_name){
+                document.querySelector('#editFilialFIO').value = res.full_name;
+            }
+            if (res.phone){
+                document.querySelector('#editFilialPhone').value = res.phone.split('+998')[1];
+            }
+            if (res.country){
+                document.querySelector('.filial-country').value = res.country;
+                var options = document.querySelector('.filial-country').options;
+                for(let i=0;i<options.length;i++){
+                    element = options[i];
+                    if(element.value == res.country){
+                        element.setAttribute('selected', true);
+                        element.setAttribute('defaultSelected', true);
+                    } else {
+                        element.setAttribute('defaultSelected', false);
+                    }
+                }
+            }
+            if (res.region_id){
+                document.querySelector('.selectRegion2').value = res.region_id;
+                var options = document.querySelector('.selectRegion2').options;
+                console.log(typeof(options))
+                for(let i=0;i<options.length;i++){
+                    element = options[i];
+                    if(element.value == res.region_id){
+                        element.setAttribute('selected', true);
+                    }
+                }
+            }
+            if (res.district_id){
+                document.querySelector('.selectDistrict2').value = res.district_id;
+                var options = document.querySelector('.selectDistrict2').options;
+                console.log(typeof(options))
+                for(let i=0;i<options.length;i++){
+                    element = options[i];
+                    if(element.value == res.district_id){
+                        element.setAttribute('selected', true);
+                    }
+                }
+            }
+            if (res.address){
+                document.querySelector('#editFilialAddress').value = res.address;
+            }
+            if (res.max_groups){
+                document.querySelector('#maxguruh11').value = res.max_groups;
+            }
+            if (res.max_students){
+                document.querySelector('#maxuser11').value = res.max_students;
+            }
+            if (res.teacher_can_see_payments){
+                document.querySelector('#check-un11').checked = res.teacher_can_see_payments;
+            }
+            if (res.max_students){
+                document.querySelector('#check-un21').checked = res.max_students;
+            }
+            })
+            
+        }
+
+        function getRegions(country, num, region=null){
+            console.log(country, region, num)
+            var url = `/admintion/connected_regs/?c=${country}&r=${region===null?'':region}`;
+            fetch(url)
+            .then(res=>res.json())
+            .then(res=>{
+                var selectRegion = document.querySelector(`.selectRegion${num}`);
+                selectRegion.options.length = 0;
+                res.regions.forEach(element => {
+                    var selected = false;
+
+                    if(region==element.id){
+                        selected = true;
+                    }
+                    selectRegion.add(new Option(element.name, element.id, selected, selected))
+                });
+                console.log(`.selectDistrict${num}`, `.selectRegion${num}`)
+
+                var selectDistrict = document.querySelector(`.selectDistrict${num}`);
+                selectDistrict.options.length = 0;
+                res.districts.forEach(element => {
+                    var selected = false;
+
+                    if(region==element.id){
+                        selected = true;
+                    }
+                    selectDistrict.options.add(new Option(element.name, element.id, false, selected))
+                });
+            })
+            return ;
+        }
+        {% if perms.admintion.add_educenter %}
+        document.querySelector('.selectCountry1').addEventListener('change', (e)=>{
+            var country = e.target.value;
+            getRegions(country, 1, region);
+        })
+        document.querySelector('.selectRegion1').addEventListener('change', (e)=>{
+            var country = document.querySelector('.selectCountry1').value;
+            var region = e.target.value;
+            getRegions(country, 1, region);
+        })
+
+        {% endif %}
+        
+        {% if perms.admintion.change_educenter %}
+        document.querySelector('.filial-country').onchange = (e)=>{
+            var country = e.target.value;
+            getRegions(country, 2, null);
+        }
+        
+        document.querySelector('.selectRegion2').addEventListener('change', (e)=>{
+            var country = document.querySelector('.filial-country').value;
+            var region = e.target.value;
+            getRegions(country,2, region);
+        })
+        {% endif %}
+    </script>
+
+{% endblock %}
+    

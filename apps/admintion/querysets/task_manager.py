@@ -14,7 +14,8 @@ class TasksQueryset(QuerySet):
             'whom',
             'user_status',
             'comment',
-            'status'
+            'status',
+            'created_at',
         )
     def tasks(self):
         return self.get_info()
@@ -46,6 +47,15 @@ class TasksQueryset(QuerySet):
             ))
         ).filter(groups__id__in=[id]).order_by('-deadline')
 
+    def student_tasks(self, id: int):
+        return self.get_info().annotate(
+            type = F('task_type__task_type'),
+            responsible_staffs = ArrayAgg(Concat(F('responsibles__last_name'), Value(' '), F('responsibles__first_name')), distinct=True),
+            # today_tasks = ArrayAgg(
+            #     Cast('deadline', TextField()),
+            #     filter=Q(deadline__date=timezone.now().date()
+            # ))
+        ).filter(students__id=id).order_by('deadline')
 
 class TasksManager(Manager):
     def get_query_set(self):
@@ -59,3 +69,6 @@ class TasksManager(Manager):
 
     def group_tasks(self, id):
         return self.get_query_set().group_tasks(id)
+
+    def student_tasks(self, id):
+        return self.get_query_set().student_tasks(id)

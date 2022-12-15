@@ -333,7 +333,7 @@
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none" style="overflow: scroll;">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
-            <h6 class="drawer-title">Yangi lid qo’shish</h6>
+            <h6 class="drawer-title">Yangi o'quvchi qo’shish</h6>
             <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
         </div><!-- ends: .atbd-drawer__header -->
         <div class="atbd-drawer__body">
@@ -632,6 +632,7 @@
                 input.type = item;
                 input.classList.add(...['col-md-' + Math.floor(10 / typs.length), 'form-control', 'ih-medium', 'ip-light', 'radius-xs', 'b-light', 'px-15']);
                 input.id = "a" + names[index];
+                input.name = `${_id.split("-")[0]}_${names[index]}`;
                 input.placeholder = plcs[index];
                 wrap.appendChild(input);
                 input = null;

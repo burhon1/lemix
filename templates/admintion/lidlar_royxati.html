@@ -213,7 +213,18 @@ margin-right: 7px;
                                                              
                                                                 <div class="userDatatable-inline-title">
                                                                     <a href="#" class="text-dark fw-500">
-                                                                        <h6>{{ lead.author__first_name }} {{ lead.author__last_name }}</h6>
+                                                                        <h6>
+                                                                            {% if lead.author__first_name %}
+                                                                                {{ lead.author__first_name }} 
+                                                                            {% endif %}
+                                                                            {% if lead.author__first_name %}
+                                                                                {{ lead.author__last_name }}
+                                                                            {% endif %}
+                                                                            {% if lead.via_form__title %}
+                                                                                <small><span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>
+                                                                                {{ lead.via_form__title }}
+                                                                            {% endif %}
+                                                                        </h6>
                                                                     </a>
                                                                     <p class="d-block mb-0">
                                                                         {{ lead.created_at|date:'d/m/Y -H:i' }}

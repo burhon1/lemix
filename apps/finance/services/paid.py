@@ -16,12 +16,14 @@ def student_paid(student,price,paid_type,goal_type,description,user):
         )
     title=None
     if goal_type!="0":
-        group = Group.objects.filter(id=goal_type).first()
+        group = Group.objects.filter(id=int(goal_type)).first() 
         paid.group=group
         title=group.title
     else:
         title="Balans"
     student_balance = StudentBalance.objects.filter(title=title,student=student).first()
+    if student_balance is None:
+        student_balance = StudentBalance.objects.create(title=title,student=student) 
     student_balance.balance=student_balance.balance+int(price)
     paid.save()
     student_balance.save()

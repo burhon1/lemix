@@ -1,6 +1,6 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from datetime import date,datetime
 from django.utils import timezone
 from django.db.models import Q
@@ -11,6 +11,7 @@ from admintion.models import GroupStudents, LeadDemo, Room, TaskTypes, Teacher,C
 from admintion.utilts.users import get_days,get_month
 from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
+from admintion.forms.groups import GroupForm
 from finance.models import StudentBalance
 
 def groups_view(request):
@@ -25,11 +26,12 @@ def groups_view(request):
         trainer = post.get('trainer',False)
         days = post.getlist('days',False)
         pay_type = post.get('pay_type',False)
+        start_date = post.get('start_date',False)
         start_time = post.get('start_time',False)
         end_time = post.get('end_time',False)
         comments = post.get('comments',False)
         limit = post.get('limit', False)
-        if title and course and status and teacher and room and trainer and days and pay_type and start_time and end_time and comments:
+        if title and course and status and teacher and room and trainer and days and pay_type and start_time and start_date and end_time and comments:
             course = Course.objects.filter(id=course).first()
             teacher = Teacher.objects.filter(id=teacher).first()
             room = Room.objects.filter(id=room).first()
@@ -46,7 +48,8 @@ def groups_view(request):
                 status=status,
                 start_time=start_time,
                 end_time=end_time,
-                limit=limit
+                limit=limit,
+                start_date=start_date
             )
             group.save()
             group.days.add(*days)
@@ -62,8 +65,18 @@ def groups_view(request):
     return render(request,'admintion/groups.html',context)
 
 def group_detail_view(request,id):
-    context = {}
-    context['group'] = Group.groups.group(id)
+    group1 = get_object_or_404(Group, pk=id)
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=group1)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('admintion:group-detail', args=[id])+"?success=Muvaffaqiyatli yangilandi.")
+        else:
+            return redirect(reverse('admintion:group-detail', args=[id])+"?error=Ma'lumotlar to'liq emas.")
+    group = Group.groups.group(id)
+    if group is None:
+        raise Http404("Bunday guruh mavjud emas.")
+    context = {'date': timezone.now().date(), 'form': GroupForm(), 'group':group, 'group_obj':group1}
     context = context | get_attendace(id,context['group']['start_date'])
     context['student_list'] = Student.students.studet_list()
     context['tasks'] = Tasks.tasks.group_tasks(id=id)

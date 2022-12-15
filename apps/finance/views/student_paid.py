@@ -5,6 +5,7 @@ from paycomuz import Paycom
 from django.urls import reverse
 from django.http import JsonResponse
 import json
+from clickuz import ClickUz
 from admintion.models import Student
 from finance.services.paid import student_paid
 
@@ -57,6 +58,11 @@ class CheckOrder(Paycom):
 
 class TestView(MerchantAPIView):
     VALIDATE_CLASS = CheckOrder
+
+def pay_student(request):
+    url = ClickUz.generate_url(order_id='172',amount='1000',return_url='http://example.com')
+    print(url)
+    return redirect(url)
 
     
 

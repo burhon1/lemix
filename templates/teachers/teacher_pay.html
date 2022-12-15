@@ -1,0 +1,319 @@
+{% extends 'teachers/main.html' %}
+
+{% load static %}
+
+{% block title %}
+    To'lovlar
+{% endblock %}
+
+
+{% block style %}
+<style>
+        .cardPay {
+            position: relative;
+        }
+
+        .cardPay:hover {
+            border: 1px solid #5f63f2;
+
+        }
+
+        .cardPay:hover::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            border-radius: 5px;
+            height: 100%;
+            width: 100%;
+            background-color: #5f63f288;
+        }
+
+        .feature-card--1 figcaption h5 {
+            margin: 0 0 0.5rem 0 !important;
+        }
+
+        .feature-cards:hover {
+            cursor: pointer;
+            box-shadow: 0 0 5px #5f63f2;
+        }
+
+        .atbd-tab .tab-content p {
+            font-size: 12px !important;
+        }
+        .v-num{
+            font-size: 14px;
+        }
+        .application-faqs .panel-title a{
+            font-size: 12px !important;
+        }
+        .forms-view{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .forms-view > .form-group{
+            display: flex;
+            align-items: center;
+        }
+        .table-responsive tr td>div{
+            text-transform: none;
+        }
+        .atbd-select .select2-selection,
+        .select2-container--default .select2-selection--single{
+            height: 1.875rem;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    -webkit-border-radius: 0.2rem;
+    border-radius: 0.2rem;
+    margin-right: 7px;
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered{
+            width: auto !important;
+        }
+        .atbd-menu.menu-vertical .atbd-menu__item.has-submenu > .atbd-menu__link:before {
+            margin-top: 0;
+        }
+        #infoUser{
+            overflow: hidden;
+            height: 120px;
+        }
+        #info {
+            display: none;
+        }
+        .select2-container--default .select2-selection--single{
+            height: 48px !important;
+        }
+        label,table th .userDatatable-title,.edit-profile__title h6{
+            text-transform: none !important;
+        }
+    </style>
+{% endblock %}
+
+        {% block content %}
+           
+            <div class="atbd-page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+    
+                            <div class="breadcrumb-main">
+                                <h4 class="text-capitalize breadcrumb-title">To'lovlar</h4>
+                                
+                            </div>
+    
+                        </div>
+                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header px-sm-25 px-3">
+                            <div class="edit-profile__title d-flex justify-content-between w-100 align-items-center">
+                                <h6>To'lovlar ro'yxati</h6>
+                                <!-- <button class="btn btn-success btn-xs btn-squared btn-block w-auto" data-toggle="modal" data-target="#modal-basic1">+ Qo'shish
+                                </button> -->
+                                <!-- <span class="fs-13 color-light fw-400">Set up your personal
+                                    information</span> -->
+                            </div>
+                        </div>
+                    <div class="card-body">
+                        <div class="selling-table-wrap">
+                            <div class="table-responsive">
+                                <table
+                                    class="table table--default">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th class="text-center">№</th>
+                                            <th class="text-center">Id</th>
+                                            <th class="text-center">Summa</th>
+                                            <th class="text-center">To'lov turi</th>
+                                            <th class="text-center">Sana</th>
+                                            <th class="text-center">Maqsadi</th>
+                                            <th class="text-center">Izoh</th>
+                                            <th class="text-center">Check</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td class="text-center">1</td>
+                                            <td class="text-center">35184</td>
+                                            <td class="text-center"><h6>
+                                                3 000 000
+                                            </h6></td>
+                                            
+                                            <td class="text-center">
+                                            <p class="mb-0">plastik</p>
+                                            </td>
+                                            <td class="text-center">02.08.2022 14:58</td>
+                                            <td class="text-center">Iyul -darsbay maosh</td>
+                                           
+                                            <td class="text-center ">100% o'tdi
+                                            </td>
+                                        
+                                           <td class="text-center">
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                <li>
+                                                    <a href="#" class="view" data-toggle="modal" data-target="#modal-basic">
+                                                        <span data-feather="eye" ></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="printer"  data-toggle="modal" data-target="#modal-basic" >
+                                                        <span data-feather="printer"  ></span></a>
+                                                </li>
+                                                </ul>
+                                            </td>
+
+                                        </tr>
+                                  
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                </div>
+            </div>
+                </div>
+            </div>
+            <!-- ends: .atbd-page-content -->
+            <div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+    
+    
+    
+                            <h6 class="modal-title">Kvitansiya</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                          <div id="check_info" class="row" style="max-width:350px ;margin: auto;">
+                        <div class="col-12 border pt-2">
+                            <p class="d-flex justify-content-center mb-1">
+                                <span class="d-flex"><img src="./img/logo_dark.png" alt="" style="height: 50px;" class="logo_img"></span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">Kun: 25 02 2021  14:18:15  </span><span class="d-flex">15</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">Mijoz ismi:   </span><span class="d-flex">Kobilov Asadbek</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">O'qtuvchi ismi: </span><span class="d-flex">Axrolxo'ja Raxmatxo'jayev</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1 border-bottom">
+                                <span class="d-flex">Xona raqami: </span><span class="d-flex">18</span>
+                            </p>
+                            <p class="d-flex justify-content-around text-dark fw-bold mb-1 border-bottom">
+                                <span class="d-flex fw-bold "> Kurs nomi    </span><span class="d-flex fw-bold"> To'lov oyi</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">Biznesni tizimlashtirish       </span><span class="d-flex"> 04.03.2021  04.04.2021</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1 border-bottom">
+                                <span class="d-flex">kursi-3 soat      </span><span class="d-flex">  3 kun haftasiga</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">Naqd:   </span><span class="d-flex">700000</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">Terminal:  </span><span class="d-flex">    </span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">Perechisleniya:   </span><span class="d-flex">  </span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1 border-bottom">
+                                <span class="d-flex">Jami to'lov:   </span><span class="d-flex">700000</span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1 border-bottom">
+                                <span class="d-flex">Mijoz qarzi:   </span><span class="d-flex">0</span>
+                            </p>
+                            <p class="d-flex justify-content-center mb-1">
+                                <span class="d-flex fs-16 text-dark">DARS JADVALI   </span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">  Kuni:   </span><span class="d-flex">Boshlanish vaqti: </span><span class="d-flex">Tugash vaqti: </span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">  Dushanba   </span><span class="d-flex">15:00:00  </span><span class="d-flex"> 18:00:00 </span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">  Chorshanba   </span><span class="d-flex">15:00:00  </span><span class="d-flex">18:00:00 </span>
+                            </p>
+                            <p class="d-flex justify-content-between mb-1">
+                                <span class="d-flex">  Juma   </span><span class="d-flex">15:00:00  </span><span class="d-flex">18:00:00 </span>
+                            </p>
+                          
+                          
+                        </div>  
+                        <div class="col-12 border">
+                            <p class="d-flex justify-content-center mb-1">
+                                <span class="d-flex fs-16">  BIZGA ISHONGANINGIZ UCHUN RAXMAT!   </span>
+                            </p>
+                            <p class="d-flex justify-content-center mb-1">
+                                <span class="d-flex fs-15">"Yangliklar, chegirmalar va aksiyalarni bizning 
+                                  ijtimoiy tarmoqlarda kuzating:" </span>
+                              </p>
+                              <p class="d-flex justify-content-between mb-1">
+                                  <span class="d-flex flex-1 flex-wrap">QR kod uchun
+                                <img src="./img/qr code.jpg" alt="" style="height: 180px; width: 180px;">
+                                </span>
+                                  <span class="d-flex flex-1"> Sayt: Avlod21.uz <br>
+                                      Telegram: avlod21  <br>  
+                                      Instagram: avlod21 <br>
+                                      Tik Tok: avlod21 <br>
+                                      Facebook: avlod21 <br>
+                                      You Tube: avlod21"   </span>
+                              </p>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Chiqish</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">Saqlash</button>
+                        </div>
+                    </div>
+                </div>
+    
+    
+            </div>
+
+
+        {% endblock %}
+
+    
+    {% block script %}
+        <script>
+            document.querySelector('.view').addEventListener('click',()=>{
+                document.querySelector('#modal-basic .btn.btn-primary.btn-sm').style.display='none'
+            })
+            document.querySelector('.printer').addEventListener('click',()=>{
+                document.querySelector('#modal-basic .btn.btn-primary.btn-sm').style.display='block'
+            })
+
+            document.querySelector('#edit').addEventListener("click", function(e){
+        e.target.style.display="none";
+            document.querySelector("#info").style.display="block"
+            document.querySelector("#info_use").style.display="none"
+        })
+        document.querySelector('#save').addEventListener("click", function(e){
+            document.querySelector("#info").style.display="none"
+            document.querySelector('#edit').style.display="block"
+            document.querySelector("#info_use").style.display="block"
+        })
+        document.querySelector('#cancel').addEventListener("click", function(e){
+            document.querySelector("#info").style.display="none"
+            document.querySelector('#edit').style.display="block"
+            document.querySelector("#info_use").style.display="block"
+        })
+
+
+        </script>
+
+    {% endblock %}

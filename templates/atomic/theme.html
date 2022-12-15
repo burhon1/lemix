@@ -27,7 +27,7 @@
     {% include 'atomic/header.html' %}
     <main class="main-content">
         {% include 'atomic/sidebar.html' %}
-        <div class="contents">
+        <div class="contents {% if is_director %}crm{% endif %}">
             {% block content %}
             {% endblock %}
         </div>
@@ -45,7 +45,8 @@
             </div>
         </span>
     </div>
-
+    {% block customizer %}
+    {% endblock %}
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
     {% include 'atomic/injectjs.html' %}
 </body>
