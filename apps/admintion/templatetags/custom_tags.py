@@ -2,7 +2,7 @@ from django import template
 from django.shortcuts import get_object_or_404
 
 import datetime
-from admintion.models import Attendace, GroupStudents, LeadDemo,LeadForms
+from admintion.models import Attendace, GroupStudents, LeadDemo,LeadForms, Course, Group
 from ..data import chooses
 from user.data import chooses as user_chooses
 register = template.Library()
@@ -87,11 +87,13 @@ def get_type_name(value, arg):
     elif arg == "gender":
         return dict(user_chooses.COURSES_SEXES)[value] or ""
     elif arg == "day":
-        return dict(chooses.GROUPS_DAYS)[value] or ""
+        return dict(chooses.GROUPS_DAYS)[int(value)] or ""
     elif arg == "attendance":
         return dict(chooses.STUDENT_ATTANDENCE_TYPE)[value] or ""
     elif arg == "payment":
         return dict(chooses.PAYMENT_TYPE)[value] or ""
+    elif arg == "pay_type":
+        return dict(chooses.PAY_FORMS)[value] or ""
     return value
 
 def readable_days(value):
@@ -108,15 +110,22 @@ def readable_days(value):
     return result
 
 def readable_days2(values): # values GroupDays modelining obyektlari
+    
+    print(values)
     result: str = ''
     for value in values:
         result+=str(dict(chooses.GROUPS_DAYS)[value.days])+ "/"
     return result
 
 def readable_days3(values): # values -> hafta kunining raqami.
+    if values == None:
+        return ''
     result: str = ''
     for value in values:
-        result+=str(dict(chooses.GROUPS_DAYS)[int(value)])+ "/"
+        try:
+            result+=str(dict(chooses.GROUPS_DAYS)[int(value)])+ "/"
+        except:
+            pass
     return result
 
 def get_week_day(value):
@@ -129,7 +138,7 @@ def get_conversion(id):
     leadform = LeadForms.objects.filter(id=id).first()
     if leadform:
         try:
-            return leadform.seen/(leadform.formlead_set.all())
+            return round(len(leadform.formlead_set.all())/leadform.seen, ndigits=2)
         except:
             return 0
     return 0
@@ -150,6 +159,49 @@ def get_conversion_status(id):
             return 'danger'
 
 
+def get_course_students(value):
+    if type(value) == Course:
+        value = value.id
+    groups = Group.objects.filter(course_id=value)
+    students = [ gr_st.student for group in groups for gr_st in group.students.all()]
+    return len(set(students))
+
+
+def check_groupday(value, group):
+    if type(group) == int:
+        group = Group.objects.filter(id=group).first()
+    if group and value in group.days.all():
+        return True
+    return False
+
+def check_groupcourse(value, group):
+    if type(group) == int:
+        group = Group.objects.filter(id=group).first()
+    if group and value == group.course:
+        return True
+    return False
+
+def check_groupteacher(value, group):
+    if type(group) == int:
+        group = Group.objects.filter(id=group).first()
+    if group and value == group.teacher:
+        return True
+    return False
+
+
+def check_grouptrainer(value, group):
+    if type(group) == int:
+        group = Group.objects.filter(id=group).first()
+    if group and value == group.trainer:
+        return True
+    return False
+
+def check_grouproom(value, group):
+    if type(group) == int:
+        group = Group.objects.filter(id=group).first()
+    if group and value == group.room:
+        return True
+    return False
 
 register.filter('take_attendance_status', take_attendance_status) 
 register.filter('attendance_result', attendance_result) 
@@ -165,3 +217,9 @@ register.filter('get_status2', get_status2)
 register.filter('lead_attendance_result', lead_attendance_result) 
 register.filter('get_conversion', get_conversion)
 register.filter('get_conversion_status', get_conversion_status)
+register.filter('get_course_students', get_course_students)
+register.filter('check_groupday', check_groupday)
+register.filter('check_groupcourse', check_groupcourse)
+register.filter('check_groupteacher', check_groupteacher)
+register.filter('check_grouptrainer', check_grouptrainer)
+register.filter('check_grouproom', check_grouproom)

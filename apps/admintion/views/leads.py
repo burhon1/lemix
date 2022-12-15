@@ -18,7 +18,7 @@ def leads_view(request):
         template_name = 'admintion/lidlar_arxiv.html' 
     context = dict()
     context['leads'] = get_form_leads({'activity':activity}, (
-        'id', 'user__first_name', 'user__last_name', 'user__phone', 'status__status', 'comment', 'source', 'author', 'author__first_name', 'author__last_name', 'created_at', 'modified_at'))
+        'id', 'user__first_name', 'user__last_name', 'user__phone', 'status__status', 'comment', 'source', 'author', 'author__first_name', 'author__last_name', 'created_at', 'modified_at', 'via_form__title'))
     
     context['sources'] = Sources.objects.all() #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
     context['lead_statuses'] = LeadStatus.objects.values('id', 'status')
@@ -43,6 +43,7 @@ def lead_create_view(request):
             lead_data = convert_to_json(lead, fields=('id', 'user', 'source_id', 'comment'))
             return JsonResponse(lead_data, status=201)
         else:
+            print(form.errors)
             return JsonResponse({'message': 'error occured'}, safe=False, status=400)
     return JsonResponse({'method':'get'}, status=400)
 

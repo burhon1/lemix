@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .data.chooses import COURSES_SEXES, COURSES_STATUS
 from .querysets.managers import CustomUserManager, UserManager
+from .querysets.devices_managers import DeviceManager
 
 # Foydalanuvchilarni malumotlari saqlanadi
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -26,6 +27,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_seen = models.DateTimeField(blank=True, null=True)
     location = models.CharField(max_length=100,null=True,blank=True)
     email = models.EmailField(null=True)
+    otp = models.PositiveIntegerField("OTP", null=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    
     def full_name(self):
         return str(self.first_name)+" "+str(self.last_name) # qiymati none bo'lsa xato qaytardi
 
@@ -39,7 +43,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     users = UserManager()
     def __str__(self):
         return self.phone
+    
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     print("before: ", self.user_permissions.all())
+    #     permissions = [perm.id for group in self.groups.all() for perm in group.permissions.all()]
+    #     self.user_permissions.add(permissions)
+    #     print("then: ", self.user_permissions.all())
         
+
 class Logger(models.Model):
     title = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
@@ -70,3 +82,20 @@ class Logger(models.Model):
 #     def __str__(self) -> str:
 #         return self.fio
 
+class UserDevices(models.Model):
+    STATUS = (
+        (1, 'Yangi'),
+        (2, 'Bloklangan'),
+        (3, 'Qayta ochilgan'),
+    )
+    ip = models.CharField("Foydalanuvchi IP si.", max_length=100)
+    device = models.CharField("Qurilma", max_length=100)
+    connected = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(CustomUser, models.CASCADE)
+    status = models.PositiveSmallIntegerField(
+        "Qurilma statusi", choices=STATUS, default=1
+    )
+    objects = models.Manager()
+    devices = DeviceManager()
+    def __str__(self):
+        return self.user.full_name()

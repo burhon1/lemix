@@ -3,8 +3,8 @@ from django.forms import model_to_dict
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 import datetime
-from .models import Attendace, Student, Course, Group, GroupStudents, FormLead, LeadDemo, Tasks
-from .templatetags.custom_tags import attendance_result
+from admintion.models import Attendace, Student, Course, Group, GroupStudents, FormLead, LeadDemo, Tasks
+from admintion.templatetags.custom_tags import attendance_result
 from admintion.data.chooses import TASK_STATUS, GET_GROUPS_DAYS
 
 def convert_str(_iterable, counter=0):

@@ -32,6 +32,8 @@ class TeacherQueryset(QuerySet):
 
     def teacher(self,id):
         return self.teachers().filter(id=id).annotate(
+            first_name=F('user__first_name'),
+            last_name=F('user__last_name'),
             birthday=F('user__birthday'),
             location=F('user__location'),
             students=Count(F('group_teacher__student'))

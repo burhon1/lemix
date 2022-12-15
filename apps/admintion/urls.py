@@ -1,6 +1,6 @@
 from django.urls import path
-
-from .views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms
+from django.views.generic import TemplateView
+from admintion.views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms,reports, educenters, settings
 app_name = 'admintion'
 
 urlpatterns = [
@@ -8,8 +8,13 @@ urlpatterns = [
     path('employee/<int:id>/detail/',employes.employee_detail_view,name='employee-detail'),
     path('rooms/',rooms.rooms_view,name='rooms'),
     path('courses/',courses.courses_view,name='courses'),
+    path('courses/<int:pk>/delete/', courses.course_delete_view, name='course-delete'),
+    path('courses/<int:pk>/detail/', courses.course_detail_view, name='course-detail'),
+    path('courses/<int:pk>/update/', courses.course_update_view, name='course-update'),
     path('teachers/',teachers.teachers_view,name='teachers'),
     path('teacher/<int:id>/detail/',teachers.teacher_detail_view,name='teacher-detail'),
+    path('teacher/<int:id>/delete/',teachers.teacher_delete_view,name='teacher-delete'),
+    path('teacher/<int:id>/update/',teachers.teacher_update_view,name='teacher-update'),
     path('groups/',groups.groups_view,name='groups'),
     path('group/<int:id>/detail/',groups.group_detail_view,name='group-detail'),
     path('group/<int:id>/data/',groups.group_detail_data,name='group-data'),
@@ -19,6 +24,7 @@ urlpatterns = [
     path('group/<int:id>/add/student/',groups.add_student_view,name='add-student'),
     path('students/',students.students_view,name='students'),
     path('student/<int:id>/detail/',students.student_detail_view,name='student-detail'),
+    path('student/<int:id>/detail-data/',students.student_detail_data,name='student-detail-data'),
     path('student/<int:id>/',students.student_view,name='student'),
     path('student/<int:id>/delete/',students.student_delete_view,name='student-delete'),
     path('student/<int:id>/add-group/', students.student_add_group_view, name='add-student-to-group'),
@@ -49,4 +55,19 @@ urlpatterns = [
     path('sms/send/group/', sms.send_sms_to_group, name='send_sms_to_group'),
     path('sms/send/teacher/', sms.send_sms_to_teacher, name='send_sms_to_teacher'),
     path('sms/send/parent/', sms.send_sms_to_parent, name='send_sms_to_parent'),
-]
+
+    path('reports/', reports.reports_view, name='reports'),
+    path('educenters/', educenters.educenters_view, name='edu-centers'),
+    path('educenters/<int:pk>/delete/', educenters.educenter_delete_view, name='edu-centers-delete'),
+    path('educenters/<int:pk>/data/', educenters.educenter_detail, name='edu-centers-detail-data'),
+    path('educenters/<int:pk>/update/', educenters.educenter_update_view, name='edu-centers-update'),
+    path('connected_regs/', educenters.connected_regs, name='connected_regions'),
+    path('settings/', settings.settings_view, name='settings'),
+
+    path('director/', TemplateView.as_view(template_name='admintion/dashboard_director.html'), name='director_dashboard'),
+    path('teacher/', TemplateView.as_view(template_name='teachers/dashboard_teacher.html'), name='teacher_dashboard'),
+    path('teacher/pay/', TemplateView.as_view(template_name='teachers/teacher_pay.html'), name='teacher_pay'),
+
+
+
+] 

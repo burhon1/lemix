@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'student',
     'finance',
     'clickuz'
+    'django_user_agents',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     # 'admintion.middleware.page_access.check_user_page_access',
     # 'admintion.middleware.logger.write_logger',
 ]
@@ -149,6 +152,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+# STATIC_ROOT = str(BASE_DIR.joinpath('static'))
 MEDIA_URL = '/media/uploads/'
 MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 
@@ -156,4 +160,3 @@ MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 LOGIN_URL = '/user/login/'
-SPOTLIGHTR_vooKEY = 'Oyp3soAFRuYIul8iH93P8Rum1'

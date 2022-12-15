@@ -1,0 +1,783 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+
+{% block title %}
+    Dars jadvali - Lemix
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+    .v-num{
+        font-size: 14px;
+    }
+    .application-faqs .panel-title a{
+        font-size: 12px !important;
+    }
+    .forms-view{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .forms-view > .form-group{
+        display: flex;
+        align-items: center;
+    }
+    .table-responsive tr td>div{
+        text-transform: none;
+    }
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single{
+        height: 1.875rem;
+padding: 0;
+font-size: 12px;
+line-height: 1.5;
+-webkit-border-radius: 0.2rem;
+border-radius: 0.2rem;
+margin-right: 7px;
+    }
+    .select2-container .select2-selection--single .select2-selection__rendered{
+        width: auto !important;
+    }
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu > .atbd-menu__link:before {
+        margin-top: 0;
+    }
+    #infoUser{
+        overflow: hidden;
+        height: 120px;
+    }
+</style>
+{% endblock %}
+
+<body class="layout-light side-menu overlayScroll">
+
+{% block content %}
+
+                <!-- Umumiy -->
+            <div class="atbd-page-content">
+                <div class="container-fluid">
+                  
+                    <div class="row calendar-grid justify-content-center mt-3">
+                        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+                            <div class="atbd-calendar-left">
+                               
+                                <div class="card card-md mb-4">
+                                    <div class="card-body">
+                                        <div class="draggable-events" id="draggable-events">
+                                            <h4 class="text-none breadcrumb-title" style="text-transform: none;" >Dars jadvali</h4>
+                              
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: .card -->
+                            </div>
+                        </div>
+                        <!-- ends: .col-lg-3 -->
+                        <div class="col-xxl-12 col-xl-12">
+                            
+                            <div class="card card-default card-md mb-4">
+                                <div class="card-body">
+                                    <div class="tab-wrapper">
+
+                                        <div class="atbd-tab tab-horizontal">
+                                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">Umumiy</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Xonalar bo'yicha</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">O'qituvchilar bo'yicha</a>
+                                                </li>
+
+
+
+                                            </ul>
+                                            <div class="tab-content">
+
+
+
+                                                <div class="tab-pane fade show active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
+                                                    <div class="card border-0">
+                                                        <div class="card-header">
+                                                            <h6 style="text-transform: none;">Umumiy</h6>
+                                                            <div class="card-extra">
+                                                                <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
+                                                                    <a class="btn btn-xs btn-white active border" id="f_today-tab" data-toggle="tab" href="#st_matrics-today" role="tab" area-controls="st_matrics" aria-selected="true">Hafta 1</a>
+                                                                    <a class="btn btn-xs btn-white border" id="f_week-tab" data-toggle="tab" href="#st_matrics-week" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 2</a>
+                                                                    <a class="btn btn-xs btn-white border" id="f_month-tab" data-toggle="tab" href="#st_matrics-month" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 3</a>
+                                                                    <a class="btn btn-xs btn-white border" id="f_year-tab" data-toggle="tab" href="#st_matrics-year" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 4</a>
+                                                                </div>
+                                                                <div class="dropdown dropleft">
+                                                                    <a href="#" role="button" id="Today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <span data-feather="more-horizontal"></span>
+                                                                    </a>
+                                                                    <div class="dropdown-menu" aria-labelledby="Today">
+                                                                        <a class="dropdown-item" href="#">Action</a>
+                                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body p-0">
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane fade active show" id="st_matrics-today" role="" aria-labelledby="st_matrics-tab">
+                                                                    <div class="table-responsive mb-3">
+                                                                        <table class="table table-bordered table-social">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th colspan="12">
+                                                                                    Dushanba
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>08:00-09:00</td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    
+                                                                                
+                                                                                    
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        09:00-10:00
+                                                                                    </td>
+                                                                                    <td class="bg-primary text-white" >Bisnak R.
+                                                                                        Корпоративная группа
+                                                                                        ООО "Рога и Копыта"
+                                                                                        11:00-12:00
+                                                                                        с 01.08 (Пн/Ср)</td>
+                                                                            
+                                                                                </tr>
+                                                                            <tr><td>10:00-11:00</td><td></td> <td></td></tr>
+                                                                            <tr> <td>11:00-12:00</td><td></td> <td></td>
+                                                                                </tr>
+                                                                                <tr><td>12:00-13:00</td><td></td> <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>13:00-14:00</td>
+                                                                                    <td class="bg-primary text-white">Bisnak R.
+                                                                                        Корпоративная группа
+                                                                                        ООО "Рога и Копыта"
+                                                                                        11:00-12:00
+                                                                                        с 01.08 (Пн/Ср)</td>
+                                                                                        <td class="bg-primary text-white">Bisnak R.
+                                                                                            Корпоративная группа
+                                                                                            ООО "Рога и Копыта"
+                                                                                            11:00-12:00
+                                                                                            с 01.08 (Пн/Ср)</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>14:00-15:00</td>
+                                                                                <td></td> <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>15:00-16:00</td>
+                                                                                    <td></td> <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>16:00-17:00</td>
+                                                                                <td></td> <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>17:00-18:00</td>
+                                                                                    <td></td> <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>18:00-19:00</td><td></td> <td></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                    <div class="tab-pane fade" id="st_matrics-week" role="tabpanel" aria-labelledby="st_matrics-tab">
+                                                        <div class="table-responsive mb-3">
+                                                            <table class="table table-bordered table-social">
+                                                              <thead>
+                                                                <tr>
+                                                                    <th colspan="12">
+                                                                        Dushanba
+                                                                    </th>
+                                                                </tr>
+                                                              </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>08:00-09:00</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        
+                                                                       
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            09:00-10:00
+                                                                        </td>
+                                                                        <td class="bg-primary text-white" >Bisnak R.
+                                                                            Корпоративная группа
+                                                                            ООО "Рога и Копыта"
+                                                                            11:00-12:00
+                                                                            с 01.08 (Пн/Ср)</td>
+                                                                   
+                                                                    </tr>
+                                                                  <tr><td>10:00-11:00</td><td></td> <td></td></tr>
+                                                                  <tr> <td>11:00-12:00</td><td></td> <td></td>
+                                                                    </tr>
+                                                                    <tr><td>12:00-13:00</td><td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>13:00-14:00</td>
+                                                                           <td class="bg-primary text-white">Bisnak R.
+                                                                            Корпоративная группа
+                                                                            ООО "Рога и Копыта"
+                                                                            11:00-12:00
+                                                                            с 01.08 (Пн/Ср)</td>
+                                                                            <td class="bg-primary text-white">Bisnak R.
+                                                                                Корпоративная группа
+                                                                                ООО "Рога и Копыта"
+                                                                                11:00-12:00
+                                                                                с 01.08 (Пн/Ср)</td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>14:00-15:00</td>
+                                                                      <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>15:00-16:00</td>
+                                                                        <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>16:00-17:00</td>
+                                                                      <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>17:00-18:00</td>
+                                                                        <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>18:00-19:00</td><td></td> <td></td>
+                                                                       </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="st_matrics-month" role="tabpanel" aria-labelledby="st_matrics-tab">
+                                                        <div class="table-responsive mb-3">
+                                                            <table class="table table-bordered table-social">
+                                                              <thead>
+                                                                <tr>
+                                                                    <th colspan="12">
+                                                                        Dushanba
+                                                                    </th>
+                                                                </tr>
+                                                              </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>08:00-09:00</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        
+                                                                       
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            09:00-10:00
+                                                                        </td>
+                                                                        <td class="bg-primary text-white" >Bisnak R.
+                                                                            Корпоративная группа
+                                                                            ООО "Рога и Копыта"
+                                                                            11:00-12:00
+                                                                            с 01.08 (Пн/Ср)</td>
+                                                                   
+                                                                    </tr>
+                                                                  <tr><td>10:00-11:00</td><td></td> <td></td></tr>
+                                                                  <tr> <td>11:00-12:00</td><td></td> <td></td>
+                                                                    </tr>
+                                                                    <tr><td>12:00-13:00</td><td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>13:00-14:00</td>
+                                                                           <td class="bg-primary text-white">Bisnak R.
+                                                                            Корпоративная группа
+                                                                            ООО "Рога и Копыта"
+                                                                            11:00-12:00
+                                                                            с 01.08 (Пн/Ср)</td>
+                                                                            <td class="bg-primary text-white">Bisnak R.
+                                                                                Корпоративная группа
+                                                                                ООО "Рога и Копыта"
+                                                                                11:00-12:00
+                                                                                с 01.08 (Пн/Ср)</td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>14:00-15:00</td>
+                                                                      <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>15:00-16:00</td>
+                                                                        <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>16:00-17:00</td>
+                                                                      <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>17:00-18:00</td>
+                                                                        <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>18:00-19:00</td><td></td> <td></td>
+                                                                       </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="st_matrics-year" role="tabpanel" aria-labelledby="st_matrics-tab">
+                                                        <div class="table-responsive mb-3">
+                                                            <table class="table table-bordered table-social">
+                                                              <thead>
+                                                                <tr>
+                                                                    <th colspan="12">
+                                                                        Dushanba
+                                                                    </th>
+                                                                </tr>
+                                                              </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>08:00-09:00</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        
+                                                                       
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            09:00-10:00
+                                                                        </td>
+                                                                        <td class="bg-primary text-white" >Bisnak R.
+                                                                            Корпоративная группа
+                                                                            ООО "Рога и Копыта"
+                                                                            11:00-12:00
+                                                                            с 01.08 (Пн/Ср)</td>
+                                                                   
+                                                                    </tr>
+                                                                  <tr><td>10:00-11:00</td><td></td> <td></td></tr>
+                                                                  <tr> <td>11:00-12:00</td><td></td> <td></td>
+                                                                    </tr>
+                                                                    <tr><td>12:00-13:00</td><td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>13:00-14:00</td>
+                                                                           <td class="bg-primary text-white">Bisnak R.
+                                                                            Корпоративная группа
+                                                                            ООО "Рога и Копыта"
+                                                                            11:00-12:00
+                                                                            с 01.08 (Пн/Ср)</td>
+                                                                            <td class="bg-primary text-white">Bisnak R.
+                                                                                Корпоративная группа
+                                                                                ООО "Рога и Копыта"
+                                                                                11:00-12:00
+                                                                                с 01.08 (Пн/Ср)</td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>14:00-15:00</td>
+                                                                      <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>15:00-16:00</td>
+                                                                        <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>16:00-17:00</td>
+                                                                      <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>17:00-18:00</td>
+                                                                        <td></td> <td></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                        <td>18:00-19:00</td><td></td> <td></td>
+                                                                       </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                                    <div class="card border-0">
+                                                        <div class="card-header">
+                                                            <h6 style="text-transform: none;">Xonalar bo'yicha</h6>
+                                                            <div class="card-extra">
+                                                                <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
+                                                                    {% for week, data in rooms.schedule.items %}
+                                                                        <a class="btn btn-xs btn-white border" id="f_year-tab-{{forloop.counter}}" data-toggle="tab" href="#{{week}}" role="tab" area-controls="st_matrics" aria-selected="false">Hafta {{forloop.counter}}</a>
+                                                                    {% endfor %}
+
+
+                                                                </div>
+                                                                <div class="dropdown dropleft">
+                                                                    <a href="#" role="button" id="Today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <span data-feather="more-horizontal"></span>
+                                                                    </a>
+                                                                    <div class="dropdown-menu" aria-labelledby="Today">
+                                                                        <!-- <a class="dropdown-item" href="#">Action</a>
+                                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                                        <a class="dropdown-item" href="#">Something else here</a> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body p-0">
+                                                            <div class="tab-content">
+                                                                {% for week, data in rooms.schedule.items %}
+                                                                   
+                                                                    <div class="tab-pane fade active show" id="{{week}}" role="" aria-labelledby="st_matrics-tab">
+
+                                                                        {% for date in data %}
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-bordered table-social">
+                                                                              <thead>
+                                                                                <tr>
+                                                                                    <th colspan="12">
+                                                                                        <b> {{ date.day }} | {{ date.date|date:'d.m.Y'}}</b> 
+                                                                                    </th>
+                                                                                </tr>
+                                                                              </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td></td>
+                                                                                        {% for time in rooms.times %}
+                                                                                            <td>{{ time }}</td>
+                                                                                        {% endfor %}
+                                                                                        
+                                                                                    </tr>
+
+                                                                                {% for room in date.room %}
+
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <a href="">{{ room.title }}</a>
+                                                                                        </td>
+                                                                                        {% for time in room.times %}
+                                                                                        {% if time.group %}
+                                                                                        <td class="bg-primary text-white">
+                                                                                            {{ time.group.teacher.user.full_name}}
+                                                                                            {{ time.group }} 
+                                                                                            {{ time.group.course }}</td>
+                                                                                        {% else %}
+                                                                                        <td></td>
+
+                                                                                        {% endif %}
+                                                                                        {% endfor %}
+                                                                                    </tr>
+                                                                                
+                                                                                    {% endfor %}
+
+                                                                                    
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                    
+                                                                {% endfor %}
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
+                                                    <div class="card border-0">
+                                                        <div class="card-header">
+                                                            <h6 style="text-transform: none;">O'qituvchilar bo'yicha</h6>
+                                                            <div class="card-extra">
+                                                                <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
+                                                                    
+                                                                    {% for key, schedule in teachers.schedule.items %}
+                                                                        <a class="btn btn-xs btn-white {% if forloop.counter == 1 %}active{% endif %} border" id="f_today-tab" data-toggle="tab" href="#teachers-{{ forloop.counter }}" role="tab" area-controls="st_matrics" aria-selected="{% if forloop.counter == 1 %}true{% else %}false{% endif %}">Hafta {{ forloop.counter }}</a>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                <div class="dropdown dropleft">
+                                                                    <a href="#" role="button" id="Today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <span data-feather="more-horizontal"></span>
+                                                                    </a>
+                                                                    <div class="dropdown-menu" aria-labelledby="Today">
+                                                                        <a class="dropdown-item" href="#">...</a>
+                                                                      
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body p-0">
+                                                            <div class="tab-content">
+                                                                
+                                                                {% for data in teachers.schedule.values %}
+                                                                   
+                                                                    <div class="tab-pane fade active show" id="teachers-{{ forloop.counter }}" role="" aria-labelledby="st_matrics-tab">
+                                                                        
+                                                                        {% for date in data %}
+                                                                        <div class="table-responsive mb-3">
+                                                                            <table class="table table-bordered table-social">
+                                                                              <thead>
+                                                                                <tr>
+                                                                                    <th colspan="12">
+                                                                                        <b> {{ date.day.day }} | {{ date.day.date|date:'d.m.Y'}}</b> 
+                                                                                    </th>
+                                                                                </tr>
+                                                                              </thead>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td></td>
+                                                                                        {% for time in rooms.times %}
+                                                                                            <td>{{ time }}</td>
+                                                                                        {% endfor %}
+                                                                                        
+                                                                                    </tr>
+
+                                                                                {% for teacher in date.teachers %}
+
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <a href="">{{ teacher.full_name }}</a>
+                                                                                        </td>
+                                                                                        {% for time in teacher.times %}
+                                                                                        {% if time.group %}
+                                                                                        <td class="bg-primary text-white">
+                                                                                            {{ time.group.title}}
+                                                                                            {{ time.group.room.title|default:'' }}-xona
+                                                                                            {{ time.group.course }}</td>
+                                                                                        {% else %}
+                                                                                        <td></td>
+
+                                                                                        {% endif %}
+                                                                                        {% endfor %}
+                                                                                    </tr>
+                                                                                
+                                                                                    {% endfor %}
+
+                                                                                    
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                    
+                                                                {% endfor %}
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <!-- ends: .card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ends: .atbd-page-content -->
+                <!-- Xonalar bo'yicha -->
+            <div class="c-event-modal modal fade" id="c-event-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-md c-event-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Create Event</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="c-event-form">
+                                <form action="#">
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>Title</label>
+                                        </div>
+                                        <div class="e-form-row__right">
+                                            <input type="text" name="e-title" placeholder="Weekly report meeting" class="form-control form-control-md">
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>Event type</label>
+                                        </div>
+                                        <div class="e-form-row__right">
+                                            <div class="radio-horizontal-list d-flex flex-wrap">
+                                                <div class="radio-theme-default custom-radio ">
+                                                    <input class="radio" type="radio" name="radio-e-type" value="01" id="radio-1">
+                                                    <label for="radio-1">
+                                                        <span class="radio-text">Event</span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio-theme-default custom-radio ">
+                                                    <input class="radio" type="radio" name="radio-e-type" value="02" id="radio-2">
+                                                    <label for="radio-2">
+                                                        <span class="radio-text">Remainder</span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio-theme-default custom-radio ">
+                                                    <input class="radio" type="radio" name="radio-e-type" value="03" id="radio-3">
+                                                    <label for="radio-3">
+                                                        <span class="radio-text">Task</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>Start</label>
+                                        </div>
+                                        <div class="e-form-row__right d-flex">
+                                            <div class="input-container icon-left position-relative mr-2">
+                                                <span class="input-icon icon-left">
+                                                    <span data-feather="calendar"></span></span>
+                                                <input type="text" class="form-control form-control-md" name="s-date" placeholder="Select Date">
+                                            </div>
+                                            <div class="input-container icon-left position-relative">
+                                                <span class="input-icon icon-left">
+                                                    <span data-feather="clock"></span></span>
+                                                <input type="text" class="form-control form-control-md" name="s-time" placeholder="Select Time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>End</label>
+                                        </div>
+                                        <div class="e-form-row__right d-flex">
+                                            <div class="input-container icon-left position-relative mr-2">
+                                                <span class="input-icon icon-left">
+                                                    <span data-feather="calendar"></span></span>
+                                                <input type="text" class="form-control form-control-md" name="e-date" placeholder="Select Date">
+                                            </div>
+                                            <div class="input-container icon-left position-relative">
+                                                <span class="input-icon icon-left">
+                                                    <span data-feather="clock"></span></span>
+                                                <input type="text" class="form-control form-control-md" name="e-time" placeholder="Select Time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="e-form-row__right">
+                                            <textarea name="e-description" class="form-control form-control-md" placeholder="Add Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white btn-sm" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary btn-sm">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ends: .c-event-modal -->
+                <!-- O'qituvchilar bo'yicha -->
+            <div class="e-info-modal modal fade" id="e-info-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm e-info-dialog modal-dialog-centered" id="c-event" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header e-info-header bg-primary">
+                            <h6 class="modal-title e-info-title">Project Update</h6>
+                            <div class="e-info-action">
+                                <button class="btn-icon">
+                                    <span data-feather="edit"></span></button>
+                                <button class="btn-icon">
+                                    <span data-feather="mail"></span></button>
+                                <button class="btn-icon">
+                                    <span data-feather="trash-2"></span></button>
+                                <button type="button" class="btn-icon btn-close" data-dismiss="modal" aria-label="Close">
+                                    <span data-feather="x"></span></button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="e-info-list">
+                                <li>
+                                    <span data-feather="calendar"></span>
+                                    <span class="list-line">
+                                        <span class="list-label">Date :</span>
+                                        <span class="list-meta"> Thursday, January 23</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span data-feather="clock"></span>
+                                    <span class="list-line">
+                                        <span class="list-label">Time :</span>
+                                        <span class="list-meta"> 23⋅5:00 – 6:00 am</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span data-feather="align-left"></span>
+                                    <span class="list-line">
+                                        <span class="list-text"> Lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam consetetur sadipscing elitr sed diam</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ends: .e-info-modal -->
+
+
+
+
+   
+{% endblock %}

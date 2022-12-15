@@ -26,6 +26,22 @@
                     <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-group">
                         <div class="table-responsive">
                             <div id="filter-form-container"></div>
+
+                            <div class="d-flex m-2">
+                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                    <div class="checkbox-group-wrapper">
+                                        <div class="checkbox-group d-flex">
+                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex ml-2 pl-1">
+                                                <input class="checkbox" type="checkbox" id="check-grp-all">
+                                                <label for="check-grp-all">Barcha guruhlarni tanlash</label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                                </div>
+                                
+                            </div>
+
                             <table class="table mb-0 table-borderless adv-table-group" data-sorting="true"
                                 data-filter-container="#filter-form-container" data-paging-current="1"
                                 data-paging-position="left" data-paging-size="10">
@@ -67,12 +83,13 @@
                                     {% for group in groups %}
                                     <tr>
                                         <td>
-                                            <div class="d-flex">
+                                            <div class="d-flex"> 
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
                                                     <div class="checkbox-group-wrapper">
                                                         <div class="checkbox-group d-flex">
                                                             <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-{{group.id}} group-checkboxes" type="checkbox" id="check-grp-{{group.id}}">
+                                                                <input class="checkbox check-grp-{{group.id}} group-checkboxes" type="checkbox" id="check-grp-{{group.id}}" hidden>
+                                                                <label for="check-grp-{{group.id}}"></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -141,20 +158,7 @@
                             </table>
                         </div>
 
-                        <div class="d-flex m-2">
-                            <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                <div class="checkbox-group-wrapper">
-                                    <div class="checkbox-group d-flex">
-                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                            <input class="checkbox" type="checkbox" id="check-grp-all">
-                                            <label for="check-grp-all">Barcha guruhlarni tanlash</label> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
-                            </div>
-                            
-                        </div>
+                        
 
                     </div>
 
@@ -221,13 +225,13 @@
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
                                             <input name="title" type="text"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                                placeholder="Nomi">
+                                                placeholder="Nomi" required="True">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
-                                            <select name="course" id="owner"
+                                            <select name="course" id="owner" required="True"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
                                                 {% for course in courses %}
                                                 <option value="{{course.id}}">{{course.title}}</option>
@@ -238,7 +242,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
-                                            <select name="status" id="owner"
+                                            <select name="status" id="owner"  required="True"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
                                                 <option value="1">tayyorlanmoqda</option>
                                                 <option value="2">ishga tayyor</option>
@@ -252,7 +256,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
-                                            <select name="teacher" id="owner"
+                                            <select name="teacher" id="owner"  required="True"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
                                                 {% for teacher in teachers %}
                                                 <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
@@ -295,8 +299,8 @@
                                                         <option value="3">Chor</option>
                                                         <option value="4">Pay</option>
                                                         <option value="5">Ju</option>
-                                                        <option value="5">Sha</option>
-                                                        <option value="5">Yak</option>
+                                                        <option value="6">Sha</option>
+                                                        <option value="7">Yak</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -313,6 +317,15 @@
                                                 <option value="3">Yillik</option>
                                                 <option value="4">Modulli</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">
+                                                Darsning boshlanish sanasi</label>
+                                            <input type="date" required="True" name="start_date"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="Deadline"
+                                                placeholder="Qaysi sanadan">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

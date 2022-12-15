@@ -10,6 +10,7 @@ from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data,get_leads_data,get_lead_homework_contents
 from education.forms import LessonAddForm, ContentForm, FAQFormSet, TextContentForm, FAQForm, ModuleForm, HomeworkActionForm, TaskForm
 from education.utils import youtube_link_formatter
+from education.services import createVideo
 from student.models import Homeworks
 from user.models import CustomUser
 from user.utils import get_admins
@@ -34,25 +35,28 @@ def onlin_view(request):
     context = dict()
     teacher = Teacher.objects.filter(user=request.user).first()
     context['courses'] = get_courses(request.user)
+    print(context)
     context['courses'] = get_courses_data(context['courses'], teacher=teacher)
     groups = get_groups(request.user)
     context['groups'] = get_groups_data(groups, teacher)
     context['is_teacher'] = bool(teacher)
+    
     return render(request,'education/onlin.html', context) 
 
 @login_required
 def onlin_video_view(request, pk):
     content = get_object_or_404(Contents, pk=pk)
     context = dict()
-    context['resources'] = content.content_resources.values('id', 'file', 'link')
-    context['faqs'] = content.faqs.values('id', 'question', 'answer')
+    context['resources'] = list(content.content_resources.values('id', 'file', 'link'))
+    context['faqs'] = list(content.faqs.values('id', 'question', 'answer'))
     context['content'] = model_to_dict(content, fields=('id', 'title', 'video', 'video_link', 'text', 'required'))
     context['action'] = 'tahrirlash'
     if request.method == 'POST':
         form = ContentForm(request.POST, request.FILES, instance=content)
         if form.is_valid():
             content = form.save(commit=False)
-            content.video_link = youtube_link_formatter(content.video_link)
+            if 'spotlightr.com' not in content.video_link:
+                content.video_link = createVideo(request.scheme, video_url=content.video_link, name=content.title) # youtube_link_formatter(content.video_link)
             content.save()
             form.save_m2m()
             data = model_to_dict(content, fields=('id', 'title', 'video_link', 'text', 'required', 'status'))
@@ -62,7 +66,7 @@ def onlin_video_view(request, pk):
                 data['video_link'] = ''
             data['redirect_id'] = content.lesson.module.course.id
             data['group'] = request.GET.get('group', None)
-            return JsonResponse(data, status=200)
+            return redirect(reverse('education:onlin_video', args=[pk])+'?status=ok')
         else:
             return JsonResponse({'errors': form.non_field_errors()}, status=400, safe=False)
     return render(request,'education/onlin_video.html', context=context) 
@@ -78,14 +82,14 @@ def onlin_video_create_view(request, lesson_id):
         form = ContentForm(request.POST, request.FILES)
         if form.is_valid():
             content = form.save(commit=False)
-            if content.video is None and content.video_link is None:
-                return JsonResponse({'message': 'Video fayl yoki havola yuklashingiz kerak'}, status=400)
+            if content.video_link is None: # content.video is None and 
+                return JsonResponse({'message': 'havola yuklashingiz kerak'}, status=400) # Video fayl yoki 
             content.content_type = 1 
             content.lesson = lesson 
             content.author = request.user
             video_url = form.cleaned_data.get('video_link', None)
             if video_url:
-                content.video_link = youtube_link_formatter(video_url)
+                content.video_link =  createVideo(request.scheme, video_url=video_url, name=content.title) # youtube_link_formatter(video_url)
             content.save()
             if group:
                 content.groups.add(group)
@@ -190,10 +194,11 @@ def onlin_hwork_create_view(request, lesson_id):
                 group = request.GET.get('group',None)
                 group = Group.objects.get(id=group)
                 content.groups.add(group)
+                content.save()
             except:
                 if request.user in get_admins():
                     content.groups.add(*Group.objects.filter(course=lesson.module.course))
-            
+                    content.save()
             data = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             data['redirect_id'] = content.lesson.module.course.id
             data['group'] = request.GET.get('group', None)
@@ -349,8 +354,10 @@ def modules_view(request):
 
             if group and type(group) == Group:
                 module.groups.add(group)
+                module.save()
             elif request.user.is_superuser:
                 module.groups.add(*Group.objects.filter(course_id=int(request.POST.get('course'))))
+                module.save()
             data = model_to_dict(module, fields=('id', 'title'))
             data['status'] = False
             return JsonResponse(data, status=201)
@@ -391,8 +398,10 @@ def create_lesson_view(request):
             lesson = form.save(author=request.user)
             if group:
                 lesson.groups.add(group)
+                lesson.save()
             elif request.user.is_superuser:
                 lesson.groups.add(*Group.objects.filter(course=lesson.module.course))
+                lesson.save()
             return JsonResponse({'lesson': model_to_dict(lesson, exclude=('groups',)), 'status': 201} )
         print(form.errors)
         return JsonResponse({'message': 'Forma to\'g\'ri to\'ldirmadingiz.', 'status':400})
@@ -579,13 +588,13 @@ def online_content_resources_view(request):
 @login_required
 def modules_detail_view(request, pk):
     module = get_object_or_404(Modules, pk=pk)
-    if request.user in get_admins():
-        lessons = module.lessons.all().values('id', 'title', 'order')
-    else:
-        admins = CustomUser.objects.filter(is_superuser=True)
-        lessons = module.lessons.filter(Q(author=request.user)|Q(author__in=admins)).values('id', 'title', 'order')
-    data = dict()
-    data['lessons'] = list(lessons)
+    # if request.user in get_admins():
+    #     lessons = module.lessons.all().values('id', 'title', 'order')
+    # else:
+    #     admins = CustomUser.objects.filter(is_superuser=True)
+    #     lessons = module.lessons.filter(Q(author=request.user)|Q(author__in=admins)).values('id', 'title', 'order')
+    # data['lessons'] = list(lessons)
+    data = model_to_dict(module, fields=('id', 'title'))
     data['status'] = bool(Contents.objects.filter(lesson__module=module, status=True).count())
     return JsonResponse(data, safe=False)
 

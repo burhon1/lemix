@@ -120,14 +120,26 @@
                 </a>
                 <ul>
                     <li>
+                        <a class="" href="{% url 'admintion:settings' %}">Umumiy Sozlamalar</a>
+                    </li>
+                    {% if perms.admintion.view_educenters %}
+                    <li>
+                        <a class="" href="{% url 'admintion:edu-centers' %}">Filiallar</a>
+                    </li>
+                    {% endif %}
+                    <li>
                         <a class="" href="{% url 'admintion:rooms' %}">Xonalar</a>
                     </li>
+                    {% if perms.admintion.view_educenters %}
                     <li>
                         <a class="" href="business.html">Rollar</a>
                     </li>
+                    {% endif %}
+                    {% if perms.admintion.view_leadforms %}
                     <li>
                         <a class="" href="{% url 'admintion:forms' %}">Lid formalar</a>
                     </li>
+                    {% endif %}
                     <li>
                         <a class="" href="performance.html">Billing</a>
                     </li>

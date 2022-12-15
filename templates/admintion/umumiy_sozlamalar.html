@@ -1,0 +1,523 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+
+
+{% block title %}
+    Umumiy Sozlamalar 
+{% endblock %}
+
+
+{% block style %}
+<style>
+    label,table th .userDatatable-title,.edit-profile__title h6{
+        text-transform: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+            <div class="profile-setting ">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="breadcrumb-main">
+                                <h4 class="text-capitalize breadcrumb-title">Umumiy sozlamalar</h4>
+                                
+                            </div>
+
+                        </div>
+                        <div class="col-xxl-3 col-lg-4 col-sm-5">
+                            <!-- Profile Acoount -->
+                            <div class="card mb-25">
+                                <div class="card-body text-center p-0">
+
+                                    <!-- <div class="account-profile border-bottom pt-25 px-25 pb-0 flex-column d-flex align-items-center ">
+                                        <div class="ap-img mb-20 pro_img_wrapper">
+                                            <input id="file-upload" type="file" name="fileUpload" class="d-none">
+                                            <label for="file-upload">
+                                                <img class="ap-img__main rounded-circle wh-120" src="img/author/profile.png" alt="profile">
+                                                <span class="cross" id="remove_pro_pic">
+                                                    <span data-feather="camera"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="ap-nameAddress pb-3">
+                                            <h5 class="ap-nameAddress__title">Duran Clayton</h5>
+                                            <p class="ap-nameAddress__subTitle fs-14 m-0">UI/UX Designer</p>
+                                        </div>
+                                    </div> -->
+                                    <div class="ps-tab p-20 pb-25">
+                                        <div class="nav flex-column text-left" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                           
+                                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                                <span data-feather="user"></span>Asosiy</a>
+                                            
+                                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                                <span data-feather="settings"></span>Qurilmalar</a>
+                                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                                <span data-feather="key"></span>Parolni o’zgartirish</a>
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- Profile Acoount End -->
+                        </div>
+                        <div class="col-xxl-9 col-lg-8 col-sm-7">
+                            <!-- <div class="as-cover">
+                                <div class="as-cover__imgWrapper">
+                                    <input id="file-upload1" type="file" name="fileUpload" class="d-none">
+                                    <label for="file-upload1">
+                                        <img src="img/ap-header.png" alt="image" class="w-100">
+                                        <span class="ap-cover__changeImgBtn">
+                                            <span class="btn btn-outline-primary cover-btn">
+                                                <span data-feather="camera"></span>Change
+                                                Cover</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div> -->
+                            <div class="p-0 mt-0 mb-50">
+                                <div class="tab-content mt-0 pt-0" id="v-pills-tabContent">
+                                    
+
+                                    <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                        <!-- Edit Profile -->
+                                        <div class="edit-profile ">
+                                            <div class="card">
+                                                <div class="card-header px-sm-25 px-3">
+                                                    <div class="edit-profile__title">
+                                                        <h6>Asosiy</h6>
+                                                        <!-- <span class="fs-13 color-light fw-400">Set up your personal
+                                                            information</span> -->
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-12">
+                                                            <div class="edit-profile__body mx-lg-20">
+                                                                <form id="mainUpdate" action="{% url 'admintion:settings' %}" method="post">{% csrf_token %}
+                                                                    <div class="form-group mb-20 ">
+                                                                        <label for="formFile" class="form-label">Logoni yuklash</label>
+                                                                        <input class="form-control" type="file" id="formFile" name="logo">
+                                                                    </div>
+                                                                    <div class="form-group mb-20">
+                                                                        <label for="names">O'quv markazining nomi</label>
+                                                                        <input type="text" class="form-control" id="names" placeholder="O'quv markaz nomi" value="{{educenter.name}}">
+                                                                    </div>
+                                                                    <div class="form-group mb-20">
+                                                                        <label for="phoneNumber1">Telefon raqam</label>
+                                                                        <div class="d-flex justify-content-md-start">
+                                                                            <label
+                                                                            style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
+                                                                        <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone" value="{{ educenter.director.phone }}"
+                                                                            placeholder="99 704 65 99" name="phone_number">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class=" mb-20 ">
+                                                                        <label for="formFile" class="form-label">Ofertani yuklash</label>
+                                                                        <input class="form-control" type="file" id="formFile" name="oferta">
+                                                                    </div>
+                                                                    <div class=" mb-20 ">
+                                                                        <label for="formFile" class="form-label">Talabalar uchun shartnomani yuklash</label>
+                                                                        <input class="form-control" type="file" id="formFile" name="s_contract">
+                                                                    </div>
+                                                                    <div class=" mb-20 ">
+                                                                        <label for="formFile" class="form-label">O'qituvchilar uchun shartnomani yuklash</label>
+                                                                        <input class="form-control" type="file" id="formFile" name="t_contract">
+                                                                    </div>
+                                                                    <div class=" mb-20 ">
+                                                                        <label for="formFile" class="form-label">Xodimlar uchun shartnomani yuklash</label>
+                                                                        <input class="form-control" type="file" id="formFile" name="j_contract">
+                                                                    </div>
+                                                                    <div class="form-group mb-20">
+                                                                        <div class="countryOption">
+                                                                            <label for="countryOption">
+                                                                                Oldindan belgilangan tili
+                                                                            </label>
+                                                                            <select class="js-example-basic-single js-states form-control" id="countryOption">
+                                                                                <option value="uz">uz</option>
+                                                                                <option value="ru">ru</option>
+                                                                                <option value="en">en</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group mb-20">
+
+
+                                                                        <div class="checkbox-theme-default custom-checkbox ">
+                                                                            <input class="checkbox" type="checkbox" name="check-1" id="check-un1" {% if educenter.teacher_can_see_payments %}checked="true"{% endif %}>
+                                                                            <label for="check-un1">
+                                                                                <span class="checkbox-text">
+                                                                                    O'qituvchilar talaba to'lovlarini ko'rishi mumkin
+                
+                                                                                </span>
+                                                                            </label>
+                                                                        </div>
+                
+                
+                                                                    </div>
+                                                                    <div class="form-group mb-20">
+
+
+                                                                        <div class="checkbox-theme-default custom-checkbox ">
+                                                                            <input class="checkbox" type="checkbox" name="check-1" id="check-un2" {% if educenter.teacher_can_sign_contracts %}checked="true"{% endif %}>
+                                                                            <label for="check-un2">
+                                                                                <span class="checkbox-text">
+                                                                                    O'quvchilar bilan shartnoma imzolash
+                
+                                                                                </span>
+                                                                            </label>
+                                                                        </div>
+                
+                
+                                                                    </div>
+                                                                  
+                                                                    <div class="button-group d-flex flex-wrap pt-30 mb-15">
+                                                                        <button class="btn btn-light btn-default btn-squared fw-400 text-capitalize">Bekor qilish
+                                                                        </button>
+
+                                                                        
+                                                                        <button class="btn btn-primary btn-default btn-squared mr-15 text-capitalize" type="submit">Saqlash
+                                                                        </button>
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Edit Profile End -->
+                                    </div>
+                                    
+                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                        <!-- Edit Profile -->
+                                        <div class="edit-profile">
+                                            <div class="card">
+                                                <div class="card-header  px-sm-25 px-3">
+                                                    <div class="edit-profile__title">
+                                                        <h6>Qurilmalar</h6>
+                                                        <!-- <span class="fs-13 color-light fw-400">Update your username and manage your
+                                                            account</span> -->
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table4  p-0 bg-white mb-30">
+                                                        <div class="table-responsive">
+                                                            <table class="table mb-0">
+                                                                <thead>
+                                                                    <tr class="userDatatable-header">
+                                                                        <th>
+                                                                            <span class="userDatatable-title">IP manzil</span>
+                                                                        </th>
+                                                                        <th>
+                                                                            <span class="userDatatable-title">Qurilma</span>
+                                                                        </th>
+                                                                        <th>
+                                                                            <span class="userDatatable-title">Ulangan vaqti</span>
+                                                                        </th>
+                                                                        <th>
+                                                                            <span class="userDatatable-title">O'chirish</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for device in sessions %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                {{ device.ip }}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                {{ device.device }}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                {{ device.connected|date:'d.m.Y H:i'}}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                <button class="btn btn-danger btn-xs btn-squared btn-block " data-toggle="modal" data-target="#modal-basic1" onclick="setRemoveDeviceForm({{ device.id }})">
+                                                                                    O'chirish
+                                                                                </button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              
+                                            </div>
+                                        </div>
+                                        <!-- Edit Profile End -->
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                        <!-- Edit Profile -->
+                                        <div class="edit-profile">
+                                            <div class="card">
+                                                <div class="card-header  px-sm-25 px-3">
+                                                    <div class="edit-profile__title">
+                                                        <h6>Parolni o'zgartirish</h6>
+                                                        <!-- <span class="fs-13 color-light fw-400">Change or reset your account
+                                                            password</span> -->
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-12">
+                                                            <div class="edit-profile__body mx-lg-20">
+                                                                <form id="changePasswordForm" action="{% url 'user:password_change' %}" method="post"> {% csrf_token %}
+                                                                    <div class="form-group mb-20">
+                                                                        <label for="password-old">Eski parol kiriting</label>
+                                                                        <div class="position-relative">
+                                                                            <input id="password-old" type="password" class="form-control pr-50" name="old_password" value="">
+                                                                            <span class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group mb-1">
+                                                                        <label for="password-field">Yangi parolni kiriting</label>
+                                                                        <div class="position-relative">
+                                                                            <input id="password-field" type="password" class="form-control pr-50" name="password1" value="">
+                                                                            <span class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2"></span>
+                                                                        </div>
+                                                                        <small id="passwordHelpInline" class="text-light fs-13">Minimum
+                                                                            6
+                                                                            belgi
+                                                                        </small>
+                                                                    </div>
+                                                                    <div class="form-group mb-1">
+                                                                        <label for="password-field">Yangi parolni qayta kiriting</label>
+                                                                        <div class="position-relative">
+                                                                            <input id="password-field" type="password" class="form-control pr-50" name="password2" value="">
+                                                                            <span class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2"></span>
+                                                                        </div>
+                                                                        <small id="passwordHelpInline" class="text-light fs-13">Minimum
+                                                                            6
+                                                                            belgi
+                                                                        </small>
+                                                                    </div>
+
+                                                                    <input id="id_otp" type="number" class="form-control pr-50" name="otp" value="" hidden="true">
+
+                                                                    <div class="button-group d-flex flex-wrap pt-45 mb-35"> 
+                                                                    <button class="btn btn-light btn-default btn-squared fw-400 text-capitalize">Bekor qilish
+                                                                    </button>
+                                                                        <button class="btn btn-primary btn-default btn-squared mr-15 text-capitalize" data-toggle="modal" data-target="#modal-basic" onclick="generateOTP()">Saqlash
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Edit Profile End -->
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+         <!-- ends: .atbd-page-content -->
+
+         <div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content modal-bg-white ">
+                    <div class="modal-header">
+
+
+
+                        <h6 class="modal-title">Tasdiqlash</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span data-feather="x"></span></button>
+                    </div>
+                    <div class="modal-body">
+                                        <form>
+
+                                            <div class="form-group mb-20">
+                                                <label for="ID_otp" id="genOTPLabel">Tekshirish maqsadida +998 99 123-45-67 raqamiga 6 xonali kod jo'natildi</label>
+                                                <input type="text" class="form-control" id="ID_otp" placeholder="*** ***" name="otp">
+                                            </div>
+                                         
+                                           
+                                        </form>
+                                  
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilsish</button>
+                        <button type="submit" class="btn btn-primary btn-sm" form="changePasswordForm">Saqlash</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- ends: .modal-Basic -->
+
+             <!-- ends: .atbd-page-content -->
+
+            <div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+
+
+
+                            <h6 class="modal-title">O'chirish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="removeDeviceForm" action="" method="post"> {% csrf_token %}
+                                <p>Qurilma haqidatdan ham o'chirilsinmi?</p>
+                            </form>
+                            
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-lighten btn-sm" data-dismiss="modal">Bekor qilish</button>
+                            <button type="submit" class="btn btn-secondary btn-sm" form="removeDeviceForm">Ha</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- ends: .modal-Basic -->
+
+{% endblock %}
+
+{% block customizer %}
+    <div class="overlay-dark-sidebar"></div>
+    <div class="customizer-overlay"></div>
+    <a href="#" class="customizer-trigger">
+        <span data-feather="settings"></span></a>
+    <div class="customizer-wrapper">
+        <div class="customizer">
+            <div class="customizer__head">
+                <h4 class="customizer__title">Customizer</h4>
+                <span class="customizer__sub-title">Sahifa ko'rinishini o'zingizga moslab oling.</span>
+                <a href="#" class="customizer-close">
+                    <span data-feather="x"></span></a>
+            </div>
+            <div class="customizer__body">
+                <div class="customizer__single">
+                    <h4>Layout Type</h4>
+                    <ul class="customizer-list d-flex layout">
+                        <li class="customizer-list__item">
+                            <a href="#ltr" class="active">
+                                <img src="{% static 'img/ltr.png' %}" alt="">
+                                <i class="fa fa-check-circle"></i>
+                            </a>
+                        </li>
+                        <li class="customizer-list__item">
+                            <a href="#rtl" class=""> 
+                                <img src="{% static 'img/rtl.png' %}" alt="">
+                                <i class="fa fa-check-circle"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- ends: .customizer__single -->
+
+                <div class="customizer__single">
+                    <h4>Sidebar Type</h4>
+                    <ul class="customizer-list d-flex l_sidebar">
+                        <li class="customizer-list__item">
+                            <a href="#" data-layout="light" class="active">
+                                <img src="{% static 'img/light.png' %}" alt="">
+                                <i class="fa fa-check-circle"></i>
+                            </a>
+                        </li>
+                        <li class="customizer-list__item">
+                            <a href="#" data-layout="dark">
+                                <img src="{% static 'img/dark.png' %}" alt="">
+                                <i class="fa fa-check-circle"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- ends: .customizer__single -->
+
+                <div class="customizer__single">
+                    <h4>Navbar Type</h4>
+                    <ul class="customizer-list d-flex l_navbar">
+                        <li class="customizer-list__item">
+                            <a href="#" data-layout="side" class="active">
+                                <img src="{% static 'img/side.png' %}" alt="">
+                                <i class="fa fa-check-circle"></i>
+                            </a>
+                        </li>
+                        <li class="customizer-list__item top">
+                            <a href="#" data-layout="side"> <!-- top -->
+                                <img src="{% static 'img/top.png' %}" alt="">
+                                <i class="fa fa-check-circle"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- ends: .customizer__single -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    document.querySelectorAll('form').forEach(item=>item.addEventListener('submit',e=>e.preventDefault()))
+
+    function setRemoveDeviceForm(id){
+        document.querySelector('#removeDeviceForm').action = `/user/devices/${id}/remove/`;
+    }
+
+    $("button[form='removeDeviceForm']").click(function(){
+    	$("form#removeDeviceForm").trigger("submit")	
+    })
+
+    function generateOTP(){
+        var url = "{% url 'user:gen_otp' %}";
+        fetch(url)
+        .then(res=>{
+            if(res.status==201){
+                return res;
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            document.querySelector('#genOTPLabel').textContent = `Tekshirish maqsadida +998${res.phone} raqamiga 6 xonali kod jo'natildi`;
+        })
+    }
+    var otp_input_hidden = document.querySelector('#id_otp');
+    var otp_input = document.querySelector('#ID_otp');
+    otp_input.addEventListener('change', ()=>{
+        otp_input_hidden.value = otp_input.value
+    })
+
+    $("button[form='changePasswordForm']").click(function(){
+    	$("form#changePasswordForm").trigger("submit")	
+    })
+
+
+</script>
+{% endblock %}

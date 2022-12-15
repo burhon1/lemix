@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.forms.models import model_to_dict
 from django.urls import reverse
+from django.contrib import messages 
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from admintion.models import LeadForms,FormUniversalFields,FormFields,EduCenters,Contacts
+from admintion.models import LeadForms,FormUniversalFields,FormFields,EduCenters,Contacts, LeadStatus
 from admintion.forms.leads import LeadFormClass,FieldsFormSet,ContactsFormSet,LeadFormRegisterForm
 from admintion.services.qrcode import create_qrcode
 
@@ -170,21 +171,26 @@ def contacts_delete_view(request, pk):
 
 def lead_registration_view(request, pk):
     leadform = get_object_or_404(LeadForms, pk=pk)
+    leadform.seen += 1
+    leadform.save(update_fields=['seen'])
     form = LeadFormRegisterForm(form=leadform)
     context = {'pk':pk, 'title':leadform.title, 'main_edu': (leadform.educenters.filter(parent=None) or EduCenters.objects.filter(parent=None)).first(), 'educenters':leadform.educenters.all(), 'form':form}
     context['contacts'] = leadform.contacts_set.all()
     if request.method == "POST":
         form = LeadFormRegisterForm(leadform, request.POST, request.FILES)
         if form.is_valid():
-            lead = form.save()
-            leadform.seen += 1
-            leadform.save(update_fields=['seen'])
+            lead = form.save(commit=False)
+            lead.status = LeadStatus.objects.first()
+            lead.save()
             
             fname = lead.user.first_name or ""
             lname = lead.user.last_name or ""
             context['first_name'] = fname if fname else ""
             context['last_name'] = lname if lname else ""
             return render(request, "admintion/lead_form_success.html", context)
+        else:
+            messages.add_message(request, messages.WARNING, 'Bu raqam oldin ro\'yxatdan o\'tgan.')
+            return redirect(reverse('lead_registration_view', args=[pk])+f"?title={request.GET.get('title', '')}")
     else:
         context['edu_count'] = len(context['educenters'])     
     return render(request, "admintion/lead_form.html", context=context)

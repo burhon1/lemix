@@ -1,15 +1,21 @@
 from django.db import models
-from admintion.querysets import rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, parents_manager, payment_manager, group_students_manager, course_manager,lead_manager,task_manager
+from admintion.querysets import (
+    rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, 
+    parents_manager, payment_manager, group_students_manager, course_manager,lead_manager,
+    task_manager, educenters_managers, common_managers
+)
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
 from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES
-# Create your models here.
+from admintion.validators import validate_file_size
+
 class Room(models.Model):
     title = models.CharField(max_length=50)
     capacity = models.PositiveSmallIntegerField()
     image = models.ImageField(upload_to='user/',null=True,blank=True)
     status = models.BooleanField(default=False)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
 
     rooms = rooms_manager.RoomQueryset()
 
@@ -24,6 +30,8 @@ class Course(models.Model):
     comment = models.TextField()
     status = models.BooleanField(default=False)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    
     objects = models.Manager()
     courses = course_manager.CoursesManager()
     def __str__(self) -> str:
@@ -34,11 +42,14 @@ class Teacher(models.Model):
     teacer_type = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     status = models.BooleanField(default=False,null=True,blank=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    
     teachers = teachers_manager.TeacherManager()
     objects = models.Manager()
 
 class GroupsDays(models.Model):
     days = models.PositiveSmallIntegerField(choices=chooses.GROUPS_DAYS)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
 
 class Group(models.Model):
     title = models.CharField(max_length=50)
@@ -54,6 +65,8 @@ class Group(models.Model):
     start_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     end_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     limit = models.PositiveIntegerField(default=0)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    
     groups = groups_manager.GroupManager()
     objects = models.Manager()
 
@@ -103,7 +116,7 @@ class FormLead(models.Model):
     parents = models.CharField("Ota-onasi", max_length=150, null=True)
     p_phone = models.CharField(max_length=100, null=True)
     passport = models.CharField("Passport seriya va raqami", max_length=10, null=True)
-    file = models.FileField(upload_to="leads", null=True)
+    file = models.FileField(upload_to="leads", null=True, validators=[validate_file_size])
     days = models.ManyToManyField(GroupsDays, blank=True)
     course = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True, related_name="created_leads")
@@ -113,6 +126,7 @@ class FormLead(models.Model):
     purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
     user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
     via_form = models.ForeignKey('LeadForms', models.SET_NULL, null=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     objects = models.Manager()
     leads = lead_manager.LeadManager()
     def __str__(self) -> str:
@@ -167,7 +181,8 @@ class Tasks(models.Model):
     leads = models.ManyToManyField(FormLead, blank=True)
     students = models.ManyToManyField(Student, blank=True)
     courses = models.ManyToManyField(Course, blank=True)
-    parents = models.ManyToManyField(Parents, blank=True) 
+    parents = models.ManyToManyField(Parents, blank=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     objects = models.Manager()
     tasks = task_manager.TasksManager()
 
@@ -188,12 +203,36 @@ class Messages(models.Model):
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='author_messages')
     message_type = models.PositiveSmallIntegerField(choices=MESSAGE_TYPE, default=1)
 
-class EduCenters(models.Model):
-    name = models.CharField(max_length=150, verbose_name="O'quv markazi")
-    parent = models.ForeignKey('self', models.SET_NULL, null=True, blank=True, related_name='filiallar')
+class EduFormats(models.Model):
+    name = models.CharField("Ta'lim formati", max_length=150)
 
     def __str__(self):
         return self.name
+
+class EduCenters(models.Model):
+    name = models.CharField(max_length=150, verbose_name="O'quv markazi")
+    director = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True)
+    country = models.ForeignKey('admintion.Countries', models.SET_NULL, null=True)
+    region = models.ForeignKey('admintion.Regions', models.SET_NULL, null=True)
+    district = models.ForeignKey('admintion.Districts', models.SET_NULL, null=True)
+    address = models.CharField("Manzil", max_length=500, null=True, blank=True)
+    max_groups = models.PositiveIntegerField("Maksimal guruh sig'imi", default=0)
+    max_students = models.PositiveIntegerField("Maksimal o'quvchilar sig'imi", default=0)
+    teacher_can_see_payments = models.BooleanField("O'qituvchilar talaba to'lovlarini ko'rishi mumkin", default=False)
+    teacher_can_sign_contracts = models.BooleanField("O'quvchilar bilan shartnoma imzolash", default=False)
+    # format = models.ForeignKey(EduFormats, models.SET_NULL, null=True, blank=True)
+    parent = models.ForeignKey('self', models.SET_NULL, null=True, blank=True, related_name='filiallar')
+    logo = models.ImageField(upload_to='educenters/logos', null=True)
+    oferta = models.FileField(upload_to='educenters/', null=True)
+    s_contract = models.FileField(upload_to='educenters/', null=True)
+    t_contract = models.FileField(upload_to='educenters/', null=True)
+    j_contract = models.FileField(upload_to='educenters/', null=True)
+    
+    objects = models.Manager()
+    educenters = educenters_managers.EduCentersManager()
+    def __str__(self):
+        return self.name
+
 class LeadForms(models.Model):
     name  = models.CharField(max_length=150, verbose_name="Forma nomi", null=True, blank=True)
     title = models.CharField(max_length=150, verbose_name="Forma sarlavhasi")
@@ -229,4 +268,30 @@ class FormUniversalFields(models.Model):
     key      = models.CharField(max_length=50, null=True)
     order    = models.PositiveIntegerField(default=1)
     required = models.BooleanField("Talab qilinadimi?", default=False)
- 
+
+
+class Countries(models.Model):
+    name = models.CharField("Davlat nomi", max_length=150)
+    objects = models.Manager()
+    countries = common_managers.CountriesManager()
+    def __str__(self):
+        return self.name
+
+
+class Regions(models.Model):
+    name = models.CharField("Viloyat nomi", max_length=150)
+    country = models.ForeignKey(Countries, models.CASCADE, verbose_name='Davlat')
+    objects = models.Manager()
+    regions = common_managers.RegionsManager()
+    def __str__(self):
+        return self.name
+
+class Districts(models.Model):
+    name = models.CharField("Viloyat nomi", max_length=150)
+    country = models.ForeignKey('Countries', models.CASCADE, verbose_name='Davlat')
+    region = models.ForeignKey('Regions', models.CASCADE, verbose_name='Viloyati')
+    objects = models.Manager()
+    districts = common_managers.DistrictsManager()
+    
+    def __str__(self):
+        return self.name

@@ -1,8 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
-from ..models import CustomUser
+from user.services.users import add_to_device_list
+from ..models import CustomUser, UserDevices
 
 def login_view(request):
     context = {}
@@ -19,6 +21,7 @@ def login_view(request):
                 success = user.first().check_password(password)
                 if success:
                     login(request,user.first())
+                    add_to_device_list(request)
                     if request.user.is_superuser or request.user.is_staff:
                         return redirect('education:onlin')
                     elif request.user.student_set.first():
@@ -32,3 +35,13 @@ def login_view(request):
             else:
                 context['error']='Bunday foydalanuvchi yoq'    
     return render(request,'user/login.html',context)
+
+@login_required
+def remove_device_view(request, pk):
+    device = get_object_or_404(UserDevices, pk=pk)
+    status = 'Bajarilmadi.'
+    if request.method == 'POST' and request.user == device.user:
+        device.delete()
+        status = 'ok'
+    return redirect(reverse('admintion:settings')+f'?status={status}')
+    

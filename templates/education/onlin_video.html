@@ -101,6 +101,7 @@ margin-right: 7px;
                                         <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="element-text" placeholder="Video dars manzili(url)" value="{{ content.video_link|default:''  }}">
                                     </div>
                                 </div>
+                                {% comment %}
                                 <div class="form-group row">
                                     <div class="col-sm-3 d-flex aling-items-center">
                                         <label for="formFile" class=" col-form-label color-dark fs-14 fw-500 align-center"></label>
@@ -112,6 +113,7 @@ margin-right: 7px;
                                         <input class="form-control ih-medium ip-light radius-xs b-light px-15" type="file" id="videoFile">
                                     </div>
                                 </div>
+                                {% endcomment %}
                                 </div>
                                 <div class="form-group row" style="min-height: 80px;">
                                     <div class="col-sm-3 d-flex aling-items-center">
@@ -822,11 +824,14 @@ function saveContent(isReady=true){
     var url = window.location.href;
 
     var formData = new FormData();
+    {% comment %}
     var video = document.getElementById('videoFile').files[0];
     if (video != null ){
         console.log(video, video.name);
         formData.append('video', video, video.name);
     }
+
+    {% endcomment %}
     var video_link = document.getElementById('element-text').value;
     if (video_link != 'None' || video_link != ''){
         console.log(video_link);

@@ -28,7 +28,7 @@ class GroupQueryset(QuerySet):
                 course=F("course__title"),
                 teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
                 times = Concat(Substr(Cast(F('start_time'), TextField()),1,5),Value('-'),Substr(Cast(F('end_time'), TextField()),1,5),output_field=CharField()),
-                total_student=Count('students'),
+                total_student=Count('students',distinct=True),
                 days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
                 )
             for item in datas:
@@ -62,7 +62,10 @@ class GroupQueryset(QuerySet):
                 'room__title',
                 'start_date',
                 'days',
-                'limit'
+                'limit',
+                'pay_type', 'status', 'comments'
+            ).annotate(
+                groupdays = F('days'),
             ).filter(id=id).first()
 
 class GroupManager(Manager):

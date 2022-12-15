@@ -81,7 +81,7 @@
                                     </a>
 
                                     <div class="dropdown-default">
-                                        <a class="dropdown-item" href="#">Tahrirlash</a>
+                                        <a class="dropdown-item" href="#" data-target="#modal-basic9" data-toggle="modal">Tahrirlash</a>
 
                                     </div>
                                 </div>
@@ -94,17 +94,17 @@
                                     <li class="w-100 mb-2"><span class="version-date">O'qituvchi</span><span
                                             class="version-name">{{group.teacher}}</span></li>
                                     <li class="w-100 mb-2"><span class="version-date">Kunlari</span><span
-                                            class="version-name">Du,Pa,Sha </span></li>
+                                            class="version-name">{{ group_obj.days.all|readable_days2}} </span></li>
                                     <li class="w-100 mb-2"><span class="version-date">Vaqti</span><span
                                             class="version-name">{{group.times}}</span></li>
                                     <li class="w-100 mb-2"><span class="version-date">Narxi</span><span
-                                            class="version-name">{{group.course__price}} so'm</span></li>
+                                            class="version-name">{{group.course__price|readable_soums}} so'm</span></li>
                                     <li class="w-100 mb-2"><span class="version-date">Kurs</span><span
                                             class="version-name">{{group.course}} </span></li>
                                     <li class="w-100 mb-2"><span class="version-date">Xona</span><span
                                             class="version-name"> {{group.room__title}}</span></li>
                                     <li class="w-100 mb-2"><span class="version-date">Mashg'ulot
-                                            vaqti</span><span class="version-name">1.5-1.9.2022</span></li>
+                                            boshlandi </span><span class="version-name">{{group.start_date|date:'d/m/Y'}}</span></li>
 
                                 </ul>
 
@@ -240,7 +240,7 @@
                                                         role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
                                                         <div class="card border-0">
                                                             <div class="card-header">
-                                                                <h6>davomat | 23.07.2022</h6>
+                                                                <h6>davomat | {{date|date:'d.m.Y'}}</h6>
                                                                 <div class="card-extra">
                                                                     <ul class="card-tab-links mr-3 nav-tabs nav"
                                                                         role="tablist">
@@ -312,7 +312,8 @@
                                                                                                         <div class="checkbox-group-wrapper">
                                                                                                             <div class="checkbox-group d-flex">
                                                                                                                 <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                                    <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-{{student_attendace.id}} group-checkboxes" type="checkbox" id="check-grp-{{student_attendace.id}}{% if student_attendace.is_lead is True %}-lead{% endif %}">
+                                                                                                                    <input class=" checkbox check-grp-{{student_attendace.id}} group-checkboxes" type="checkbox" hidden="True" id="check-grp-{{student_attendace.id}}{% if student_attendace.is_lead is True %}-lead{% endif %}">
+                                                                                                                    <label for="check-grp-{{student_attendace.id}}{% if student_attendace.is_lead is True %}-lead{% endif %}"></label>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>
@@ -382,7 +383,7 @@
                                                                                                             name="select-search"
                                                                                                             id="{{student_attendace.id}}-{{attendace.attendaces|date:'Y-m-d'}}" {% if is_lead and enabled is False %}disabled=true{% endif %}
                                                                                                             class="form-control atbd-select-day{{student_attendace.id}}"
-                                                                                                            {% if student_attendace.is_lead %}onchange='handleChange("{{student_attendace.id}}","{{date}}",true)'{% else %}onchange='handleChange("{{student_attendace.id}}","{{date}}")'{% endif %}>
+                                                                                                            onchange='handleChange("{{student_attendace.id}}","{{date}}",{{ student_attendace.is_lead }})'>
                                                                                                             <option
                                                                                                                 value="0">
                                                                                                                 Tanlang
@@ -1410,7 +1411,7 @@
                     <div class="forms w-100">
                             <!-- <label for="a10" class="col-12 p-1">Demo dars uchun guruhni tanlang</label> -->
                             <div class="form-group col-12 p-0">
-                                <select name="student" class="form-control  form-control-sm border-light select2-hidden-accessible" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
+                                <select name="student" class="form-control  form-control-sm border-light select2-hidden-accessible add-student-select" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
                                     <option data-select2-id="5">Tanlang</option>
                                     {% for student in student_list %}
                                     <option value="{{student.id}}">{{student.full_name}}</option>
@@ -1420,9 +1421,9 @@
                 
                         </div>
                         <!-- <p><b class="fw-bold">Guruh limiti:</b> 12/8 </p> -->
-                        <p><b class="fw-bold">FIO:</b> Burhon Baqoyev</p>
-                        <p><b class="fw-bold">Telefon raqam:</b> +998(99)702 53 12</p>
-                        <p><b class="fw-bold">Guruh:</b> Matematika B1 | Du, Se, Cho | 14:00- 16:00</p>
+                        <p id="studentFIO"></p>
+                        <p id="studentPhone"></p>
+                        <p style="vertical-align:top;" class="d-flex" id="studentGroups"></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1436,6 +1437,137 @@
 
 
 </div>
+
+<div class="modal-basic modal fade show" id="modal-basic9" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <form action="{% url 'admintion:group-detail' group.id %}" method="post">
+            <div class="modal-header">
+                <h6 class="modal-title">Guruh ({{ group.title }}) ma'lumotlarini tahrirlash</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <div class="form-group col-12">
+                    
+                    <input class="form-control" name="title" required="true" id="id_title" class="form-control form-control-sm" placeholder="Guruh nomi..." value="{{group.title }}" />
+                </div>
+                <div class="form-group col-12">
+                    <input class="form-control" name="comments" required="true" id="id_comments" class="form-control form-control-sm" placeholder="Izoh..." value="{{group.comments }}" />
+                </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="course" id="id_course">
+                        {% for c in form.fields.course.queryset %}
+                            {% if c|check_groupcourse:group_obj %}
+                                <option value="{{c.id}}" selected="true">{{c.title}}</option>
+                            {% else %}
+                                <option value="{{c.id}}">{{c.title}} {{c|check_groupcourse:group_obj}}</option>
+                            {% endif %}
+                           {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group col-12">
+                    <select class="form-control" name="teacher" id="id_teacher">
+                        {% for c in form.fields.teacher.queryset %}
+                            {% if c|check_groupteacher:group_obj %}
+                                <option value="{{c.id}}" selected="true">{{c.user.full_name}}</option>
+                            {% else %}
+                                <option value="{{c.id}}">{{c.user.full_name}}</option>
+                            {% endif %}
+                           {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="trainer" id="id_trainer">
+                        {% for c in form.fields.trainer.queryset %}
+                            {% if c|check_grouptrainer:group_obj %}
+                                <option value="{{c.id}}" selected="true">{{c.user.full_name}}</option>
+                            {% else %}
+                                <option value="{{c.id}}">{{c.user.full_name}}</option>
+                            {% endif %}
+                           {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="room" id="id_room">
+                        {% for c in form.fields.room.queryset %}
+                            {% if c|check_grouproom:group_obj %}
+                                <option value="{{c.id}}" selected="true">{{c.title}} | {{ c.capacity }} o'rinli {{ group.room}}</option>
+                            {% else %}
+                                <option value="{{c.id}}">{{c.title}} | {{ c.capacity }} o'rinli</option>
+                            {% endif %}
+                           {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="days" id="select-tag-group-days" multiple>
+                        {% for c in form.fields.days.queryset %}
+
+                            {% if c|check_groupday:group_obj %}
+                                <option value="{{c.id}}" selected="true">{{c.days|get_type_name:'day'}}</option>
+                            {% else %}
+                                <option value="{{c.id}}">{{c.days|get_type_name:'day'}}</option>
+                            {% endif %}
+                                {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="pay_type" id="id_pay_type">
+                        
+                        {% for key, value  in form.fields.pay_type.choices %}
+                        {% if group.pay_type is key %}
+                            <option value="{{key}}" selected="true">{{value}}</option>
+                        {% else %}
+                            <option value="{{key}}">{{value}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="status" id="id_status">
+                        
+                        {% for key, value  in form.fields.status.choices %}
+                        {% if group.status is key %}
+                            <option value="{{key}}" selected="true">{{value}}</option>
+                        {% else %}
+                            <option value="{{key}}">{{value}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group col-12">
+                    <input class="form-control" type="date" name="start_date" required="true" id="id_start_date" class="form-control form-control-sm" placeholder="Guruh nomi..." value="{{group_obj.start_date|date:'Y-m-d'}}" />
+                </div>
+                <div class="form-group m-2 d-flex justify-content-between align-items-center">
+                    <div class="col-4">
+                        <input class="form-control"  type="time" name="start_time" required="true" id="id_start_time" class="form-control form-control-sm" placeholder="Boshlanish soati..."  value='{{group_obj.start_time|time:"h:i" }}' />
+                    </div>
+    
+                    <div class="col-4">
+                        <input class="form-control" type="time" name="end_time" required="true" id="id_end_time" class="form-control form-control-sm" placeholder="Tugash vaqti..."  value='{{group_obj.end_time|time:"h:i" }}' />
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="number" name="limit" required="true" id="id_limit" class="form-control form-control-sm" placeholder="Limit..."  value="{{group.limit}}" />
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+
+</div>
+
+
 <div class="drawer-basic-wrap">
     <div class="atbd-drawer drawer-account d-none">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
@@ -1512,11 +1644,12 @@
     return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
     }
     function handleChange(id, date, is_lead=false) {
-        var status = document.getElementById(`${id.toString()}-${date.toString()}`)
+        var status = document.getElementById(`${id.toString()}|${date.toString()}`)
         var group_id = window.location.pathname.split('/')[3]; // need to optimize some points
         console.log(group_id);
 
-        if(is_lead==true){
+        if(is_lead===true){
+            console.log("LEAD status")
             fetch(`{% url 'admintion:change-lead-attendace' %}`, {
                 method: 'POST',
                 headers: {
@@ -1652,7 +1785,7 @@
             formData.append('responsibles', responsibles.selectedOptions[i].value);
         }
         
-        formData.append('user_status', 3);
+        formData.append('user_status', 2);
 
         var taskType = document.getElementById('select-search');
         formData.append('task_type', taskType.value);
@@ -1850,6 +1983,45 @@ mainCheckBox.addEventListener('change', ()=>{
         checkBoxes[i].checked = mainCheckBox.checked;
     }
 })
+
+function printStudentShortData(data){
+    var fio = document.getElementById('studentFIO');
+    fio.innerHTML = `<b class="fw-bold">FIO:</b> ${data.full_name}`;
+
+    var phone = document.getElementById('studentPhone');
+    phone.innerHTML = `<b class="fw-bold">Telefon raqam:</b> ${data.phone_number}`;
+
+    var group = document.getElementById('studentGroups');
+    if (data.groups){
+        console.log(data.groups.map(item => item))  
+        group.innerHTML = `<b class="fw-bold">Guruhi:</b> <div class="display:inline-block;">${data.groups.join('<br/>')}</div>`;
+    } else {
+        group.innerHTML = `<b class="fw-bold">Guruhi:</b>`;
+    }
+
+    return ;
+}
+
+var addStudentSelect = document.getElementsByClassName('add-student-select')[0];
+addStudentSelect.onchange = (event)=>{
+    var id = event.target.value;
+    console.log("change");
+    if (id==="Tanlang"){
+        return ;
+    } else {
+        var url = `/admintion/student/${id}/detail-data/`;
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+            printStudentShortData(res);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+}
+
 
 
 </script>
