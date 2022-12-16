@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'admintion',
     'student',
     'finance',
-    'clickuz'
+    'clickuz',
     'django_user_agents',
     'import_export',
 ]
