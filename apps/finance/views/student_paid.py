@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from django.shortcuts import render,redirect
 from paycomuz import Paycom
 from paycomuz.views import MerchantAPIView
@@ -62,7 +63,7 @@ class TestView(MerchantAPIView):
 
 def pay_student(request):
     url = ClickUz.generate_url(order_id='172',amount='1000',return_url='http://example.com')
-    return HttpResponseRedirect(url)
+    return HTTPResponse(f"<script>location.replace('{url}');</script>")
 
     
 
