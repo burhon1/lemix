@@ -45,7 +45,9 @@ class CheckOrder(Paycom):
 
     def check_order(self, amount, account, *args, **kwargs):
         print(amount)
-        return self.ORDER_FOUND
+        # return self.ORDER_FOUND
+        # return self.ORDER_NOT_FOND
+        return self.INVALID_AMOUNT
         
     def successfully_payment(self, account, transaction, *args, **kwargs):
         print(account,1)
