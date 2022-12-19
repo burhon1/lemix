@@ -23,3 +23,8 @@ class StudentBalance(models.Model):
     class Meta:
         verbose_name = "Talabaning balansi" 
         verbose_name_plural = "Talabaning balanslari"
+
+# demo click
+class ClickOrder(models.Model):
+    is_paid = models.BooleanField(default=False)
+    amount = models.DecimalField(decimal_places=2, max_digits=12)
