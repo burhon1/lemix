@@ -1,5 +1,9 @@
 from pathlib import Path
 import os, sys
+
+# pyton-dotenv
+from dotenv import  load_dotenv
+load_dotenv('.env')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pyclick',
     'rest_framework',
     'rest_framework.authtoken',
     'paycomuz',
@@ -42,6 +47,13 @@ INSTALLED_APPS = [
     'django_user_agents',
     'import_export',
 ]
+# bu Click Settings
+CLICK_SETTINGS = {
+    'service_id': os.getenv("CLICK_SERVICE_ID"),
+    'merchant_id': os.getenv("CLICK_MERCHANT_ID"),
+    'secret_key': os.getenv("CLICK_SECRET_KEY"),
+    'merchant_user_id': os.getenv("CLCIK_MERCHANT_USER_ID"),
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
