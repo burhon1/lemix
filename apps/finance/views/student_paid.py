@@ -3,11 +3,14 @@ from django.shortcuts import render,redirect
 from paycomuz import Paycom
 from paycomuz.views import MerchantAPIView
 from paycomuz import Paycom
+from paycomuz.models import Transaction
 from django.urls import reverse
 from django.http import JsonResponse
 import json
 from clickuz import ClickUz
-from django.http import HttpResponseRedirect
+from clickuz.views import ClickUzMerchantAPIView
+from django.http import HttpResponse,HttpResponseRedirect
+from django.utils import timezone
 from admintion.models import Student
 from finance.services.paid import student_paid
 
@@ -38,6 +41,7 @@ def check_paid(request,id):
     paycom = Paycom()
     url = paycom.create_initialization(amount=5.00, order_id='197', return_url='https://example.com/success/')
     # print(url)
+    print(url)
     return redirect(url)  
 
 class CheckOrder(Paycom):
@@ -45,25 +49,59 @@ class CheckOrder(Paycom):
     # account = 'bu yerga qaysi account ni yozish kerak?'
 
     def check_order(self, amount, account, *args, **kwargs):
-        print(amount)
-        # return self.ORDER_FOUND
-        # return self.ORDER_NOT_FOND
-        return self.INVALID_AMOUNT
+        # print(,args)
+        result=None
+        result = Transaction.objects.filter(order_key=account['Lemix_kassa'])
+        key_tran = kwargs.get('id',False)
+        
+        if key_tran:
+            return self.ORDER_FOUND
+            
+        if result.exists():
+            if int(result.first().amount)*100!=amount:
+                return self.INVALID_AMOUNT    
+            elif result.exists() and int(result.first().amount)*100==amount:
+                return self.ORDER_FOUND
+        else:
+            return self.ORDER_NOT_FOND
+        
+        # if result.exists(): #ma'lumotlari omborida huddi shunday buyurtma bor narxi ham to'g'ri keladi 
+        #     return self.ORDER_FOUND 
+        # else: #agar bunday buyurtma bo'lmasa 
+        #     return self.ORDER_NOT_FOND   
         
     def successfully_payment(self, account, transaction, *args, **kwargs):
         print(account,1)
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
         print(account)
+        # now = timezone.now()
+        # print(now,2)
       
     # result = check_order(amount=1, account=2222)
 
 class TestView(MerchantAPIView):
     VALIDATE_CLASS = CheckOrder
+    # VALIDATE_CLASS.cancel_payment()
 
 def pay_student(request):
-    url = ClickUz.generate_url(order_id='172',amount='1000',return_url='http://example.com')
-    return HTTPResponse(f"<script>location.replace('{url}');</script>")
+    url = ClickUz.generate_url(order_id='1',amount='1000')
+    print(url)
+    
+    return HttpResponseRedirect(url)
+
+    from clickuz.views import ClickUzMerchantAPIView
+
+
+class OrderCheckAndPayment(ClickUz):
+    def check_order(self, order_id: str, amount: str):
+        return self.ORDER_FOUND
+
+    def successfully_payment(self, order_id: str, transaction: object):
+        print(order_id)
+
+class TestClickView(ClickUzMerchantAPIView):
+    VALIDATE_CLASS = OrderCheckAndPayment
 
     
 
