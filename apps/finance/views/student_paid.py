@@ -94,7 +94,7 @@ def pay_student(request):
     
     return HttpResponseRedirect(url)
 
-    from clickuz.views import ClickUzMerchantAPIView
+from clickuz.views import ClickUzMerchantAPIView
 
 
 class OrderCheckAndPayment(ClickUz):
@@ -111,12 +111,12 @@ class TestClickView(ClickUzMerchantAPIView):
 #pip install
 
 class CreateClickOrderView(CreateAPIView):
-    serializer_class = serializers.ClickOrderSerializer
+    serializer_class = ClickOrderSerializer
 
     def post(self, request, *args, **kwargs):
         amount = request.POST.get('amount')
         order = ClickOrder.objects.create(amount=amount)
-        return_url = 'http://127.0.0.1:8000/'
+        return_url = 'http://t.lemix.uz/finance/fnc'
         url = PyClick.generate_url(order_id=order.id, amount=str(amount), return_url=return_url)
         return redirect(url)
 
@@ -143,4 +143,4 @@ class OrderCheckAndPayment(PyClick):
 
 
 class OrderTestView(PyClickMerchantAPIView):
-    VALIDATE_CLASS = OrderCheckAndPayment
+    VALIDATE_CLASS = OrderCheckAndPayment 

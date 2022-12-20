@@ -148,11 +148,11 @@ PAYCOM_SETTINGS = {
     }
 }
 
-CLICK_SETTINGS = {
-    'service_id':'25807',
-    'merchant_id':'18147',
-    'secret_key':'HHPm2yaWiIwb'
-}
+# CLICK_SETTINGS = {
+#     'service_id':'25807',
+#     'merchant_id':'18147',
+#     'secret_key':'HHPm2yaWiIwb'
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

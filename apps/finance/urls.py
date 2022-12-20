@@ -10,7 +10,7 @@ urlpatterns = [
     path('paycom/<int:id>/list/', student_paid.check_paid),
     path('billing/',billing.student_pay),
     path('pay/',student_paid.pay_student),
-    path('click/transaction/',student_paid.TestClickView.as_view()),
-    path('click/', student_paid.CreateClickOrderView.as_view()),
+    # path('click/transaction/',student_paid.TestClickView.as_view()),
+    path('fnc/', student_paid.CreateClickOrderView.as_view()),
     path('click/transaction/', student_paid.OrderTestView.as_view()),
 ]
