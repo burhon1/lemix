@@ -34,16 +34,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pyclick',
     'rest_framework',
     'rest_framework.authtoken',
-    'paycomuz',
+    'payme',
     'user',
     'education',
     'admintion',
     'student',
     'finance',
-    'clickuz',
     'django_user_agents',
     'import_export',
 ]
@@ -148,12 +146,14 @@ PAYCOM_SETTINGS = {
     }
 }
 
-CLICK_SETTINGS = {
-    'service_id':'25807',
-    'merchant_id':'18147',
-    'secret_key':'HHPm2yaWiIwb'
+PAYME: dict = {
+    'PAYME_ID': '635795929fd41bc3daf5019c',
+    'PAYME_KEY': 'Lemix_kassa',
+    'PAYME_URL': 'payme-checkout-url',
+    'PAYME_CALL_BACK_URL': 'your-callback-url', # merchant api callback url
+    'PAYME_MIN_AMOUNT': '1000', # integer field
+    'PAYME_ACCOUNT': 'HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d',
 }
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
