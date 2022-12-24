@@ -1,5 +1,9 @@
 from pathlib import Path
 import os, sys
+
+# pyton-dotenv
+# from dotenv import  load_dotenv
+# load_dotenv('.env')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,6 +27,23 @@ CSRF_TRUSTED_ORIGINS = ['http://5.8.248.139','http://lemix.uz/','https://lemix.u
 
 # Application definition
 
+PAYME: dict = {
+    'PAYME_ID': '635795929fd41bc3daf5019c',
+    'PAYME_KEY': 'HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d',
+    'PAYME_URL': 'https://checkout.paycom.uz',
+    'PAYME_CALL_BACK_URL': 'https://www.youtube.com',
+    'PAYME_MIN_AMOUNT': 0,
+    'PAYME_ACCOUNT': 'order_id',
+}
+
+# Payme Configuration
+PAYCOM: dict = {
+    "min_amount": 0,
+    "account": "order_id",
+    "paycom_key": "HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d"
+}
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,8 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'payme',
     'rest_framework',
-    'paycomuz',
+    'rest_framework.authtoken',
     'user',
     'education',
     'admintion',
@@ -41,7 +63,22 @@ INSTALLED_APPS = [
     'import_export',
     'sms',
     'django_cleanup.apps.CleanupConfig',
+    'payme_app'
+
 ]
+# bu Click Settings
+CLICK_SETTINGS = {
+    'service_id': os.getenv("CLICK_SERVICE_ID"),
+    'merchant_id': os.getenv("CLICK_MERCHANT_ID"),
+    'secret_key': os.getenv("CLICK_SECRET_KEY"),
+    'merchant_user_id': os.getenv("CLCIK_MERCHANT_USER_ID"),
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,18 +124,18 @@ AUTH_USER_MODEL  = 'user.CustomUser'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lemix',
-        'USER': 'postgres',
-        'PASSWORD': '1',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'lemix',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '1',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    # }
 
 }
 

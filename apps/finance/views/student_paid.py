@@ -1,12 +1,14 @@
+from http.client import HTTPResponse
 from django.shortcuts import render,redirect
-from paycomuz import Paycom
-from paycomuz.views import MerchantAPIView
-from paycomuz import Paycom
+from rest_framework.generics import CreateAPIView
 from django.urls import reverse
 from django.http import JsonResponse
 import json
+from django.http import HttpResponse,HttpResponseRedirect
+from django.utils import timezone
 from admintion.models import Student
 from finance.services.paid import student_paid
+from finance.serializers import *
 
 # Create your views here.
 def student_pay(request,id):
@@ -31,31 +33,8 @@ def group_students_pay(request):
     val = student_paid(student,price,paid_type,goal_type,description,request.user)
     return JsonResponse({'status':201,'balance':val}) 
 
-def check_paid(request,id):
-    paycom = Paycom()
-    url = paycom.create_initialization(amount=5.00, order_id='197', return_url='https://example.com/success/')
-    # print(url)
-    return redirect(url)  
 
-class CheckOrder(Paycom):
-    # order = 'bu yerda Order ID buladi'
-    # account = 'bu yerga qaysi account ni yozish kerak?'
 
-    def check_order(self, amount, account, *args, **kwargs):
-        print(amount)
-        return self.ORDER_FOUND
-        
-    def successfully_payment(self, account, transaction, *args, **kwargs):
-        print(account,1)
 
-    def cancel_payment(self, account, transaction, *args, **kwargs):
-        print(account)
-      
-    # result = check_order(amount=1, account=2222)
-
-class TestView(MerchantAPIView):
-    VALIDATE_CLASS = CheckOrder
-
-    
 
 

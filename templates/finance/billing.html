@@ -1,0 +1,656 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block style %}
+    <style>
+        .cardPay {
+            position: relative;
+        }
+
+        .cardPay:hover {
+            border: 1px solid #5f63f2;
+
+        }
+
+        .cardPay:hover::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            border-radius: 5px;
+            height: 100%;
+            width: 100%;
+            background-color: #5f63f288;
+        }
+
+        .feature-card--1 figcaption h5 {
+            margin: 0 0 0.5rem 0 !important;
+        }
+
+        .feature-cards:hover {
+            cursor: pointer;
+            box-shadow: 0 0 5px #5f63f2;
+        }
+
+        .atbd-tab .tab-content p {
+            font-size: 12px !important;
+        }
+        .v-num{
+            font-size: 14px;
+        }
+        .application-faqs .panel-title a{
+            font-size: 12px !important;
+        }
+        .forms-view{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .forms-view > .form-group{
+            display: flex;
+            align-items: center;
+        }
+        .table-responsive tr td>div{
+            text-transform: none;
+        }
+        .atbd-select .select2-selection,
+        .select2-container--default .select2-selection--single{
+            height: 1.875rem;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    -webkit-border-radius: 0.2rem;
+    border-radius: 0.2rem;
+    margin-right: 7px;
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered{
+            width: auto !important;
+        }
+        .atbd-menu.menu-vertical .atbd-menu__item.has-submenu > .atbd-menu__link:before {
+            margin-top: 0;
+        }
+        #infoUser{
+            overflow: hidden;
+            height: 120px;
+        }
+        #info {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="breadcrumb-main">
+                        <h4 class="text-capitalize breadcrumb-title">Integration</h4>
+                        
+                    </div>
+
+                </div>
+            </div>
+    <div class="row">
+        <div class="col-12">
+              <!-- Filter Controls - Simple Mode -->
+              <div class="gallery-filter mb-sm-50 mb-30">
+                <ul class="simplefilter w-100 ap-tab-main px-sm-25 px-15 bg-white d-flex flex-wrap align-items-center radius-xl">
+                    <li class="fltr-controls nav-link active" data-filter="all">Barchasi</li>
+                    <li class="fltr-controls nav-link" data-filter="1">To'lov tizimlari </li>    
+                    <li class="fltr-controls nav-link" data-filter="2">SMS shlyuzlar</li>
+                    <li class="fltr-controls nav-link" data-filter="4">Telegram botlar </li>
+                    <li class="fltr-controls nav-link" data-filter="3">IP telefoniya </li>
+                    
+                    <li class="fltr-controls nav-link" data-filter="5">Boshqalar</li>
+                </ul>
+                <div class="push-down push-down--style pr-3">
+                    <div class="filtr-container">
+                        <div class="filtr-item filtr-item--style" data-category="1"  data-toggle="modal" data-target="#modal-basic-tahrirlash" data-sort="Busy streets">
+                            <div class="card">
+                                
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Click</P>
+                                            <button class="btn btn-success btn-xs btn-squared ">	&#10004; O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style"  data-toggle="modal" data-target="#modal-basic" data-category="1" data-sort="Luminous night">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery2.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Payme</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="1" data-sort="City wonders">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery3.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Apelsin</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="1" data-sort="In production">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery4.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Payze</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="2" data-sort="Industrial site">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery5.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Play mobile</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="2" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery6.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Eskiz</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="4" data-sort="Industrial site">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery7.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Telegram bot Admittance</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="4" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Telegram bot parent</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                     
+                        <div class="filtr-item filtr-item--style" data-category="4" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery9.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Telegram bot manager</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    
+                        <div class="filtr-item filtr-item--style" data-category="3" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Online PBX</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="5" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Zoom</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="5" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Telegram messenjer</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="5" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Instagram</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="5" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>WhatsApp</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="5" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Facebook</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="filtr-item filtr-item--style" data-category="5" data-sort="Peaceful lake">
+                            <div class="card">
+
+                                <div class="gc ">
+                                    <div class="gc__img">
+                                        <img src="img/gallery11.png" alt="img" class="w-100 radius-xl">
+                                    </div>
+                                    <div class="card-body px-25 py-20">
+                                        <div class="gc__title">
+                                            <P>Google kalendar</P>
+                                            <button class="btn btn-light btn-xs btn-squared ">+ O'rnatish </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-basic modal fade" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header">
+
+
+
+                    <h6 class="modal-title">WhatsAppni o'rnatish</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card product-details border-0">
+                        <div class="product-item d-flex ">
+                            <div class="row">
+                                <div class=" col-lg-7">
+                                    <!-- Start: Product Details -->
+                                    <div class=" border-bottom mb-25 pb-sm-30 pb-15 mt-lg-0 mt-15">
+                                        <div class="product-item__body">
+                                            <!-- Start: Product Title -->
+                                           
+                                            <div class="product-item__image">
+                                                <img class="img-fluid d-flex bg-opacity-primary " src="img/slider-details.png" alt="Card image cap" title="">
+                                                </div>
+                                            <!-- End: Product Title -->
+                                            <div class="product-item__content text-capitalize">
+                                              
+                                                <!-- End: Product Brand -->
+                                                <!-- Start: Product Description -->
+                                                <p class=" product-deatils-pera">Lorem ipsum dolor sit amet, consetetur
+                                                    sadipscing elitr, sed diam
+                                                    nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
+                                                <!-- End: Product Description -->
+
+                                             
+                                         
+                                            </div>
+                                           
+                                          
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="product-item__title">
+                                        <h2 class="card-title fw-500 d-flex">
+                                            <img class="img-fluid d-flex bg-opacity-primary " style="height: 50px;width: 50px;" src="img/slider-details.png" alt="">
+                                            <a href="#" class="fs-20 text-dark ml-3">This stools are </a>
+                                        </h2>
+                                    </div>
+                                    <p class=" product-deatils-pera">Lorem ipsum dolor sit amet, consetetur
+                                        sadipscing elitr, sed diam
+                                        nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
+                                    <!-- End: Product Description -->
+
+                                 
+                             <div class="form-basic mb-3">
+                                  
+                                  <div class="form-group mb-2">
+                                    <label for="one">Mechand Id </label>
+                                        <input type="text" id="one" class="form-control form-control-default" placeholder="Default Size">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="one">Token  </label>
+                                    <input type="text" class="form-control form-control-default" placeholder="Default Size">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="one">Login</label>
+                                <input type="text" class="form-control form-control-default" placeholder="Default Size">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Parol</label>
+                            <div class="input-container position-relative icon-right">
+                                <a href="#" class="input-icon icon-right"><span data-feather="eye-off"></span></a>
+                                <input class="form-control form-control-lg" type="password" name="password" placeholder="Password">
+                            </div>
+                    </div>
+                    <button class="btn btn-primary "   style="margin-top: 20px;">
+                        O'rnatish
+                      </button>
+                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- ends: .modal-Basic -->
+
+       <!-- ends: .atbd-page-content -->
+
+       <div class="modal-basic modal fade" id="modal-basic-tahrirlash" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header">
+
+
+
+                    <h6 class="modal-title">WhatsAppni o'rnatish</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card product-details border-0">
+                        <div class="product-item d-flex ">
+                            <div class="row">
+                                <div class=" col-lg-7">
+                                    <!-- Start: Product Details -->
+                                    <div class=" border-bottom mb-25 pb-sm-30 pb-15 mt-lg-0 mt-15">
+                                        <div class="product-item__body">
+                                            <!-- Start: Product Title -->
+                                           
+                                            <div class="product-item__image">
+                                                <img class="img-fluid d-flex bg-opacity-primary " src="img/slider-details.png" alt="Card image cap" title="">
+                                                </div>
+                                            <!-- End: Product Title -->
+                                            <div class="product-item__content text-capitalize">
+                                              
+                                                <!-- End: Product Brand -->
+                                                <!-- Start: Product Description -->
+                                                <p class=" product-deatils-pera">Lorem ipsum dolor sit amet, consetetur
+                                                    sadipscing elitr, sed diam
+                                                    nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
+                                                <!-- End: Product Description -->
+
+                                             
+                                         
+                                            </div>
+                                           
+                                            <div class="product-item__image">
+                                                <img class="img-fluid d-flex bg-opacity-primary " src="img/slider-details.png" alt="Card image cap" title="">
+                                                </div>
+                                            <!-- End: Product Title -->
+                                            <div class="product-item__content text-capitalize">
+                                              
+                                                <!-- End: Product Brand -->
+                                                <!-- Start: Product Description -->
+                                                <p class=" product-deatils-pera">Lorem ipsum dolor sit amet, consetetur
+                                                    sadipscing elitr, sed diam
+                                                    nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
+                                                <!-- End: Product Description -->
+
+                                             
+                                         
+                                            </div>
+                                           
+                                            <div class="product-item__image">
+                                                <img class="img-fluid d-flex bg-opacity-primary " src="img/slider-details.png" alt="Card image cap" title="">
+                                                </div>
+                                            <!-- End: Product Title -->
+                                            <div class="product-item__content text-capitalize">
+                                              
+                                                <!-- End: Product Brand -->
+                                                <!-- Start: Product Description -->
+                                                <p class=" product-deatils-pera">Lorem ipsum dolor sit amet, consetetur
+                                                    sadipscing elitr, sed diam
+                                                    nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
+                                                <!-- End: Product Description -->
+
+                                             
+                                         
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="product-item__title">
+                                        <h2 class="card-title fw-500 d-flex">
+                                            <img class="img-fluid d-flex bg-opacity-primary " style="height: 50px;width: 50px;" src="img/slider-details.png" alt="">
+                                            <a href="#" class="fs-20 text-dark ml-3">This stools are </a>
+                                        </h2>
+                                    </div>
+                                    <p class=" product-deatils-pera">Lorem ipsum dolor sit amet, consetetur
+                                        sadipscing elitr, sed diam
+                                        nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
+                                    <!-- End: Product Description -->
+                                       <div id="info_use">
+                                        <p><b>Merchan ID</b> : asdasdasdasd</p>
+                                        <p><b>Merchan ID</b> : asdasdasdasd</p>
+                                        <p><b>Merchan ID</b> : asdasdasdasd</p>
+                                        <p><b>Merchan ID</b> : asdasdasdasd</p>
+                                       </div>
+                                 
+                       
+                    <button class="btn btn-warning "  id="edit" style="margin-top: 20px;">
+                        Tahrirlash
+                      </button>
+
+                      <div class="form-basic mb-3" id="info">
+                                  
+                        <div class="form-group mb-2">
+                          <label for="one">Mechand Id </label>
+                              <input type="text" id="one" class="form-control form-control-default" value="asdasdasdasdasdasdas" placeholder="Default Size">
+                      </div>
+                      <div class="form-group mb-2">
+                          <label for="one">Token  </label>
+                          <input type="text" class="form-control form-control-default" value="adasdasdasd" placeholder="Default Size">
+                  </div>
+                  <div class="form-group mb-2">
+                      <label for="one">Login</label>
+                      <input type="text" class="form-control form-control-default" value="casdasdas" placeholder="Default Size">
+              </div>
+              <div class="form-group mb-2">
+                  <label>Parol</label>
+                  <div class="input-container position-relative icon-right">
+                      <a href="#" class="input-icon icon-right"><span data-feather="eye-off"></span></a>
+                      <input class="form-control form-control-lg" type="password" value="eweewee" name="password" placeholder="Password">
+                  </div>
+          </div>
+         <div class="d-flex ">
+            <button class="btn btn-warning mr-2" id="save"   style="margin-top: 20px;">
+                Bekor qilish
+              </button>
+              <button class="btn btn-primary " id="cancel"  style="margin-top: 20px;">
+                  Saqlash
+                </button>
+         </div>
+          </div>
+                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- ends: .modal-Basic -->
+        {% endblock %}
+   {% block script %}
+   <script>
+    document.querySelector('#edit').addEventListener("click", function(e){
+    e.target.style.display="none";
+        document.querySelector("#info").style.display="block"
+        document.querySelector("#info_use").style.display="none"
+    })
+    document.querySelector('#save').addEventListener("click", function(e){
+        document.querySelector("#info").style.display="none"
+        document.querySelector('#edit').style.display="block"
+        document.querySelector("#info_use").style.display="block"
+    })
+    document.querySelector('#cancel').addEventListener("click", function(e){
+        document.querySelector("#info").style.display="none"
+        document.querySelector('#edit').style.display="block"
+        document.querySelector("#info_use").style.display="block"
+    })
+</script>
+   {% endblock %}
+    
