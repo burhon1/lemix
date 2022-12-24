@@ -14,6 +14,7 @@ urlpatterns = [
     path('student/', include('student.urls')),
     path('finance/', include('finance.urls')),
     path('register/',include('admintion.form_urls')),
+    path('sms/', include('sms.urls')),
     path("payments/", include("payme_app.urls"))
 ]
 

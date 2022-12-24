@@ -39,6 +39,14 @@
                                                         <div class="edit-profile__body">
                                                             <form action="" method="post">
                                                                 {% csrf_token %}
+
+                                                                {%  if error %} 
+                                                                    <div class="alert alert-danger br-2">
+                                                                        <span data-feather="alert-octagon"></span>
+                                                                        <p class="pl-2">{{ error }}</p>
+                                                                    </div>
+                                                                {% endif %}
+ 
                                                                 <div class="form-group mb-20">
                                                                     <label for="username"
                                                                         style="display: block;">Telefon</label>

@@ -100,3 +100,13 @@ CONTACT_TYPES = (
     (6, 'Telefon'),
     (7, 'Havola'),
 )
+
+MESSAGE_STATUS = (
+    (1, 'Waiting'),
+    (2, 'TRANSMTD'),
+    (3, 'DELIVRD'),
+    (4, 'UNDELIV'),
+    (5, 'EXPIRED'),
+    (6, 'REJECTD'),
+    (7, 'DELETED'),
+)

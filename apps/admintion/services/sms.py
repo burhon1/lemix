@@ -2,6 +2,7 @@ from django.conf import settings
 from admintion.models import SmsIntegration,Messages
 from admintion.services import send_sms
 
+from sms.models import SMSAccount
 
 def get_sms_integration(main=False):
     sms_in = SmsIntegration.objects.filter(main=main).first()
@@ -9,11 +10,15 @@ def get_sms_integration(main=False):
         return sms_in
     else:
         return SmsIntegration.objects.create() 
+    # sms_account = SMSAccount.objects.first()
+    # if sms_account is None:
+    #     return None
+    # elif sms_account.free_sms > 0:
+    #     return settings.ESKIZ_EMAIL.values()
+        
 
 def get_bonus_smses(sms_integration):
-    # if sms_integration.limit > sms_integration.used:
     return sms_integration.limit
-    # return 0
 
 def set_used_smses(used: int):
     sms_integration = get_sms_integration()

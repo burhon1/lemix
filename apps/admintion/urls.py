@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from admintion.views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms,reports, educenters, settings
+from admintion.views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms,reports, educenters, settings, dashboard
 app_name = 'admintion'
 
 urlpatterns = [
@@ -55,7 +55,7 @@ urlpatterns = [
     path('sms/send/group/', sms.send_sms_to_group, name='send_sms_to_group'),
     path('sms/send/teacher/', sms.send_sms_to_teacher, name='send_sms_to_teacher'),
     path('sms/send/parent/', sms.send_sms_to_parent, name='send_sms_to_parent'),
-
+        
     path('reports/', reports.reports_view, name='reports'),
     path('educenters/', educenters.educenters_view, name='edu-centers'),
     path('educenters/<int:pk>/delete/', educenters.educenter_delete_view, name='edu-centers-delete'),
@@ -64,10 +64,9 @@ urlpatterns = [
     path('connected_regs/', educenters.connected_regs, name='connected_regions'),
     path('settings/', settings.settings_view, name='settings'),
 
-    path('director/', TemplateView.as_view(template_name='admintion/dashboard_director.html'), name='director_dashboard'),
-    path('teacher/', TemplateView.as_view(template_name='teachers/dashboard_teacher.html'), name='teacher_dashboard'),
-    path('teacher/pay/', TemplateView.as_view(template_name='teachers/teacher_pay.html'), name='teacher_pay'),
+    path('', dashboard.dashboard, name='dashboard'),
+    path('teacher/pay/', dashboard.teacher_pay, name='teacher_pay'),
 
-
+    path('reports/finance/', reports.financial_reports, name='reports-finance'),
 
 ] 

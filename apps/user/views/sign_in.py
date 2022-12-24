@@ -22,14 +22,10 @@ def login_view(request):
                 if success:
                     login(request,user.first())
                     add_to_device_list(request)
-                    if request.user.is_superuser or request.user.is_staff:
-                        return redirect('education:onlin')
-                    elif request.user.student_set.first():
-                        return redirect('student:student')
-                    elif request.user.teacher_set.first():
-                        return redirect('education:onlin')
-                    elif request.user.lead:
-                        return redirect('student:lead')
+                    next = request.GET.get('next')
+                    if next:
+                        return redirect(reverse('user:account')+f'?next={next}')
+                    return redirect(f'user:account')
                 else:
                     context['error'] = "Parol xato kiritildi"   
             else:

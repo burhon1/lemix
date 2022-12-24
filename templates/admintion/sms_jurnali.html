@@ -1,0 +1,481 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+    SMS Jurnal 
+{% endblock %}
+
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+
+    .v-num {
+        font-size: 14px;
+    }
+
+    .application-faqs .panel-title a {
+        font-size: 12px !important;
+    }
+
+    .forms-view {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .forms-view>.form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .table-responsive tr td>div {
+        text-transform: none;
+    }
+
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single {
+        height: 1.875rem;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        margin-right: 7px;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        width: auto !important;
+    }
+
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:before {
+        margin-top: 0;
+    }
+
+    #infoUser {
+        overflow: hidden;
+        height: 120px;
+    }
+
+    #info {
+        display: none;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 48px !important;
+    }
+
+    label,
+    table th .userDatatable-title,
+    .edit-profile__title h6 {
+        text-transform: none !important;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="atbd-page-content">
+        <div class="container-fluid">
+            <div class="row my-2">
+                <div class="col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        <p class="fs-14 mb-0">Hozirgi balans: {{ balance|readable_soums|default:0 }} so'm</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <p class=" d-flex fs-14 mb-0">Yuborilgan SMS soni: {{ sent_sms }}{% if free_sms %}
+                            <span class="selling-badge order-bg-opacity-success color-success">+{{ free_sms|default:0 }} ta bonus sifatida</span>
+                            {% endif %}</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <p class="fs-14 mb-0">Yuborilgan SMS miqdori: {{ sent_sms_soums|readable_soums|default:0 }} so'm</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header px-sm-25 px-3">
+                            <div
+                                class="edit-profile__title w-100 d-flex justify-content-between align-items-center ">
+                                <h6>SMS ro'yxati</h6>
+                                <div id="filter-form-container"
+                                    class="footable-filtering-external footable-filtering-right">
+                                    <form class="form-inline" style="flex-flow: row nowrap;">
+                                        <div class="form-group footable-filtering-search"><label
+                                            class="sr-only">Search</label>
+                                        <div class="input-group"><input type="text" class="form-control"
+                                                placeholder="Qidirish">
+                                            <div class="input-group-btn"><button type="button"
+                                                    class="btn btn-primary"><span
+                                                        class="fooicon fooicon-search"></span></button><button
+                                                    type="button"
+                                                    class="btn btn-default dropdown-toggle"><span
+                                                        class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span class="userDatatable-title">id</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span
+                                                                    class="userDatatable-title">user</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span
+                                                                    class="userDatatable-title">emaill</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span
+                                                                    class="userDatatable-title">company</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span
+                                                                    class="userDatatable-title">position</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span class="userDatatable-title">join
+                                                                    date</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span
+                                                                    class="userDatatable-title">status</span>
+                                                            </label></a></li>
+                                                    <li><a class="checkbox"><label><input type="checkbox"
+                                                                    checked="checked">
+                                                                <span
+                                                                    class="userDatatable-title float-right">action</span>
+                                                            </label></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div
+                                            class="form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-10 mr-0">
+                                            <select class="form-control ml-sm-10 ml-0">
+                                                <option>Turi</option>
+                                                <option>Shablon</option>
+                                                <option>Xabar</option>
+                                                <option>Reklama</option>
+                                            </select></div>
+                                        
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="selling-table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table--default" data-sorting="true"
+                                        data-filter-container="#filter-form-container" data-paging-current="1"
+                                        data-paging-position="right" data-paging-size="10">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th class="text-center">№</th>
+                                                <th class="text-center">Kim tomondan</th>
+                                                <th class="text-center">Oluvchilar</th>
+                                                <th class="text-center">Turi</th>
+                                                <th class="text-center">Nomi</th>
+                                                <th class="text-center">Summasi</th>
+                                                <th class="text-center">Vaqti</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for sms in messages %}
+
+                                            <tr class="text-center">
+                                                <td class="text-center">{{ forloop.counter }}</td>
+                                                <td class="text-center">{{ sms.who_sent }}</td>
+                                                <td class="text-center color-primary" onclick="setModal({{sms.id}})" data-toggle="modal" data-target="#modal-basic1" style="cursor: pointer;">{{ sms.sms_count }}</td>
+                                                <td class="text-center">{{ sms.type }}</td>
+                                                <td class="text-center" style="max-width: 200px;">
+                                                    <p class="mb-0"
+                                                        style="max-width: 200px;white-space:break-spaces ;"> {{ sms.name }}</p>
+                                                </td>
+
+                                                <td class="text-center">{{ sms.soums|default:0 }} so'm</td>
+                                                <td class="text-center">
+                                                    {{ sms.created_at|date:'d.m.Y H:i:s'}}
+                                                </td>
+
+                                            </tr>
+
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ends: .atbd-page-content -->
+
+
+
+
+
+
+
+
+
+
+    <div class="modal-basic modal  fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+        <div class="modal-dialog " role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header">
+
+
+
+                    <h6 class="modal-title" id="receiverH6">Jami oluvchilar: </h6>
+                    <h6 class="modal-title"  id="soumsH6">Jami summa: 150 so'm</h6>
+                    <h6 class="modal-title" id="timedeltaH6">Sarfangan vaqt: 00:02:48</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="selling-table-wrap">
+                        <div class="table-responsive">
+                            <table class="table table--default" data-sorting="true"
+                                data-filter-container="#filter-form-container" data-paging-current="1"
+                                data-paging-position="right" data-paging-size="10">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="text-center">№</th>
+                                        <th class="text-center">Telefon</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Mamlakat</th>
+                                        <th class="text-center">Summa(UZS)</th>
+                                        <th class="text-center">Vaqti</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="messagesTBodyID">
+                                    <tr class="text-center">
+                                        <td class="text-center">2</td>
+                                        <td class="text-center">+99899 123 45 67</td>
+                                        <td > <div class="d-flex justify-content-end">
+                                            <span class="selling-badge order-bg-opacity-success color-success">Yuborildi</span>
+                                        </div></td>
+                                        <td class="text-center">Uzb</td>
+                                        
+                                        <td class="text-center">500 000</td>
+                                        <td class="text-center">
+                                            12.12.2022 14:55
+                                        </td>
+
+                                    </tr>
+                                    <tr class="text-center">
+                                        <td class="text-center">3</td>
+                                        <td class="text-center">+99899 123 45 67</td>
+                                        <td > <div class="d-flex justify-content-end">
+                                            <span class="selling-badge order-bg-opacity-danger color-danger">Tugagan</span>
+                                        </div></td>
+                                        <td class="text-center">Uzb</td>
+                                        
+                                        <td class="text-center">500 000</td>
+                                        <td class="text-center">
+                                            12.12.2022 14:55
+                                        </td>
+
+                                    </tr>
+                                    <tr class="text-center">
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">+99899 123 45 67</td>
+                                        <td > <div class="d-flex justify-content-end">
+                                            <span class="selling-badge order-bg-opacity-warning color-warning">Uzatildi</span>
+                                        </div></td>
+                                        <td class="text-center">Uzb</td>
+                                        
+                                        <td class="text-center">500 000</td>
+                                        <td class="text-center">
+                                            12.12.2022 14:55
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pagesBtnID"  class="d-flex justify-content-end">
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-lighten btn-sm" data-dismiss="modal">Yopish</button>
+                    <!-- <button type="button" class="btn btn-success btn-sm">Qo'shish</button> -->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block script %}
+    <script>
+        document.querySelector('#edit').addEventListener("click", function (e) {
+            e.target.style.display = "none";
+            document.querySelector("#info").style.display = "block"
+            document.querySelector("#info_use").style.display = "none"
+        })
+        document.querySelector('#save').addEventListener("click", function (e) {
+            document.querySelector("#info").style.display = "none"
+            document.querySelector('#edit').style.display = "block"
+            document.querySelector("#info_use").style.display = "block"
+        })
+        document.querySelector('#cancel').addEventListener("click", function (e) {
+            document.querySelector("#info").style.display = "none"
+            document.querySelector('#edit').style.display = "block"
+            document.querySelector("#info_use").style.display = "block"
+        })
+
+        
+
+
+
+        function setModal(id, page){
+            let MessageStatus = new Map([
+            ['Waiting', 'warning'],
+            ['TRANSMTD', 'info'],
+            ['DELIVRD', 'success'],
+            ['UNDELIV', 'danger'],
+            ['EXPIRED', 'danger'],
+            ['REJECTD', 'danger'],
+            ['DELETED', 'danger'],
+
+        ])
+            if(page!=="" || page!==undefined || page!==null){
+                page = 1;
+            }
+            let url = `/sms/${id}/messages/?page=${page}`;
+            
+            let tbody = document.querySelector('#messagesTBodyID');
+            tbody.innerHTML = "";
+            let pages = document.querySelector('#pagesBtnID');
+            pages.innerHTML = "";
+            
+            fetch(url)
+            .then(res=>{
+                if(res.status!==200){
+                    return ;
+                }
+
+                return res;
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                console.log(res)
+                document.querySelector('#receiverH6').innerHTML = `Jami oluvchilar: ${res.count}`;
+                document.querySelector('#soumsH6').innerHTML = `Jami summa: ${res.soums}`;
+                document.querySelector('#timedeltaH6').innerHTML = `Sarflangan vaqt: ${res.timedelta}`;
+                
+                for(let i=0;i<res.messages.length;i++){
+                    console.log(res.messages[i].soums, res.messages[i].created_at)
+                    tbody.innerHTML+=`
+                    <tr class="text-center">
+                        <td class="text-center">${i+1}</td>
+                        <td class="text-center">+${res.messages[i].phone_number||res.messages[i].to}</td>
+                        <td > <div class="d-flex justify-content-end">
+                            <span class="selling-badge order-bg-opacity-${MessageStatus.get(res.messages[i].status)} color-${MessageStatus.get(res.messages[i].status)}">${res.messages[i].status}</span>
+                        </div></td>
+                        <td class="text-center">${res.messages[i].country||res.messages[i].country_code}</td>
+                        
+                        <td class="text-center">${res.messages[i].soums || res.messages[i].price}</td>
+                        <td class="text-center">
+                            ${res.messages[i].created_at || res.messages[i].updated_at}
+                        </td>
+                    </tr>
+                    `
+                }
+
+                
+                for(let i=0;i<res.pages.length;i++){
+                    pages.innerHTML += `
+                    <button class="btn btn-outline-lighten btn-sm mt-1" onclick="setModal(${id}, ${i+1})">${i+1}</button>
+                    `
+                }
+            })
+            
+            let modal =  document.querySelector('#modal-basic1');
+
+        }
+    </script>
+
+{% endblock %}
+   

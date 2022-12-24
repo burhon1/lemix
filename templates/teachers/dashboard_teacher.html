@@ -1,6 +1,6 @@
 {% extends 'teachers/main.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block title %}
     Teacher's Dashboard
 {% endblock %}
@@ -36,7 +36,7 @@
                                 </span>
                                 <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
                                 <p class="fs-14 m-1">Demo(sinov) darsida</p>
-                                <h1 class="fs-18">0</h1>
+                                <h1 class="fs-18">{{active_demos.count|default:0}}</h1>
                             </div>
 
                       
@@ -55,7 +55,7 @@
                                 </span>
                                 <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
                                 <p class="fs-14 m-1">Guruhlar soni</p>
-                                <h1 class="fs-18">0</h1>
+                                <h1 class="fs-18">{{groups.count|default:0}}</h1>
                             </div>
 
                       
@@ -74,7 +74,7 @@
                                 </span>
                                 <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
                                 <p class="fs-14 m-1">O'quvchilar soni</p>
-                                <h1 class="fs-18">0</h1>
+                                <h1 class="fs-18">{{active_students.count|default:0}}</h1>
                             </div>
 
                       
@@ -95,7 +95,7 @@
                                 </span>
                                 <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
                                 <p class="fs-14 m-1">Guruhni tark etganlar</p>
-                                <h1 class="fs-18">0</h1>
+                                <h1 class="fs-18">{{removed_students.count|default:0}}</h1>
                             </div>
 
                       
@@ -112,7 +112,7 @@
                             </span>
                             <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
                             <p class="fs-14 m-1">Demodan ketganlar</p>
-                            <h1 class="fs-18">0</h1>
+                            <h1 class="fs-18">{{stopped_demo|default:0}}</h1>
                         </div>
 
                   
@@ -130,7 +130,7 @@
                             </span>
                             <!-- <img src="./img/166.png" class="rounded-circle mb-3" style="object-fit: contain;width: 50px;" alt=""> -->
                             <p class="fs-14 m-1">Muzlatilgan o'quvchilar</p>
-                            <h1 class="fs-18">0</h1>
+                            <h1 class="fs-18">{{freezed_students.count|default:0}}</h1>
                         </div>
 
                   
@@ -145,32 +145,7 @@
                 <div class="card border-0">
                     <div class="card-header">
                         <h6 style="text-transform: none;">Topshiriqlar(oxirgi 4ta)</h6>
-                        <!-- <div class="card-extra">
-                            <ul class="card-tab-links mr-3 nav-tabs nav" role="tablist">
-                                <li>
-                                    <a class="active" href="#t_selling-today2" data-toggle="tab" id="t_selling-today2-tab" role="tab" aria-selected="true">Today</a>
-                                </li>
-                                <li>
-                                    <a href="#t_selling-week2" data-toggle="tab" id="t_selling-week2-tab" role="tab" aria-selected="true">Week</a>
-                                </li>
-                                <li>
-                                    <a href="#t_selling-month3" data-toggle="tab" id="t_selling-month3-tab" role="tab" aria-selected="true">Month</a>
-                                </li>
-                                <li>
-                                    <a href="#t_selling-year4" data-toggle="tab" id="t_selling-year4-tab" role="tab" aria-selected="true">Year</a>
-                                </li>
-                            </ul>
-                            <div class="dropdown dropleft">
-                                <a href="#" role="button" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span data-feather="more-horizontal"></span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="todo10">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div> -->
+                        
                     </div>
                     <div class="card-body p-0">
                         <div class="tab-content">
@@ -189,652 +164,58 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {% for task in tasks %}
+
                                                 <tr>
-                                                    <td>1</td>
+                                                    <td>{{ forloop.counter }}</td>
                                                   
-                                                    <td>Uyga vazifa tekshirish</td>
+                                                    <td>{{ task.task_type }}</td>
                                                     <td > <div class="d-flex justify-content-end">
-                                                        <span class="selling-badge order-bg-opacity-success color-success">Faol</span>
+                                                        <span class="selling-badge order-bg-opacity-{{task.status|get_status2}} color-{{task.status|get_status2}}">{{ task.status|get_type_name:'task'}}</span>
                                                     </div></td>
-                                                    <td> 05.11.2022 03:30 </td>
-                                                    <td> 06.11.2022 23:59 </td>
+                                                    <td> {{task.created_at|date:'d.m.Y H:i'}} </td>
+                                                    <td> {{task.deadline|date:'d.m.Y H:i'}} </td>
                                                   
-                                                    <td>
-                                                        O'quvchi(N.Jonibek)
+                                                    <td class="d-flex align-items-center justify-content-center">
+                                                        <span class="selling-badge order-bg-opacity-{{task.status|get_status2}} color-{{task.status|get_status2}}">
+                                                        {% if task.groups %}
+                                                            Guruhlar:
+                                                        {% elif task.leads %}
+                                                            Lidlar:
+                                                        {% elif task.students %}
+                                                            O'quvchilar:
+                                                        {% elif task.courses %}
+                                                            Kurslar:
+                                                        {% elif task.parents %}
+                                                            Ota-onalar:
+                                                        {% endif %}
+                                                    </span>
+                                                    {% if task.whom_count %}
+                                                        {% if task.whom_count is 1 %}
+                                                            {{ task.whom.0 }}
+                                                        {% else %}
+                                                            ({% for whom in task.whom %} {{ whom }}, {% endfor %})
+                                                        {% endif %}
+                                                    {% endif %}
                                                     </td>
                                                 </tr>
                                           
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="t_selling-week2" role="tabpanel" aria-labelledby="t_selling-week2-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                                            <span>John Mark</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Samsung Galaxy S8 256GB</td>
-                                                    <td>$339</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
-                                                            <span>David Miller
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Half Sleeve Shirt </td>
-                                                    <td>$136</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                                            <span>Chris Lein</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Marco Shoes</td>
-                                                    <td>$448</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
-                                                            <span>Robert Philips</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>15" Mackbook Pro</td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                                            <span>Ahmad Abdullah</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Apple iPhone X </td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="t_selling-month3" role="tabpanel" aria-labelledby="t_selling-month3-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                                            <span>John Mark</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Samsung Galaxy S8 256GB</td>
-                                                    <td>$339</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
-                                                            <span>David Miller
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Half Sleeve Shirt </td>
-                                                    <td>$136</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                                            <span>Chris Lein</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Marco Shoes</td>
-                                                    <td>$448</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
-                                                            <span>Robert Philips</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>15" Mackbook Pro</td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                                            <span>Ahmad Abdullah</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Apple iPhone X </td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="t_selling-year4" role="tabpanel" aria-labelledby="t_selling-year4-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                                            <span>John Mark</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Samsung Galaxy S8 256GB</td>
-                                                    <td>$339</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
-                                                            <span>David Miller
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Half Sleeve Shirt </td>
-                                                    <td>$136</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                                            <span>Chris Lein</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Marco Shoes</td>
-                                                    <td>$448</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                {% endfor %}
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
-                                                            <span>Robert Philips</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>15" Mackbook Pro</td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                                            <span>Ahmad Abdullah</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Apple iPhone X </td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                               
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
 
             </div>
-            <!-- <div class="col-lg-12 col-sm-12 mb-25">
-
-                <div class="card border-0">
-                    <div class="card-header">
-                        <h6 style="text-transform: none;">Bildirishnomalar(oxirgi 4ta)</h6>
-                     </div>
-                    <div class="card-body p-0">
-                        <div class="tab-content">
-                            <div class="tab-pane fade active show" id="t_selling-today2" role="tabpanel" aria-labelledby="t_selling-today2-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>№</th>
-                                                    <th>Vaqti</th>
-                                                    <th>Kimdan</th>
-                                                    <th>Holati</th>
-                                                    <th> Nomi</th>
-                                                    
-                                                    
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td> 05.11.2022 03:30 </td>
-                                                    <td>
-                                                        Direktor(N.Jonibek)
-                                                    </td>
-                                                    <td > <div class="d-flex justify-content-end">
-                                                        <span class="selling-badge order-bg-opacity-warning color-warning">O'qilmagan</span>
-                                                    </div></td>
-                                                   
-                                                  
-                                                  
-                                                   
-                                                    <td>Uyga vazifa tekshirish</td>
-                                                </tr>
-                                          
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="t_selling-week2" role="tabpanel" aria-labelledby="t_selling-week2-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                                            <span>John Mark</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Samsung Galaxy S8 256GB</td>
-                                                    <td>$339</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
-                                                            <span>David Miller
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Half Sleeve Shirt </td>
-                                                    <td>$136</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                                            <span>Chris Lein</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Marco Shoes</td>
-                                                    <td>$448</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
-                                                            <span>Robert Philips</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>15" Mackbook Pro</td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                                            <span>Ahmad Abdullah</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Apple iPhone X </td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="t_selling-month3" role="tabpanel" aria-labelledby="t_selling-month3-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                                            <span>John Mark</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Samsung Galaxy S8 256GB</td>
-                                                    <td>$339</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
-                                                            <span>David Miller
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Half Sleeve Shirt </td>
-                                                    <td>$136</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                                            <span>Chris Lein</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Marco Shoes</td>
-                                                    <td>$448</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
-                                                            <span>Robert Philips</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>15" Mackbook Pro</td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                                            <span>Ahmad Abdullah</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Apple iPhone X </td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="t_selling-year4" role="tabpanel" aria-labelledby="t_selling-year4-tab">
-                                <div class="selling-table-wrap">
-                                    <div class="table-responsive">
-                                        <table class="table table--default">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                                            <span>John Mark</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Samsung Galaxy S8 256GB</td>
-                                                    <td>$339</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-primary color-primary">Shipped</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid" src="img/165.png" alt="img">
-                                                            <span>David Miller
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Half Sleeve Shirt </td>
-                                                    <td>$136</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                                            <span>Chris Lein</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Marco Shoes</td>
-                                                    <td>$448</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-danger color-danger">panding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/325.png" alt="img">
-                                                            <span>Robert Philips</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>15" Mackbook Pro</td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="selling-product-img d-flex align-items-center">
-                                                            <img class="mr-15 wh-34 radius-xs img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                                            <span>Ahmad Abdullah</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>Apple iPhone X </td>
-                                                    <td>$146</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-end">
-                                                            <span class="selling-badge order-bg-opacity-success color-success">paid</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> -->
-              <!-- ends: .col-lg-3 -->
               <div class="col-xxl-12 col-xl-12">
                             
                 <div class="card card-default card-md mb-4">
@@ -851,7 +232,7 @@
                                         <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Xonalar bo'yicha</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">O'qituvchilar bo'yicha</a>
+                                        <a class="nav-link" id="tab-v-3-tab" data-toggle="tab" href="#tab-v-3" role="tab" aria-controls="tab-v-3" aria-selected="false">Guruhlar bo'yicha</a>
                                     </li>
 
 
@@ -1180,10 +561,10 @@
                                                 <h6 style="text-transform: none;">Xonalar bo'yicha</h6>
                                                 <div class="card-extra">
                                                     <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
-                                                        <a class="btn btn-xs btn-white active border" id="f_today-tab" data-toggle="tab" href="#st_matrics-today" role="tab" area-controls="st_matrics" aria-selected="true">Hafta 1</a>
-                                                        <a class="btn btn-xs btn-white border" id="f_week-tab" data-toggle="tab" href="#st_matrics-week" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 2</a>
-                                                        <a class="btn btn-xs btn-white border" id="f_month-tab" data-toggle="tab" href="#st_matrics-month" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 3</a>
-                                                        <a class="btn btn-xs btn-white border" id="f_year-tab" data-toggle="tab" href="#st_matrics-year" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 4</a>
+                                                        
+                                                        {% for week, data in schedule.rooms.items %}
+                                                            <a class="btn btn-xs btn-white border" id="f_year-tab-{{forloop.counter}}" data-toggle="tab" href="#{{week}}" role="tab" area-controls="st_matrics" aria-selected="false">Hafta {{forloop.counter}}</a>
+                                                        {% endfor %}
                                                     </div>
                                                     <div class="dropdown dropleft">
                                                         <a href="#" role="button" id="Today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1197,378 +578,63 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                                {{ schedule.rooms.items.0 }}
                                             <div class="card-body p-0">
                                                 <div class="tab-content">
-                                                    <div class="tab-pane fade active show" id="st_matrics-today" role="" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive mb-3">
-                                                            <table class="table table-bordered table-social">
-                                                              <thead>
-                                                                <tr>
-                                                                    <th colspan="12">
-                                                                        Dushanba
-                                                                    </th>
-                                                                </tr>
-                                                              </thead>
-                                                                <tbody>
+                                                    {% for week, data in schedule.rooms.items %}
+                                                        
+                                                        <div class="tab-pane fade {% if week is 'week-1' %}active show {% endif %}" id="{{week}}" role="" aria-labelledby="st_matrics-tab">
+                                                            {% for date in data %}
+                                                            <div class="table-responsive mb-3">
+                                                                <table class="table table-bordered table-social">
+                                                                    <thead>
                                                                     <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
+                                                                        <th colspan="12">
+                                                                            <b> {{ date.day }} | {{ date.date|date:'d.m.Y'}}</b> 
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            {% for time in schedule.times %}
+                                                                                <td>{{ time }}</td>
+                                                                            {% endfor %}
+                                                                            
+                                                                        </tr>
+
+                                                                    {% for room in date.room %}
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">{{ room.title }}</a>
+                                                                            </td>
+                                                                            {% for time in room.times %}
+                                                                            {% if time.group %}
+                                                                            <td class="bg-primary text-white">
+                                                                                {{ time.group.teacher.user.full_name}}<br>
+                                                                                {{ time.group.trainer.user.full_name}}<br>
+                                                                                {{ time.group.course.title }} <br>
+                                                                                {{ time.group.room.title }} <br>
+                                                                                {{ time.group.title }}</td>
+
+                                                                            {% else %}
+                                                                            <td></td>
+
+                                                                            {% endif %}
+                                                                            {% endfor %}
+                                                                        </tr>
+                                                                    
+                                                                        {% endfor %}
+
                                                                         
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            {% endfor %}
                                                         </div>
-                                                        <div class="table-responsive mb-3">
-                                                            <table class="table table-bordered table-social">
-                                                              <thead>
-                                                                <tr>
-                                                                    <th colspan="12">
-                                                                        Seshanba
-                                                                    </th>
-                                                                </tr>
-                                                              </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="st_matrics-week" role="tabpanel" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="st_matrics-month" role="tabpanel" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="st_matrics-year" role="tabpanel" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
+                                                        
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                         </div>
@@ -1576,13 +642,12 @@
                                     <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
                                         <div class="card border-0">
                                             <div class="card-header">
-                                                <h6 style="text-transform: none;">O'qituvchilar bo'yicha</h6>
+                                                <h6 style="text-transform: none;">Guruhlar bo'yicha</h6>
                                                 <div class="card-extra">
                                                     <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
-                                                        <a class="btn btn-xs btn-white active border" id="f_today-tab" data-toggle="tab" href="#st_matrics-today" role="tab" area-controls="st_matrics" aria-selected="true">Hafta 1</a>
-                                                        <a class="btn btn-xs btn-white border" id="f_week-tab" data-toggle="tab" href="#st_matrics-week" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 2</a>
-                                                        <a class="btn btn-xs btn-white border" id="f_month-tab" data-toggle="tab" href="#st_matrics-month" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 3</a>
-                                                        <a class="btn btn-xs btn-white border" id="f_year-tab" data-toggle="tab" href="#st_matrics-year" role="tab" area-controls="st_matrics" aria-selected="false">Hafta 4</a>
+                                                        {% for week, data in schedule.rooms.items %}
+                                                            <a class="btn btn-xs btn-white border" id="f_year-tab-{{forloop.counter}}" data-toggle="tab" href="#{{week}}-groups" role="tab" area-controls="st_matrics" aria-selected="false">Hafta {{forloop.counter}}</a>
+                                                        {% endfor %}
                                                     </div>
                                                     <div class="dropdown dropleft">
                                                         <a href="#" role="button" id="Today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1598,376 +663,63 @@
                                             </div>
                                             <div class="card-body p-0">
                                                 <div class="tab-content">
-                                                    <div class="tab-pane fade active show" id="st_matrics-today" role="" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive mb-3">
-                                                            <table class="table table-bordered table-social">
-                                                              <thead>
-                                                                <tr>
-                                                                    <th colspan="12">
-                                                                        Dushanba
-                                                                    </th>
-                                                                </tr>
-                                                              </thead>
-                                                                <tbody>
+
+                                                    {% for week, data in schedule.groups.items %}
+                                                        
+                                                        <div class="tab-pane fade {% if week is 'week-1' %}active show {% endif %}" id="{{week}}-groups" role="" aria-labelledby="st_matrics-tab">
+                                                            {% for date in data %}
+                                                            <div class="table-responsive mb-3">
+                                                                <table class="table table-bordered table-social">
+                                                                    <thead>
                                                                     <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
+                                                                        <th colspan="12">
+                                                                            <b> {{ date.day }} | {{ date.date|date:'d.m.Y'}}</b> 
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            {% for time in schedule.times %}
+                                                                                <td>{{ time }}</td>
+                                                                            {% endfor %}
+                                                                            
+                                                                        </tr>
+
+                                                                    {% for group in date.groups %}
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">{{ group.title }}</a>
+                                                                            </td>
+                                                                            {% for time in group.times %}
+                                                                            {% if time.group %}
+                                                                            <td class="bg-primary text-white">
+                                                                                
+                                                                                {{ time.group.teacher.user.full_name}}<br>
+                                                                                {{ time.group.trainer.user.full_name}}<br>
+                                                                                {{ time.group.course.title }} <br>
+                                                                                {{ time.group.room.title }}</td>
+                                                                            {% else %}
+                                                                            <td></td>
+
+                                                                            {% endif %}
+                                                                            {% endfor %}
+                                                                        </tr>
+                                                                    
+                                                                        {% endfor %}
+
                                                                         
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            {% endfor %}
                                                         </div>
-                                                        <div class="table-responsive mb-3">
-                                                            <table class="table table-bordered table-social">
-                                                              <thead>
-                                                                <tr>
-                                                                    <th colspan="12">
-                                                                        Seshanba
-                                                                    </th>
-                                                                </tr>
-                                                              </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="st_matrics-week" role="tabpanel" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="st_matrics-month" role="tabpanel" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="st_matrics-year" role="tabpanel" aria-labelledby="st_matrics-tab">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td>08:00-09:00</td>
-                                                                        <td>09:00-10:00</td>
-                                                                        <td>10:00-11:00</td>
-                                                                        <td>11:00-12:00</td>
-                                                                        <td>12:00-13:00</td>
-                                                                        <td>13:00-14:00</td>
-                                                                        <td>14:00-15:00</td>
-                                                                        <td>15:00-16:00</td>
-                                                                        <td>16:00-17:00</td>
-                                                                        <td>17:00-18:00</td>
-                                                                        <td>18:00-19:00</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi</a>
-                                                                        </td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Xona nomi 1</a>
-                                                                        </td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td class="bg-primary text-white">Bisnak R.
-                                                                            Корпоративная группа
-                                                                            ООО "Рога и Копыта"
-                                                                            11:00-12:00
-                                                                            с 01.08 (Пн/Ср)</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
+                                                        
+                                                    {% endfor %}
+
+
+                                                    
                                                 </div>
                                             </div>
                                         </div>
