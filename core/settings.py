@@ -27,22 +27,6 @@ CSRF_TRUSTED_ORIGINS = ['http://5.8.248.139','http://lemix.uz/','https://lemix.u
 
 # Application definition
 
-PAYME: dict = {
-    'PAYME_ID': '635795929fd41bc3daf5019c',
-    'PAYME_KEY': 'HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d',
-    'PAYME_URL': 'https://checkout.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'https://www.youtube.com',
-    'PAYME_MIN_AMOUNT': 0,
-    'PAYME_ACCOUNT': 'order_id',
-}
-
-# Payme Configuration
-PAYCOM: dict = {
-    "min_amount": 0,
-    "account": "order_id",
-    "paycom_key": "HqEBBzMOwmCJ5G#pju9F75QMCnua2H1iCH?d"
-}
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'payme',
     'rest_framework',
     'rest_framework.authtoken',
     'user',
@@ -62,8 +45,7 @@ INSTALLED_APPS = [
     'django_user_agents',
     'import_export',
     'sms',
-    'django_cleanup.apps.CleanupConfig',
-    'payme_app'
+    'django_cleanup.apps.CleanupConfig'
 
 ]
 # bu Click Settings
