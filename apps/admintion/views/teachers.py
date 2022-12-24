@@ -6,6 +6,8 @@ from user.services.users import user_add
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from django.http import JsonResponse
+
+@permission_required('admintion.teacher_view')
 def teachers_view(request):
     context = {}
     if request.method == "POST":

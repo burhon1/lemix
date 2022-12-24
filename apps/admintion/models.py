@@ -7,7 +7,7 @@ from admintion.querysets import (
 from admintion.data import chooses
 from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
-from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES
+from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES, MESSAGE_STATUS
 from admintion.validators import validate_file_size
 
 class Room(models.Model):
@@ -126,7 +126,7 @@ class FormLead(models.Model):
     purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
     user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
     via_form = models.ForeignKey('LeadForms', models.SET_NULL, null=True)
-    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    # educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     objects = models.Manager()
     leads = lead_manager.LeadManager()
     def __str__(self) -> str:
@@ -195,6 +195,7 @@ class SmsIntegration(models.Model):
     class Meta:
         verbose_name = "Sms Integratsiya"
         verbose_name_plural = "Sms Integratsiya"
+
 
 class Messages(models.Model):
     text = models.CharField("Xabar matni", max_length=5000)

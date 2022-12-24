@@ -28,3 +28,9 @@ def reports_view(request):
         
     }
     return render(request, 'admintion/dars_jadvali.html', context)
+
+
+@login_required
+def financial_reports(request):
+
+    return render(request, 'admintion/moliyaviy_hisobot.html')

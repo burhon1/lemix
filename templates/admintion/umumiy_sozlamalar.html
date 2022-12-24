@@ -98,7 +98,7 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-12">
                                                             <div class="edit-profile__body mx-lg-20">
-                                                                <form id="mainUpdate" action="{% url 'admintion:settings' %}" method="post">{% csrf_token %}
+                                                                <form id="mainUpdate" action="{% url 'admintion:settings' %}" method="post"  enctype="multipart/form-data">{% csrf_token %}
                                                                     <div class="form-group mb-20 ">
                                                                         <label for="formFile" class="form-label">Logoni yuklash</label>
                                                                         <input class="form-control" type="file" id="formFile" name="logo">
@@ -180,7 +180,7 @@
                                                                         </button>
 
                                                                         
-                                                                        <button class="btn btn-primary btn-default btn-squared mr-15 text-capitalize" type="submit">Saqlash
+                                                                        <button class="btn btn-primary btn-default btn-squared mr-15 text-capitalize" type="submit" form="mainUpdate">Saqlash
                                                                         </button>
 
                                                                     </div>
@@ -518,6 +518,9 @@
     	$("form#changePasswordForm").trigger("submit")	
     })
 
+    $("button[form='mainUpdate']").click(function(){
+    	$("form#mainUpdate").trigger("submit")	
+    })
 
 </script>
 {% endblock %}
