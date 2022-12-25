@@ -1,8 +1,7 @@
 from django.shortcuts import redirect, render,reverse
 from django.conf import settings
-import requests, json
+import requests, json, pytz
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
 
 from sms.utils import get_new_dispatch_id
 from sms.models import SMSMessage, SMSAccount
@@ -69,7 +68,7 @@ def need_items(data, fields=None):
         for key,value in dt.items():
             if key in fields:
                 if key in ['created_at', 'updated_at']:
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(ZoneInfo(settings.TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(pytz.timezone(settings.TIME_ZONE)).strftime('%Y-%m-%d %H:%M:%S')
                 dt2.append((key,value))
         items.append(dict(dt2))
     return items
@@ -111,8 +110,8 @@ def get_messages_by_dispatch(email=None, password=None, dispatch_id=None, page=N
                 messages = res['data']['data']
             price+=sum([ m['price'] for m in res['data']['data'] if type(m['price'])==int])
         if len(messages) > 0:
-            created_at = datetime.strptime(messages[0]['created_at'], '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(ZoneInfo(settings.TIME_ZONE))
-            updated_at = datetime.strptime(messages[-1]['updated_at'], '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(ZoneInfo(settings.TIME_ZONE))
+            created_at = datetime.strptime(messages[0]['created_at'], '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(pytz.timezone(settings.TIME_ZONE))
+            updated_at = datetime.strptime(messages[-1]['updated_at'], '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(pytz.timezone(settings.TIME_ZONE))
         timedelta = updated_at - created_at
 
         if not sms_message:
