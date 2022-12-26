@@ -51,10 +51,10 @@ INSTALLED_APPS = [
 ]
 # bu Click Settings
 CLICK_SETTINGS = {
-    'service_id': os.getenv("CLICK_SERVICE_ID"),
-    'merchant_id': os.getenv("CLICK_MERCHANT_ID"),
-    'secret_key': os.getenv("CLICK_SECRET_KEY"),
-    'merchant_user_id': os.getenv("CLCIK_MERCHANT_USER_ID"),
+    'service_id': '25807',
+    'merchant_id': '18147',
+    'secret_key': 'HHPm2yaWiIwb',
+    'merchant_user_id': '29268',
 }
 
 REST_FRAMEWORK = {
