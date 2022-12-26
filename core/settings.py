@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     # 'import_export',
     # 'sms',
     # 'django_cleanup.apps.CleanupConfig',
-    # 'pyclick',
+    'pyclick',
 
 ]
 # bu Click Settings
