@@ -21,7 +21,7 @@ DEBUG = os.environ.get('DEBUG', True)
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['*'] # '5.8.248.139','t.lemix.uz','localhost', '127.0.0.1'
+ALLOWED_HOSTS = ['t.lemix.uz','*'] # '5.8.248.139','t.lemix.uz','localhost', '127.0.0.1'
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
 CSRF_TRUSTED_ORIGINS = ['http://5.8.248.139','http://lemix.uz/','https://lemix.uz','https://*.lemix.uz','http://*.lemix.uz','http://lemix.uz','https://lemix.uz','http://*','https://*', 'https://*.eu.ngrok.io']
 
@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django_user_agents',
     'import_export',
     'sms',
-    'django_cleanup.apps.CleanupConfig'
+    'django_cleanup.apps.CleanupConfig',
+    'pyclick',
 
 ]
 # bu Click Settings
