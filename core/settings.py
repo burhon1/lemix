@@ -21,7 +21,7 @@ DEBUG = os.environ.get('DEBUG', True)
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['*'] # '5.8.248.139','t.lemix.uz','localhost', '127.0.0.1'
+ALLOWED_HOSTS = ['t.lemix.uz','*'] # '5.8.248.139','t.lemix.uz','localhost', '127.0.0.1'
 DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
 CSRF_TRUSTED_ORIGINS = ['http://5.8.248.139','http://lemix.uz/','https://lemix.uz','https://*.lemix.uz','http://*.lemix.uz','http://lemix.uz','https://lemix.uz','http://*','https://*', 'https://*.eu.ngrok.io']
 
@@ -42,18 +42,19 @@ INSTALLED_APPS = [
     'admintion',
     'student',
     'finance',
-    'django_user_agents',
-    'import_export',
-    'sms',
-    'django_cleanup.apps.CleanupConfig'
+    # 'django_user_agents',
+    # 'import_export',
+    # 'sms',
+    # 'django_cleanup.apps.CleanupConfig',
+    'pyclick',
 
 ]
 # bu Click Settings
 CLICK_SETTINGS = {
-    'service_id': os.getenv("CLICK_SERVICE_ID"),
-    'merchant_id': os.getenv("CLICK_MERCHANT_ID"),
-    'secret_key': os.getenv("CLICK_SECRET_KEY"),
-    'merchant_user_id': os.getenv("CLCIK_MERCHANT_USER_ID"),
+    'service_id': '25807',
+    'merchant_id': '18147',
+    'secret_key': 'HHPm2yaWiIwb',
+    'merchant_user_id': '29268',
 }
 
 REST_FRAMEWORK = {
@@ -106,18 +107,18 @@ AUTH_USER_MODEL  = 'user.CustomUser'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
     # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'lemix',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '1',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lemix',
+        'USER': 'djangouser',
+        'PASSWORD': '1',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 
 }
 
