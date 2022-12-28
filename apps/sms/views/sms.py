@@ -38,7 +38,7 @@ def sms_journal_view(request):
         context.setdefault('sent_sms', account.sent_sms)
         context.setdefault('free_sms', account.free_sms)
         context.setdefault('sent_sms_soums', account.sent_sms_soums)
-    context.setdefault('messages', SMSMessage.objects.all().order_by('-created_at'))
+    context.setdefault('messages', SMSMessage.messages.messages())
     return render(request, 'admintion/sms_jurnali.html', context)
 
 

@@ -202,19 +202,38 @@
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="y_subscriber-year" role="tabpanel" aria-labelledby="y_subscriber-year">
                                                         <div class="card-chart-bar d-flex justify-content-between">
-                                                            <div class="card-bar-top">
-                                                             
-                                                                <h3 class="card-bar-info d-flex align-items-end">25,472
-                                                                    <sub class="color-success">
-                                                                        <i data-feather="arrow-up"></i> 25%</sub>
-                                                                </h3>
+                                                            <div class="cashflow-display cashflow-display2 d-flex">
+                                                        
+                                                                <!-- ends: .cashflow-display__single -->
+                                                                <div class="cashflow-display__single">
+                                                        
+                                                                    <span class="cashflow-display__title">Daromad</span>
+                                                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-success fs-13 fw-500 mr-10"><i class="las la-arrow-up"></i> <strong>15%</strong></span></h3>
+                                                                </div>
+                                                                <!-- ends: .cashflow-display__single -->
+                                                                <div class="cashflow-display__single">
+
+                                                                    <span class="cashflow-display__title">Xarajat</span>
+                                                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-danger fs-13 fw-500 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                                                </div>
+                                                                <!-- ends: .cashflow-display__single -->
+                                                                <div class="cashflow-display__single">
+
+                                                                    <span class="cashflow-display__title">Vaucher</span>
+                                                                    <h3 class="cashflow-display__amount">$28.4k<span class="color-info fs-13 fw-500 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                                                </div>
+                                                                <!-- ends: .cashflow-display__single -->
                                                             </div>
-                                                            <ul class="legend-static">
-                                                                <li class="custom-label">
-                                                                    <span style="background-color: rgb(95, 99, 242);"></span>Gained
+                                                            <!-- ends: .performance-stats -->
+                                                            <ul class="legend-static" style="display: block !important;">
+                                                                <li class="custom-label w-auto">
+                                                                    <span style="background-color: rgb(95, 99, 242);"></span>Daromad
                                                                 </li>
-                                                                <li class="custom-label">
-                                                                    <span style="background-color: rgb(255, 77, 79);"></span>Lost
+                                                                <li class="custom-label w-auto">
+                                                                    <span style="background-color: rgb(255, 77, 79);"></span>Xarajat
+                                                                </li>
+                                                                <li class="custom-label w-auto">
+                                                                    <span style="background-color: rgb(210, 242, 95);"></span>Vaucher
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -519,7 +538,13 @@
                                                         <h6>
                                                             Guruh to'lovlari(% va summa hisobida)
                                                         </h6>
-                                               
+                                                        <select class="form-control  w-auto" >
+                                                            <option value="0">Barcha</option>
+                                                            <option value="1">G5-Matematika</option>
+                                                            <option value="1">G3-Kimyo</option>
+                                                            <option value="1">G2-Fizika</option>
+
+                                                        </select>
                                                     </div>
                                                     <!-- ends: .card-header -->
                                                     <div class="card-body">
@@ -570,9 +595,15 @@
                                                 <div class="card broder-0 cashflowChart2">
                                                     <div class="card-header">
                                                         <h6>
-                                                            Guruh to'lovlari(% va summa hisobida)
+                                                            Kurslar to'lovlari(% va summa hisobida)
                                                         </h6>
-                                               
+                                                        <select class="form-control w-auto" >
+                                                            <option value="0">Barcha</option>
+                                                            <option value="1">Matematika</option>
+                                                            <option value="1">Kimyo</option>
+                                                            <option value="1">Fizika</option>
+
+                                                        </select>
                                                     </div>
                                                     <!-- ends: .card-header -->
                                                     <div class="card-body">
