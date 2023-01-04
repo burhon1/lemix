@@ -2016,7 +2016,7 @@ chartjsBarChartOne(
   "ys_barChartOne",
   dataG = (data = [10, 50, 15, 70, 14, 24, 20]),
   dataL = (data = [70, 35, 10, 25, 10, 14, 15]),
-  labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  labels = ["Jan", "Feb", "Mar", "Apr", "may", "Jun", "July", "Aug", "Sep", "Oct", "Now", "Dec"]
 );
 
 $('#ys_month-tab').on("shown.bs.tab", function () {

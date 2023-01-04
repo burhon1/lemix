@@ -161,7 +161,7 @@
                                                     <div class="card">
                                                         <div class="card-body d-flex align-items-center">
                                                             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                                                            <p class="fs-14 mb-0">Daromat: 600 so'm</p>
+                                                            <p class="fs-14 mb-0">Daromat: {{ income|default:0 }} so'm</p>
                                                         </div>
                                                     </div>
                                                  </div>
@@ -169,7 +169,7 @@
                                                     <div class="card">
                                                         <div class="card-body d-flex align-items-center">
                                                             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                                                            <p class="fs-14 mb-0">Xarajat: 600 so'm</p>
+                                                            <p class="fs-14 mb-0">Xarajat: {{ expense|default:0 }} so'm</p>
                                                         </div>
                                                     </div>
                                                  </div>
@@ -177,7 +177,7 @@
                                                     <div class="card">
                                                         <div class="card-body d-flex align-items-center">
                                                             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                                                            <p class="fs-14 mb-0">Vausher(chegirma): 600 so'm</p>
+                                                            <p class="fs-14 mb-0">Vaucher(chegirma): {{ vaucher|default:0 }} so'm</p>
                                                         </div>
                                                     </div>
                                                  </div>
@@ -185,7 +185,7 @@
                                                     <div class="card">
                                                         <div class="card-body d-flex align-items-center">
                                                             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                                            <p class="fs-14 mb-0">Qarzdorlik: 200 so'm</p>
+                                                            <p class="fs-14 mb-0">Qarzdorlik: {{ debt|default:0 }} so'm</p>
                                                         </div>
                                                     </div>
                                                  </div>
@@ -202,19 +202,38 @@
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="y_subscriber-year" role="tabpanel" aria-labelledby="y_subscriber-year">
                                                         <div class="card-chart-bar d-flex justify-content-between">
-                                                            <div class="card-bar-top">
-                                                             
-                                                                <h3 class="card-bar-info d-flex align-items-end">25,472
-                                                                    <sub class="color-success">
-                                                                        <i data-feather="arrow-up"></i> 25%</sub>
-                                                                </h3>
+                                                            <div class="cashflow-display cashflow-display2 d-flex">
+                                                        
+                                                                <!-- ends: .cashflow-display__single -->
+                                                                <div class="cashflow-display__single">
+                                                        
+                                                                    <span class="cashflow-display__title">Daromad</span>
+                                                                    <h3 class="cashflow-display__amount">${{ income|default:0}} so'm<span class="color-success fs-13 fw-500 mr-10"><i class="las la-arrow-up"></i> <strong>{{ income_perc|default:0}}%</strong></span></h3>
+                                                                </div>
+                                                                <!-- ends: .cashflow-display__single -->
+                                                                <div class="cashflow-display__single">
+
+                                                                    <span class="cashflow-display__title">Xarajat</span>
+                                                                    <h3 class="cashflow-display__amount">${{ expense|default:0}} so'm<span class="color-danger fs-13 fw-500 mr-10"><i class="las la-arrow-down"></i> <strong>{{ expense_perc|default:0}}%</strong></span></h3>
+                                                                </div>
+                                                                <!-- ends: .cashflow-display__single -->
+                                                                <div class="cashflow-display__single">
+
+                                                                    <span class="cashflow-display__title">Vaucher</span>
+                                                                    <h3 class="cashflow-display__amount">${{ vaucher|default:0}} so'm<span class="color-info fs-13 fw-500 mr-10"><i class="las la-arrow-down"></i> <strong>{{ vaucher_perc|default:0}}%</strong></span></h3>
+                                                                </div>
+                                                                <!-- ends: .cashflow-display__single -->
                                                             </div>
-                                                            <ul class="legend-static">
-                                                                <li class="custom-label">
-                                                                    <span style="background-color: rgb(95, 99, 242);"></span>Gained
+                                                            <!-- ends: .performance-stats -->
+                                                            <ul class="legend-static" style="display: block !important;">
+                                                                <li class="custom-label w-auto">
+                                                                    <span style="background-color: rgb(95, 99, 242);"></span>Daromad
                                                                 </li>
-                                                                <li class="custom-label">
-                                                                    <span style="background-color: rgb(255, 77, 79);"></span>Lost
+                                                                <li class="custom-label w-auto">
+                                                                    <span style="background-color: rgb(255, 77, 79);"></span>Xarajat
+                                                                </li>
+                                                                <li class="custom-label w-auto">
+                                                                    <span style="background-color: rgb(210, 242, 95);"></span>Vaucher
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -308,13 +327,13 @@
                                                         
                                                         <!-- ends: .cashflow-display__single -->
                                                         <div class="cashflow-display__single">
-                                                            <span class="cashflow-display__title">Bu oydagi xarajat</span>
-                                                            <h3 class="cashflow-display__amount">$28.4k<span class="color-success fs-14 fw-600 mr-10"><i class="las la-arrow-up"></i> <strong>15%</strong></span></h3>
+                                                            <span class="cashflow-display__title">Bu oydagi foyda</span>
+                                                            <h3 class="cashflow-display__amount">${{ income|default:0}} so'm<span class="color-success fs-14 fw-600 mr-10"><i class="las la-arrow-up"></i> <strong>{{ income_perc|default:0}}%</strong></span></h3>
                                                         </div>
                                                         <!-- ends: .cashflow-display__single -->
                                                         <div class="cashflow-display__single">
-                                                            <span class="cashflow-display__title">Oldingi oydagi xarajat</span>
-                                                            <h3 class="cashflow-display__amount">$28.4k<span class="color-danger fs-14 fw-600 mr-10"><i class="las la-arrow-down"></i> <strong>12%</strong></span></h3>
+                                                            <span class="cashflow-display__title">Oldingi oydagi foyda</span>
+                                                            <h3 class="cashflow-display__amount">${{ last_income|default:0}} so'm<span class="color-danger fs-14 fw-600 mr-10"><i class="las la-arrow-down"></i> <strong>{{ income_perc|default:0}}%</strong></span></h3>
                                                         </div>
                                                         <!-- ends: .cashflow-display__single -->
                                                     </div>
@@ -519,7 +538,13 @@
                                                         <h6>
                                                             Guruh to'lovlari(% va summa hisobida)
                                                         </h6>
-                                               
+                                                        <select class="form-control  w-auto" >
+                                                            <option value="0">Barcha</option>
+                                                            <option value="1">G5-Matematika</option>
+                                                            <option value="1">G3-Kimyo</option>
+                                                            <option value="1">G2-Fizika</option>
+
+                                                        </select>
                                                     </div>
                                                     <!-- ends: .card-header -->
                                                     <div class="card-body">
@@ -570,9 +595,15 @@
                                                 <div class="card broder-0 cashflowChart2">
                                                     <div class="card-header">
                                                         <h6>
-                                                            Guruh to'lovlari(% va summa hisobida)
+                                                            Kurslar to'lovlari(% va summa hisobida)
                                                         </h6>
-                                               
+                                                        <select class="form-control w-auto" >
+                                                            <option value="0">Barcha</option>
+                                                            <option value="1">Matematika</option>
+                                                            <option value="1">Kimyo</option>
+                                                            <option value="1">Fizika</option>
+
+                                                        </select>
                                                     </div>
                                                     <!-- ends: .card-header -->
                                                     <div class="card-body">
@@ -621,18 +652,26 @@
                                             </div>
                                            </div>
                                         </div>
+
+
+
+
                                         <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
-                                           <div class="row mb-2">
+                                           
+                                           {% if cashflow %}
+
+                                                {% for type in cashflow %}
+                                        
+                                           
+                                            <div class="row mb-2">
                                             <div class="col-12">
                                                 <div class="card broder-0">
                                                     <div class="card-header">
-                                                        <h6>Qabul qilish</h6>
+                                                        <h6>{{ type.title }}</h6>
                                                         <div class="card-extra">
                                                             <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
                                                                 <a class="btn btn-xs btn-white border active" id="f_today-tab" data-toggle="tab" href="#" role="tab" area-controls="st_matrics" aria-selected="false"
-                                                                onclick="qabul_qilish('xlsx')"
-                                                                
-                                                                ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</a>
+                                                                onclick="qabul_qilish('xlsx')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</a>
                                                                 </div>
                                                         </div>
                                                   </div>
@@ -658,124 +697,21 @@
                                                                         <td>Noyabr</td>
                                                                         <td>Dekabr</td>
                                                                     </tr>
+
+                                                                    {% for field in type.fields %}
+
                                                                     <tr>
                                                                         <td>
-                                                                            <a href="">Facebook</a>
+                                                                            <a href="">{{ field.title }}</a>
                                                                         </td>
                                                                         <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
+                                                                        {% for record in field.records %}
+                                                                            <td>{{ record.value|default:0}}</td>
+                                                                        {% endfor %}
                                                                         
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
+                                                                    
+                                                                    {% endfor %}
                                                                     
                                                                 </tbody>
                                                                 <tfoot>
@@ -806,378 +742,389 @@
                                                     
                                                 </div>
                         
-                                           </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                <div class="card broder-0">
-                                                    <div class="card-header">
-                                                        <h6>Xarajatlar</h6>
-                                                        <div class="card-extra">
-                                                            <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
-                                                                <a class="btn btn-xs btn-white border active" id="f_today-tab" data-toggle="tab" href="#" role="tab" area-controls="st_matrics" aria-selected="false"
-                                                                onclick="Xarajatlar('xlsx')"
-                                                                ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</a>
+                                                </div>
+                                            </div>
+                                           
+                                                {% endfor %}
+                                            {% endif %}
+                                           
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="card broder-0">
+                                                        <div class="card-header">
+                                                            <h6>Xarajatlar</h6>
+                                                            <div class="card-extra">
+                                                                <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
+                                                                    <a class="btn btn-xs btn-white border active" id="f_today-tab" data-toggle="tab" href="#" role="tab" area-controls="st_matrics" aria-selected="false"
+                                                                    onclick="Xarajatlar('xlsx')"
+                                                                    ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</a>
+                                                                    </div>
+                                                            </div>
+                                                    </div>
+                                                        <!-- ends: .card-header -->
+                                                        <div class="card-body pt-0">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered table-social" id="Xarajatlar">
+                                                                
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Turi</td>
+                                                                            <td>Jadval</td>
+                                                                            <td>Yanvar</td>
+                                                                            <td>Fevral</td>
+                                                                            <td>Mart</td>
+                                                                            <td>Aprel</td>
+                                                                            <td>May</td>
+                                                                            <td>Iyun</td>
+                                                                            <td>Iyul</td>
+                                                                            <td>Avgust</td>
+                                                                            <td>Sentabr</td>
+                                                                            <td>Oktabr</td>
+                                                                            <td>Noyabr</td>
+                                                                            <td>Dekabr</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Facebook</a>
+                                                                            </td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        <tr class="bg-gray color-white">
+                                                                            <td>
+                                                                            Jami
+                                                                            </td>
+                                                                        
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>
                                                                 </div>
-                                                        </div>
-                                                  </div>
-                                                    <!-- ends: .card-header -->
-                                                    <div class="card-body pt-0">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social" id="Xarajatlar">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>Turi</td>
-                                                                        <td>Jadval</td>
-                                                                        <td>Yanvar</td>
-                                                                        <td>Fevral</td>
-                                                                        <td>Mart</td>
-                                                                        <td>Aprel</td>
-                                                                        <td>May</td>
-                                                                        <td>Iyun</td>
-                                                                        <td>Iyul</td>
-                                                                        <td>Avgust</td>
-                                                                        <td>Sentabr</td>
-                                                                        <td>Oktabr</td>
-                                                                        <td>Noyabr</td>
-                                                                        <td>Dekabr</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Facebook</a>
-                                                                        </td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    
-                                                                </tbody>
-                                                                <tfoot>
-                                                                    <tr class="bg-gray color-white">
-                                                                        <td>
-                                                                           Jami
-                                                                        </td>
-                                                                       
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        
-                                                                    </tr>
-                                                                </tfoot>
-                                                            </table>
-                                                        </div>
+                                                        
+                                                    </div>
+                            
+                                            </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="card broder-0">
+                                                        <div class="card-header">
+                                                            <h6>Qoldiq</h6>
+                                                            <div class="card-extra">
+                                                                <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
+                                                                    <a class="btn btn-xs btn-white border active" id="f_today-tab" data-toggle="tab" href="#" role="tab" area-controls="st_matrics" aria-selected="false"
+                                                                    onclick="Qoldiq('xlsx')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</a>
+                                                                    </div>
                                                             </div>
-                                                    
-                                                </div>
-                        
-                                           </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                <div class="card broder-0">
-                                                    <div class="card-header">
-                                                        <h6>Qoldiq</h6>
-                                                        <div class="card-extra">
-                                                            <div class="card-tab btn-group atbd-button-group mr-3 nav nav-tabs">
-                                                                <a class="btn btn-xs btn-white border active" id="f_today-tab" data-toggle="tab" href="#" role="tab" area-controls="st_matrics" aria-selected="false"
-                                                                onclick="Qoldiq('xlsx')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</a>
+                                                    </div>
+                                                        <!-- ends: .card-header -->
+                                                        <div class="card-body pt-0">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered table-social" id="Qoldiq">
+                                                                
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Turi</td>
+                                                                            <td>Jadval</td>
+                                                                            <td>Yanvar</td>
+                                                                            <td>Fevral</td>
+                                                                            <td>Mart</td>
+                                                                            <td>Aprel</td>
+                                                                            <td>May</td>
+                                                                            <td>Iyun</td>
+                                                                            <td>Iyul</td>
+                                                                            <td>Avgust</td>
+                                                                            <td>Sentabr</td>
+                                                                            <td>Oktabr</td>
+                                                                            <td>Noyabr</td>
+                                                                            <td>Dekabr</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Facebook</a>
+                                                                            </td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                            <td>3.9</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="">Twitter</a>
+                                                                            </td>
+                                                                        
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            <td>1.5</td>
+                                                                            
+                                                                        </tr>
+                                                                        
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        <tr class="bg-gray color-white">
+                                                                            <td>
+                                                                            Jami
+                                                                            </td>
+                                                                        
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            <td>11.4</td>
+                                                                            
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>
                                                                 </div>
-                                                        </div>
-                                                  </div>
-                                                    <!-- ends: .card-header -->
-                                                    <div class="card-body pt-0">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered table-social" id="Qoldiq">
-                                                              
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>Turi</td>
-                                                                        <td>Jadval</td>
-                                                                        <td>Yanvar</td>
-                                                                        <td>Fevral</td>
-                                                                        <td>Mart</td>
-                                                                        <td>Aprel</td>
-                                                                        <td>May</td>
-                                                                        <td>Iyun</td>
-                                                                        <td>Iyul</td>
-                                                                        <td>Avgust</td>
-                                                                        <td>Sentabr</td>
-                                                                        <td>Oktabr</td>
-                                                                        <td>Noyabr</td>
-                                                                        <td>Dekabr</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Facebook</a>
-                                                                        </td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                        <td>3.9</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">Twitter</a>
-                                                                        </td>
-                                                                       
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        <td>1.5</td>
-                                                                        
-                                                                    </tr>
-                                                                    
-                                                                </tbody>
-                                                                <tfoot>
-                                                                    <tr class="bg-gray color-white">
-                                                                        <td>
-                                                                           Jami
-                                                                        </td>
-                                                                       
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        <td>11.4</td>
-                                                                        
-                                                                    </tr>
-                                                                </tfoot>
-                                                            </table>
-                                                        </div>
-                                                            </div>
-                                                    
-                                                </div>
-                        
-                                           </div>
+                                                        
+                                                    </div>
+                            
+                                            </div>
+                                            </div>
                                         </div>
-                                    </div>
+
+
+
+
+
+
+
                                         <div class="tab-pane fade" id="tab-v-3" role="tabpanel" aria-labelledby="tab-v-3-tab">
                                             <div class="row mb-2">
                                                 <div class="col-12">

@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+from sms.querysets import messages
+
 class SMSAccount(models.Model):
     email = models.EmailField("SMS Email", max_length=350)
     password = models.CharField("SMS Password", max_length=350)
@@ -36,9 +38,6 @@ class SMSAccount(models.Model):
             self.save(update_fields=['sent_sms', 'sent_sms_soums'])
 
 
-
-
-
 class SMSMessage(models.Model):
     message    = models.CharField("Xabar matni", max_length=160)
     who_sent   = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
@@ -53,9 +52,13 @@ class SMSMessage(models.Model):
     country      = models.CharField("Davlati", max_length=10, null=True)
     status       = models.CharField("Xabar statusi", max_length=20, null=True)
 
+    objects = models.Manager()
+    messages = messages.SMSMessageManager()
+
     class Meta:
         verbose_name = "SMS Message"
         verbose_name_plural = "SMS Messages"
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.message

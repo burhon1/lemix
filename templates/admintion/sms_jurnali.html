@@ -1,7 +1,7 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
 {% load custom_tags %}
-
+{% load user_tags %}
 {% block title %}
     SMS Jurnal 
 {% endblock %}
@@ -241,7 +241,9 @@
 
                                             <tr class="text-center">
                                                 <td class="text-center">{{ forloop.counter }}</td>
-                                                <td class="text-center">{{ sms.who_sent }}</td>
+                                                <td class="text-center">{{ sms.sender|default:'Tizim' }}
+                                                    {% if sms.sender %} | {{ sms.who_sent|user_role }} {% endif %}
+                                                </td>
                                                 <td class="text-center color-primary" onclick="setModal({{sms.id}})" data-toggle="modal" data-target="#modal-basic1" style="cursor: pointer;">{{ sms.sms_count }}</td>
                                                 <td class="text-center">{{ sms.type }}</td>
                                                 <td class="text-center" style="max-width: 200px;">
