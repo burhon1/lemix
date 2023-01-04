@@ -6,15 +6,15 @@ from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
-    # path('', RedirectView.as_view(url='user/login/', permanent=False)),
+    path('', RedirectView.as_view(url='user/login/', permanent=False)),
     path('admin/', admin.site.urls),
-    # path('user/', include('user.urls')),
-    # path('admintion/', include('admintion.urls')),
-    # path('education/', include('education.urls')),
-    # path('student/', include('student.urls')),
-    # path('finance/', include('finance.urls')),
-    # path('register/',include('admintion.form_urls')),
-    # path('sms/', include('sms.urls')),
+    path('user/', include('user.urls')),
+    path('admintion/', include('admintion.urls')),
+    path('education/', include('education.urls')),
+    path('student/', include('student.urls')),
+    path('finance/', include('finance.urls')),
+    path('register/',include('admintion.form_urls')),
+    path('sms/', include('sms.urls')),
     path('pyclick/', include('pyclick.urls')),
 ]
 
