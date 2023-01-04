@@ -35,10 +35,16 @@ class GroupQueryset(QuerySet):
                 item['days'] = 'as'   
         return datas         
                 
-    def groups(self):
-        if  not self.exists():
+    def groups(self, short_info=False):
+        if not self.exists():
             return self.all()
-        return self.get_info().values(
+        if short_info:
+            columns = (
+                'id',
+                'title',
+                )
+        else:
+            columns = (
                 'id',
                 'title',
                 'course',
@@ -48,6 +54,9 @@ class GroupQueryset(QuerySet):
                 'course__price',
                 'days',
                 'limit',
+            )
+        return self.get_info().values(
+                *columns
             )
 
     def group(self,id):
@@ -72,8 +81,8 @@ class GroupManager(Manager):
     def get_query_set(self):
         return GroupQueryset(self.model)        
 
-    def groups(self):
-        return self.get_query_set().groups() 
+    def groups(self, short_info=False):
+        return self.get_query_set().groups(short_info=short_info) 
 
     def group(self,id):
         return self.get_query_set().group(id)     

@@ -1,7 +1,7 @@
-from email.policy import default
 from django.db import models
 from finance.chooses import *
-from finance.querysets import income_expense_manager, field_manager, record_manager
+from finance.querysets import field_manager, record_manager, paid_manager
+from finance.querysets.income_expense_manager import IncomeExpenseManager
 # Create your models here.
 class Paid(models.Model):
     student = models.ForeignKey('admintion.Student',models.CASCADE)
@@ -13,6 +13,9 @@ class Paid(models.Model):
     user = models.ForeignKey('user.CustomUser',models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
+    objects = models.Manager()
+    paid_objects = paid_manager.PaidManager()
+
 
 class StudentBalance(models.Model):
     title = models.CharField(max_length=100)
@@ -37,7 +40,7 @@ class IncomeExpense(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
     objects = models.Manager()
-    ie_objects = income_expense_manager.IncomeExpenseManager()
+    ie_objects = IncomeExpenseManager()
     class Meta:
         verbose_name = 'Income Or Expense'
         verbose_name_plural = 'Income Or Expense'

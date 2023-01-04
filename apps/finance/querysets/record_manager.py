@@ -1,4 +1,4 @@
-from django.db.models import QuerySet, Manager, F, Value
+from django.db.models import QuerySet, Manager, F, Value, Sum, Q
 from django.db.models.functions import Concat
 
 
@@ -14,11 +14,17 @@ class RecordQuerySet(QuerySet):
             'value',
             'field_id',
             'created',
-            'author_id',
+            # 'author_id',
         ).annotate(
-            author = Concat(F('author__last_name'), Value(' '), F('author__first_name')),
+            # author = Concat(F('author__last_name'), Value(' '), F('author__first_name')),
             field = F('field__title'),
         ).filter(**kwargs)
+
+    def statistics(self, **kwargs):
+        return self.get_info().aggregate(
+            january = Sum('value', filter=Q(year=2023)&Q(month=1))
+        )
+
 
 
 class RecordManager(Manager):

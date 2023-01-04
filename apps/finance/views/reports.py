@@ -3,21 +3,24 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 from finance.chooses import MONTHS
-from finance.selectors.reports import get_by_category
+from finance.models import IncomeExpense
 from admintion.models import Group, Course
 
 @login_required
 def financial_reports(request):
-    cashflow = get_by_category(1)
+    cashflow = IncomeExpense.ie_objects.by_category(1)
     print(cashflow)
-    PandL = get_by_category(2)
+    PandL = IncomeExpense.ie_objects.by_category(2)
+    print(PandL)
     context = {
         'income': 0, 'debt': 0, 'expense': 0, 'vaucher': 0,
-        'income_perc': 0, 'debt_perc': 0,
+        'income_perc': 0, 'debt_perc': 0, 'expense_perc': 0, 'vaucher_perc': 0,
         'months': dict(MONTHS),
         'soums': [],
         'cashflow': cashflow,
-        'PandL': PandL
+        'PandL': PandL,
+        'groups': Group.groups.groups(short_info=True),
+        'courses': Course.courses.courses(short_info=True)
     }
     return render(request, 'admintion/moliyaviy_hisobot.html', context)
 

@@ -1,6 +1,12 @@
-from django.db.models import QuerySet, Manager, F, Value
+from django.db.models import QuerySet, Manager, F, Value, Subquery, OuterRef, Sum
+from django.db.models.functions import JSONObject
 from django.contrib.postgres.aggregates import ArrayAgg
+from django.contrib.postgres.expressions import ArraySubquery
+from django.utils import timezone
+
+
 from finance.chooses import INCOME_EXPENSE_TYPE, INCOME_EXPENSE_CATEGORY
+
 
 class IncomeExpenseQuerySet(QuerySet):
     def get_info(self):
@@ -18,16 +24,19 @@ class IncomeExpenseQuerySet(QuerySet):
         ).filter(**kwargs)
 
     def by_category(self, category: int, **kwargs):
+        from ..models import IEField
+        fields = IEField.fields.fields(type_id=OuterRef('id')).values(
+            json=JSONObject(id='id', title='title', type='type', records='records')
+        )
         return self.get_info().values(
             'id', 
-            'title', 
-            'created', 
-            'author',
-            'category', 'type',
+            'title',
+            'type', 
+        ).annotate(
+            fields = ArraySubquery(fields)
         ).filter(
+            category=category,
             **kwargs
-        ).prefetch_related(
-            'fields'
         )
     
     def by_type(self, type: int, *kwargs):
@@ -37,8 +46,14 @@ class IncomeExpenseQuerySet(QuerySet):
             'created', 
             'author',
             'type',
-        ).filter(**kwargs)
+        ).filter(type=type, **kwargs)
 
+    # def reports(self):
+    #     return self.get_info().filter(
+    #         created__gte = timezone.now() - timezone.timedelta(days=365)
+    #     ).aggregate(
+    #         jan = Sum()
+    #     )
 
 class IncomeExpenseManager(Manager):
     def get_queryset(self):
