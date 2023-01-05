@@ -7,6 +7,8 @@ import json
 from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from admintion.models import Student
+from pyclick.models import ClickTransaction
+from pyclick.utils import PyClickMerchantAPIView
 from finance.services.paid import student_paid
 from finance.serializers import *
 
@@ -33,6 +35,20 @@ def group_students_pay(request):
     val = student_paid(student,price,paid_type,goal_type,description,request.user)
     return JsonResponse({'status':201,'balance':val}) 
 
+def paid_service(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount')  
+        goal_type,group_id = request.POST.get('goal_type').split('_')  
+        paid_type = request.POST.get('paid_type') 
+        return_url = f'http://127.0.0.1:8000/finance/paid-success/?goal_type={goal_type}&paid_type={paid_type}'
+        if paid_type!='0':
+            return_url+='&group_id={group_id}&user={request.user.id}' 
+        order = ClickTransaction.objects.create(amount=amount)
+        url = PyClickMerchantAPIView.generate_url(order_id=order.id, amount=str(amount), return_url=return_url)
+        return redirect(url)  
+
+def paid_success(request):
+    return JsonResponse({})
 
 
 
