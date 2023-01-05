@@ -8,7 +8,7 @@ from admintion.models import Course
 from admintion.forms.courses import CourseForm
 from user.utils import get_admins
 
-@login_required
+
 @permission_required(['admintion.view_course'], raise_exception=True)
 def courses_view(request):
     context = {}
@@ -34,7 +34,7 @@ def courses_view(request):
             course.save()
             return redirect(reverse('admintion:courses')+f"?success={True}")
         else:
-            return redirect(reverse('admintion:courses')+f"?error=1")    
+            return redirect(reverse('admintion:courses')+f"?error=Ma'lumotlar to'liq kiritilmadi")    
     context['objs'] = Course.objects.all()
     return render(request,'admintion/courses_list.html',context) 
 
