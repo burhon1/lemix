@@ -14,7 +14,7 @@ class Room(models.Model):
     capacity = models.PositiveSmallIntegerField()
     image = models.ImageField(upload_to='user/',null=True,blank=True)
     status = models.BooleanField(default=False)
-    educenter = models.PositiveIntegerField(null=True,blank=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
 
     rooms = rooms_manager.RoomQueryset()
 
@@ -28,7 +28,7 @@ class Course(models.Model):
     price = models.PositiveIntegerField()
     comment = models.TextField()
     status = models.BooleanField(default=False)
-    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
     objects = models.Manager()
@@ -39,7 +39,7 @@ class Course(models.Model):
 
 class Teacher(models.Model):
     teacer_type = models.BooleanField(default=False)
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    user = models.ForeignKey('user.CustomUser',on_delete=models.CASCADE)
     status = models.BooleanField(default=False,null=True,blank=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
