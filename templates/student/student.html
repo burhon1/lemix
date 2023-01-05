@@ -269,9 +269,9 @@ Student
                                         <label for="exampleFormControlSelect2" class="il-gray fs-14 fw-500 align-center">To'lov maqsadini tanlang</label>
                                         <div class="atbd-select ">
                                             <select name="goal_type" id="select-tag" class="form-control">
-                                                <option value="0_0">Umumiy balans</option>
+                                                <option value="0">Umumiy balans</option>
                                                 {% for group in groups %}
-                                                <option value="3_{{group.id}}">{{group.name}}</option>
+                                                <option value="{{group.id}}">{{group.name}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
