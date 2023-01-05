@@ -5,7 +5,6 @@ from admintion.querysets import (
     task_manager, educenters_managers, common_managers
 )
 from admintion.data import chooses
-from user.models import CustomUser
 from user.data.chooses import COURSES_SEXES
 from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES, MESSAGE_STATUS
 from admintion.validators import validate_file_size
@@ -29,7 +28,7 @@ class Course(models.Model):
     price = models.PositiveIntegerField()
     comment = models.TextField()
     status = models.BooleanField(default=False)
-    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
     objects = models.Manager()
@@ -40,7 +39,7 @@ class Course(models.Model):
 
 class Teacher(models.Model):
     teacer_type = models.BooleanField(default=False)
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    user = models.ForeignKey('user.CustomUser',on_delete=models.CASCADE)
     status = models.BooleanField(default=False,null=True,blank=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
@@ -74,7 +73,7 @@ class Group(models.Model):
         return self.title
 
 class Student(models.Model):
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    user = models.ForeignKey('user.CustomUser',on_delete=models.CASCADE)
     status = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
     source = models.ForeignKey('Sources', models.SET_NULL, null=True) # models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES)
     groups = models.ManyToManyField(Group,related_name='student')
@@ -90,7 +89,7 @@ class Attendace(models.Model):
     date = models.DateField()
     group_student = models.ForeignKey("GroupStudents", models.SET_NULL, null=True,related_name='attendance')
     created = models.DateTimeField(auto_now_add=True, null=True)
-    creator = models.ForeignKey(CustomUser, models.SET_NULL, related_name="created_attendaces", null=True)
+    creator = models.ForeignKey('user.CustomUser', models.SET_NULL, related_name="created_attendaces", null=True)
     lead_demo = models.ForeignKey("LeadDemo", models.SET_NULL, null=True, related_name='lead_attendance')
     objects = models.Manager()
     attendaces = attendace_manager.AttendaceManager()
@@ -100,7 +99,7 @@ class Payment(models.Model):
     paid = models.PositiveIntegerField()
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='payment')
     created = models.DateTimeField(auto_now_add=True)
-    receiver = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    receiver = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
     payment_type = models.SmallIntegerField("To'lov turi", choices=chooses.PAYMENT_TYPE, default=1)
     comment = models.CharField("Izoh", max_length=500, null=True)
     payments = payment_manager.PaymentManager()
@@ -119,12 +118,12 @@ class FormLead(models.Model):
     file = models.FileField(upload_to="leads", null=True, validators=[validate_file_size])
     days = models.ManyToManyField(GroupsDays, blank=True)
     course = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
-    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True, related_name="created_leads")
+    author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True, blank=True, related_name="created_leads")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=False, null=True)
     activity = models.PositiveSmallIntegerField("Lidning statusi", choices=chooses.LEAD_FORM_STATUS, default=1)
     purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
-    user = models.OneToOneField(CustomUser, models.SET_NULL, null=True, related_name="lead")
+    user = models.OneToOneField('user.CustomUser', models.SET_NULL, null=True, related_name="lead")
     via_form = models.ForeignKey('LeadForms', models.SET_NULL, null=True)
     # educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     objects = models.Manager()
@@ -145,7 +144,7 @@ class GroupStudents(models.Model):
     class Meta:
         unique_together = ('student', 'group')
 class Parents(models.Model):
-    user     = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    user     = models.OneToOneField('user.CustomUser',on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
     passport = models.CharField("Passport", max_length=10, null=True)
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
@@ -169,13 +168,13 @@ class UserTaskStatus(models.Model):
 
 class Tasks(models.Model):
     task_type = models.ForeignKey(TaskTypes, models.SET_NULL, null=True)
-    responsibles = models.ManyToManyField(CustomUser, related_name='user_tasks')
+    responsibles = models.ManyToManyField('user.CustomUser', related_name='user_tasks')
     deadline = models.DateTimeField("Deadline:", auto_now_add=False, auto_now=False)
     comment = models.CharField(max_length=500, null=True)
-    whom = models.ManyToManyField(CustomUser, related_name="my_tasks")
+    whom = models.ManyToManyField('user.CustomUser', related_name="my_tasks")
     user_status = models.ForeignKey(UserTaskStatus, models.SET_NULL, null=True)
     status = models.PositiveSmallIntegerField("Statusi", choices=TASK_STATUS, default=1)
-    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
+    author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     groups = models.ManyToManyField(Group, blank=True)
     leads = models.ManyToManyField(FormLead, blank=True)
@@ -199,9 +198,9 @@ class SmsIntegration(models.Model):
 
 class Messages(models.Model):
     text = models.CharField("Xabar matni", max_length=5000)
-    user = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='messages')
+    user = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True, related_name='messages')
     created_at = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(CustomUser, models.SET_NULL, null=True, related_name='author_messages')
+    author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True, related_name='author_messages')
     message_type = models.PositiveSmallIntegerField(choices=MESSAGE_TYPE, default=1)
 
 class EduFormats(models.Model):
@@ -212,7 +211,7 @@ class EduFormats(models.Model):
 
 class EduCenters(models.Model):
     name = models.CharField(max_length=150, verbose_name="O'quv markazi")
-    director = models.ForeignKey(CustomUser, models.SET_NULL, null=True, blank=True)
+    director = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True, blank=True)
     country = models.ForeignKey('admintion.Countries', models.SET_NULL, null=True)
     region = models.ForeignKey('admintion.Regions', models.SET_NULL, null=True)
     district = models.ForeignKey('admintion.Districts', models.SET_NULL, null=True)

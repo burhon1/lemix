@@ -2,6 +2,7 @@ from django.db import models
 from finance.chooses import *
 from finance.querysets import field_manager, record_manager, paid_manager
 from finance.querysets.income_expense_manager import IncomeExpenseManager
+
 # Create your models here.
 class Paid(models.Model):
     student = models.ForeignKey('admintion.Student',models.CASCADE)

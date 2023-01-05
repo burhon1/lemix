@@ -5,8 +5,6 @@ from education.views import *
 app_name = 'education'
 
 urlpatterns = [
-
-    
     path('test/',test2_view,name='test'),
     path('task/',task_view,name='task'),
     path('task/add/', task_create_view, name='task-add'),
