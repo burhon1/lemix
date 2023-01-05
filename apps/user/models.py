@@ -28,7 +28,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     location = models.CharField(max_length=100,null=True,blank=True)
     email = models.EmailField(null=True)
     otp = models.PositiveIntegerField("OTP", null=True)
-    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    educenter = models.ForeignKey('admintion.EduCenters', on_delete=models.CASCADE, related_name="start_widget",
+        null=True,
+        blank=True,)
     
     def full_name(self):
         return str(self.first_name)+" "+str(self.last_name) # qiymati none bo'lsa xato qaytardi
