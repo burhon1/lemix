@@ -40,7 +40,7 @@ def paid_service(request):
         amount = request.POST.get('amount')  
         goal_type,group_id = request.POST.get('goal_type').split('_')  
         paid_type = request.POST.get('paid_type') 
-        return_url = f'http://127.0.0.1:8000/finance/paid-success/?goal_type={goal_type}&paid_type={paid_type}'
+        return_url = f'http://t.lemix.uz/finance/paid-success/?goal_type={goal_type}&paid_type={paid_type}'
         if paid_type!='0':
             return_url+='&group_id={group_id}&user={request.user.id}' 
         order = ClickTransaction.objects.create(amount=amount)
