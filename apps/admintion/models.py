@@ -14,7 +14,7 @@ class Room(models.Model):
     capacity = models.PositiveSmallIntegerField()
     image = models.ImageField(upload_to='user/',null=True,blank=True)
     status = models.BooleanField(default=False)
-    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    educenter = models.PositiveIntegerField(null=True,blank=True)
 
     rooms = rooms_manager.RoomQueryset()
 
