@@ -1,6 +1,6 @@
 from django.db.models import QuerySet, Manager, F, Value, Sum, Q
 from django.db.models.functions import Concat
-
+from django.utils import timezone
 
 class RecordQuerySet(QuerySet):
     def get_info(self):
@@ -21,8 +21,20 @@ class RecordQuerySet(QuerySet):
         ).filter(**kwargs)
 
     def statistics(self, **kwargs):
+        curr_year: int = timezone.now().year 
         return self.get_info().aggregate(
-            january = Sum('value', filter=Q(year=2023)&Q(month=1))
+            jan = Sum('value', filter=Q(year=curr_year)&Q(month=1)),
+            feb = Sum('value', filter=Q(year=curr_year)&Q(month=2)),
+            mar = Sum('value', filter=Q(year=curr_year)&Q(month=3)),
+            apr = Sum('value', filter=Q(year=curr_year)&Q(month=4)),
+            may = Sum('value', filter=Q(year=curr_year)&Q(month=5)),
+            jun = Sum('value', filter=Q(year=curr_year)&Q(month=6)),
+            jul = Sum('value', filter=Q(year=curr_year)&Q(month=7)),
+            aug = Sum('value', filter=Q(year=curr_year)&Q(month=8)),
+            sep = Sum('value', filter=Q(year=curr_year)&Q(month=9)),
+            oct = Sum('value', filter=Q(year=curr_year)&Q(month=10)),
+            now = Sum('value', filter=Q(year=curr_year)&Q(month=11)),
+            dec = Sum('value', filter=Q(year=curr_year)&Q(month=12)),
         )
 
 
