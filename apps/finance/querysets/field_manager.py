@@ -23,6 +23,7 @@ class FieldQuerySet(QuerySet):
 
             # type = F('type__title'),
             author = Concat(F('author__last_name'), Value(' '), F('author__first_name')),
+            # records_soums = Sum()
             records = ArraySubquery(records)
         ).filter(**kwargs)
 

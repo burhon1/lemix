@@ -538,12 +538,13 @@
                                                         <h6>
                                                             Guruh to'lovlari(% va summa hisobida)
                                                         </h6>
-                                                        <select class="form-control  w-auto" >
-                                                            <option value="0">Barcha</option>
-                                                            <option value="1">G5-Matematika</option>
-                                                            <option value="1">G3-Kimyo</option>
-                                                            <option value="1">G2-Fizika</option>
-
+                                                        <select class="form-control  w-auto" id="group-Select">
+                                                            <option value="">Barcha</option>
+                                                            {% for group in groups %}
+                                                                <option value="{{ group.id}}">{{ group.title }}</option>
+                                                            {% endfor %}
+                                                            
+                                                            
                                                         </select>
                                                     </div>
                                                     <!-- ends: .card-header -->
@@ -567,9 +568,9 @@
                                                                 <div class="cashflow-chart">
                                                                     <div class="parentContainer">
                                                                    
-                                <div>
-                                    <canvas id="barChartHorizontal"></canvas>
-                                </div>
+                                                                <div>
+                                                                    <canvas id="barChartHorizontal"></canvas>
+                                                                </div>
                                         
                     
                                                                     </div>
@@ -597,11 +598,12 @@
                                                         <h6>
                                                             Kurslar to'lovlari(% va summa hisobida)
                                                         </h6>
-                                                        <select class="form-control w-auto" >
-                                                            <option value="0">Barcha</option>
-                                                            <option value="1">Matematika</option>
-                                                            <option value="1">Kimyo</option>
-                                                            <option value="1">Fizika</option>
+                                                        <select class="form-control w-auto" id="course-Select">
+                                                            <option value="">Barcha</option>
+                                                            {% for course in courses %}
+                                                                <option value="{{ course.id }}">{{ course.title }}</option>
+                                                            {% endfor %}
+                                                            
 
                                                         </select>
                                                     </div>
@@ -1660,6 +1662,33 @@
             document.querySelector('#edit').style.display = "block"
             document.querySelector("#info_use").style.display = "block"
         })
+
+
+        const groupSelect = document.querySelector('#group-Select');
+        groupSelect.addEventListener('change', ()=>{ 
+            console.log("change")
+        })
+
+        const courseSelect = document.querySelector('#course-Select');
+        courseSelect.addEventListener('change', ()=>{ 
+            console.log("change")
+        })
+
+        // groupSelect.addEventListener('change', ()=>{
+        //     console.log(groupSelect.value);
+        //     // var url = `/finance/reports/payments/stats/?group=${e.target.selectedOption}`;
+        // })
+
+        function getStats(id, type){
+            var url = `/finance/reports/payments/stats/?${type}=${id}`;
+            fetch(url)
+            .then(res=>res.json())
+            .then(res=>{
+                console.log(type, res);
+            })
+        }
+
+
     </script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
     {% endblock %}

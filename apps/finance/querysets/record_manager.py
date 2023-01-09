@@ -22,21 +22,23 @@ class RecordQuerySet(QuerySet):
 
     def statistics(self, **kwargs):
         curr_year: int = timezone.now().year 
-        return self.get_info().aggregate(
-            jan = Sum('value', filter=Q(year=curr_year)&Q(month=1)),
-            feb = Sum('value', filter=Q(year=curr_year)&Q(month=2)),
-            mar = Sum('value', filter=Q(year=curr_year)&Q(month=3)),
-            apr = Sum('value', filter=Q(year=curr_year)&Q(month=4)),
-            may = Sum('value', filter=Q(year=curr_year)&Q(month=5)),
-            jun = Sum('value', filter=Q(year=curr_year)&Q(month=6)),
-            jul = Sum('value', filter=Q(year=curr_year)&Q(month=7)),
-            aug = Sum('value', filter=Q(year=curr_year)&Q(month=8)),
-            sep = Sum('value', filter=Q(year=curr_year)&Q(month=9)),
-            oct = Sum('value', filter=Q(year=curr_year)&Q(month=10)),
-            now = Sum('value', filter=Q(year=curr_year)&Q(month=11)),
-            dec = Sum('value', filter=Q(year=curr_year)&Q(month=12)),
+        return self.get_info().all(
+           
+        ).aggregate(
+            jan = Sum('value', filter=Q(year=curr_year)&Q(month=1), default=0),
+            feb = Sum('value', filter=Q(year=curr_year)&Q(month=2), default=0),
+            mar = Sum('value', filter=Q(year=curr_year)&Q(month=3), default=0),
+            apr = Sum('value', filter=Q(year=curr_year)&Q(month=4), default=0),
+            may = Sum('value', filter=Q(year=curr_year)&Q(month=5), default=0),
+            jun = Sum('value', filter=Q(year=curr_year)&Q(month=6), default=0),
+            jul = Sum('value', filter=Q(year=curr_year)&Q(month=7), default=0),
+            aug = Sum('value', filter=Q(year=curr_year)&Q(month=8), default=0),
+            sep = Sum('value', filter=Q(year=curr_year)&Q(month=9), default=0),
+            oct = Sum('value', filter=Q(year=curr_year)&Q(month=10), default=0),
+            now = Sum('value', filter=Q(year=curr_year)&Q(month=11), default=0),
+            dec = Sum('value', filter=Q(year=curr_year)&Q(month=12), default=0),
         )
-
+ 
 
 
 class RecordManager(Manager):
@@ -45,3 +47,6 @@ class RecordManager(Manager):
 
     def records(self, **kwargs):
         return self.get_queryset().records(**kwargs)
+
+    def statistics(self):
+        return self.get_queryset().statistics()

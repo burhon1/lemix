@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 from finance.chooses import MONTHS
-from finance.models import IncomeExpense
+from finance.models import IncomeExpense, Paid
+from finance.selectors.reports import get_payment_stats
 from admintion.models import Group, Course
 
 @login_required
@@ -30,13 +31,15 @@ def payments(request):
     """
     Guruh va Kurslar uchun umumiy.
     """
+
     group_id = request.GET.get('group', None)
+    course_id = request.GET.get('course', None)
     if group_id:
-        group = get_object_or_404(Group, pk=int(group_id))
+        payments = Paid.paid_objects.group_payments(group_id)
+    elif course_id:
+        payments = Paid.paid_objects.course_payments(course_id)
     else:
-        course_id = request.GET.get('course', None)
-        if course_id:
-            course = get_object_or_404(Course, pk=int(course_id))
+        payments = Paid.paid_objects.group_payments()
 
     context = {
         'income': 0, 'debt': 0,
@@ -45,4 +48,8 @@ def payments(request):
         'soums': []
     }
 
+    context.update(
+        get_payment_stats(payments)
+        )
+    print(context)
     return JsonResponse(context)

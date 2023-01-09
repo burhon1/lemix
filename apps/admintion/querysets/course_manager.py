@@ -7,10 +7,11 @@ class CoursesQueryset(QuerySet):
     def get_info(self):
         return self.all()
 
-    def courses(self, short_info=False):
+    def courses(self, short_info=False, **kwargs):
         if short_info:
-            return self.get_info().values('id', 'title')
-        return self.get_info()
+            return self.get_info().values('id', 'title').filter(**kwargs)
+        return self.get_info().filter(**kwargs)
+        
     def course(self, id):
         return self.get_info().values(
             'id', 
@@ -23,8 +24,8 @@ class CoursesManager(Manager):
     def get_query_set(self):
         return CoursesQueryset(self.model)
     
-    def courses(self, short_info=False):
-        return self.get_query_set().courses(short_info=short_info)
+    def courses(self, short_info=False, **kwargs):
+        return self.get_query_set().courses(short_info=short_info, **kwargs)
 
     def course(self, id):
         return self.get_query_set().course(id)
