@@ -11,6 +11,18 @@ from user.utils import get_admins
 
 @permission_required(['admintion.view_course'], raise_exception=True)
 def courses_view(request):
+    """
+        foydalanuvchida kurslarni ko'rishga permission bo'lishi kerak.
+        method lari: `get`, `post`. 
+        `GET` so'rov natijasi: {'objs': Courses Queryset,}
+        `POST`: 
+            - foydalanuvchida kurs qo'shishga permission bo'lishi kerak.
+            - Kiritilishi kerak SOHALAR: 
+                    `title`, `duration`, `lesson_duration`, `price`, `comment`, `status`.
+                    bunda `status` -> optional field. DEFAULT: `False`
+            - course obyekt yaratadi, yoki xatolik qaytaradi.
+            - Natijada {% url 'admintion:courses' %} urlga qaytaradi.
+    """
     context = {}
     if request.method == "POST":
         if(request.user.has_perm('admintion.add_courses') is False):
@@ -40,6 +52,13 @@ def courses_view(request):
 
 @permission_required('admintion.delete_course')
 def course_delete_view(request, pk):
+    """
+        - o'chirish uchun permission talab qilinadi. 
+        - Kursni, unga bog'langan guruh, onlayn dars materiallarini o'chiradi.
+        - Methodlari: `POST`.
+        - Kurs topilmasa, 404 xatolik qaytaradi.
+        - Natija: {% url 'admintion:courses' %} urlga qaytaradi. 
+    """
     if request.method == 'POST':
         course = get_object_or_404(Course, pk=pk)
         course.delete()
@@ -50,6 +69,12 @@ def course_delete_view(request, pk):
 
 @permission_required('admintion.view_course')
 def course_detail_view(request, pk):
+    """
+        - kursni ko'rish uchun permission talab qilinadi.
+        - Course obyektini olib beradi (JSON ko'rinishda). 
+        - Methodlari: `GET`.
+        - Kurs topilmasa, 404 xatolik qaytaradi.
+    """
     course = get_object_or_404(Course, pk=pk)
     return JsonResponse(
         model_to_dict(course, exclude=('author'))
@@ -58,6 +83,13 @@ def course_detail_view(request, pk):
 
 @permission_required('admintion.change_course')
 def course_update_view(request, pk):
+    """
+        - kurs ma'lumotlarini yangilash uchun permission talab qilinadi.
+        - Course obyekti bazada mavjud bo'lmasa, 404 xatolik qaytaradi. 
+        - Methodlari: `GET`, `POST`.
+            bunda `GET`:faqat formani olish uchun.
+        - Kurs topilmasa, 404 xatolik qaytaradi.
+    """
     course = get_object_or_404(Course, pk=pk)
     form = CourseForm(request.POST, instance=course)
     if request.method == 'POST' and form.is_valid():

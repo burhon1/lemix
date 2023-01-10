@@ -4,6 +4,15 @@ from admintion.models import EduCenters, Countries, Regions, Districts, EduForma
 
 
 class EducentersForm(forms.ModelForm):
+    """
+        - O'quv markaz filialini yaratish/tahrirlash uchun FormClass.
+        - Bunda `full_name` va `phone` -> majburiy. Ular asnosida foydalanuvchi (director sifatida)
+        yaratiladi, agar mavjud bo'lsa, unga directorlar uchun bo'lganidek permissionlar beriladi -> save() methodda.
+        - O'quv markazi lokatsiyasini olish uchun davlatlar, viloyatlar, tumanlar birliklari nomlanishlaridan 
+        foydalaniladi. -> __init__() methodda.
+        - Telefon raqam sonlardan iborat bo'lishi kerak(`+` mumkin emas.):
+            998XXYYYZZZZ yoki XXYYYZZZZ.
+    """
     full_name = forms.CharField(label='Filial rahbari FIO', max_length=120, required=False)
     phone = forms.CharField(label='Telefon raqam', max_length=13, required=True)
     class Meta:
