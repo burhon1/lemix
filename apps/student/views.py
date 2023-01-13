@@ -19,15 +19,15 @@ from user.utils import get_admins
 
 @login_required
 def student_view(request):
-    # student = get_object_or_404(Student, user=request.user)
-    # context = {
-    #     'student': model_to_dict(student)
-    # }
-    # context.setdefault('balance', student.balance )
-    # payments = Payment.payments.student_payments(student.id)
-    # context.setdefault('payments', payments)
-    # group_student_objs = GroupStudents.custom_manager.student_groups(student.id)
-    # context.setdefault('groups', group_student_objs)
+    student = get_object_or_404(Student, user=request.user)
+    context = {
+        'student': model_to_dict(student)
+    }
+    context.setdefault('balance', student.balance )
+    payments = Payment.payments.student_payments(student.id)
+    context.setdefault('payments', payments)
+    group_student_objs = GroupStudents.custom_manager.student_groups(student.id)
+    context.setdefault('groups', group_student_objs)
     context = {}
     context['is_student'] = True
     return render(request, 'student/student.html',context)
