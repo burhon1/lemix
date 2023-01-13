@@ -21,12 +21,14 @@ def student_paid(student,price,paid_type,goal_type,description,user):
         title=group.title
     else:
         title="Balans"
-    student_balance = StudentBalance.objects.filter(title=title,student=student).first()
-    if student_balance is None:
-        student_balance = StudentBalance.objects.create(title=title,student=student) 
-    student_balance.balance=student_balance.balance+int(price)
+    
     paid.save()
-    student_balance.save()
+    if int(paid_type)>=5:
+        student_balance = StudentBalance.objects.filter(title=title,student=student).first()
+        if student_balance is None:
+            student_balance = StudentBalance.objects.create(title=title,student=student) 
+        student_balance.balance=student_balance.balance+int(price)
+        student_balance.save()
     return {
         'balance':student_balance.balance,
         'paid_id':paid.pk

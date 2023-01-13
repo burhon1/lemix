@@ -2,8 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
+from finance.chooses import GOAL_TYPE
 
-from finance.models import Paid
+from finance.models import Paid,StudentBalance
 from . import serializers
 from .methods_merchant_api import Services
 from .models import ClickTransaction
@@ -41,11 +42,19 @@ class TransactionCheck(PyClickMerchantAPIView):
         print('success 1 ',transaction)
         click_pay=ClickTransaction.objects.filter(click_paydoc_id=transaction)
         if click_pay.exists():
-            paid = Paid.objects.filter(id=int(click_pay.first().extra_data))  
+            click_pay = click_pay.first()
+            paid = Paid.objects.filter(id=int(click_pay.extra_data)) 
+            amount = click_pay.amount
             if paid.exists():
+                paid=paid.first()
                 paid.status=True
-                paid.save()     
-        pass
+                paid.save()  
+                title=GOAL_TYPE[paid.goal_type-1][1]
+                student_balance = StudentBalance.objects.filter(title=title,student=paid.student).first()
+                if student_balance is None:
+                    student_balance = StudentBalance.objects.create(title=title,student=paid.student) 
+                student_balance.balance=student_balance.balance+int(amount)
+                student_balance.save()   
 
 
 class ClickTransactionTestView(PyClickMerchantAPIView):
