@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
+
+from finance.models import Paid
 from . import serializers
 from .methods_merchant_api import Services
 from .models import ClickTransaction
@@ -37,6 +39,12 @@ class TransactionCheck(PyClickMerchantAPIView):
     def successfully_payment(cls, transaction: ClickTransaction):
         """ Эта функция вызывается после успешной оплаты """
         print('success 1 ',transaction)
+        click_pay=ClickTransaction.objects.filter(click_paydoc_id=transaction)
+        if click_pay.exists():
+            paid = Paid.objects.filter(id=int(click_pay.first().extra_data))  
+            if paid.exists():
+                paid.status=True
+                paid.save()     
         pass
 
 

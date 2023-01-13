@@ -27,7 +27,10 @@ def student_paid(student,price,paid_type,goal_type,description,user):
     student_balance.balance=student_balance.balance+int(price)
     paid.save()
     student_balance.save()
-    return student_balance.balance
+    return {
+        'balance':student_balance.balance,
+        'paid_id':paid.pk
+    }
 
 def pay_take():
     pass
