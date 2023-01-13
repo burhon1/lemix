@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q,Sum
 from django.forms.models import model_to_dict
 from django.http.response import JsonResponse
 from django.urls import reverse
 from admintion.models import GroupStudents, Student, Payment, Course, FormLead, LeadDemo, Group
+from finance.models import Paid,StudentBalance
 from education.models import Modules, Lessons, Contents, Tests
 from education.selectors import get_updated_modules, get_need_content
 from education.services import set_student_viewed_content
@@ -19,16 +20,16 @@ from user.utils import get_admins
 
 @login_required
 def student_view(request):
-    # student = get_object_or_404(Student, user=request.user)
-    # context = {
-    #     'student': model_to_dict(student)
-    # }
-    # context.setdefault('balance', student.balance )
-    # payments = Payment.payments.student_payments(student.id)
-    # context.setdefault('payments', payments)
-    # group_student_objs = GroupStudents.custom_manager.student_groups(student.id)
-    # context.setdefault('groups', group_student_objs)
+    student = get_object_or_404(Student, user=request.user)
     context = {}
+    context['students']=student
+    context['balances'] = StudentBalance.objects.filter(student=student)
+    context['total_balance'] = context['balances'].annotate(total_price=Sum('balance')).first().total_price
+    payments = Paid.objects.filter(student=student,status=True)
+    context['payments'] =  payments
+    group_student_objs = GroupStudents.custom_manager.student_groups(student.id)
+    context.setdefault('groups', group_student_objs)
+    
     context['is_student'] = True
     return render(request, 'student/student.html',context)
 

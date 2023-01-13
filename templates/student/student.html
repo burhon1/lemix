@@ -109,7 +109,7 @@ Student
                                     <!-- Card 2 End  -->
                                     <div class="ap-po-details ap-po-details--2  radius-xl bg-white d-flex justify-content-between">
                                             <div class="overview-content">
-                                                <h1>{{ balance|readable_soums |default:"0"}} <small>UZS</small></h1>
+                                                <h1>{{ total_balance|readable_soums |default:"0"}} <small>UZS</small></h1>
                                                 <p class="m-0">Umumiy balans</p>
                                                 
                                             </div>
@@ -118,13 +118,13 @@ Student
                                 </div>
                                 
                                     <!-- Card 2 End  -->
-                                    {% for group in groups %}
+                                    {% for balance in balances %}
                                     <div class="col-xxl-3 col-sm-6  col-ssm-12 mb-10">
                                         <div class="ap-po-details ap-po-details--2  radius-xl bg-white d-flex justify-content-between">
                                             <div class="overview-content">
-                                                <h1>{{ group.group__course__price|readable_soums }} <small>UZS</small></h1>
+                                                <h1>{{ balance.balance|readable_soums }} <small>UZS</small></h1>
                                                 <p class="m-0">Summa</p>
-                                                <small>{{ group.group__title }}</small>
+                                                <small>{{ balance.title }}</small>
                                             </div>
                                         </div>
                                         <!-- Card 2 End  -->
@@ -195,12 +195,17 @@ Student
                                                             </td>
                                                             <td>
                                                                 <div class="userDatatable-content">
-                                                                {{ payment.paid|readable_soums }}
+                                                                {{ payment.paid }}
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="userDatatable-content">
-                                                                    {{ payment.payment_type|get_type_name:"payment" }}
+                                                                    {{ payment.payment_type }}
+                                                                    {% if payment.paid_type == 5 %}
+                                                                    Click
+                                                                    {% elif payment.paid_type == 1 %}
+                                                                    Naqt
+                                                                    {% endif %}
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -210,7 +215,7 @@ Student
                                                             </td>
                                                             <td>
                                                                 <div class="userDatatable-content">
-                                                                    {{payment.receiver }}
+                                                                    {{payment.user|default:'-' }}
                                                                 </div>
                                                             </td>
                                                             <!-- <td> 
