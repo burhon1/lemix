@@ -24,12 +24,13 @@ def student_paid(student,price,paid_type,goal_type,description,user):
         paid.goal_type=1
     
     paid.save()
-    if int(paid_type)>=5:
+    if int(paid_type)<5:
         student_balance = StudentBalance.objects.filter(title=title,student=student).first()
         if student_balance is None:
             student_balance = StudentBalance.objects.create(title=title,student=student) 
         student_balance.balance=student_balance.balance+int(price)
         student_balance.save()
+        paid.status=True
     return {
         'balance':student_balance.balance,
         'paid_id':paid.pk
