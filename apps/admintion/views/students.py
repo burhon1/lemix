@@ -19,7 +19,7 @@ def students_view(request):
         status,obj = user_add(groups,post).values()
         source=post.get('source',False)
         comment=post.get('comment',False)
-        if status==200 and source and comment:
+        if status==200 and source:
             student = Student(
                 source=get_object_or_404(Sources, pk=int(source)),
                 comment=comment,

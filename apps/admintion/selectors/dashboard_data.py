@@ -10,6 +10,7 @@ def get_data_to_director(user:CustomUser):
     educenter = EduCenters.objects.filter(director=user).first()
     if educenter is None:
         return dict()
+    educenter = educenter.id
     students = Student.objects.filter(user__educenter=educenter)
     fin_students_per = len(GroupStudents.objects.filter(group__status=5, student__user__educenter=educenter))//(len(students) or 1)*100
     rem_students_per = len(GroupStudents.objects.filter(status=3, student__user__educenter=educenter))//(len(students) or 1)*100
