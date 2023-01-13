@@ -36,7 +36,7 @@ class TransactionCheck(PyClickMerchantAPIView):
     @classmethod
     def successfully_payment(cls, transaction: ClickTransaction):
         """ Эта функция вызывается после успешной оплаты """
-        pass
+        print('success 1')
 
 
 class ClickTransactionTestView(PyClickMerchantAPIView):

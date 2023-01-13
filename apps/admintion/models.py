@@ -107,6 +107,7 @@ class Payment(models.Model):
 
 class LeadStatus(models.Model):
     status = models.CharField("Status nomi", max_length=200)
+    
 class FormLead(models.Model):
     source = models.ForeignKey('Sources', models.SET_NULL, null=True) #models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
     status = models.ForeignKey(LeadStatus, models.SET_NULL, null=True, blank=True)
