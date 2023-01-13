@@ -40,8 +40,9 @@ def paid_service(request):
         amount = request.POST.get('amount')  
         goal_type = request.POST.get('goal_type')  
         paid_type = request.POST.get('paid_type') 
-        return_url = f'http://t.lemix.uz/finance/paid-success/'
+        return_url = f'http://t.lemix.uz/student/'
         student = Student.objects.filter(user=request.user).first()
+        print(goal_type,19)
         val = student_paid(student,amount,paid_type,goal_type,'',request.user) 
         order = ClickTransaction.objects.create(amount=amount,extra_data=val.get('paid_id'))
         url = PyClickMerchantAPIView.generate_url(order_id=order.id, amount=str(amount), return_url=return_url)

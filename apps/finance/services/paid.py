@@ -10,7 +10,6 @@ def student_paid(student,price,paid_type,goal_type,description,user):
             student=student,
             paid=price,
             paid_type=paid_type,
-            goal_type=goal_type,
             description=description,
             user=user
         )
@@ -18,9 +17,11 @@ def student_paid(student,price,paid_type,goal_type,description,user):
     if goal_type!="0":
         group = Group.objects.filter(id=int(goal_type)).first() 
         paid.group=group
+        paid.goal_type=3
         title=group.title
     else:
         title="Balans"
+        paid.goal_type=1
     
     paid.save()
     if int(paid_type)>=5:
