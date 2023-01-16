@@ -79,6 +79,7 @@ class Student(models.Model):
     groups = models.ManyToManyField(Group,related_name='student')
     comment = models.TextField()
     balance = models.IntegerField("O'quvchining hisobidagi mablag'", default=0)
+    pay_type = models.PositiveSmallIntegerField(choices=chooses.PAY_FORMS,blank=True,null=True)
     
     students =  students_manager.StudentManager()
     objects = models.Manager()
@@ -144,6 +145,7 @@ class GroupStudents(models.Model):
     objects = models.Manager()
     class Meta:
         unique_together = ('student', 'group')
+
 class Parents(models.Model):
     user     = models.OneToOneField('user.CustomUser',on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)

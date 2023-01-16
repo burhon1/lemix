@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,CharField,TextField,Exists,OuterRef,Count
+from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,Subquery,CharField,TextField,Exists,OuterRef,Count
 from django.contrib.postgres.aggregates import ArrayAgg
 # from django.contrib.postgres.functions import ToArray
 from django.db.models.functions import Concat,Substr,Cast
@@ -77,6 +77,24 @@ class GroupQueryset(QuerySet):
                 groupdays = F('days'),
             ).filter(id=id).first()
 
+    def pay_by_lesson(self):
+        return self.filter(pay_type=1).annotate(
+            students=Subquery(
+                'admintion.models.Student'.students.filter_by_group(OuterRef('id'))
+            )
+        )
+
+    def pay_by_month(self):
+        return self.filter(pay_type=2) 
+
+    def pay_by_year(self):
+        return self.filter(pay_type=3)
+
+    def pay_by_module(self):
+        return self.filter(pay_type=4)
+
+    # def                         
+
 class GroupManager(Manager):
     def get_query_set(self):
         return GroupQueryset(self.model)        
@@ -85,4 +103,5 @@ class GroupManager(Manager):
         return self.get_query_set().groups(short_info=short_info) 
 
     def group(self,id):
-        return self.get_query_set().group(id)     
+        return self.get_query_set().group(id)  
+
