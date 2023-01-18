@@ -10,7 +10,6 @@ from admintion.models import Student
 from pyclick.models import ClickTransaction
 from pyclick.utils import PyClickMerchantAPIView
 from finance.services.paid import student_paid
-from finance.serializers import *
 
 # Create your views here.
 def student_pay(request,id):

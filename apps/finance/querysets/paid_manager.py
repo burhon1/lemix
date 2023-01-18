@@ -36,6 +36,17 @@ class PaidQuerySet(QuerySet):
         )
 
 class PaidManager(Manager):
+    """
+        Bu class paid modeli uchun yozilgan manager
+        :func obj | None course_payments: bu funksiyani 
+            chaqirganda unga course_id parameter keladi 
+            uning turi int. Bu funksiya qaytarishdan oldin 
+            get_queryset funksiyasini chaqiradi va uning 
+            course_payments funksiyasiga murojat qiladi.
+            murojat qilingan funksiyaning course_id parameterga 
+            course_payments dan kelgan course_id beriliadi bu bizga 
+            course id si shunga tenglarini qaytaradi
+    """
     def get_queryset(self):
         return PaidQuerySet(self.model)
 

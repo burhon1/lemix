@@ -6,5 +6,6 @@ class FinanceConfig(AppConfig):
     name = 'finance'
 
     def ready(self):
-        from finance.services import paid 
-        paid.start()
+        print(22)
+        
+        # paid.start()

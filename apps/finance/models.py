@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 from finance.chooses import *
 from finance.querysets import field_manager, record_manager, paid_manager
 from finance.querysets.income_expense_manager import IncomeExpenseManager
@@ -27,6 +28,11 @@ class StudentBalance(models.Model):
     class Meta:
         verbose_name = "Talabaning balansi" 
         verbose_name_plural = "Talabaning balanslari"
+
+class Jobs(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    run_date = models.DateField()
+    is_done = models.BooleanField(default=False,null=True,blank=True)
 
 # demo click
 class ClickOrder(models.Model):
