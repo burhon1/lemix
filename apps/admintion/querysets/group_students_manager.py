@@ -53,12 +53,18 @@ class GroupStudentsQueryset(QuerySet):
             annotate(group_days=ArrayAgg('group__days__days',distinct=True)).\
             values('group__title','student__id','created','group__start_date','group_days','group__course__price')
 
+    def student_add_group(self,user):
+        return self.filter(student__user=user).values_list('id',flat=True)
+
 class GroupStudentManager(Manager):
     def get_query_set(self):
         return GroupStudentsQueryset(self.model)
     
     def objects(self):
         return self.get_query_set().objects().order_by('-created')
+
+    def student_add_group(self,user):
+        return self.get_query_set().student_add_group(user)   
 
     def student_groups(self, student_id: int):
         return self.get_query_set().student_groups(student_id).order_by('-created') 

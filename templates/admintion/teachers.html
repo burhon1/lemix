@@ -150,32 +150,23 @@
 
 
 
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
+<div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <div class="modal-body">
-                <h4>Siz haqiqattan ushbu o'qituvchini o'chirmoqchimisiz?</h4>
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-body">
+                    <h4>Siz haqiqattan ushbu o'qituvchini o'chirmoqchimisiz?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" id="teacherDelBtn">Ha o'chirilsin</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" id="teacherDelBtn">Ha o'chirilsin</button>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
-            </div>
-        </div>
     </div>
-
-
 </div>
-<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-
-
+<div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title">Sms matni.</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
@@ -341,11 +332,6 @@
 <div class="overlay-dark-l2"></div>
 
 
-
-
-
-
-
 {% endblock %}
 
 {% block script %}
@@ -457,6 +443,7 @@
                 body: formData
             })
             .then(res=>{
+                console.log(res)
                 if(res.status===204){
                     window.location.assign(window.location.pathname)
                 }else if(res.status===401){
@@ -471,8 +458,11 @@
         }
 
         function setDeleteModal(id){
-            var modalDelBtn = document.getElementById('teacherDelBtn');
-            modalDelBtn.setAttribute('onclick', `deleteTeacher(${id})`);
+            
+        document.getElementById('teacherDelBtn').addEventListener('click',function(){
+            deleteTeacher(id);
+        });
+            modalDelBtn.data=id;
         }
         
         function teacherDetail(id){

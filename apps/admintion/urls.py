@@ -16,6 +16,7 @@ urlpatterns = [
     path('teacher/<int:id>/delete/',teachers.teacher_delete_view,name='teacher-delete'),
     path('teacher/<int:id>/update/',teachers.teacher_update_view,name='teacher-update'),
     path('groups/',groups.groups_view,name='groups'),
+    path('group-list/',groups.group_list_view,name='group-list'),
     path('group/<int:id>/detail/',groups.group_detail_view,name='group-detail'),
     path('group/<int:id>/data/',groups.group_detail_data,name='group-data'),
     path('group/change/attendace/',groups.change_attendace_view,name='change-attendace'),

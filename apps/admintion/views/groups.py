@@ -64,6 +64,11 @@ def groups_view(request):
     context['groups'] = Group.groups.groups()
     return render(request,'admintion/groups.html',context)
 
+def group_list_view(request):
+    added_group = GroupStudents.custom_manager.student_add_group(request.user)
+    groups = Group.groups.group_list(added_group)
+    return JsonResponse({'data':list(groups)})
+
 def group_detail_view(request,id):
     group1 = get_object_or_404(Group, pk=id)
     if request.method == 'POST':

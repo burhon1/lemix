@@ -113,8 +113,7 @@
 
                                         <div class="has-subMenu-left  d-flex ">
                                             <ul class="subMenu mr-2">
-                                                <div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-
+                                                <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
 
                                                     <div class="modal-dialog modal-md" role="document">
                                                         <div class="modal-content modal-bg-white ">
@@ -469,8 +468,9 @@
                             </div>
                             <p class="col-12">
 
-                            <a href="#" class="text-right d-block col-12" onclick="handleClickIcon(7)">+Guruhga
+                            <a href="#" class="text-right d-block col-12" onclick="handleAddGroup()">+Guruhga
                                 qo’shish: </a>
+                                <div class="group_add"></div>
                             <div class="forms w-100">
                                 <div class="forms-view" id="parent">
                                     <label for="a10" class="col-12 p-1">Guruhga qo’shish</label>
@@ -727,7 +727,34 @@
             console.log(err);
         })
     }
-
+    function handleAddGroup(){
+        var wrap = document.createElement('div');
+        wrap.textContent='sadsda'
+        
+        fetch("{% url 'admintion:group-list' %}", {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+           console.log(res)
+           var select = document.createElement('select');
+           select.name='group';
+           res.data.map((item)=>{
+                var option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.title;
+                select.appendChild(option);
+           })
+           document.querySelector('.group_add').appendChild(select)
+        })
+        .catch(err=>{
+            
+        })
+    }
 </script>
 {% endblock %}
 <div class="form-group col-md-6">

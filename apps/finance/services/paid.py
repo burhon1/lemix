@@ -76,7 +76,6 @@ def cal_days(day1,day2,group_days,bl_check=True):
     for week in cal.monthdayscalendar(day1.year, day1.month):
         for i, day in enumerate(week):
             # not this month's day or a weekend
-            # print(day1.day,day)
             if day == 0 or (i+1 not in group_days):
                 continue
             # or some other control if desired...
@@ -175,10 +174,9 @@ def pay_take(today):
     first_day = today.replace(day=1)
     last_day = last_day_of_month(first_day)
     
-    
     if by_lesson.exists():
         for obj in by_lesson:
-            run_date = str(find_last_lesson(obj['group__start_date'].date(),obj['group_days']))+' 01:42:15'
+            run_date = str(find_last_lesson(obj['group__start_date'].date(),obj['group_days']))+' 23:50:00'
             scheduler.add_job(pay_month, 'date', run_date=run_date,args=[obj,run_date[:-9]]) 
     if by_month.exists():
         monthly_job,_ = Jobs.objects.get_or_create(run_date=last_day)

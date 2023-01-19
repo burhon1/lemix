@@ -59,6 +59,9 @@ class GroupQueryset(QuerySet):
                 *columns
             )
 
+    def group_list(self,group):
+        return self.filter(id__in=group).values('id','title')  
+
     def group(self,id):
         return self.get_info().values(
                 'id',
@@ -77,6 +80,7 @@ class GroupQueryset(QuerySet):
                 groupdays = F('days'),
             ).filter(id=id).first()
 
+
     def pay_by_lesson(self):
         return self.filter(pay_type=1).annotate(
             students=Subquery(
@@ -92,8 +96,7 @@ class GroupQueryset(QuerySet):
 
     def pay_by_module(self):
         return self.filter(pay_type=4)
-
-    # def                         
+                 
 
 class GroupManager(Manager):
     def get_query_set(self):
@@ -101,6 +104,9 @@ class GroupManager(Manager):
 
     def groups(self, short_info=False):
         return self.get_query_set().groups(short_info=short_info) 
+
+    def group_list(self,user):
+        return self.get_query_set().group_list(user)   
 
     def group(self,id):
         return self.get_query_set().group(id)  
