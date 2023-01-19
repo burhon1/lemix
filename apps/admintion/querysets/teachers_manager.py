@@ -1,4 +1,4 @@
-from django.db.models import Value, Count, When,F,Manager,Func,Subquery,CharField,TextField,Exists,OuterRef
+from django.db.models import Value, Count, When,Case,F,Q,Manager,Func,Subquery,CharField,TextField,Exists,OuterRef
 from django.contrib.postgres.aggregates import ArrayAgg
 # from django.contrib.postgres.functions import ToArray
 from django.db.models.functions import Concat,Substr,Cast
@@ -22,12 +22,19 @@ class TeacherQueryset(QuerySet):
                 Substr(F('user__phone'),8,2)
                 ),
             groups=Count(F('group_teacher'))
+        ).annotate(
+            teacher_type=Case(
+                When(teacer_type=True,then=Value('O\'qituvchi')),
+                default=Value('Yordamchi(support)')
+            )
         ).values(
             'id',
             'full_name',
             'phone_number',
             'groups',
-            'status'
+            'status',
+            'teacer_type',
+            'teacher_type'
         )
 
     def teacher(self,id):

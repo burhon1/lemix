@@ -1,14 +1,14 @@
 from django.shortcuts import get_object_or_404
 
 from finance.models import StudentBalance
-from ..models import Group, Parents, Student, GroupStudents, Sources
+from admintion.models import Group, Parents, Student, GroupStudents, Sources
 
 
 def set_student_group(student: Student, group: Group):
     # message: str = "Muvaffaqiyatli yaratildi"
     try:
         GroupStudents.objects.create(student=student, group=group)
-        StudentBalance.objects.create(student=student, title=group.name)
+        StudentBalance.objects.create(student=student, title=group.title)
     except:
         pass# message = "talaba guruhga avvaldan biriktirilgan"
     return

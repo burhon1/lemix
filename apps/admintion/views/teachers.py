@@ -32,6 +32,7 @@ def teachers_view(request):
         context['educenter'] = request.user.educenter
     else:
         context['educenters'] = EduCenters.objects.all().values('id', 'name')
+    print(context['objs'])
     return render(request,'admintion/teachers.html',context) 
 
 

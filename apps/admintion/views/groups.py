@@ -65,8 +65,8 @@ def groups_view(request):
     return render(request,'admintion/groups.html',context)
 
 def group_list_view(request):
-    added_group = GroupStudents.custom_manager.student_add_group(request.user)
-    groups = Group.groups.group_list(added_group)
+    # added_group = GroupStudents.custom_manager.student_add_group(request.user)
+    groups = Group.groups.groups(True)
     return JsonResponse({'data':list(groups)})
 
 def group_detail_view(request,id):

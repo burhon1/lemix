@@ -221,7 +221,7 @@
                                 <tbody>
 
                                     {% for student in students %}
-                                    <tr>
+                                    <tr id="student-{{student.id}}">
                                         <td>
                                             <div class="d-flex">
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -298,7 +298,7 @@
                                                         <span data-feather="edit"></span></a>
                                                 </li>
                                                 <li>
-                                                    <a href="{% url 'admintion:student-detail' student.id %}" class="remove">
+                                                    <a href="#" onclick="handleStudentDelete({{student.id}})" class="remove">
                                                         <span data-feather="trash-2"></span></a>
                                                 </li>
                                             </ul>
@@ -727,10 +727,36 @@
             console.log(err);
         })
     }
+
+    function handleStudentDelete(id){
+        var tr = document.querySelector(`#student-${id}`);
+        fetch(`/admintion/student/${id}/delete/`, {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+           if(res.status==302){
+            tr.remove();
+           }
+        })
+        .catch(err=>{
+            
+        })
+    }
+    
     function handleAddGroup(){
         var wrap = document.createElement('div');
-        wrap.textContent='sadsda'
-        
+        var group_add = document.querySelector('.group_add');
+        group_add.className='row w-100 group_add';
+        wrap.className='form-group col-md-12';
+        if(group_add.innerHTML){
+            group_add.innerHTML="";
+            return;
+        }
         fetch("{% url 'admintion:group-list' %}", {
             method:'post',
             headers:{
@@ -742,6 +768,7 @@
         .then(res=>{
            console.log(res)
            var select = document.createElement('select');
+           var label = document.createElement('label')
            select.name='group';
            res.data.map((item)=>{
                 var option = document.createElement('option');
@@ -749,7 +776,11 @@
                 option.textContent = item.title;
                 select.appendChild(option);
            })
-           document.querySelector('.group_add').appendChild(select)
+           label.className='il-gray fs-14 fw-500 align-center';
+           select.className='form-control px-15';
+           wrap.appendChild(label);
+           wrap.appendChild(select)
+           group_add.appendChild(wrap)
         })
         .catch(err=>{
             

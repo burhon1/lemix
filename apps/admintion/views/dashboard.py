@@ -12,7 +12,7 @@ def dashboard(request):
         context['is_director'] = True
         context.update(get_data_to_director(request.user))
 
-    if group.name == 'Admin' or group.name == 'Manager':
+    if group.name == 'Admintion' or group.name == 'Manager':
         template_name = 'admintion/dashboard_director.html'
         context['is_admin'] = True
         context.update(get_data_to_admin(request.user))

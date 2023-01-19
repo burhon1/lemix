@@ -39,7 +39,7 @@ class StudentQueryset(QuerySet):
             group_count = Count(F('ggroups'), distinct=True),
             payment = Sum(F('payment__paid'), distinct=True),
             attendace = ArrayAgg(F('ggroups__attendance'), distinct=True)
-        )
+        ).order_by('-id')
 
     def students_attendace(self,id):
         return self.get_info().filter(ggroups__group__id=id).values(

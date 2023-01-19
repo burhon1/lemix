@@ -57,10 +57,7 @@ class GroupQueryset(QuerySet):
             )
         return self.get_info().values(
                 *columns
-            )
-
-    def group_list(self,group):
-        return self.filter(id__in=group).values('id','title')  
+            )  
 
     def group(self,id):
         return self.get_info().values(
@@ -105,8 +102,8 @@ class GroupManager(Manager):
     def groups(self, short_info=False):
         return self.get_query_set().groups(short_info=short_info) 
 
-    def group_list(self,user):
-        return self.get_query_set().group_list(user)   
+    def group_list(self):
+        return self.get_query_set().group_list()   
 
     def group(self,id):
         return self.get_query_set().group(id)  

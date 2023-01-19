@@ -7,10 +7,11 @@ from user.services.users import user_add, CustomUser
 from django.contrib.auth.models import Group
 from django.utils import timezone
 import json
-from admintion.models import Student, Group as GroupModel, Parents, TaskTypes, Sources, Tasks
+from admintion.models import Student, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
 from admintion.selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups,get_student_report
 from admintion.services.student import set_student_group, set_student_group_status, update_student
 from admintion.templatetags.custom_tags import readable_days
+
 def students_view(request):
     context = {}
     if request.method == "POST":
@@ -31,6 +32,7 @@ def students_view(request):
             pphone = post.get('parent_phone',False)
             telegram = post.get('telegram_telegram',None)
             passport = post.get('passport_passport', None)
+            group = post.get('group',False)
             if parent and pphone:
                 try:
                     fname, lname = parent.split(" ")
@@ -48,6 +50,9 @@ def students_view(request):
                 parent.passport = passport or parent.passport
                 parent.students.add(student)
                 parent.save()
+            if group:
+                grop = GroupModel.objects.get(id=group)
+                set_student_group(student, grop)
             return redirect('admintion:students')
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
@@ -79,7 +84,6 @@ def student_detail_view(request,id):
     context['tasks'] = Tasks.tasks.student_tasks(id)
     context['today_tasks'] = len([task for task in context['tasks'] if task['deadline'].date() == timezone.now().date()])
     context['reports'] = get_student_report(id=id)
-    print(context['reports'])
     return render(request,'admintion/student_detail.html',context)
 
 def student_view(request,id):
@@ -123,7 +127,10 @@ def student_delete_view(request, id):
     status = 400
     if request.method == 'POST':
         student.delete()
+        # print(student._meta.related_objects)
         status = 302
+        # for related_object in student._meta.related_objects:
+        #     print(related_object.first())
     return JsonResponse({'status': status})
 
 def student_add_task_view(request, id):
