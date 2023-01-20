@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.conf import settings
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
+from dateutil import zoneinfo as ZoneInfo
 
 from sms.services import get_account, get_user_info, get_user_balance, get_messages_by_dispatch
 from sms.models import SMSAccount, SMSMessage 
