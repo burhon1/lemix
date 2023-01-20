@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'finance',
     # 'django_user_agents',
     # 'import_export',
-    # 'sms',
+    'sms',
     # 'django_cleanup.apps.CleanupConfig',
     'pyclick',
 
