@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'finance',
     # 'django_user_agents',
     # 'import_export',
-    'sms',
+    # 'sms',
     # 'django_cleanup.apps.CleanupConfig',
     'pyclick',
 
@@ -175,6 +175,8 @@ USE_TZ = True
 # # STATIC_ROOT = str(BASE_DIR.joinpath('static'))
 # MEDIA_URL = '/media/uploads/'
 # MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
