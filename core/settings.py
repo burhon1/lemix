@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k%qh!4%iiwyfn)xtmc5qpckb_#zq1k=@tw!%pg(1832#)-p(7z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+DEBUG = os.environ.get('DEBUG', True)
 
 # Append module dir
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
@@ -114,7 +114,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lemix',
-        'USER': 'djangouser', #  djangouser  postgres
+        'USER': 'postgres', #  djangouser  postgres
         'PASSWORD': '1',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -167,10 +167,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-# STATIC_URL = 'static/'
-# STATICFILES_DIRS = [    
-#     BASE_DIR / 'static',
-#     ]
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)

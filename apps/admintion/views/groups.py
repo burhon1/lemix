@@ -31,18 +31,17 @@ def groups_view(request):
         end_time = post.get('end_time',False)
         comments = post.get('comments',False)
         limit = post.get('limit', False)
-        if title and course and status and teacher and room and trainer and days and pay_type and start_time and start_date and end_time and comments:
+        print(days)
+        if title and course and status and teacher and room and days and pay_type and start_time and start_date and end_time and comments:
             course = Course.objects.filter(id=course).first()
             teacher = Teacher.objects.filter(id=teacher).first()
             room = Room.objects.filter(id=room).first()
-            trainer = Teacher.objects.filter(id=trainer).first()
             days=GroupsDays.objects.filter(id__in=days)
             group = Group(
                 title=title,
                 comments=comments,
                 course=course,
                 teacher=teacher,
-                trainer=trainer,
                 room=room,
                 pay_type=pay_type,
                 status=status,
@@ -51,6 +50,9 @@ def groups_view(request):
                 limit=limit,
                 start_date=start_date
             )
+            if trainer:
+                trainer = Teacher.objects.filter(id=trainer).first()
+                group.trainer=trainer
             group.save()
             group.days.add(*days)
             return redirect('admintion:groups')
