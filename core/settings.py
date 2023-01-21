@@ -5,8 +5,8 @@ import os, sys
 # from dotenv import  load_dotenv
 # load_dotenv('.env')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# BASE_DIR = Path(__file__).resolve().parent.parent # local
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.getcwd()))) # deploy
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -114,7 +114,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lemix',
-        'USER': 'djangouser', #  djangouser  postgres
+        'USER': 'postgres', #  djangouser  postgres
         'PASSWORD': '1',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -167,7 +167,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 # STATIC_ROOT = str(BASE_DIR.joinpath('static'))
