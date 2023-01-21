@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k%qh!4%iiwyfn)xtmc5qpckb_#zq1k=@tw!%pg(1832#)-p(7z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DEBUG', False)
 
 # Append module dir
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
@@ -170,18 +170,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-<<<<<<< HEAD
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    '/var/lemix/static/',
-]
-=======
 STATIC_URL = '/static/'              # Used to include static resources in web pages
 STATIC_ROOT = '/var/lemix/static/' 
->>>>>>> dd6904a4ddd2959967a6865ef191edc4d627543a
+
 # STATIC_URL = 'static/'
 # STATICFILES_DIRS = [    
 #     BASE_DIR / 'static',
