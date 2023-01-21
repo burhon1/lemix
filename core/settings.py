@@ -5,8 +5,8 @@ import os, sys
 # from dotenv import  load_dotenv
 # load_dotenv('.env')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent # local
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.getcwd()))) # deploy
+BASE_DIR = Path(__file__).resolve().parent.parent # local
+# BASE_DIR =  # deploy
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -81,7 +81,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(os.getcwd()))), 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -167,7 +167,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 # STATIC_ROOT = str(BASE_DIR.joinpath('static'))
