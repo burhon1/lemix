@@ -81,7 +81,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(os.getcwd()))), 'templates')],
+        'DIRS': [os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,7 +114,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lemix',
-        'USER': 'postgres', #  djangouser  postgres
+        'USER': 'djangouser', #  djangouser  postgres
         'PASSWORD': '1',
         'HOST': '127.0.0.1',
         'PORT': '5432',
