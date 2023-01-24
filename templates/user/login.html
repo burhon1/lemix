@@ -64,17 +64,8 @@
                                                                         <input id="password-field" type="password"
                                                                             class="form-control" name="password" value="">
                                                                         <div
-                                                                            class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2">
+                                                                            class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2" >
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="signUp-condition signIn-condition">
-                                                                    <div class="checkbox-theme-default custom-checkbox ">
-                                                                        <input class="checkbox" type="checkbox"
-                                                                            id="check-1">
-                                                                        <label for="check-1">
-                                                                            <span class="checkbox-text">Eslab qolish</span>
-                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                                 <div
@@ -114,5 +105,19 @@
     </div>
     {% include 'atomic/injectjs.html' %}
 </body>
-
+<script>
+    document.querySelector('.toggle-password2').addEventListener('click',function(e){
+        var indx = e.target.className.search('fa-eye-slash');
+        if(indx!==-1){
+            e.target.className = e.target.className.replace('fa-eye-slash','fa-eye');
+            e.target.previousElementSibling.type='text';
+        }
+        else {
+            e.target.className = e.target.className.replace('fa-eye','fa-eye-slash');
+            e.target.previousElementSibling.type='password';
+        }
+        console.log( )
+        // .map((x, i) => [i, x]).filter(x=>x=='fa-eye-slash')
+    })
+</script>
 </html>
