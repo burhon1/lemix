@@ -9,7 +9,7 @@ from admintion.forms.courses import CourseForm
 from user.utils import get_admins
 
 
-@permission_required(['admintion.view_course'], raise_exception=True)
+# @permission_required(['admintion.view_course'], raise_exception=True)
 def courses_view(request):
     context = {}
     if request.method == "POST":
