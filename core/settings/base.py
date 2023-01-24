@@ -14,9 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent # local
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k%qh!4%iiwyfn)xtmc5qpckb_#zq1k=@tw!%pg(1832#)-p(7z'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
-
 # Append module dir
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
@@ -103,25 +100,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 AUTH_USER_MODEL  = 'user.CustomUser'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lemix',
-        'USER': 'postgres', #  djangouser  postgres
-        'PASSWORD': '1',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -168,8 +146,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
-# STATIC_ROOT = str(BASE_DIR.joinpath('static'))
+
 MEDIA_URL = '/media/uploads/'
 MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 

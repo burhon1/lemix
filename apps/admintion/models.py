@@ -16,7 +16,7 @@ class Room(models.Model):
     status = models.BooleanField(default=False)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
 
-    rooms = rooms_manager.RoomQueryset()
+    rooms = rooms_manager.RoomManager()
 
     def __str__(self) -> str:
         return self.title

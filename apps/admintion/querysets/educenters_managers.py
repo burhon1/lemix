@@ -1,12 +1,13 @@
 from django.db.models.query import QuerySet
 from django.db.models import Manager, Value, F  
 from django.db.models.functions import Concat
+
 class EduCentersQuerySet(QuerySet):
     def get_info(self):
         return self.all()
 
     def objects(self):
-        return self.get_info()
+        return self.all()
         
     def educenters(self):
         return self.get_info().values(
@@ -26,6 +27,10 @@ class EduCentersQuerySet(QuerySet):
             district=F('district__name'),
         )
 
+    def educenter_id_list(self,id):
+        # print(self.filter(id=1),3)
+        return self.filter(id=id)
+
     def educenter(self, id):
         return self.educenters().filter(pk=id).first()
 
@@ -35,6 +40,8 @@ class EduCentersManager(Manager):
 
     def educenters(self):
         return self.get_query_set().educenters()
-    
+
+    def educenter_id_list(self,id):
+        return self.get_query_set().educenter_id_list(id)
     def educenter(self, id):
         return self.get_query_set().educenter(id)
