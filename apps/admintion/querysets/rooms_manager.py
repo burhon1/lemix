@@ -6,10 +6,6 @@ from django.db.models.query import QuerySet
 
 class RoomQueryset(QuerySet):
     def get_info(self,educenter_id):
-        # educenter_ids = 'admintion.EduCenters'.educenters.educenters()
-        # print(educenter_ids)
-        # objs = 
-        # print(objs|objs.prefetch_related(''))
         return self.filter(educenter__id__in=educenter_id)
 
     def rooms(self,educenter_id):

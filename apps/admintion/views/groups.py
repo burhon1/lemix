@@ -7,7 +7,7 @@ from django.db.models import Q
 import json
 from admintion.selectors import get_next_n_group_dates
 from user.models import CustomUser
-from admintion.models import GroupStudents, LeadDemo, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace,Tasks
+from admintion.models import GroupStudents, LeadDemo,EduCenters, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace,Tasks
 from admintion.utilts.users import get_days,get_month
 from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
@@ -61,7 +61,9 @@ def groups_view(request):
             return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
     context['teachers'] = Teacher.objects.filter(teacer_type=True) 
     context['trainers'] = Teacher.objects.filter(teacer_type=False)
-    context['rooms'] = Room.objects.all()
+    ed_id=request.user.educenter
+    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    context['rooms'] = Room.rooms.rooms(educenter_ids)
     context['courses'] = Course.objects.all()
     context['groups'] = Group.groups.groups()
     return render(request,'admintion/groups.html',context)
