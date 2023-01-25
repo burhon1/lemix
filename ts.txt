@@ -12,3 +12,5 @@ server {
         proxy_pass http://unix:/var/lemix/gunicorn.sock;
     }
 }
+
+export DJANGO_SETTINGS_MODULE=core.development_settings

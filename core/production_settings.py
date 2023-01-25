@@ -1,7 +1,7 @@
-from core.settings.base import *
+from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -14,7 +14,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lemix',
-        'USER': 'postgres', #  djangouser  postgres
+        'USER': 'djangouser', #  djangouser  postgres
         'PASSWORD': '1',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -22,4 +22,4 @@ DATABASES = {
 
 }
 
-STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+STATIC_ROOT = str(BASE_DIR.joinpath('static'))
