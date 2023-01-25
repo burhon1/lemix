@@ -10,11 +10,13 @@ def rooms_view(request):
         title = post.get('title',False)
         capacity = post.get('capacity',False)
         files = request.FILES.get('files',False)
+        educenter=EduCenters.objects.filter(id=request.user.educenter).first()
         if title and capacity and files:
             room = Room(
                 title=title,
                 capacity=capacity,
-                image=files
+                image=files,
+                educenter=educenter
             )
             room.save()
             return redirect(reverse('admintion:rooms')+f"?success={True}")
