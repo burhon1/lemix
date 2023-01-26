@@ -7,12 +7,12 @@ from django.db.models.query import QuerySet
 # from admintion.models import Student
 
 class GroupQueryset(QuerySet):
-    def get_info(self):
+    def get_info(self,educenter_id):
         datas = None
         if  not self.exists():
             datas = self.all()
         else:    
-            datas = self.values(
+            datas = self.filter(educenter__id__in=educenter_id).values(
                 'id',
                 'course__title',
                 'teacher__user__first_name',
@@ -35,7 +35,7 @@ class GroupQueryset(QuerySet):
                 item['days'] = 'as'   
         return datas         
                 
-    def groups(self, short_info=False):
+    def groups(self, educenter_ids,short_info=False):
         if not self.exists():
             return self.all()
         if short_info:
@@ -55,7 +55,7 @@ class GroupQueryset(QuerySet):
                 'days',
                 'limit',
             )
-        return self.get_info().values(
+        return self.get_info(educenter_ids).values(
                 *columns
             )  
 
@@ -99,8 +99,8 @@ class GroupManager(Manager):
     def get_query_set(self):
         return GroupQueryset(self.model)        
 
-    def groups(self, short_info=False):
-        return self.get_query_set().groups(short_info=short_info) 
+    def groups(self,educenter_ids, short_info=False):
+        return self.get_query_set().groups(educenter_ids,short_info=short_info) 
 
     def group_list(self):
         return self.get_query_set().group_list()   

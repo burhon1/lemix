@@ -20,7 +20,7 @@ def user_add(groups,post, is_staff=False):
                 birthday=birthday,
                 gender=gender,
                 is_staff=is_staff,
-                # educenter_id=educenter
+                educenter=educenter
             )
             if location:
                 custom_user.location=location

@@ -287,32 +287,37 @@
                                         id="validationServer01" required>
                                 </div>
                             </div>
+                            {% if educenters.count == 1 %}
                             <div class="col-md-6">
-                                {% if educenters %}
-                                    <div class="form-group">
-                                        <label for="validationServer05"
-                                            class="il-gray fs-14 fw-500 align-center">O'quv markazi</label>
+                                <div class="form-group">
+                                    <label for="validationServer05"
+                                        class="il-gray fs-14 fw-500 align-center">O'quv markazi</label>
+                                        <select hidden name="educenter"
+                                        class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                        id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                            <option selected disabled value="">Tanlang</option>
+                                            {% for edu in educenters %}
+                                                <option selected value="{{ edu.id }}"> {{ edu.name }} </option>
+                                            {% endfor %}
+                                        </select>
+                                </div>
+                            </div>
+                            {% elif educenters.count > 1 %}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="validationServer05"
+                                        class="il-gray fs-14 fw-500 align-center">O'quv markazi</label>
                                         <select name="educenter"
-                                            class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
-                                            id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                        class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                        id="validationServer04" aria-describedby="validationServer04Feedback" required>
                                             <option selected disabled value="">Tanlang</option>
                                             {% for edu in educenters %}
                                                 <option value="{{ edu.id }}"> {{ edu.name }} </option>
                                             {% endfor %}
                                         </select>
-                                    </div>
-                                {% elif educenter %}
-                                    <div class="form-group">
-                                        <label for="validationServer05"
-                                            class="il-gray fs-14 fw-500 align-center">O'quv markazi</label>
-                                        <select name="educenter" hidden="true"
-                                            class="custom-select is-valid form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
-                                            id="validationServer05" aria-describedby="validationServer04Feedback" required>
-                                                <option selected value="{{ educenter.id }}"> {{ educenter.name }} </option>
-                                        </select>
-                                    </div>
-                                {% endif %}
+                                </div>
                             </div>
+                            {% endif %}
                             <div class="col-md-12 d-flex justify-content-between">
                                 <div class="userDatatable-title checkbox-group-wrapper">
                                     <div class="checkbox-group d-flex">

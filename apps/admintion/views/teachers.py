@@ -13,6 +13,7 @@ def teachers_view(request):
     if request.method == "POST":
         post = request.POST
         groups = Group.objects.filter(name="Teacher")
+        educenter = post.get('educenter',False)
         status,obj = user_add(groups,post, True).values()
         teacer_type=post.get('teacer_type',False)
         status_ = post.get('status',False)
@@ -22,17 +23,18 @@ def teachers_view(request):
                 user=obj,
                 status=status_
             )
+            if educenter:
+                teacher.educenter=EduCenters.objects.filter(id=educenter).first()
             teacher.save()
             return redirect('admintion:teachers')
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:teachers')+f"?error={context['error']}")
-    context['objs'] = Teacher.teachers.teachers()
-    if request.user.educenter:
-        context['educenter'] = request.user.educenter
-    else:
-        context['educenters'] = EduCenters.objects.all().values('id', 'name')
-    print(context['objs'])
+    ed_id=request.user.educenter
+    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    teacher = Teacher.teachers.teachers(educenter_ids) 
+    context['objs'] = teacher
+    context['educenters'] = EduCenters.objects.filter(id=ed_id).values('id','name')|EduCenters.objects.filter(parent__id=ed_id).values('id','name')
     return render(request,'admintion/teachers.html',context) 
 
 

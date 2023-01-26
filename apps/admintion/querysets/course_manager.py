@@ -4,13 +4,14 @@ from django.db.models.query import QuerySet
 from django.contrib.postgres.aggregates import ArrayAgg
 
 class CoursesQueryset(QuerySet):
-    def get_info(self):
-        return self.all()
+    def get_info(self,educenter_id):
+        return self.filter(educenter__id__in=educenter_id)
 
-    def courses(self, short_info=False):
+    def courses(self, educenter_id,short_info=False):
         if short_info:
-            return self.get_info().values('id', 'title')
-        return self.get_info()
+            return self.get_info(educenter_id).values('id', 'title')
+        return self.get_info(educenter_id)
+
     def course(self, id):
         return self.get_info().values(
             'id', 
@@ -23,8 +24,8 @@ class CoursesManager(Manager):
     def get_query_set(self):
         return CoursesQueryset(self.model)
     
-    def courses(self, short_info=False):
-        return self.get_query_set().courses(short_info=short_info)
+    def courses(self,educenter_id, short_info=False):
+        return self.get_query_set().courses(educenter_id,short_info=short_info)
 
     def course(self, id):
         return self.get_query_set().course(id)

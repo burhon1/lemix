@@ -4,10 +4,10 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models.query import QuerySet
 
 class StudentQueryset(QuerySet):
-    def get_info(self):
+    def get_info(self,educenter_ids):
         if not self.exists():
             return self.all()
-        return self.values(
+        return self.filter(educenter__id__in=educenter_ids).values(
             'id',
             'user__first_name',
             'user__last_name',
@@ -15,8 +15,8 @@ class StudentQueryset(QuerySet):
             full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
         )
 
-    def students(self):
-        return self.get_info().values(
+    def students(self,educenter_ids):
+        return self.get_info(educenter_ids).values(
             'id',
             'user__first_name',
             'user__last_name',
@@ -113,8 +113,8 @@ class StudentManager(Manager):
     def get_query_set(self):
         return StudentQueryset(self.model)
     
-    def students(self):
-        return self.get_query_set().students() 
+    def students(self,educenter_ids):
+        return self.get_query_set().students(educenter_ids) 
 
     def students_attendace(self,id):
         return self.get_query_set().students_attendace(id)

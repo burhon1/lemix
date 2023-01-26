@@ -59,13 +59,15 @@ def groups_view(request):
         else: 
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
-    context['teachers'] = Teacher.objects.filter(teacer_type=True) 
-    context['trainers'] = Teacher.objects.filter(teacer_type=False)
+    
     ed_id=request.user.educenter
     educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    teacher = Teacher.teachers.teachers(educenter_ids) 
+    context['teachers'] = teacher
+    context['trainers'] = teacher
     context['rooms'] = Room.rooms.rooms(educenter_ids)
-    context['courses'] = Course.objects.all()
-    context['groups'] = Group.groups.groups()
+    context['courses'] = Course.courses.courses(educenter_ids)
+    context['groups'] = Group.groups.groups(educenter_ids)
     return render(request,'admintion/groups.html',context)
 
 def group_list_view(request):

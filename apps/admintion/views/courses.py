@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.forms import model_to_dict
 from django.contrib.auth.decorators import permission_required, login_required
 from django.core.exceptions import PermissionDenied
-from admintion.models import Course
+from admintion.models import Course,EduCenters
 from admintion.forms.courses import CourseForm
 from user.utils import get_admins
 
@@ -35,7 +35,9 @@ def courses_view(request):
             return redirect(reverse('admintion:courses')+f"?success={True}")
         else:
             return redirect(reverse('admintion:courses')+f"?error=Ma'lumotlar to'liq kiritilmadi")    
-    context['objs'] = Course.objects.all()
+    ed_id=request.user.educenter
+    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)   
+    context['objs'] = Course.courses.courses(educenter_ids)
     return render(request,'admintion/courses_list.html',context) 
 
 @permission_required('admintion.delete_course')
