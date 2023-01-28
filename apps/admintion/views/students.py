@@ -7,7 +7,7 @@ from user.services.users import user_add, CustomUser
 from django.contrib.auth.models import Group
 from django.utils import timezone
 import json
-from admintion.models import Student, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
+from admintion.models import EduCenters,Student, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
 from admintion.selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups,get_student_report
 from admintion.services.student import set_student_group, set_student_group_status, update_student
 from admintion.templatetags.custom_tags import readable_days
@@ -57,7 +57,9 @@ def students_view(request):
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:students')+f"?error={context['error']}")
-    context['students'] = Student.students.students()
+    ed_id=request.user.educenter
+    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    context['students'] = Student.students.students(educenter_ids)
     context['sources'] = Sources.objects.all()
     context['students_count'] = context['students'].count()
     context['active_students'] = context['students'].students_by_status(status=1).count()

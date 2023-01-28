@@ -1,5 +1,5 @@
 from django.db.models.query import QuerySet
-from django.db.models import Manager, Value, F  
+from django.db.models import Manager, Value, F,Q  
 from django.db.models.functions import Concat
 
 class EduCentersQuerySet(QuerySet):
@@ -29,7 +29,7 @@ class EduCentersQuerySet(QuerySet):
 
     def educenter_id_list(self,id):
         # print(self.filter(id=1),3)
-        return self.filter(id=id)
+        return self.filter(Q(id=id)|Q(parent__id=id)).values('id','name')
 
     def educenter(self, id):
         return self.educenters().filter(pk=id).first()
