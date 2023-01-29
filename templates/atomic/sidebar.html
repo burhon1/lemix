@@ -153,6 +153,7 @@
                     <li>
                         <a class="" href="{% url 'education:parents-list' %}">Ota-onalar</a>
                     </li>
+                    {% if 'Admintion' not in groups_list %}
                     <li>
                         <a class="" href="{% url 'education:onlin' %}">Onlayn darslar</a>
                     </li>
@@ -165,8 +166,10 @@
                     <li>
                         <a class="" href="{% url 'education:teachers' %}">Kutubxona</a>
                     </li>
+                    {% endif %}
                 </ul>
             </li>  
+            {% if 'Manager' in groups_list or 'Director' in groups_list %}
             <li class="has-child">
                 <a href="#" class="">
                     <span data-feather="refresh-cw" class="nav-icon"></span>
@@ -174,7 +177,6 @@
                     <span class="toggle-icon"></span>
                 </a>
                 <ul>
-                    
                     <li>
                         <a class="" href="{% url 'education:finance-list' %}">Barcha to'lovlar</a>
                     </li>
@@ -257,6 +259,8 @@
 
                 </ul>
             </li>
+            {% endif %}
+            
             
             
             {% endif %}

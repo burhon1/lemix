@@ -2,14 +2,15 @@ from django.utils import timezone
 
 from user.models import CustomUser, UserDevices
 
-def user_add(groups,post, is_staff=False):
+def user_add(groups,request, is_staff=False):
+    post = request.POST
     first_name = post.get('first_name',False)
     last_name = post.get('last_name',False)
     phone = post.get('phone',False)
     birthday = post.get('birthday',False)
     gender = post.get('gender',False)
     location = post.get('location',False)
-    educenter = post.get('educenter', False)
+    educenter = request.session.get('branch_id',False)
     user = CustomUser.objects.filter(phone=phone)
     if not user.exists():
         if first_name and last_name and phone and birthday and gender and groups:

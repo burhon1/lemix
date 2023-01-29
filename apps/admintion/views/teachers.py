@@ -14,7 +14,7 @@ def teachers_view(request):
         post = request.POST
         groups = Group.objects.filter(name="Teacher")
         educenter = post.get('educenter',False)
-        status,obj = user_add(groups,post, True).values()
+        status,obj = user_add(groups,request, True).values()
         teacer_type=post.get('teacer_type',False)
         status_ = post.get('status',False)
         if status==200 and teacer_type and status_:

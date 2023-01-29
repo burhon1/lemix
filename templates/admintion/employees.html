@@ -130,9 +130,7 @@
 
 
 
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
+<div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-body">
@@ -144,8 +142,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 <div class="drawer-basic-wrap">
@@ -162,7 +158,6 @@
                     <form class="was-validated" action="{% url 'admintion:employees' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="validationServer01"

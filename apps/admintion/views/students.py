@@ -17,7 +17,7 @@ def students_view(request):
     if request.method == "POST":
         post = request.POST
         groups = Group.objects.filter(name="Student")
-        status,obj = user_add(groups,post).values()
+        status,obj = user_add(groups,request).values()
         source=post.get('source',False)
         comment=post.get('comment',False)
         if status==200 and source:

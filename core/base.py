@@ -86,7 +86,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'admintion.admintion_processors.branch_list'
+                'admintion.admintion_processors.branch_list',
+                'admintion.admintion_processors.user_groups'
             ],
             'libraries':{
             'admintion_tags': 'admintion.templatetags.custom_tags',

@@ -11,15 +11,14 @@
         <div class="navbar-right">
             <ul class="navbar-right__menu">
                 <li class="">
-                    
                     <form action="{{path_url}}" class="" onchange="this.submit()" method="get">
                         <div class="atbd-select ">
-                            <select name="branch" id="select-1" class="form-control form-control-lg">
+                            <select name="branch" id="select-1" class="form-control">
                                 {% for branch in branches %}
                                 {% if selected_branch == branch.id %}
                                 <option value="{{branch.id}}" selected>{{branch.name}}</option>
                                 {% else %}
-                                <option value="{{branch.id}}">{{branch.name}} {{selected_branch}}</option>
+                                <option value="{{branch.id}}">{{branch.name}}</option>
                                 {% endif %}
                                 {% endfor %}
                             </select>

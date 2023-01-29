@@ -11,7 +11,7 @@ def employees_view(request):
         post = request.POST
         groups = post.getlist('groups',False)
         groups = Group.objects.filter(id__in=groups)
-        status,obj = user_add(groups,post).values()
+        status,obj = user_add(groups,request).values()
         if status:
             return redirect('admintion:employees')
         else:
