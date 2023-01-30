@@ -56,6 +56,9 @@ class GroupStudentsQueryset(QuerySet):
     def student_add_group(self,user):
         return self.filter(student__user=user).values_list('id',flat=True)
 
+    def student_filter(self,filters,educenter_ids):
+        return self.filter(**filters)    
+
 class GroupStudentManager(Manager):
     def get_query_set(self):
         return GroupStudentsQueryset(self.model)
@@ -67,7 +70,10 @@ class GroupStudentManager(Manager):
         return self.get_query_set().student_add_group(user)   
 
     def student_groups(self, student_id: int):
-        return self.get_query_set().student_groups(student_id).order_by('-created') 
+        return self.get_query_set().student_groups(student_id).order_by('-created')
+
+    def student_filter(self,filters,educenter_ids):
+        return self.get_query_set().student_filter(filters,educenter_ids)     
 
     def pay_by_lesson(self):
         return self.get_query_set().pay_by_lesson() 

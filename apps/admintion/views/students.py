@@ -2,15 +2,17 @@ from django.shortcuts import render,redirect, get_object_or_404
 from django.db.models import Q
 from django.urls import reverse
 from django.http import JsonResponse
+from admintion.utils import get_list_of_dict,get_list_of_filter
 from finance.models import StudentBalance,Paid
 from user.services.users import user_add, CustomUser
 from django.contrib.auth.models import Group
 from django.utils import timezone
 import json
-from admintion.models import EduCenters,Student, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
+from admintion.models import EduCenters,Course,Student,Teacher, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
 from admintion.selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups,get_student_report
 from admintion.services.student import set_student_group, set_student_group_status, update_student
 from admintion.templatetags.custom_tags import readable_days
+from admintion.data.chooses import STUDENT_STATUS
 
 def students_view(request):
     context = {}
@@ -58,15 +60,40 @@ def students_view(request):
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:students')+f"?error={context['error']}")
     ed_id=request.user.educenter
-    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    branch_id = int(request.session.get('branch_id',False))
+    if branch_id == 0:
+        educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    else:
+        educenter_ids = [branch_id]
+    
     context['students'] = Student.students.students(educenter_ids)
     context['sources'] = Sources.objects.all()
     context['students_count'] = context['students'].count()
-    context['active_students'] = context['students'].students_by_status(status=1).count()
-    context['nonactive_students'] = context['students'].students_by_status(status=2).count()
-    context['removed_students'] = context['students'].students_by_status(status=3).count()
+    context=context|context['students'].students_by_status()
+    context['datas_of_teacher'] = list(Teacher.teachers.teacher_list(educenter_ids))
+    context['datas_of_group'] = list(GroupModel.groups.group_list(educenter_ids))
+    context['datas_of_course'] = list(Course.courses.courses(educenter_ids,True))
+    context['datas_of_status'] = get_list_of_dict(('id','title'),STUDENT_STATUS)
     return render(request,'admintion/students.html',context) 
 
+def student_by_filter_view(request):
+    context={}
+    ed_id=request.user.educenter
+    branch_id = int(request.session.get('branch_id',False))
+    if branch_id == 0:
+        educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
+    else:
+        educenter_ids = [branch_id]
+    
+    # print(Student.students.students(educenter_ids),5)
+    # context['students'] = Student.students.students(educenter_ids)
+    status = request.GET
+    filter_keys=get_list_of_filter(status)
+    print(filter_keys)
+    # context['students']=context['students'].student_filter(filter_keys,educenter_ids)
+    # print(context['students'].count())
+    print(GroupStudents.custom_manager.student_filter(filter_keys,educenter_ids))
+    return JsonResponse({})
 
 def student_detail_view(request,id):
     context = {}

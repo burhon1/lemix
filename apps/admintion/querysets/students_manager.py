@@ -4,7 +4,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models.query import QuerySet
 
 class StudentQueryset(QuerySet):
-    def get_info(self,educenter_ids):
+    def get_info(self,educenter_ids=None):
         if not self.exists():
             return self.all()
         return self.filter(educenter__id__in=educenter_ids).values(
@@ -16,6 +16,7 @@ class StudentQueryset(QuerySet):
         )
 
     def students(self,educenter_ids):
+        # print(self.get_info(educenter_ids))
         return self.get_info(educenter_ids).values(
             'id',
             'user__first_name',
@@ -105,9 +106,21 @@ class StudentQueryset(QuerySet):
         ).filter(id=id).first()
 
     def setudent_list(self):
-        return self.get_info().filter(status=1).values('id','full_name')  
-    
+        return self.get_info().filter(status=1).values('id','full_name') 
 
+    def students_by_status(self):
+        # from admintion.data import chooses
+        # content = {}
+        # for status in chooses.STUDENT_STATUS:
+        #     print(status[1])
+        # print(chooses.STUDENT_STATUS)
+        return {
+            'active_students':self.filter(status=1).count(),
+            'nonactive_students':self.filter(status=2).count(),
+            'removed_students':self.filter(status=3).count()
+        }
+    def student_filter(self,filters):
+        return self.filter(**filters)    
 
 class StudentManager(Manager):
     def get_query_set(self):
@@ -127,4 +140,11 @@ class StudentManager(Manager):
 
     def studet_list(self):
         return self.get_query_set().setudent_list()
+
+    def student_filter(self,filters):
+        return self.get_query_set().student_filter(filters)
+
+    def students_by_status(self):
+        return self.get_query_set().students_by_status()
+
   

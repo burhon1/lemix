@@ -39,3 +39,17 @@ def convert_to_json(obj, fields):
     data.update(model_to_dict(obj, field_names))
 
     return data
+
+def get_list_of_dict(keys, list_of_tuples):
+     """
+     This function will accept keys and list_of_tuples as args and return list of dicts
+     """
+     list_of_dict = [dict(zip(keys, values)) for values in list_of_tuples]
+     return list_of_dict
+
+def get_list_of_filter(get):
+    filters = {}
+    for key, value in get.items():
+        if value != '':
+            filters[key] = value
+    return filters             

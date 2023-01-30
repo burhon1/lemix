@@ -80,7 +80,7 @@ class Student(models.Model):
     comment = models.TextField()
     balance = models.IntegerField("O'quvchining hisobidagi mablag'", default=0)
     pay_type = models.PositiveSmallIntegerField(choices=chooses.PAY_FORMS,blank=True,null=True)
-    
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     students =  students_manager.StudentManager()
     objects = models.Manager()
 
@@ -252,6 +252,8 @@ class LeadForms(models.Model):
 
 class Sources(models.Model):
     title = models.CharField(max_length=150, unique=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    
     def __str__(self):
         return self.title
 class Contacts(models.Model):

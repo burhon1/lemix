@@ -6,9 +6,8 @@ from django.db.models.query import QuerySet
 
 
 class TeacherQueryset(QuerySet):
-
-    def teachers(self,educenter_id):
-        return self.filter(educenter__id__in=educenter_id).annotate(
+    def get_info(self,educenter_id):
+            return self.filter(educenter__id__in=educenter_id).annotate(
             full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name')),
             phone_number=Concat(
                 Value('+998'),
@@ -22,7 +21,10 @@ class TeacherQueryset(QuerySet):
                 Substr(F('user__phone'),8,2)
                 ),
             groups=Count(F('group_teacher'))
-        ).annotate(
+        )
+
+    def teachers(self,educenter_id):
+        return self.get_info(educenter_id).annotate(
             teacher_type=Case(
                 When(teacer_type=True,then=Value('O\'qituvchi')),
                 default=Value('Yordamchi(support)')
@@ -46,6 +48,8 @@ class TeacherQueryset(QuerySet):
             students=Count(F('group_teacher__student'))
         ).first() 
 
+    def teacher_list(self,educenter_id):
+        return self.get_info(educenter_id).values('id','full_name')
 
 class TeacherManager(Manager):
     def get_query_set(self):
@@ -53,6 +57,9 @@ class TeacherManager(Manager):
 
     def teachers(self,educenter_id):
         return self.get_query_set().teachers(educenter_id)  
+
+    def teacher_list(self,educenter_id):
+        return self.get_query_set().teacher_list(educenter_id)    
 
     def teacher(self,id):
         return self.get_query_set().teacher(id)  

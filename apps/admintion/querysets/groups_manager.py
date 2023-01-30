@@ -58,6 +58,8 @@ class GroupQueryset(QuerySet):
         return self.get_info(educenter_ids).values(
                 *columns
             )  
+    def group_list(self,educenter_id):
+        return self.get_info(educenter_id).values('id','title')        
 
     def group(self,id):
         return self.get_info().values(
@@ -102,8 +104,8 @@ class GroupManager(Manager):
     def groups(self,educenter_ids, short_info=False):
         return self.get_query_set().groups(educenter_ids,short_info=short_info) 
 
-    def group_list(self):
-        return self.get_query_set().group_list()   
+    def group_list(self,educenter_id):
+        return self.get_query_set().group_list(educenter_id)   
 
     def group(self,id):
         return self.get_query_set().group(id)  

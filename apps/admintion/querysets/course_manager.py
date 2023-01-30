@@ -10,7 +10,7 @@ class CoursesQueryset(QuerySet):
     def courses(self, educenter_id,short_info=False):
         if short_info:
             return self.get_info(educenter_id).values('id', 'title')
-        return self.get_info(educenter_id)
+        return self.get_info(educenter_id)   
 
     def course(self, id):
         return self.get_info().values(
