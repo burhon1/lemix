@@ -37,8 +37,10 @@ def courses_view(request):
         else:
             return redirect(reverse('admintion:courses')+f"?error=Ma'lumotlar to'liq kiritilmadi")    
     ed_id=request.session.get('branch_id',False)
-    educenter_ids = EduCenters.objects.filter(Q(id=ed_id)).values_list('id',flat=True)
-    print(educenter_ids)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)
     context['objs'] = Course.courses.courses(educenter_ids)
     return render(request,'admintion/courses_list.html',context) 
 
