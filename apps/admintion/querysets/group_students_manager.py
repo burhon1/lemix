@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager, TextField, CharField,Q
+from django.db.models import Value, Case, When,F,Manager, TextField, CharField,Q,Count,Sum,IntegerField
 from django.db.models.functions import Cast, Concat, Substr
 from django.db.models.query import QuerySet
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -57,7 +57,38 @@ class GroupStudentsQueryset(QuerySet):
         return self.filter(student__user=user).values_list('id',flat=True)
 
     def student_filter(self,filters,educenter_ids):
-        return self.filter(**filters)    
+        from admintion.models import GroupStudents
+        # print()
+        return self.filter(group__educenter__id__in=educenter_ids).filter(**filters).annotate(
+            student_ids=F('student__id'),
+            fio=Concat(
+                F('student__user__first_name'),
+                Value(' '),
+                F('student__user__last_name'),
+                Value(' '),
+                F('student__user__middle_name')
+                ),
+            phone=Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('student__user__phone'),1,2),
+                Value(') '),
+                Substr(F('student__user__phone'),3,3),
+                Value(' '),
+                Substr(F('student__user__phone'),6,2),
+                Value(' '),
+                Substr(F('student__user__phone'),8,2)
+                ),
+            student_status=Case(
+                When(student__status=1,then=Value('Aktiv')),
+                When(student__status=2,then=Value('Muzlatilgan')),
+                When(student__status=3,then=Value('Ketgan')),
+                output_field=CharField()
+            ),
+            group_count = Count(F('student__ggroups'), distinct=True),
+            payment = Sum(F('student__payment__paid'), distinct=True),
+            attendace = ArrayAgg(F('student__ggroups__attendance'), distinct=True)
+        ).values('id','student_ids','fio','phone','student_status','group_count','payment','attendace')    
 
 class GroupStudentManager(Manager):
     def get_query_set(self):

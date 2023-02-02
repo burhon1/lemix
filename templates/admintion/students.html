@@ -91,9 +91,55 @@
 
             <div class="card px-20">
                 <div class="card-body p-1">
-                    <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-students">
+                    <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-studentss">
                         <div class="table-responsive">
-                            <div id="filter-form-container"></div>
+                           <div class="row">
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <select class="form-control px-15" id="exampleFormControlSelect1" onchange="_onStatusDropdownChanged(event,'group__teacher__id')">
+                                        <option value="0">O'qituvchini tanlang</option>
+                                        {% for data_of_teacher in datas_of_teacher %}
+                                        <option value="{{data_of_teacher.id}}">{{data_of_teacher.full_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <select class="form-control px-15" id="exampleFormControlSelect2" onchange="_onStatusDropdownChanged(event,'group__id')">
+                                        <option value="0">Guruhni tanlang</option>
+                                        {% for data_of_group in datas_of_group %}
+                                        <option value="{{data_of_group.id}}">{{data_of_group.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <select class="form-control px-15" id="exampleFormControlSelect3" onchange="_onStatusDropdownChanged(event,'group__course__id')">
+                                        <option value="0">Kursni tanlang</option>
+                                        {% for data_of_course in datas_of_course %}
+                                        <option value="{{data_of_course.id}}">{{data_of_course.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <select class="form-control px-15" id="exampleFormControlSelect4" onchange="_onStatusDropdownChanged(event,'student__status')">
+                                        <option value="0">Holatini tanlang</option>
+                                        {% for data_of_status in datas_of_status %}
+                                        <option value="{{data_of_status.id}}">{{data_of_status.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    search ...
+                                </div>
+                            </div>
+                           </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="version-list d-flex justify-content-between">
@@ -174,7 +220,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table mb-0 table-borderless adv-table-students" data-sorting="true"
+                            <table class="table mb-0 table-borderless adv-table-studentss" data-sorting="true"
                                 data-filter-container="#filter-form-container" data-paging-current="1"
                                 data-paging-position="left" data-paging-size="10">
                                 <thead>
@@ -197,16 +243,13 @@
                                             <span class="userDatatable-title">Guruhlar</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title ">Davomat</span>
-                                        </th>
-                                        {% comment %}<th>
-                                            <span class="userDatatable-title ">O'qituvchi</span>
-                                        </th> {% endcomment %}
-                                        <th>
-                                            <span class="userDatatable-title ">Balans</span>
+                                            <span class="userDatatable-title">Davomat</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title ">holati</span>
+                                            <span class="userDatatable-title">Balans</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">holati</span>
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">Amallar</span>
@@ -226,7 +269,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
                                                 </div>
                                             </div>
                                         </td>
@@ -261,17 +303,12 @@
                                             </div>
                                         </td>
 
-                                        {% comment %} <td>
-                                            <div class="userDatatable-content">
-                                                Zarif jorayev
-                                            </div>
-                                        </td> {% endcomment %}
-
                                         <td>
                                             <div class="userDatatable-content">
                                                 {{ student.payment|readable_soums }}
                                             </div>
                                         </td>
+
                                         <td>
                                             <div class="userDatatable-content d-inline-block">
                                                     <span
@@ -280,8 +317,9 @@
                                                     </span>    
                                             </div>
                                         </td>
+                                        
                                         <td>
-                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap" style="justify-content: flex-start;">
                                                 <li>
                                                     <a href="{% url 'admintion:student-detail' student.id %}" class="view">
                                                         <span data-feather="eye"></span></a>
@@ -300,7 +338,6 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
-
                             <div class="d-flex align-items-center m-4">
                                 <div class="custom-checkbox  check-all">
                                     <input class="checkbox" type="checkbox" id="check-3">
@@ -309,7 +346,6 @@
                                     </label>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -790,275 +826,108 @@
         return url_path+parms
     }
     //students list 
-    function request_form(url,headers){
-        fetch(url, headers)
+    function request_form(url,headers,func){
+        return fetch(url, headers)
+        .then(res=>res.json())
         .then(res=>{
             if(res.status==200){
-                // alert("Xabar O'quvchilarga yuborildi.");
-                var input = document.getElementById('id_message');
-                input.value = '';
+                func(res.data)
             } else {
                 alert("Ma'lumotlar to'liq kiritilmadi");;
             } 
         }).catch(err=>{  
         })
     }
-    function get_request(url){
+    function get_request(url,func){
         return (
             request_form(url,{
             method:'get',
             headers:{
                 'X-CSRFToken': '{{ csrf_token }}'
             },
-        })
+        },func)
         )
     }
-$(function() {
-    $('.adv-table-students').footable({
-      filtering: {
-        enabled: true
-      },
-      "paging": {
-              "enabled": true,
-			  "current": 1
-	  },
-      strings: {
-        enabled: false
-      },
-      "filtering": {
-              "enabled": true
-          },
-      components: {
-          filtering: FooTable.MyFiltering
-      },
-    }); 
-  });
-  
-  
-FooTable.MyFiltering = FooTable.Filtering.extend({
-	construct: function(instance){
-		this._super(instance);
-		
-		// courses
-		this.courses = {{datas_of_course|safe}};
-		this.courseDefault = 'Kurslar';
-		this.$course = null;
-			//groups
-			this.groups = {{datas_of_group|safe}};
-			this.groupDefault = 'Guruh bo\'yicha';
-			this.$group = null;
-		//teacher
-		this.teachers = {{datas_of_teacher|safe}};
-		this.teacherDefault = "O'qituvchini tanlang";
-		this.$teacher = null;
-		//status
-		this.statuses = {{datas_of_status|safe}};
-		this.statusDefault = 'Holatni tanlang';
-		this.$status = null;
-	},
-	$create: function(){
-		this._super();
-		var self = this;
-		
 
-		// courses
-		var $course_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__course'})
-			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
-			.prependTo(self.$form);
+    function createCheckbox(dflex,student_id){
+        var wrapimg = document.createElement('div');
+        wrapimg.className='userDatatable__imgWrapper d-flex align-items-center';
+        var checkboxWrap = document.createElement('div');                                 
+        checkboxWrap.className='checkbox-group-wrapper';
+        var checkboxGroup = document.createElement('div');
+        checkboxGroup.className='checkbox-group d-flex';
+        var checkboxTheme = document.createElement('div');
+        checkboxTheme.className='checkbox-theme-default custom-checkbox checkbox-group__single d-flex';
+        var checkInput = document.createElement('input');
+        checkInput.className='checkbox studentCheckbox';
+        checkInput.type='checkbox';
+        checkInput.id=`check-grp-${student_id}`;
+        checkboxTheme.appendChild(checkInput)
+        checkboxGroup.appendChild(checkboxTheme)
+        checkboxWrap.appendChild(checkboxGroup);
+        wrapimg.appendChild(checkboxWrap);
+        return wrapimg;
+    }
 
-		self.$course = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-			.on('change', {self: self}, self._onCourseDropdownChanged)
-			.append($('<option/>', {text: self.courseDefault}))
-			.appendTo($course_form_grp);
+    function studentList(datas){
+        console.log(datas)
+        var tbody = document.querySelector('tbody');
 
-		$.each(self.courses, function(i, status){
-			self.$course.append($('<option/>',{text:status.title,value:status.id}));
-		});
-		
+        while(tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+            }
+        datas.forEach(element => {
+            alert(3)
+            var tr = document.createElement('tr');
+            tr.id = `student-${element.student_ids}`
+            var columns = ['check','id','fio','phone','group_count','attendance','balance','status','action']
+            
+            for(var i=0;i<columns.length;i++){
+                if(columns[i]=='check'){
+                    var td = document.createElement('td');
+                    var dflex = document.createElement('dev');
+                    dflex.className='d-flex';
+                    dflex.appendChild(createCheckbox(dflex,element.student_ids));
+                    td.appendChild(dflex);
+                    tr.appendChild(td);
+                }
+                else if(columns[i] in ['fio','status','action','id']){
 
-				//groups
-				var $group_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__group'})
-				.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
-				.prependTo(self.$form);
-		
-			self.$group = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-				.on('change', {self: self}, self._onGroupDropdownChanged)
-				.append($('<option/>', {text: self.groupDefault}))
-				.appendTo($group_form_grp);
-		
-			$.each(self.groups, function(i, status){
-				self.$group.append($('<option/>',{text:status.title,value:status.id}));
-			});
-
-			
-		//teacher 
-		var $teacher_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__teacher'})
-		.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
-		.prependTo(self.$form);
-
-	self.$teacher = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-		.on('change', {self: self}, self._onTeacherDropdownChanged)
-		.append($('<option/>', {text: self.teacherDefault}))
-		.appendTo($teacher_form_grp);
-
-	$.each(self.teachers, function(i, status){
-		self.$teacher.append($('<option/>',{text:status.full_name,value:status.id}));
-	});
-
-			//day
-			var $status_form_grp = $('<div/>', {'class': 'form-group atbd-select d-flex align-items-center adv-table-searchs__status'})
-			.append($('<label/>', {'class': 'd-flex align-items-center mb-sm-0 mb-2', text: ''}))
-			.prependTo(self.$form);
-	
-		self.$status = $('<select/>', { 'class': 'form-control ml-sm-10 ml-0' })
-			.on('change', {self: self}, self._onStatusDropdownChanged)
-			.append($('<option/>', {text: self.statusDefault,value:0}).attr('selected',true))
-			.appendTo($status_form_grp);
-	
-		$.each(self.statuses, function(i, status){
-			self.$status.append($('<option/>',{text:status.title,value:status.id}));
-		});
-	},
+                    // <div class="userDatatable-content">
+                    //                             {{ student.payment|readable_soums }}
+                    //                         </div>
+                    
+                }
+                else {
+                    
+                    var td = document.createElement('td');
+                    var dcontent = document.createElement('dev');
+                    // td.style.display='block'
+                    dcontent.className='userDatatable-content'
+                    td.textContent=element[columns[i]];
+                    // td.appendChild(dcontent);
+                    tr.appendChild(td);
+                }
+            }
+            tbody.appendChild(tr);
+            console.log(tbody)
+            var dvTd = document.createElement('div');
+            dvTd.className='userDatatable-content';
 
 
-	
-
-	_onGroupDropdownChanged: function(e){
-        alert(e.target.value)
-		var self = e.data.self,
-			selected = e.target.value;
-		// if (selected !== self.groupDefault){
-		// 	self.addFilter('group', selected, ['group']);
-		// } else {
-		// 	self.removeFilter('group');
-		// }
-		// self.filter();
+        });
+    }
+    function _onStatusDropdownChanged (e,name){
+            
+        var selected = e.target.value;
         if (selected != 0){
-            params['group__id']=selected
+            params[name]=e.target.value
+        } else {
+            params[name]=''
+        }
+        get_request(generate_path(),studentList)
 
-			// self.addFilter('status', selected, ['status']);
-		} else {
-            params['group__id']=''
-			// self.removeFilter('status');
-		}
-        get_request(generate_path())
-	},
-
-	_onCourseDropdownChanged: function(e){
-        alert(e.target.value)
-		var self = e.data.self,
-			selected = e.target.value;
-		// if (selected !== self.courseDefault){
-		// 	self.addFilter('course', selected, ['course']);
-		// } else {
-		// 	self.removeFilter('course');
-		// }
-		// self.filter();
-        if (selected != 0){
-            params['group__course']=selected
-
-			// self.addFilter('status', selected, ['status']);
-		} else {
-            params['group__course']=''
-			// self.removeFilter('status');
-		}
-        get_request(generate_path())
-	},
-
-	_onTeacherDropdownChanged: function(e){
-        alert(e.target.value)
-		var self = e.data.self,
-			selected = e.target.value;
-		// if (selected !== self.teacherDefault){
-		// 	self.addFilter('teacher', selected, ['teacher']);
-		// } else {
-		// 	self.removeFilter('teacher');
-		// }
-		// self.filter();
-        if (selected != 0){
-            params['group__teacher']=selected
-
-			// self.addFilter('status', selected, ['status']);
-		} else {
-            params['group__teacher']=''
-			// self.removeFilter('status');
-		}
-        get_request(generate_path())
-	},
-
-	_onStatusDropdownChanged: function(e){
-
-        
-		var self = e.data.self,
-			selected = e.target.value;
-		if (selected != 0){
-            params['student__status']=e.target.value
-
-			// self.addFilter('status', selected, ['status']);
-		} else {
-            params['student__status']=''
-			// self.removeFilter('status');
-		}
-        get_request(generate_path())
-		// self.filter();
-	},
-
-
-	// _onHolDropdownChanged: function(e){
-	// 	var self = e.data.self,
-	// 		selected = $(this).val();
-	// 	if (selected !== self.jobTitleDefault){
-	// 		self.addFilter('status', selected, ['status']);
-	// 	} else {
-	// 		self.removeFilter('status');
-	// 	}
-	// 	self.filter();
-	// },
-	
-	draw: function(){
-		this._super();
-		// handle the status filter if one is supplied
-		// var status = this.find('position');
-		// if (status instanceof FooTable.Filter){
-		// 	this.$status.val(status.query.val());
-		// } else {
-		// 	this.$status.val(this.statusDefault);
-		// }
-
-		// handle the course filter if one is supplied
-		var course = this.find('course');
-		if (course instanceof FooTable.Filter){
-			this.$course.val(status.query.val());
-		} else {
-			this.$course.val(this.courseDefault);
-		}
-
-		// handle the group filter if one is supplied
-		var group = this.find('group');
-		if (group instanceof FooTable.Filter){
-			this.$group.val(group.query.val());
-		} else {
-			this.$group.val(this.groupDefault);
-		}
-
-		 // handle the teacher filter if one is supplied
-				var teacher = this.find('teacher');
-				if (teacher instanceof FooTable.Filter){
-					this.$teacher.val(teacher.query.val());
-				} else {
-					this.$teacher.val(this.teacherDefault);
-				}
-
-
-				 // handle the hol filter if one is supplied
-				 var status = this.find('status');
-				 if (hol instanceof FooTable.Filter){
-					 this.$status.val(status.query.val());
-				 } else {
-					 this.$status.val(this.statusDefault);
-				 }
-	}
-});
+}
 
 </script>
 {% endblock %}

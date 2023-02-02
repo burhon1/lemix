@@ -84,16 +84,12 @@ def student_by_filter_view(request):
         educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
     else:
         educenter_ids = [branch_id]
-    
-    # print(Student.students.students(educenter_ids),5)
-    # context['students'] = Student.students.students(educenter_ids)
+
     status = request.GET
     filter_keys=get_list_of_filter(status)
-    print(filter_keys)
-    # context['students']=context['students'].student_filter(filter_keys,educenter_ids)
-    # print(context['students'].count())
-    print(GroupStudents.custom_manager.student_filter(filter_keys,educenter_ids))
-    return JsonResponse({})
+
+    student = list(GroupStudents.custom_manager.student_filter(filter_keys,educenter_ids))
+    return JsonResponse({'data':student,'status':200})
 
 def student_detail_view(request,id):
     context = {}
