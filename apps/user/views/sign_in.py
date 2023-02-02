@@ -8,8 +8,8 @@ from ..models import CustomUser, UserDevices
 
 def login_view(request):
     context = {}
-    # if request.user.is_authenticated:
-    #     return redirect('user:account')
+    if request.user.is_authenticated:
+        return redirect('user:account')
     if request.method == "POST":
         phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
