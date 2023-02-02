@@ -13,7 +13,7 @@ def branch_list(request):
         else:
             request.session['branch_id']=str(request.user.educenter)  
             branch=request.user.educenter 
-        return {'branches':educenter_ids,'path_url':request.path,'selected_branch':int(branch)}
+        return {'branches':educenter_ids,'path_url':request.path,'selected_branch':0}
     return {}    
 
 def user_groups(request):

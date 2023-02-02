@@ -14,6 +14,9 @@
                     <form action="{{path_url}}" class="" onchange="this.submit()" method="get">
                         <div class="atbd-select ">
                             <select name="branch" id="select-1" class="form-control">
+                                {% if branches.count > 1 %}
+                                <option value="0" selected>Barcha filyallar</option>
+                                {% endif %}
                                 {% for branch in branches %}
                                 {% if selected_branch == branch.id %}
                                 <option value="{{branch.id}}" selected>{{branch.name}}</option>

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
 from django.forms import model_to_dict
+from django.db.models import Q
 from django.contrib.auth.decorators import permission_required, login_required
 from django.core.exceptions import PermissionDenied
 from admintion.models import Course,EduCenters
@@ -35,8 +36,9 @@ def courses_view(request):
             return redirect(reverse('admintion:courses')+f"?success={True}")
         else:
             return redirect(reverse('admintion:courses')+f"?error=Ma'lumotlar to'liq kiritilmadi")    
-    ed_id=request.user.educenter
-    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)   
+    ed_id=request.session.get('branch_id',False)
+    educenter_ids = EduCenters.objects.filter(Q(id=ed_id)).values_list('id',flat=True)
+    print(educenter_ids)
     context['objs'] = Course.courses.courses(educenter_ids)
     return render(request,'admintion/courses_list.html',context) 
 

@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
     # 'admintion.middleware.page_access.check_user_page_access',
-    # 'admintion.middleware.logger.write_logger',
+    'admintion.middlewares.FirstMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
