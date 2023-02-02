@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from admintion.models import EduCenters, Regions, Districts
 from admintion.forms.educenters import EducentersForm
 
-@permission_required('admintion.view_educenters')
+# @permission_required('admintion.view_educenters')
 def educenters_view(request):
     if request.method == 'POST':
         form = EducentersForm(request.POST)
@@ -24,7 +24,6 @@ def educenters_view(request):
         'objects': educenters,
         'form': form,
     }
-    print(form.errors)
     return render(request, 'admintion/filiallar.html', context=context)
 
 @permission_required('admintion.view_educenters')
