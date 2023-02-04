@@ -1,5 +1,7 @@
 from admintion.models import EduCenters
+from django.contrib.auth.decorators import permission_required
 
+@permission_required('admintion.view_educenters')
 def branch_list(request):
     if request.user.is_authenticated:
         ed_id=request.user.educenter
