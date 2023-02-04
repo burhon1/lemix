@@ -1,5 +1,5 @@
 from django.utils import timezone
-
+from getmac import get_mac_address
 from user.models import CustomUser, UserDevices
 
 def user_add(groups,request, is_staff=False):
@@ -65,8 +65,9 @@ def get_client_ip(request):
 def add_to_device_list(request):
     type_ = get_device_type(request) +'/'+ request.user_agent.os.family + ', '+ request.user_agent.browser.family
     ip = get_client_ip(request)
-    device, created = UserDevices.objects.get_or_create(user=request.user, ip=ip, device=type_)
+    device, created = UserDevices.objects.get_or_create(user=request.user, ip=ip, device=type_,mac=get_mac_address(ip=ip, network_request=True))
     
     if device.status == 2:
         device.status = 3
         device.save(update_fields=['status'])
+        

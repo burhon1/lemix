@@ -20,7 +20,7 @@ def leads_view(request):
     context['leads'] = get_form_leads({'activity':activity}, (
         'id', 'user__first_name', 'user__last_name', 'user__phone', 'status__status', 'comment', 'source', 'author', 'author__first_name', 'author__last_name', 'created_at', 'modified_at', 'via_form__title'))
     
-    context['sources'] = Sources.objects.all() #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
+    # context['sources'] = Sources.objects.all() #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
     context['lead_statuses'] = LeadStatus.objects.values('id', 'status')
     context['courses'] = Course.objects.filter(status=True).values('id', 'title')
     groups = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')

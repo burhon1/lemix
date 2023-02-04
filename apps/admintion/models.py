@@ -256,6 +256,7 @@ class Sources(models.Model):
     
     def __str__(self):
         return self.title
+        
 class Contacts(models.Model):
     contact_type = models.PositiveSmallIntegerField("Aloqa turi", choices=CONTACT_TYPES)
     value        = models.CharField(max_length=150)
