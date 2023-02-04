@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from getmac import get_mac_address
 from django.contrib.auth.decorators import permission_required
 from django.db.models import Q
 from admintion.models import EduCenters
+from user.services.users import get_client_ip
 from user.models import UserDevices
 from admintion.forms.settings import EduCentersForm
 
 
 @permission_required('admintion.view_educenters')
 def settings_view(request):
+    ip = get_client_ip(request)
+    mac_address = get_mac_address(ip=ip, network_request=True)
     context = {
-        'sessions': UserDevices.devices.filter(user=request.user)
+        'sessions': UserDevices.devices.filter(user=request.user).exclude(mac_address=mac_address)
     }
     ed_id=request.session.get('branch_id',False)
     qury = Q(id=ed_id)
