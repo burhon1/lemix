@@ -90,7 +90,7 @@ class UserDevices(models.Model):
     )
     ip = models.CharField("Foydalanuvchi IP si.", max_length=100)
     device = models.CharField("Qurilma", max_length=100)
-    mac=models.CharField(null=True,blank=True)
+    mac=models.CharField(max_length=100,null=True,blank=True)
     connected = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(CustomUser, models.CASCADE)
     status = models.PositiveSmallIntegerField(
