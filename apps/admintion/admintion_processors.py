@@ -1,9 +1,10 @@
 from admintion.models import EduCenters
-from django.contrib.auth.decorators import permission_required,method_decorator
+from django.urls import resolve
 
 
 def branch_list(request):
-    if request.user.is_authenticated and  not request.user.is_superuser:
+    current_url = resolve(request.path_info).url_name
+    if request.user.is_authenticated and  current_url!='admin':
         ed_id=request.user.educenter
         educenter_ids = EduCenters.educenters.educenter_id_list(ed_id)  
         return {'branches':educenter_ids,'path_url':request.path,'selected_branch':int(request.session.get('branch_id',0))}
