@@ -12,14 +12,15 @@ class DevicesQuerySet(QuerySet):
             'ip',
             'device',
             'connected',
-            'status'
+            'status',
+            'mac_address'
         ).annotate(
             full_name=Concat('user__first_name', Value(' '), 'user__last_name'),
         )
 
 
     def filtr(self, **kwargs):
-        return self.objects().filter(**kwargs)
+        return self.filter(**kwargs)
 
 
 class DeviceManager(Manager):
