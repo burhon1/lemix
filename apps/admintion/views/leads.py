@@ -17,11 +17,15 @@ def leads_view(request):
     if  activity == 2:
         template_name = 'admintion/lidlar_arxiv.html' 
     context = dict()
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(educenter__id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(educenter__id=request.user.educenter) | Q(educenter__parent__id=request.user.educenter))
     context['leads'] = get_form_leads({'activity':activity}, (
         'id', 'user__first_name', 'user__last_name', 'user__phone', 'status__status', 'comment', 'source', 'author', 'author__first_name', 'author__last_name', 'created_at', 'modified_at', 'via_form__title'))
     
-    # context['sources'] = Sources.objects.all() #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
-    context['lead_statuses'] = LeadStatus.objects.values('id', 'status')
+    context['sources'] = Sources.objects.filter(qury) #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
+    context['lead_statuses'] = LeadStatus.objects.filter().values('id', 'status')
     context['courses'] = Course.objects.filter(status=True).values('id', 'title')
     groups = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
     context['groups'] = select_groups_by_limit(groups)

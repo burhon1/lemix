@@ -9,7 +9,7 @@ def account_view(request):
             return redirect(next)
         if 'Admintion' in group:
             return redirect('admintion:courses')
-        elif 'Teacher' in group or 'Direktor' in group:
+        elif 'Teacher' in group or 'Director' in group:
             return redirect('admintion:dashboard')
         elif 'Student' in group:
             return redirect('student:student')   

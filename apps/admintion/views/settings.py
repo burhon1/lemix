@@ -22,12 +22,29 @@ def settings_view(request):
         qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
     educenter = EduCenters.objects.filter(qury).first()
     if request.method == 'POST' and request.user.has_perm('admintion.change_educenters'):
-        form = EduCentersForm(request.POST, request.FILES, instance=educenter)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('admintion:settings'))
-        else:
-            print(form.errors)
+        name  = request.POST.get('name',False)
+        if name:
+            educenter.name=name
+        phone_number  = request.POST.get('phone_number',False)
+        if phone_number:
+            educenter.phone_number=phone_number 
+        teacher_can_see_payments  = request.POST.get('teacher_can_see_payments',False)
+        if teacher_can_see_payments:
+            educenter.teacher_can_see_payments=teacher_can_see_payments 
+        teacher_can_sign_contracts  = request.POST.get('teacher_can_sign_contracts',False)
+        if teacher_can_sign_contracts:
+            educenter.teacher_can_sign_contracts=teacher_can_sign_contracts            
+        # phone =
+        # logo = 
+        # oferta = 
+        # s_contract =
+        # t_contract =
+        # j_contract =
+        # teacher_can_see_payments =
+        # teacher_can_sign_contracts =  
+        educenter.save()
+        return redirect(reverse('admintion:settings'))
+        
     else:
         form = EduCentersForm(instance=educenter)
     context['educenter'] = educenter

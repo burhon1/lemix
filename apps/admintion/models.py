@@ -220,6 +220,7 @@ class EduCenters(models.Model):
     district = models.ForeignKey('admintion.Districts', models.SET_NULL, null=True)
     address = models.CharField("Manzil", max_length=500, null=True, blank=True)
     max_groups = models.PositiveIntegerField("Maksimal guruh sig'imi", default=0)
+    phone_number = models.CharField(max_length=100,null=True,blank=True)
     max_students = models.PositiveIntegerField("Maksimal o'quvchilar sig'imi", default=0)
     teacher_can_see_payments = models.BooleanField("O'qituvchilar talaba to'lovlarini ko'rishi mumkin", default=False)
     teacher_can_sign_contracts = models.BooleanField("O'quvchilar bilan shartnoma imzolash", default=False)

@@ -98,21 +98,21 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-12">
                                                             <div class="edit-profile__body mx-lg-20">
-                                                                <form id="mainUpdate" action="{% url 'admintion:settings' %}" method="post"  enctype="multipart/form-data">{% csrf_token %}
+                                                                <form id="mainUpdate" action="{% url 'admintion:settings' %}?change=main" method="post"  enctype="multipart/form-data">{% csrf_token %}
                                                                     <div class="form-group mb-20 ">
                                                                         <label for="formFile" class="form-label">Logoni yuklash</label>
                                                                         <input class="form-control" type="file" id="formFile" name="logo">
                                                                     </div>
                                                                     <div class="form-group mb-20">
                                                                         <label for="names">O'quv markazining nomi</label>
-                                                                        <input type="text" class="form-control" id="names" placeholder="O'quv markaz nomi" value="{{educenter.name}}">
+                                                                        <input type="text" class="form-control" id="names" name="name" placeholder="O'quv markaz nomi" value="{{educenter.name}}">
                                                                     </div>
                                                                     <div class="form-group mb-20">
                                                                         <label for="phoneNumber1">Telefon raqam</label>
                                                                         <div class="d-flex justify-content-md-start">
                                                                             <label
                                                                             style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
-                                                                        <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone" value="{{ educenter.director.phone }}"
+                                                                        <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone" value="{{ educenter.phone_number|default:educenter.director.phone }}"
                                                                             placeholder="99 704 65 99" name="phone_number">
                                                                         </div>
                                                                     </div>
@@ -148,7 +148,7 @@
 
 
                                                                         <div class="checkbox-theme-default custom-checkbox ">
-                                                                            <input class="checkbox" type="checkbox" name="check-1" id="check-un1" {% if educenter.teacher_can_see_payments %}checked="true"{% endif %}>
+                                                                            <input class="checkbox" type="checkbox" name="teacher_can_see_payments" id="check-un1" {% if educenter.teacher_can_see_payments %}checked="true"{% endif %}>
                                                                             <label for="check-un1">
                                                                                 <span class="checkbox-text">
                                                                                     O'qituvchilar talaba to'lovlarini ko'rishi mumkin
@@ -163,7 +163,7 @@
 
 
                                                                         <div class="checkbox-theme-default custom-checkbox ">
-                                                                            <input class="checkbox" type="checkbox" name="check-1" id="check-un2" {% if educenter.teacher_can_sign_contracts %}checked="true"{% endif %}>
+                                                                            <input class="checkbox" type="checkbox" name="teacher_can_sign_contracts" id="check-un2" {% if educenter.teacher_can_sign_contracts %}checked="true"{% endif %}>
                                                                             <label for="check-un2">
                                                                                 <span class="checkbox-text">
                                                                                     O'quvchilar bilan shartnoma imzolash

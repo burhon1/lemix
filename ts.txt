@@ -14,3 +14,4 @@ server {
 }
 
 export DJANGO_SETTINGS_MODULE=core.development_settings
+export DJANGO_SETTINGS_MODULE=core.production_settings
