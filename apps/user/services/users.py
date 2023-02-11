@@ -10,13 +10,12 @@ def user_add(groups,request, is_staff=False):
     birthday = post.get('birthday',False)
     gender = post.get('gender',False)
     location = post.get('location',False)
+    fio = post.get('fio',False)
     educenter = request.session.get('branch_id',False)
     user = CustomUser.objects.filter(phone=phone)
     if not user.exists():
-        if first_name and last_name and phone and birthday and gender and groups:
+        if  phone and birthday and gender and groups and ((first_name and last_name) or fio):
             custom_user = CustomUser.objects.create(
-                first_name=first_name,
-                last_name=last_name,
                 phone=phone,
                 birthday=birthday,
                 gender=gender,
@@ -25,6 +24,12 @@ def user_add(groups,request, is_staff=False):
             )
             if location:
                 custom_user.location=location
+            if first_name and last_name:
+                custom_user.first_name=first_name   
+                custom_user.last_name=last_name 
+            else:
+                custom_user.first_name = fio       
+            
             custom_user.set_password(phone)
             custom_user.save()
             custom_user.groups.add(*groups)

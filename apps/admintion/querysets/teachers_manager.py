@@ -48,8 +48,23 @@ class TeacherQueryset(QuerySet):
             students=Count(F('group_teacher__student'))
         ).first() 
 
+    def teacher_all(self,educenter_id):
+        return self.filter(educenter__id__in=educenter_id) \
+        .annotate(
+            full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
+        ).values('id','full_name')
+
+    def main_teacher(self):
+        return self.filter(teacer_type=True)
+
     def teacher_list(self,educenter_id):
-        return self.get_info(educenter_id).values('id','full_name')
+        return self.filter(teacer_type=True,educenter__id__in=educenter_id) \
+        .annotate(
+            full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
+        ).values('id','full_name')
+
+    def trainer_list(self):
+        return self.filter(teacer_type=False)
 
 class TeacherManager(Manager):
     def get_query_set(self):
@@ -59,7 +74,16 @@ class TeacherManager(Manager):
         return self.get_query_set().teachers(educenter_id)  
 
     def teacher_list(self,educenter_id):
-        return self.get_query_set().teacher_list(educenter_id)    
+        return self.get_query_set().teacher_list(educenter_id) 
+
+    def teacher_all(self,educenter_id):
+        return self.get_query_set().teacher_all(educenter_id)
+    
+    def main_teacher(self):
+        return self.get_query_set().main_teacher() 
+
+    def trainer_list(self):
+        return self.get_query_set().trainer_list()    
 
     def teacher(self,id):
         return self.get_query_set().teacher(id)  

@@ -4,13 +4,15 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
+        <div class="col-lg-12 d-flex justify-content-between breadcrumb-main align-items-center">
             <h4 class="text-capitalize breadcrumb-title">Guruhlar-{{groups.count|default:0}}ta </h4>
 
                 <div class="action-btn d-flex align-center justify-content-end">
-                    <button class="btn btn-primary btn-default btn-squared mb-10 mr-2" onclick="checkSMS()" data-toggle="modal" data-target="#modal-basic2">SMS jo'natish</button>
+                    <button class="btn btn-primary btn-default btn-squared mb-10 mr-2 drawer-trigger" onclick="checkSMS()" data-drawer="profile">
+                       <span data-feather="mail"></span> SMS jo'natish</button>
 
                     <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
+                        <span data-feather="plus"></span>
                         Guruh qo'shish
                     </button>
                 </div>
@@ -21,37 +23,81 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 mb-1">
-            <div class="card px-20 ">
+            <div class="card p-20 ">
                 <div class="card-body p-1">
-                    <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-group">
-                        <div class="table-responsive">
-                            <div id="filter-form-container"></div>
-
-                            <div class="d-flex m-2">
-                                <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                    <div class="checkbox-group-wrapper">
-                                        <div class="checkbox-group d-flex">
-                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex ml-2 pl-1">
-                                                <input class="checkbox" type="checkbox" id="check-grp-all">
-                                                <label for="check-grp-all">Barcha guruhlarni tanlash</label> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
+                    <form class="filter-form mb-4">
+                        <div class="row">
+                                <div class="col-2 px-1">
+                                    <input class="form-control mb-2 box-shadow-none" type="text" placeholder="Search...">
                                 </div>
-                                
-                            </div>
-
-                            <table class="table mb-0 table-borderless adv-table-group" data-sorting="true"
-                                data-filter-container="#filter-form-container" data-paging-current="1"
+                                <div class="col-2 px-1">
+                                    <div class="atbd-select">
+                                        <select name="select-courses " id="select-courses" class="form-control" onchange="dropdownChanged(event,'course__id')">
+                                            <option value="0" selected>Kurslar</option>
+                                            {% for course in courses_list %}
+                                            <option value="{{course.id}}">{{course.title}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-2 px-1">
+                                    <div class="atbd-select">
+                                        <select name="select-groups" id="select-groups" class="form-control" onchange="dropdownChanged(event,'group__id')">
+                                            <option value="0" selected>Guruhlar</option>
+                                            {% for group in groups_list %}
+                                            <option value="{{group.id}}">{{group.title}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-2 px-1">
+                                    <div class="atbd-select">
+                                        <select name="select-teacher" id="select-teacher" class="form-control" onchange="dropdownChanged(event,'teacher__id')">
+                                            <option value="0" selected>O'qituvchi</option>
+                                            {% for teacher in teachers %}
+                                            <option value="{{teacher.id}}">{{teacher.full_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                               <div class="col-2 px-1">
+                                <div class="atbd-select">
+                                    <select name="select-status" id="select-status" class="form-control" onchange="dropdownChanged(event,'days__days')">
+                                        <option value="0" selected>Dars kunlari</option>
+                                        {% for day in days %}
+                                        <option value="{{day.id}}">{{day.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                               </div>
+                               <div class="col-2 px-1">
+                                <div class="atbd-select">
+                                    <select name="select-status" id="select-status" class="form-control" onchange="dropdownChanged(event,'status')">
+                                        <option value="0" selected disabled>Guruh statusi</option> 
+                                        {% for status in group_status %}
+                                        <option value="{{status.id}}">{{status.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                               </div>
+                       </div>
+                    </form>
+                    <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-groups">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-borderless adv-table-groups" data-sorting="true"
+                                 data-paging-current="1"
                                 data-paging-position="left" data-paging-size="10">
                                 <thead>
                                     <tr class="userDatatable-header">
                                         <th>
-                                            
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">#</span>
+                                            <div class="d-flex align-items-center">
+                                                <div class="custom-checkbox  check-all">
+                                                    <input class="checkbox" type="checkbox" id="check-3">
+                                                    <label for="check-3">
+                                                        <span class="checkbox-text userDatatable-title">Id</span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">Nomi</span>
@@ -83,23 +129,20 @@
                                     {% for group in groups %}
                                     <tr>
                                         <td>
-                                            <div class="d-flex"> 
+                                            <div class="d-flex">
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
                                                     <div class="checkbox-group-wrapper">
                                                         <div class="checkbox-group d-flex">
                                                             <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                <input class="checkbox check-grp-{{group.id}} group-checkboxes" type="checkbox" id="check-grp-{{group.id}}" hidden>
-                                                                <label for="check-grp-{{group.id}}"></label>
+                                                                <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-{{student.id}}">
+                                                                <label for="check-grp-{{student.id}}">
+                                                                    <span class="checkbox-text userDatatable-title">#{{forloop.counter}}</span>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
                                                 </div>
-                                                
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content">{{forloop.counter}}</div>
                                         </td>
                                         <td>
                                             <div class="d-flex">
@@ -142,15 +185,20 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
-                                                ...
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content d-inline-block">
-                                                <span
-                                                    class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
-                                            </div>
+                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap" style="justify-content: flex-start;">
+                                                <li>
+                                                    <a href="#" class="view">
+                                                        <span data-feather="eye"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="edit">
+                                                        <span data-feather="edit"></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="handleStudentDelete({{student.id}})" class="remove">
+                                                        <span data-feather="trash-2"></span></a>
+                                                </li>
+                                            </ul>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -161,7 +209,6 @@
                         
 
                     </div>
-
                 </div>
             </div>
         </div>
@@ -171,14 +218,11 @@
 
 
 <div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
-
-
+                
+                
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title">Sms matni.</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
@@ -216,7 +260,7 @@
             <div class="atbd-drawer__body">
                 <div class="drawer-content">
                     <div class="drawer-account-form form-basic">
-                        <form action="{% url 'admintion:groups' %}" method="post">
+                        <form action="{% url 'admintion:groups' %}" method="post" class="was-validate">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="row ">
@@ -224,7 +268,7 @@
                                         <div class="form-group">
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
                                             <input name="title" type="text"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-name" id="a1"
                                                 placeholder="Nomi" required="True">
                                         </div>
                                     </div>
@@ -232,8 +276,8 @@
                                         <div class="form-group">
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
                                             <select name="course" id="owner" required="True"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                {% for course in courses %}
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-course">
+                                                {% for course in courses_list %}
                                                 <option value="{{course.id}}">{{course.title}}</option>
                                                 {% endfor %}
                                             </select>
@@ -243,23 +287,20 @@
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
                                             <select name="status" id="owner"  required="True"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
-                                                <option value="1">tayyorlanmoqda</option>
-                                                <option value="2">ishga tayyor</option>
-                                                <option value="3">ishga tushgan</option>
-                                                <option value="4">To'xtab turipdi</option>
-                                                <option value="5">Tugatdi</option>
-                                                <option value="6">Arxivchi</option>
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-status">
+                                                {% for status in group_status %}
+                                                <option value="{{status.id}}">{{status.title}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="a2" class="il-gray fs-14 fw-500 align-center">O'qituvchi</label>
+                                            <label for="a2" class="il-gray fs-14 fw-500 align-center ">O'qituvchi</label>
                                             <select name="teacher" id="owner"  required="True"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-teacher">
                                                 {% for teacher in teachers %}
-                                                <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
+                                                <option value="{{teacher.id}}">{{teacher.full_name}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -271,7 +312,7 @@
                                             <select name="trainer" id="owner"
                                                 class="form-control ih-medium ip-light radius-xs b-light px-15">
                                                 {% for trainer in trainers %}
-                                                <option value="{{trainer.id}}">{{trainer.user.first_name}}</option>
+                                                <option value="{{trainer.id}}">{{trainer.full_name}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -280,7 +321,7 @@
                                         <div class="form-group">
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona</label>
                                             <select name="room" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-room">
                                                 {% for room in rooms %}
                                                 <option value="{{room.id}}">{{room.title}}</option>
                                                 {% endfor %}
@@ -288,9 +329,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="card  card-md-4 mb-30">
+                                        <div class="card border-0  card-md-4 mb-30">
                                             <div class="card-body p-0">
-                                                <label for="a2" class="il-gray fs-14 fw-500 align-center">Kunlar</label>
+                                                <label for="a2" class="il-gray fs-14 fw-500 align-center form-days">Kunlar</label>
                                                 <div class="atbd-select ">
                                                     <select name="days" id="select-search"
                                                         class="form-control form-group" multiple="multiple">
@@ -311,7 +352,7 @@
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">To'lov
                                                 formati</label>
                                             <select name="pay_type" id="owner"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-payment">
                                                 <option value="1">Darsbay</option>
                                                 <option value="2">Oylik</option>
                                                 <option value="3">Yillik</option>
@@ -324,7 +365,7 @@
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">
                                                 Darsning boshlanish sanasi</label>
                                             <input type="date" required="True" name="start_date"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="Deadline"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-start-date" id="Deadline"
                                                 placeholder="Qaysi sanadan">
                                         </div>
                                     </div>
@@ -333,8 +374,8 @@
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars boshlanish
                                                 vaqti</label>
                                             <input type="time" name="start_time"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                                placeholder="soni">
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-start-time" id="a2"
+                                                placeholder="time">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -342,7 +383,7 @@
                                             <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugash
                                                 vaqti</label>
                                             <input type="time" name="end_time"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15 form-end-time" id="a2"
                                                 placeholder="soni">
                                         </div>
                                     </div>
@@ -351,14 +392,14 @@
                                             <label for="id_limit" class="il-gray fs-14 fw-500 align-center">O'quvchilarning soniga chegara o'rnatish
                                                 </label>
                                             <input type="number" name="limit"
-                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_limit"value="15"
+                                                class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_limit"
                                                 placeholder="soni">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="exampleFormControlTextarea1"
                                             class="il-gray fs-14 fw-500 align-center">Izoh</label>
-                                        <textarea class="form-control form-row" id="exampleFormControlTextarea1"
+                                        <textarea class="form-control" id="exampleFormControlTextarea1"
                                             name="comments" rows="2"></textarea>
                                     </div>
                                     <div class="col-md-12">
@@ -374,6 +415,58 @@
             <!-- ends: .atbd-drawer__body -->
     </div>
     <!-- ends: .atbd-drawer -->
+    </div>
+    <div class="atbd-drawer drawer-profile d-none">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+            <h6 class="drawer-title">SMS yuborish</h6>
+            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+        </div><!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body">
+            <div class="drawer-content">
+                <div class="drawer-account-form form-basic">
+                    <form action="#">
+                            <div class="form-group col-12">
+                                <label for="description">Xabar matni</label>
+                                <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
+                            </div>
+                            
+                            <div class="form-group col-12">
+                                <small id="small_code"></small>
+                            </div>
+                            <div class="form-group col-12">
+                                <a href="./sms_yoriqnoma.html">SMSda simvollarni ishlatish bo'yicha yo'riqnoma</a>
+                            </div>
+                            <div class="form-group col-12">
+                                <div class="btn btn-primary">Yuborish</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- ends: .atbd-drawer__body -->
+    </div>
+    <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <form class="form-group" method="post" id="delForm">
+                    <div class="modal-header">
+                        {% csrf_token %}
+                        <h6 class="modal-title">Rostan ham kurs (<span id="courseTitle"></span> kursi) ni o'chirmoqchimisiz?</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                            <span data-feather="x"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <p>Kursni o'chirish, unga bog'langan, darslik va dars ishlanmalar, guruhlarning yo'qolishiga olib kelishi mumkin.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="closeModal()">Orqaga</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -392,86 +485,289 @@
 {% block script %}
 <script>
 
-function checkSMS(){
-    
-    var formData = new FormData();
-    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-    var checkboxes = document.getElementsByClassName('group-checkboxes');
-    for(var i=0;i<checkboxes.length;i++){
-        if(checkboxes[i].checked == true){
-            formData.append('groups', checkboxes[i].id.split("-")[2]);
+    var formName = document.querySelector(".form-name");
+    var formCourse = document.querySelector(".form-course");
+    var formStatus = document.querySelector(".form-status");
+    var formTeacher = document.querySelector(".form-teacher");
+    var formRoom = document.querySelector(".form-room");
+    var formDays = document.querySelector(".form-days");
+    var formPayment = document.querySelector(".form-payment");
+    var formStartDate = document.querySelector(".form-start-date");
+    var formStartTime = document.querySelector(".form-start-time");
+    var formEndTime = document.querySelector(".form-end-time");
+    function validation(element,action){
+        element.addEventListener(action,(evt)=>{
+        if(evt.target.value){
+            evt.target.className = "is-valid form-control ih-medium ip-light radius-xs b-light form-name";
+        } else{
+            evt.target.className = "is-invalid form-control ih-medium ip-light radius-xs b-light form-name";
         }
+    })
     }
-    fetch("{% url 'admintion:check-sms-availability' %}", {
-        method:'post',
-        headers:{
-            'Accept':'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: formData
-    })
-    .then(res=>res.json())
-    .then(res=>{
-        var div = document.getElementsByClassName('sms-status-message')[0];
-        //div.classList.add('d-flex m-2 p-2')
-        div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
-                         Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
-                        sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
-        `
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-}
+    validation(formName,"input")
+    validation(formCourse,"change")
+    validation(formStatus,"change")
+    validation(formTeacher,"change")
+    validation(formRoom,"change")
+    validation(formDays,"change")
+    validation(formPayment,"change")
+    validation(formStartDate,"input")
+    validation(formStartTime,"input")
+    validation(formEndTime,"input")
 
-
-var cancelBtn = document.getElementById('cancelSMS');
-cancelBtn.addEventListener('click', ()=>{
-    var input = document.getElementById('id_message');
-    input.value = '';
-})
-
-var sendSMS = document.getElementById('sendSMS');
-sendSMS.addEventListener('click', ()=>{
-    var formData = new FormData();
-    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-    var input = document.getElementById('id_message');
-    formData.append('message', input.value);
-    var checkboxes = document.getElementsByClassName('group-checkboxes');
-    for(var i=0;i<checkboxes.length;i++){
-        if(checkboxes[i].checked == true){
-            formData.append('groups', checkboxes[i].id.split("-")[2]);
+    function checkSMS(){
+        
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        var checkboxes = document.getElementsByClassName('group-checkboxes');
+        for(var i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].checked == true){
+                formData.append('groups', checkboxes[i].id.split("-")[2]);
+            }
         }
-    } 
-    var url = "{% url 'admintion:send_sms_to_group' %}"
-    fetch(url, {
-        method:'post',
-        headers:{
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: formData,
+        fetch("{% url 'admintion:check-sms-availability' %}", {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            var div = document.getElementsByClassName('sms-status-message')[0];
+            //div.classList.add('d-flex m-2 p-2')
+            div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+                             Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
+                            sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+            `
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    
+    
+    var cancelBtn = document.getElementById('cancelSMS');
+    cancelBtn.addEventListener('click', ()=>{
+        var input = document.getElementById('id_message');
+        input.value = '';
     })
-    .then(res=>{
-        var status = res.status
-        return res;
-    })
-    .then(res=>res.json())
-    .then(res=>{
-        if(status==200){
-            alert("Xabar Lidlarga yuborildi.");
-        } else {
-            alert("Ma'lumotlar to'liq kiritilmadi");;
+    
+    var sendSMS = document.getElementById('sendSMS');
+    sendSMS.addEventListener('click', ()=>{
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        var input = document.getElementById('id_message');
+        formData.append('message', input.value);
+        var checkboxes = document.getElementsByClassName('group-checkboxes');
+        for(var i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].checked == true){
+                formData.append('groups', checkboxes[i].id.split("-")[2]);
+            }
         } 
+        var url = "{% url 'admintion:send_sms_to_group' %}"
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            var status = res.status
+            return res;
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            if(status==200){
+                alert("Xabar Lidlarga yuborildi.");
+            } else {
+                alert("Ma'lumotlar to'liq kiritilmadi");;
+            } 
+        })
     })
-})
+    
+        var checkAllBtn = document.getElementById('check-grp-all');
+        checkAllBtn.addEventListener('change', ()=>{
+            var checkBoxes = document.getElementsByClassName('group-checkboxes');
+            for(var i=0;i<checkBoxes.length;i++){
+                checkBoxes[i].checked = checkAllBtn.checked
+            }
+        })
+    
+    function setDelModal(id,title){
+        var form = document.getElementById('delForm');
+        form.setAttribute('action', `/admintion/group/${id}/delete/`);
+        form.parentElement.parentElement.parentElement.classList.add("show")
+        var courseTitle = document.getElementById('courseTitle');
+        courseTitle.innerHTML = title;
+    }
 
-    var checkAllBtn = document.getElementById('check-grp-all');
-    checkAllBtn.addEventListener('change', ()=>{
-        var checkBoxes = document.getElementsByClassName('group-checkboxes');
-        for(var i=0;i<checkBoxes.length;i++){
-            checkBoxes[i].checked = checkAllBtn.checked
+    function closeModal(){
+        var form = document.getElementById('modal-basic1');
+        form.classList.remove('show')
+    }
+    
+</script>
+<script type="text/javascript">
+    var url_path = '/admintion/groups/filter?';
+    var detailUrl="/admintion/groups/<int:id>/detail/"
+    var params = {
+        duration_type:'',
+        status:''
+    }
+    function generate_path(){
+        parms = new URLSearchParams(params);
+        return url_path+parms
+    }
+    //students list 
+    function request_form(url,headers,func){
+        return fetch(url, headers)
+        .then(res=>res.json())
+        .then(res=>{
+            if(res.status==200){
+                func(res.data)
+            } else {
+                alert("Ma'lumotlar to'liq kiritilmadi");;
+            } 
+        }).catch(err=>{  
+        })
+    }
+    function get_request(url,func){
+        return (
+            request_form(url,{
+            method:'get',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        },func)
+        )
+    }
+
+    function createCheckbox(dflex,student_id,idx){
+        var wrapimg = document.createElement('div');
+        wrapimg.className='userDatatable__imgWrapper d-flex align-items-center';
+        var checkboxWrap = document.createElement('div');                                 
+        checkboxWrap.className='checkbox-group-wrapper';
+        var checkboxGroup = document.createElement('div');
+        checkboxGroup.className='checkbox-group d-flex';
+        var checkboxTheme = document.createElement('div');
+        checkboxTheme.className='checkbox-theme-default custom-checkbox checkbox-group__single d-flex';
+        var checkInput = document.createElement('input');
+        checkInput.className='checkbox studentCheckbox';
+        checkInput.type='checkbox';
+        checkInput.id=`check-grp-${student_id}`;
+        var label = document.createElement('label');
+        label.for = `check-grp-${student_id}`
+        var span = document.createElement('span');
+        span.className='checkbox-text userDatatable-title';
+        span.textContent=`#${++idx}`;
+        label.appendChild(span);
+        checkboxTheme.appendChild(checkInput)
+        checkboxTheme.appendChild(label)
+        checkboxGroup.appendChild(checkboxTheme)
+        checkboxWrap.appendChild(checkboxGroup);
+        wrapimg.appendChild(checkboxWrap);
+        return wrapimg;
+    }
+
+    function createAction(detailU,_id,title){
+        var ul = document.createElement('ul');
+        ul.className="orderDatatable_actions mb-0 d-flex flex-wrap";
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.className='view';
+        a.href=detailU
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
+        li.appendChild(a);
+        ul.appendChild(li);
+        var a = document.createElement('a');
+        var li = document.createElement('li');
+        a.className='edit';
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
+        li.appendChild(a);
+        ul.appendChild(li);
+        var a = document.createElement('a');
+        var li = document.createElement('li');
+        a.className='remove';
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
+        a.addEventListener('click',()=>setDelModal(_id,title))
+        li.appendChild(a);
+        ul.appendChild(li);
+        return ul;
+    }
+
+    function dataList(datas){
+        var tbody = document.querySelector('tbody');
+
+        while(tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+            }
+        datas.forEach((element,idx) => {
+            var tr = document.createElement('tr');
+            tr.id = `student-${element.student_ids}`
+            var columns = {{keys|safe}};
+            
+            for(var i=0;i<columns.length;i++){
+                if(columns[i]=='check'){
+                    var td = document.createElement('td');
+                    var dflex = document.createElement('dev');
+                    dflex.className='d-flex';
+                    dflex.appendChild(createCheckbox(dflex,element.id,idx));
+                    td.appendChild(dflex);
+                    tr.appendChild(td);
+                }
+                else if(columns[i] == 'action'){
+                    var td = document.createElement('td');
+                    td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
+                    tr.appendChild(td);  
+                }
+                else if(columns[i] == 'status'){
+                    var td = document.createElement('td');
+                    if(element.status){
+                        td.innerHTML = `
+                        <div class="userDatatable-content d-inline-block">
+                            <span
+                                class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
+                        </div>
+                        `
+                    }
+                    else{
+                        td.innerHTML = `
+                        <div class="userDatatable-content d-inline-block">
+                            <span
+                                class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
+                        </div>
+                        `
+                    }
+                    tr.appendChild(td); 
+                }
+                else {
+                    
+                    var td = document.createElement('td');
+                    var dcontent = document.createElement('dev');
+                    // td.style.display='block'
+                    dcontent.className='userDatatable-content'
+                    td.textContent=element[columns[i]];
+                    // td.appendChild(dcontent);
+                    tr.appendChild(td);
+                }
+            }
+            tbody.appendChild(tr);
+            var dvTd = document.createElement('div');
+            dvTd.className='userDatatable-content';
+        });
+    }
+    function dropdownChanged (e,name){
+        var selected = e.target.value;
+        if (selected != 0){
+            params[name]=e.target.value
+        } else {
+            params[name]=''
         }
-    })
+        get_request(generate_path(),dataList)
 
+}
 </script>
 {% endblock %}

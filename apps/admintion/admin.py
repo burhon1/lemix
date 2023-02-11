@@ -3,12 +3,13 @@ from import_export.admin import ImportExportModelAdmin, ImportExportActionModelA
 from admintion.models import (Room,Course,Teacher,Group,Student,GroupsDays,Payment,Attendace, GroupStudents, 
                               Parents, LeadDemo, TaskTypes, Tasks, FormLead,LeadStatus,UserTaskStatus,
                               SmsIntegration,Messages,EduCenters,FormFields, FormUniversalFields,Sources,Contacts,LeadForms,
-                              Countries, Regions, Districts, 
+                              Countries, Regions, Districts,RoomImage 
                             )
 from admintion.resources import admintion as resources
 
 # Register your models here.
 admin.site.register(Room)
+admin.site.register(RoomImage)
 admin.site.register(Course)
 admin.site.register(Teacher)
 admin.site.register(GroupsDays)

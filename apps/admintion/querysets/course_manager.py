@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager, TextField, CharField
+from django.db.models import Value, Count, When,F,Manager, TextField, CharField
 from django.db.models.functions import Cast, Concat, Substr
 from django.db.models.query import QuerySet
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -10,7 +10,30 @@ class CoursesQueryset(QuerySet):
     def courses(self, educenter_id,short_info=False):
         if short_info:
             return self.get_info(educenter_id).values('id', 'title')
-        return self.get_info(educenter_id)   
+        return self.get_info(educenter_id)\
+            .annotate(
+                group_count=Count(F('group'), distinct=True),
+                student_count=Count(F('group__students'), distinct=True)
+            )\
+            .order_by('-id')   
+
+    def course_filter(self,filters,educenter_ids):
+        return self.filter(educenter__id__in=educenter_ids) \
+        .filter(**filters) \
+        .annotate(
+            group_count=Count(F('group'), distinct=True),
+            student_count=Count(F('group__students'), distinct=True)
+        )\
+        .values(
+            'id',
+            'title',
+            'duration',
+            'price',
+            'group_count',
+            'student_count',
+            'status'
+        )\
+        .order_by('-id')
 
     def course(self, id):
         return self.get_info().values(
@@ -26,6 +49,9 @@ class CoursesManager(Manager):
     
     def courses(self,educenter_id, short_info=False):
         return self.get_query_set().courses(educenter_id,short_info=short_info)
+
+    def course_filter(self,filters,educenter_ids):
+        return self.get_query_set().course_filter(filters,educenter_ids)  
 
     def course(self, id):
         return self.get_query_set().course(id)

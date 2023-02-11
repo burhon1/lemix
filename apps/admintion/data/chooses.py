@@ -1,3 +1,17 @@
+COURCE_DURATION_TYPES = (
+    (1,"kun"),
+    (2,"oy"),
+    (3,"yil")
+)
+LESSON_DURATION_TYPES = (
+    (1,"daqiqa"),
+    (2,"soat")
+)
+PRICE_TYPES = (
+    (1,"so'm"),
+    (2,"rubl"),
+    (3,"dollar"),
+)
 GROUPS_STATUS = (
     (1, "tayyorlanmoqda"),
     (2, "ishga tayyor"),

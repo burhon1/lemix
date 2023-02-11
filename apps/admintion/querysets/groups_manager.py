@@ -7,10 +7,12 @@ from django.db.models.query import QuerySet
 # from admintion.models import Student
 
 class GroupQueryset(QuerySet):
-    def get_info(self,educenter_id):
+    def get_info(self,educenter_id,short_info=False):
         datas = None
         if  not self.exists():
             datas = self.all()
+        elif short_info:
+            return self.get_info(educenter_id).values('id', 'title')    
         else:    
             datas = self.filter(educenter__id__in=educenter_id).values(
                 'id',
@@ -59,10 +61,10 @@ class GroupQueryset(QuerySet):
                 *columns
             )  
     def group_list(self,educenter_id):
-        return self.get_info(educenter_id).values('id','title')        
+        return self.get_info(educenter_id,True)        
 
-    def group(self,id):
-        return self.get_info().values(
+    def group(self,id,educenter_ids):
+        return self.get_info(educenter_ids).values(
                 'id',
                 'title',
                 'course',
@@ -79,6 +81,29 @@ class GroupQueryset(QuerySet):
                 groupdays = F('days'),
             ).filter(id=id).first()
 
+    def group_filter(self,filters,educenter_ids):
+        return self.filter(educenter__id__in=educenter_ids) \
+        .filter(**filters) \
+        .values(
+                'id',
+                'course__title',
+                'teacher__user__first_name',
+                'teacher__user__last_name',
+                'start_time',
+                'end_time',
+                'course__price',
+                'title',
+                'room__title',
+                'start_date',
+                'limit',
+            )\
+        .annotate(
+            course=F("course__title"),
+            teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
+            times = Concat(Substr(Cast(F('start_time'), TextField()),1,5),Value('-'),Substr(Cast(F('end_time'), TextField()),1,5),output_field=CharField()),
+            total_student=Count('students',distinct=True),
+            days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
+        )
 
     def pay_by_lesson(self):
         return self.filter(pay_type=1).annotate(
@@ -107,6 +132,9 @@ class GroupManager(Manager):
     def group_list(self,educenter_id):
         return self.get_query_set().group_list(educenter_id)   
 
-    def group(self,id):
-        return self.get_query_set().group(id)  
+    def group_filter(self,filters,educenter_ids):
+        return self.get_query_set().group_filter(filters,educenter_ids)   
+
+    def group(self,id,educenter_ids):
+        return self.get_query_set().group(id,educenter_ids)  
 

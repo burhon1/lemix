@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.db.models import Q
 import json
 from admintion.selectors import get_next_n_group_dates
+from admintion.data.chooses import GROUPS_DAYS,GROUPS_STATUS
 from user.models import CustomUser
 from admintion.models import GroupStudents, LeadDemo,EduCenters, Room, TaskTypes, Teacher,Course,Group,GroupsDays,Student,Attendace,Tasks
 from admintion.utilts.users import get_days,get_month
@@ -13,67 +14,100 @@ from admintion.templatetags.custom_tags import attendance_result
 from admintion.services.groups import get_attendace
 from admintion.forms.groups import GroupForm
 from finance.models import StudentBalance
+from admintion.utils import get_list_of_dict,get_list_of_filter
 
 def groups_view(request):
     context = {}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
     if request.method == "POST":
-        post = request.POST 
-        title = post.get('title',False)
-        course = post.get('course',False)
-        status = post.get('status',False)
-        teacher = post.get('teacher',False)
-        room = post.get('room',False)
-        trainer = post.get('trainer',False)
-        days = post.getlist('days',False)
-        pay_type = post.get('pay_type',False)
-        start_date = post.get('start_date',False)
-        start_time = post.get('start_time',False)
-        end_time = post.get('end_time',False)
-        comments = post.get('comments',False)
-        limit = post.get('limit', False)
-        print(days)
-        if title and course and status and teacher and room and days and pay_type and start_time and start_date and end_time and comments:
-            course = Course.objects.filter(id=course).first()
-            teacher = Teacher.objects.filter(id=teacher).first()
-            room = Room.objects.filter(id=room).first()
-            days=GroupsDays.objects.filter(id__in=days)
-            group = Group(
-                title=title,
-                comments=comments,
-                course=course,
-                teacher=teacher,
-                room=room,
-                pay_type=pay_type,
-                status=status,
-                start_time=start_time,
-                end_time=end_time,
-                limit=limit,
-                start_date=start_date
-            )
-            if trainer:
-                trainer = Teacher.objects.filter(id=trainer).first()
-                group.trainer=trainer
-            group.save()
-            group.days.add(*days)
-            return redirect('admintion:groups')
-        else: 
-            context['error'] = 'Malumotlar to\'liq kiritilmadi'  
-            return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
-    
-    ed_id=request.user.educenter
-    educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
-    teacher = Teacher.teachers.teachers(educenter_ids) 
-    context['teachers'] = teacher
-    context['trainers'] = teacher
-    context['rooms'] = Room.rooms.rooms(educenter_ids)
-    context['courses'] = Course.courses.courses(educenter_ids)
+        if educenter.count() == 1:
+            post = request.POST 
+            title = post.get('title',False)
+            course = post.get('course',False)
+            status = post.get('status',False)
+            teacher = post.get('teacher',False)
+            room = post.get('room',False)
+            trainer = post.get('trainer',False)
+            days = post.getlist('days',False)
+            pay_type = post.get('pay_type',False)
+            start_date = post.get('start_date',False)
+            start_time = post.get('start_time',False)
+            end_time = post.get('end_time',False)
+            comments = post.get('comments',False)
+            limit = post.get('limit', False)
+
+            if title and course and status and teacher and room and days and pay_type and start_time and start_date and end_time:
+                course = Course.objects.filter(id=course).first()
+                teacher = Teacher.objects.filter(id=teacher).first()
+                room = Room.objects.filter(id=room).first()
+                days=GroupsDays.objects.filter(days__in=days)
+                group = Group(
+                    title=title,
+                    course=course,
+                    teacher=teacher,
+                    room=room,
+                    pay_type=pay_type,
+                    status=status,
+                    start_time=start_time,
+                    end_time=end_time,
+                    start_date=start_date,
+                    educenter=educenter.first()
+                )
+                if trainer:
+                    trainer = Teacher.objects.filter(id=trainer).first()
+                    group.trainer=trainer
+
+                if limit:
+                    group.limit=limit
+
+                if comments:
+                    group.comments=comments
+                            
+                group.save()
+                group.days.add(*days)
+                return redirect('admintion:groups')
+            else: 
+                context['error'] = 'Malumotlar to\'liq kiritilmadi'  
+                return redirect(reverse('admintion:groups')+f"?error={context['error']}")   
+        return redirect(reverse('admintion:groups')+f"?error=Filyalni tanlang")            
+
+    educenter_ids = educenter.values_list('id',flat=True)             
+    teacher = Teacher.teachers.teacher_all(educenter_ids) 
+    context['teachers'] = teacher.main_teacher()
+    context['trainers'] = teacher.trainer_list() 
     context['groups'] = Group.groups.groups(educenter_ids)
+    context['groups_list'] = Group.groups.group_list(educenter_ids)
+    context['rooms'] = Room.rooms.rooms(educenter_ids)
+    context['courses_list'] = Course.courses.courses(educenter_ids,True)
+    context['courses'] = Course.courses.courses(educenter_ids)
+    context['days'] = [{'id':i[0],'title':i[1]} for i in GROUPS_DAYS]
+    context['group_status'] = [{'id':i[0],'title':i[1]} for i in GROUPS_STATUS] 
+    context['keys'] =  ['check','title','course','teacher','days','times','total_student','course__price','action']
+    
     return render(request,'admintion/groups.html',context)
 
 def group_list_view(request):
     # added_group = GroupStudents.custom_manager.student_add_group(request.user)
     groups = Group.groups.groups(True)
     return JsonResponse({'data':list(groups)})
+
+def groups_by_filter_view(request):
+    context={}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)   
+
+    status = request.GET
+    filter_keys=get_list_of_filter(status)
+
+    groups = list(Group.groups.group_filter(filter_keys,educenter_ids))
+    return JsonResponse({'data':groups,'status':200})
 
 def group_detail_view(request,id):
     group1 = get_object_or_404(Group, pk=id)
@@ -84,7 +118,12 @@ def group_detail_view(request,id):
             return redirect(reverse('admintion:group-detail', args=[id])+"?success=Muvaffaqiyatli yangilandi.")
         else:
             return redirect(reverse('admintion:group-detail', args=[id])+"?error=Ma'lumotlar to'liq emas.")
-    group = Group.groups.group(id)
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)  
+    group = Group.groups.group(id,educenter_ids)
     if group is None:
         raise Http404("Bunday guruh mavjud emas.")
     context = {'date': timezone.now().date(), 'form': GroupForm(), 'group':group, 'group_obj':group1}
@@ -96,6 +135,13 @@ def group_detail_view(request,id):
     context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
     context['balances'] = StudentBalance.objects.filter(title=context['group']['title'])
     return  render(request,'admintion/group.html',context)
+
+def group_delete_view(request, id):
+    student = get_object_or_404(Group, pk=id)
+    status = 400
+    if request.method == 'POST':
+        student.delete()
+    return redirect('admintion:groups')
 
 def get_attendace_view(request):
     context = {}

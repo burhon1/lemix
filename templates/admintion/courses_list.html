@@ -2,326 +2,358 @@
 {% load static %}
 {% load custom_tags %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4>Kurslar-{{objs.count}}ta </h4>
-            <h4 class="text-capitalize breadcrumb-title"></h4>
-            {% if perms.admintion.add_courses %}
-            <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account"> Kurs
-                qo'shish
-            </button>
-            {% endif %}
-
+<div class="atbd-page-content">
+                
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 d-flex breadcrumb-main justify-content-between align-items-center">
+                <h4>Kurslar-{{objs.count}}ta </h4>
+                <h4 class="text-capitalize breadcrumb-title"></h4>
+                <button class="btn btn-primary btn-default btn-squared mb-10 mr-2 drawer-trigger" onclick="checkSMS()"  data-drawer="profile">SMS jo'natish</button>
+                {% if perms.admintion.add_courses %}
+                <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account"> Kurs
+                    qo'shish
+                </button>
+                {% endif %}
+    
+            </div>
         </div>
     </div>
-</div>
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-12 mb-1">
-            <div class="card px-20">
-                <div class="card-body p-1">
-                    <div
-                        class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-list">
-                        <div class="table-responsive">
-                            <div id="filter-form-container"></div>
-                            <table class="table mb-0 table-borderless adv-table-course-list" data-sorting="true"
-                                data-filter-container="#filter-form-container" data-paging-current="1"
-                                data-paging-position="left" data-paging-size="10">
-                                <thead>
-                                    <tr class="userDatatable-header">
-                                        <th>
-                                            <span class="userDatatable-title">id</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Nomi</span>
-                                        </th>
-                                        <th data-type="html" data-name='position'>
-                                            <span class="userDatatable-title">Davomiyligi</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Narxi</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Guruhlar</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">O'quvchilar</span>
-                                        </th>
-                                        <th data-type="html" data-name='status'>
-                                            <span class="userDatatable-title">status</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title float-right">Amallar</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for obj in objs %}
-                                    <tr>
-                                        <td>
-                                            <div class="userDatatable-content">{{forloop.counter}}</div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="userDatatable-inline-title">
-                                                    <a href="#" class="text-dark fw-500">
-                                                        <h6>{{obj.title}}</h6>
-                                                    </a>
+    <div class="container-fluid">
+    
+        <div class="row">
+            <div class="col-12 mb-1">
+                <div class="card px-20">
+                    <form class="filter-form my-4">
+                        <div class="row">
+                            <div class="col-3">
+                                <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
+                            </div>
+                            <div class="col-3">
+                                <div class="atbd-select">
+                                    <select name="select-courses" id="select-courses" class="form-control" onchange="dropdownChanged(event,'duration_type')">
+                                        <option value="" selected>Kurs davomiyligi</option>
+                                        {% for course_duration_type in course_duration_types %}
+                                        <option value="{{course_duration_type.id}}">{{course_duration_type.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="atbd-select ">
+                                    <select name="select-groups" id="select-groups" class="form-control" onchange="dropdownChanged(event,'status')">
+                                        <option value="" selected>Statusi</option>
+                                        <option value="True">Aktiv</option>
+                                        <option value="False">No Faol</option>
+                                    </select>
+                                </div>
+                            </div>
+                       </div>
+                    </form>
+                    <div class="card-body p-1">
+                        <div
+                            class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-list">
+                            <div class="table-responsive">
+                                <div id="filter-form-container"></div>
+                                <table class="table mb-0 table-borderless adv-table-course-lists" data-sorting="true"
+                                    data-filter-container="#filter-form-container" data-paging-current="1"
+                                    data-paging-position="left" data-paging-size="10">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                            <th>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="custom-checkbox  check-all">
+                                                        <input class="checkbox" type="checkbox" id="check-3">
+                                                        <label for="check-3">
+                                                            <span class="checkbox-text userDatatable-title">Id</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                {{obj.duration}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                {{obj.price|readable_soums}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                {{ obj.group_set.count }}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                {{ obj|get_course_students }}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {% if obj.status %}
-                                            <div class="userDatatable-content d-inline-block">
-                                                <span
-                                                    class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
-                                            </div>
-                                            {% else %}
-                                            <div class="userDatatable-content d-inline-block">
-                                                <span
-                                                    class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
-                                            </div>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                                <li>
-                                                    <a href="#" class="view">
-                                                        <span data-feather="eye"></span></a>
-                                                </li>
-                                                {% if perms.admintion.change_course %}
-                                                <li>
-                                                    <a href="#" class="edit" onclick="getCourseDetail('{{obj.id}}')"  data-toggle="modal" data-target="#modal-basic2">
-                                                        <span data-feather="edit"></span></a>
-                                                </li>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Nomi</span>
+                                            </th>
+                                            <th data-type="html" data-name='position'>
+                                                <span class="userDatatable-title">Davomiyligi</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Narxi</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Guruhlar</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">O'quvchilar</span>
+                                            </th>
+                                            <th data-type="html" data-name='status'>
+                                                <span class="userDatatable-title">status</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title float-right">Amallar</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in objs %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                        <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                    <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-{{obj.id}}">
+                                                                    <label for="check-grp-{{obj.id}}">
+                                                                        <span class="checkbox-text userDatatable-title">#{{forloop.counter}}</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="#" class="text-dark fw-500">
+                                                            <h6>{{obj.title}}</h6>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    {{obj.duration}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    {{obj.price|readable_soums}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    {{ obj.group_count }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    {{ obj.student_count }} 
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% if obj.status %}
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span
+                                                        class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
+                                                </div>
+                                                {% else %}
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span
+                                                        class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
+                                                </div>
                                                 {% endif %}
-                                                {% if perms.admintion.delete_course %} 
-                                                <li>
-                                                    <a href="#" class="remove"  data-toggle="modal" data-target="#modal-basic1"
-                                                     onclick='setDelModal("{{ obj.id}}","{{obj.title}}")'>
-                                                        <span data-feather="trash-2"></span></a>
-                                                </li>
-                                                {% endif %}
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
+                                            </td>
+                                            <td>
+                                                <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                    <li>
+                                                        <a href="{% url 'admintion:course-detail' obj.id %}" class="view">
+                                                            <span data-feather="eye"></span></a>
+                                                    </li>
+                                                    {% if perms.admintion.change_course %}
+                                                    <li>
+                                                        <a href="#" class="edit" onclick="getCourseDetail('{{obj.id}}')"  data-toggle="modal" data-target="#modal-basic2">
+                                                            <span data-feather="edit"></span></a>
+                                                    </li>
+                                                    {% endif %}
+                                                    {% if perms.admintion.delete_course %} 
+                                                    <li>
+                                                        <a href="{% url 'admintion:course-delete' obj.id %}" class="remove"  data-toggle="modal" data-target="#modal-basic1"
+                                                         onclick='setDelModal("{{ obj.id}}","{{obj.title}}")'>
+                                                            <span data-feather="trash-2"></span></a>
+                                                    </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+    
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- ends: .modal-Basic -->
-<div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <form class="form-group" method="post" id="delForm">
-                <div class="modal-header">
-                    {% csrf_token %}
-                    <h6 class="modal-title">Rostan ham kurs (<span id="courseTitle"></span> kursi) ni o'chirmoqchimisiz?</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span data-feather="x"></span></button>
-                </div>
-                <div class="modal-body">
-                    
-                    <p>Kursni o'chirish, unga bog'langan, darslik va dars ishlanmalar, guruhlarning yo'qolishiga olib kelishi mumkin.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-</div>
-
-<div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content modal-bg-white ">
-            <form class="form-group" method="post" id="updateForm">
-                <div class="modal-header">
-                    <h6 class="modal-title">Kurs (<span id="courseTitle2"></span> kursi) ni yangilash</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span data-feather="x"></span></button>
-                </div>
-                <div class="modal-body">
-                    {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="courseName" class="il-gray fs-14 fw-500 align-center">Nomi</label>
-                                    <input name="title" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="courseName"
-                                        placeholder="Nomi">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="duration" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
-                                    <input name="duration" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="duration"
-                                        placeholder="Oy">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="lesson_duration" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
-                                    <input name="lesson_duration" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="lesson_duration"
-                                        placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="price" class="il-gray fs-14 fw-500 align-center">Narx</label>
-                                    <input name="price" type="number"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="price"
-                                        placeholder="Narx">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label for="comment"
-                                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
-                                <textarea name="comment" class="form-control" id="comment"
-                                    rows="3"></textarea>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="statusID" class="checkbox">
-                                        <input name="status" type="checkbox" checked="false" value="0"
-                                        class="checkbox" id="statusID">
-                                        Aktiv holatda</label>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-</div>
-
-<div class="drawer-basic-wrap">
-    <div class="atbd-drawer drawer-account d-none">
-        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
-            <h3>Kurs qo'shish</h3>
-            <h6 class="drawer-title"></h6>
-            <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
-        </div>
-        
-        <div class="atbd-drawer__body">
-
-            <div class="drawer-content">
-
-                <div class="drawer-account-form form-basic">
-
-                    <form action="{% url 'admintion:courses' %}" method="post">
+    
+    <!-- ends: .modal-Basic -->
+    <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <form class="form-group" method="post" id="delForm">
+                    <div class="modal-header">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
-                                    <input name="title" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                        placeholder="Nomi">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Davomiyligi</label>
-                                    <input name="duration" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1"
-                                        placeholder="Oy">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
-                                    <input name="lesson_duration" type="text"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Narx</label>
-                                    <input name="price" type="number"
-                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="a2"
-                                        placeholder="Narx">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label for="exampleFormControlTextarea1"
-                                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
-                                <textarea name="comment" class="form-control" id="exampleFormControlTextarea1"
-                                    rows="3"></textarea>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="courseID" class="checkbox">
-                                        <input name="status" type="checkbox" checked="true" value="1" 
-                                        class="checkbox" id="courseID">
-                                        Aktiv holatda</label>
-                                    
-                                </div>
-                            </div>
-                            
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        <h6 class="modal-title">Rostan ham kurs (<span id="courseTitle"></span> kursi) ni o'chirmoqchimisiz?</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span data-feather="x"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <p>Kursni o'chirish, unga bog'langan, darslik va dars ishlanmalar, guruhlarning yo'qolishiga olib kelishi mumkin.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
+                    </div>
+                </form>
             </div>
         </div>
-
     </div>
+    
+    <div class="drawer-basic-wrap">
+        <div class="atbd-drawer drawer-profile d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h6 class="drawer-title">SMS yuborish</h6>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+                             
+                                <div class="form-group col-12">
+                                    <label for="description">Xabar matni</label>
+                                    <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
+                                </div>
+                                
+                                <div class="form-group col-12">
+                                    <small id="small_code"></small>
+                                </div>
+                                <div class="form-group col-12">
+                                    <a href="./sms_yoriqnoma.html">SMSda simvollarni ishlatish bo'yicha yo'riqnoma</a>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="btn btn-primary">Yuborish</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div>
+        <div class="atbd-drawer drawer-account d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h3>Kurs qo'shish</h3>
+                <h6 class="drawer-title"></h6>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div>
+            
+            <div class="atbd-drawer__body">
+    
+                <div class="drawer-content">
+    
+                    <div class="drawer-account-form form-basic">
+    
+                        <form action="{% url 'admintion:courses' %}" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                        <input name="title" type="text"
+                                            class="form-control b-deep" id="a1"
+                                            placeholder="Nomi">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="duration" class="il-gray fs-14 fw-500 align-center">Kurs davomiyligi</label>
+                                        <div class="d-flex align-items-baseline ">
+                                            <input name="duration" type="number"
+                                            class="form-control radius-xs b-deep" id="duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                            placeholder="Kurs davomiyligi">
+                                            <div class="atbd-select m-0 p-0">
+                                                <select name="course_duration_type" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                    {% for course_duration_type in course_duration_types %}
+                                                    <option value="{{course_duration_type.id}}">{{course_duration_type.title}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="lesson_duration" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
+                                        <div class="d-flex align-items-baseline ">
+                                            <input name="lesson_duration" type="number"
+                                            class="form-control radius-xs b-deep" id="lesson_duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                            placeholder="Kurs davomiyligi">
+                                            <div class="atbd-select m-0 p-0">
+                                                <select name="lesson_duration_type" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                    {% for lesson_duration_type in lesson_duration_types %}
+                                                    <option value="{{lesson_duration_type.id}}">{{lesson_duration_type.title}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="price" class="il-gray fs-14 fw-500 align-center">Narx</label>
+                                        <div class="d-flex align-items-baseline ">
+                                            <input name="price" type="number"
+                                            class="form-control radius-xs b-deep" id="price" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                            placeholder="Kurs davomiyligi">
+                                            <div class="atbd-select m-0 p-0">
+                                                <select name="price_type" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                    {% for price_type in price_types %}
+                                                    <option value="{{price_type.id}}" {% if forloop.counter == 1 %} selected {% endif %}>{{price_type.title}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-12">
+                                    <label for="exampleFormControlTextarea1"
+                                        class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                    <textarea name="comment" class="form-control b-deep" id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                </div>
+    
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    <div class="overlay-dark"></div>
+    <div class="overlay-dark-l2"></div>
+    
+    
+    
+    </div>
+    
+    <!-- ends: .atbd-drawer -->
+    
+    <div class="overlay-dark"></div>
+    <div class="overlay-dark-l2"></div>
+    
+    
+
 </div>
-
-<!-- ends: .atbd-drawer -->
-
-<div class="overlay-dark"></div>
-<div class="overlay-dark-l2"></div>
+<!-- ends: .atbd-page-content -->
 
 
 
@@ -331,59 +363,217 @@
 {% block script %}
 <script>
 
-var courseStatus = document.getElementById('courseID');
-courseStatus.addEventListener('change', ()=>{
-    if (courseStatus.checked===true){
-        courseStatus.value = 1;
-    } else {
-        courseStatus.value = 0;
-    }
-})
-
-function getCourseDetail(id){
-    var url = `/admintion/courses/${id}/detail/`;
-    fetch(url)
-    .then(res=>{
-        if (res.status==200){
-            return res;
+    var courseStatus = document.getElementById('courseID');
+    courseStatus.addEventListener('change', ()=>{
+        if (courseStatus.checked===true){
+            courseStatus.value = 1;
+        } else {
+            courseStatus.value = 0;
         }
     })
-    .then(res=>res.json())
-    .then(res=>{
-        console.log(res);
-        printCourseDetail(id, res);
-    })
-}
-
-
-function printCourseDetail(id, data){
-    var form = document.getElementById('updateForm');
-    form.setAttribute('action', `/admintion/courses/${id}/update/`);
-    document.getElementById('courseTitle2').innerHTML = data.title;
-    document.getElementById('courseName').value = data.title;
-    document.getElementById('duration').value = data.duration;
-    document.getElementById('lesson_duration').value = data.lesson_duration;
-    document.getElementById('price').value = data.price;
-    document.getElementById('comment').value = data.comment;
-    var status = document.getElementById('statusID');
-    if(data.status === true){
-        status.setAttribute('checked', true);
-        status.setAttribute('value', "1");
-    } else{
-        status.setAttribute('checked', false);
-        status.setAttribute('value', "0");
+    
+    function getCourseDetail(id){
+        var url = `/admintion/courses/${id}/detail/`;
+        fetch(url)
+        .then(res=>{
+            if (res.status==200){
+                return res;
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+            printCourseDetail(id, res);
+        })
+    }
+    
+    
+    function printCourseDetail(id, data){
+        var form = document.getElementById('updateForm');
+        form.setAttribute('action', `/admintion/courses/${id}/update/`);
+        document.getElementById('courseTitle2').innerHTML = data.title;
+        document.getElementById('courseName').value = data.title;
+        document.getElementById('duration').value = data.duration;
+        document.getElementById('lesson_duration').value = data.lesson_duration;
+        document.getElementById('price').value = data.price;
+        document.getElementById('comment').value = data.comment;
+        var status = document.getElementById('statusID');
+        if(data.status === true){
+            status.setAttribute('checked', true);
+            status.setAttribute('value', "1");
+        } else{
+            status.setAttribute('checked', false);
+            status.setAttribute('value', "0");
+        }
+    
+        return ;
+    }
+    
+    function setDelModal(id,title){
+        var form = document.getElementById('delForm');
+        form.setAttribute('action', `/admintion/courses/${id}/delete/`);
+        var courseTitle = document.getElementById('courseTitle');
+        courseTitle.innerHTML = title;
+    }
+</script>
+<script type="text/javascript">
+    var url_path = '/admintion/courses/filter?';
+    var detailUrl="/admintion/courses/<int:id>/detail/"
+    var params = {
+        duration_type:'',
+        status:''
+    }
+    function generate_path(){
+        parms = new URLSearchParams(params);
+        return url_path+parms
+    }
+    //students list 
+    function request_form(url,headers,func){
+        return fetch(url, headers)
+        .then(res=>res.json())
+        .then(res=>{
+            if(res.status==200){
+                func(res.data)
+            } else {
+                alert("Ma'lumotlar to'liq kiritilmadi");;
+            } 
+        }).catch(err=>{  
+        })
+    }
+    function get_request(url,func){
+        return (
+            request_form(url,{
+            method:'get',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        },func)
+        )
     }
 
-    return ;
+    function createCheckbox(dflex,student_id,idx){
+        var wrapimg = document.createElement('div');
+        wrapimg.className='userDatatable__imgWrapper d-flex align-items-center';
+        var checkboxWrap = document.createElement('div');                                 
+        checkboxWrap.className='checkbox-group-wrapper';
+        var checkboxGroup = document.createElement('div');
+        checkboxGroup.className='checkbox-group d-flex';
+        var checkboxTheme = document.createElement('div');
+        checkboxTheme.className='checkbox-theme-default custom-checkbox checkbox-group__single d-flex';
+        var checkInput = document.createElement('input');
+        checkInput.className='checkbox studentCheckbox';
+        checkInput.type='checkbox';
+        checkInput.id=`check-grp-${student_id}`;
+        var label = document.createElement('label');
+        label.for = `check-grp-${student_id}`
+        var span = document.createElement('span');
+        span.className='checkbox-text userDatatable-title';
+        span.textContent=`#${++idx}`;
+        label.appendChild(span);
+        checkboxTheme.appendChild(checkInput)
+        checkboxTheme.appendChild(label)
+        checkboxGroup.appendChild(checkboxTheme)
+        checkboxWrap.appendChild(checkboxGroup);
+        wrapimg.appendChild(checkboxWrap);
+        return wrapimg;
+    }
+
+    function createAction(detailU,_id,title){
+        var ul = document.createElement('ul');
+        ul.className="orderDatatable_actions mb-0 d-flex flex-wrap";
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.className='view';
+        a.href=detailU
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
+        li.appendChild(a);
+        ul.appendChild(li);
+        var a = document.createElement('a');
+        var li = document.createElement('li');
+        a.className='edit';
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
+        li.appendChild(a);
+        ul.appendChild(li);
+        var a = document.createElement('a');
+        var li = document.createElement('li');
+        a.className='remove';
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
+        a.addEventListener('click',()=>setDelModal(_id,title))
+        li.appendChild(a);
+        ul.appendChild(li);
+        return ul;
+    }
+
+    function dataList(datas){
+        var tbody = document.querySelector('tbody');
+
+        while(tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+            }
+        datas.forEach((element,idx) => {
+            var tr = document.createElement('tr');
+            tr.id = `student-${element.student_ids}`
+            var columns = {{keys|safe}};
+            
+            for(var i=0;i<columns.length;i++){
+                if(columns[i]=='check'){
+                    var td = document.createElement('td');
+                    var dflex = document.createElement('dev');
+                    dflex.className='d-flex';
+                    dflex.appendChild(createCheckbox(dflex,element.id,idx));
+                    td.appendChild(dflex);
+                    tr.appendChild(td);
+                }
+                else if(columns[i] == 'action'){
+                    var td = document.createElement('td');
+                    td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
+                    tr.appendChild(td);  
+                }
+                else if(columns[i] == 'status'){
+                    var td = document.createElement('td');
+                    if(element.status){
+                        td.innerHTML = `
+                        <div class="userDatatable-content d-inline-block">
+                            <span
+                                class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
+                        </div>
+                        `
+                    }
+                    else{
+                        td.innerHTML = `
+                        <div class="userDatatable-content d-inline-block">
+                            <span
+                                class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
+                        </div>
+                        `
+                    }
+                    tr.appendChild(td); 
+                }
+                else {
+                    
+                    var td = document.createElement('td');
+                    var dcontent = document.createElement('dev');
+                    // td.style.display='block'
+                    dcontent.className='userDatatable-content'
+                    td.textContent=element[columns[i]];
+                    // td.appendChild(dcontent);
+                    tr.appendChild(td);
+                }
+            }
+            tbody.appendChild(tr);
+            var dvTd = document.createElement('div');
+            dvTd.className='userDatatable-content';
+        });
+    }
+    function dropdownChanged (e,name){
+        var selected = e.target.value;
+        if (selected != 0){
+            params[name]=e.target.value
+        } else {
+            params[name]=''
+        }
+        get_request(generate_path(),dataList)
+
 }
-
-function setDelModal(id,title){
-    var form = document.getElementById('delForm');
-    form.setAttribute('action', `/admintion/courses/${id}/delete/`);
-
-    var courseTitle = document.getElementById('courseTitle');
-    courseTitle.innerHTML = title;
-}
-
 </script>
 {% endblock %}

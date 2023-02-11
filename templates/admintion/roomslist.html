@@ -1,183 +1,202 @@
 {% extends 'atomic/theme.html' %} {% load static %}
 {% block content %}
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-      <h4 class="text-capitalize breadcrumb-title">Xonalar</h4>
-      <div class="action-btn">
-        <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
-          Xona qo'shish
-        </button>
+<div class="atbd-page-content">
+                
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 d-flex breadcrumb-main justify-content-between  align-items-center">
+          <h4 class="text-capitalize breadcrumb-title">Xonalar</h4>
+          <div class="action-btn">
+            <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
+              Xona qo'shish
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 mb-1">
-      <div class="card px-20">
-        <div class="card-body p-1">
-          <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-rooms-list">
-            <div class="table-responsive">
-              <table class="table mb-0 table-borderless adv-table-rooms-list">
-                <thead>
-                  <tr class="userDatatable-header">
-                    <th>
-                      <span class="userDatatable-title">id</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Xonalar</span>
-                    </th>
-
-                    <th>
-                      <span class="userDatatable-title">Guruhlar</span>
-                    </th>
-
-                    <th>
-                      <span class="userDatatable-title">Xona sig'imi</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Status</span>
-                    </th>
-                    <th>
-                      <span class="orderDatatable_actions mb-0 d-flex flex-wrap">...</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for obj in objs %}
-                  <tr style="
-                    
-                      border-radius: 40px;
-                      padding: 15px;
-                    ">
-                    <td>
-                      <div class="userDatatable-content">{{forloop.counter}}</div>
-                    </td>
-                    <td>
-                      <div class="d-flex">
-                        <div class="userDatatable-inline-title">
-                          <a href="#" class="text-dark fw-500">
-                            <h6>{{obj.title}}-xona</h6>
-                          </a>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="userDatatable-content">3</div>
-                    </td>
-                    <td>
-                      <div class="userDatatable-content">{{obj.capacity}}</div>
-                    </td>
-
-                    <td>
-
-                      {% if obj.status %}
-                      <div class="userDatatable-content d-inline-block">
-                        <span
-                          class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">active</span>
-                      </div>
-                      {% else %}
-                      <div class="userDatatable-content d-inline-block">
-                        <span
-                          class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">deactivate</span>
-                      </div>
-                      {% endif %}
-                    </td>
-                    <td>
-                      <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                        <li>
-                          <a href="#" class="edit">
-                            <span data-feather="edit"></span></a>
-                        </li>
-                        <li>
-                          <a href="#" class="edit">
-                            <span data-feather="trash-2" data-toggle="modal" data-target="#modal-basic"></span></a>
-                        </li>
-                      </ul>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+      <div class="row">
+        <div class="col-12 mb-1">
+          <div class="card p-20">
+            <div class="card-body p-1">
+              <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-rooms-listss">
+                <div class="table-responsive">
+                  <table class="table mb-0 table-borderless adv-table-rooms-lists">
+                    <thead>
+                      <tr class="userDatatable-header">
+                        <th>
+                          <span class="userDatatable-title">id</span>
+                        </th>
+                        <th>
+                          <span class="userDatatable-title">Xonalar</span>
+                        </th>
+    
+                        <th>
+                          <span class="userDatatable-title">Guruhlar</span>
+                        </th>
+    
+                        <th>
+                          <span class="userDatatable-title">Xona sig'imi</span>
+                        </th>
+                        <th>
+                          <span class="userDatatable-title">Status</span>
+                        </th>
+                        <th>
+                          <span class="orderDatatable_actions mb-0 d-flex flex-wrap">Amallar</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for obj in objs %}
+                      <tr style="
+                        
+                          border-radius: 40px;
+                          padding: 15px;
+                        ">
+                        <td>
+                          <div class="userDatatable-content">{{forloop.counter}}</div>
+                        </td>
+                        <td>
+                          <div class="d-flex">
+                            <div class="userDatatable-inline-title">
+                              <a href="#" class="text-dark fw-500">
+                                <h6>{{obj.title}}-xona</h6>
+                              </a>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="userDatatable-content">{{obj.group_count}}</div>
+                        </td>
+                        <td>
+                          <div class="userDatatable-content">{{obj.capacity}}</div>
+                        </td>
+    
+                        <td>
+    
+                          {% if obj.status %}
+                          <div class="userDatatable-content d-inline-block">
+                            <span
+                              class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">active</span>
+                          </div>
+                          {% else %}
+                          <div class="userDatatable-content d-inline-block">
+                            <span
+                              class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                          </div>
+                          {% endif %}
+                        </td>
+                        <td>
+                          <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                            <li>
+                              <a href="#" class="edit">
+                                <span data-feather="edit"></span></a>
+                            </li>
+                            <li data-toggle="modal" data-target="#modal-basic">
+                              <a href="#" class="remove">
+                                <span data-feather="trash-2" ></span></a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-
-<div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content modal-bg-white ">
-      <div class="modal-body">
-        <h4>Siz haqiqattan ushbu xonani o'chirmoqchimisiz?</h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="drawer-basic-wrap">
-  <div class="atbd-drawer drawer-account d-none">
-    <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
-      <h3>Xona qo'shish</h3>
-      <h6 class="drawer-title"></h6>
-      <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
-    </div>
-    <!-- ends: .atbd-drawer__header -->
-    <div class="atbd-drawer__body">
-      <div class="drawer-content">
-        <div class="drawer-account-form form-basic">
-          <form class="was-validated" action="{% url 'admintion:rooms' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-row">
-              <div class="row">
-                <div class="col-md-12">
-
-                  <div class="form-group">
-                    <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">Xona nomi</label>
-                    <input name="title" type="text"
-                      class="form-control is-invalid ih-medium ip-light radius-xs b-light" id="validationServer01"
-                      required>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">Xona sig'imi</label>
-                    <input name="capacity" type="text"
-                      class="form-control is-invalid ih-medium ip-light radius-xs b-light" id="validationServer01"
-                      required>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona rasmi</label>
-                    <input name="files" type="file" class="form-control ih-medium ip-light radius-xs b-light px-15"
-                      accept="image/*" id="a2">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
-                </div>
-              </div>
-          </form>
+    
+    
+    <div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+          <div class="modal-body">
+            <h4>Siz haqiqattan ushbu xonani o'chirmoqchimisiz?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm">Ha o'chirilsin</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+          </div>
         </div>
       </div>
     </div>
-    <!-- ends: .atbd-drawer__body -->
-  </div>
-  <!-- ends: .atbd-drawer -->
+    
+    
+    <div class="drawer-basic-wrap">
+      <div class="atbd-drawer drawer-account d-none">
+        <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+          <h3>Xona qo'shish</h3>
+          <h6 class="drawer-title"></h6>
+          <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+        </div>
+        <!-- ends: .atbd-drawer__header -->
+        <div class="atbd-drawer__body">
+          <div class="drawer-content">
+            <div class="drawer-account-form form-basic">
+              <form class="was-validate" action="{% url 'admintion:rooms' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="row">
+                    <div class="col-md-12">
+    
+                      <div class="form-group">
+                        <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">Xona nomi</label>
+                        <input name="title" type="text"
+                          class="form-control ih-medium ip-light radius-xs b-light form-name" id="validationServer01"
+                          required>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">Xona sig'imi</label>
+                        <input name="capacity" type="text"
+                          class="form-control ih-medium ip-light radius-xs b-light form-capacity" id="validationServer01"
+                          required>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona rasmi</label>
+                        <input name="files" type="file" class="form-control ih-medium ip-light radius-xs b-light px-15"
+                          accept="image/*" id="a2" multiple>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- ends: .atbd-drawer__body -->
+      </div>
+      <!-- ends: .atbd-drawer -->
+    </div>
+    <div class="overlay-dark"></div>
+    <div class="overlay-dark-l2"></div>
 </div>
-<div class="overlay-dark"></div>
-<div class="overlay-dark-l2"></div>
+<!-- ends: .atbd-page-content -->
 {% endblock %}
 {% block script %}
 <script>
+  var formName = document.querySelector(".form-name");
+  var formCapacity = document.querySelector(".form-capacity");
+
+  function validation(element,action){
+      element.addEventListener(action,(evt)=>{
+      if(evt.target.value){
+          evt.target.className = "is-valid form-control ih-medium ip-light radius-xs b-light";
+      } else{
+          evt.target.className = "is-invalid form-control ih-medium ip-light radius-xs b-light";
+      }
+  })
+  }
+  validation(formName,"input")
+  validation(formCapacity,"input")
+
   var params = new URLSearchParams(window.location.search)
   if (params.has('success')) {
     alert("malumotlar qo'shildi")

@@ -1,315 +1,478 @@
 {% extends 'atomic/theme.html' %} 
 {% load static %}
 {% block content %}
+<div class="atbd-page-content">
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 d-flex justify-content-between mt-2 align-items-center">
-            <h4 class="text-capitalize breadcrumb-title">Ota-onalar-10ta  </h4> 
-                <div class="action-btn d-flex">
-                  <button
-                    class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
-                    Ota-ona qo'shish
-                  </button>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-main d-flex justify-content-between mt-4 align-items-center">
+                    <h4 class=" breadcrumb-title">Ota-onalar - 10ta </h4>
+                    <div class="breadcrumb-action justify-content-center flex-wrap">
+
+                        <button class="btn btn-primary btn-default btn-squared mb-10 mr-2 dropdown-toggle drawer-trigger"
+                            type="button" data-drawer="profile" aria-haspopup="true" aria-expanded="false"
+                            onclick="checkSMS()">
+                            <span data-feather="mail"></span> SMS Jo'natish</button>
+                        <button class="btn btn-primary btn-default btn-squared drawer-trigger mr-2 mb-10" type="button"
+                            id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span data-feather="download"></span> Export </button>
+
+                        <button class="btn btn-primary btn-default btn-squared drawer-trigger mr-2 mb-10" type="button"
+                            id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span data-feather="archive"></span> Arxiv </button>
+                        <button class="btn btn-primary btn-default btn-squared drawer-trigger mr-2 mb-10"
+                            data-drawer="account">
+                            <span data-feather="plus"></span>Ota-ona qo'shish
+                        </button>
+                    </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 mb-1">
-                        
-                        <div class="card px-20">
-                            <div class="card-body p-1">
-                                <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-students">
-                                    <div class="table-responsive">
-                                     
-                                        <div id="filter-form-container"></div>
-                                        <div class="row">
-                                            <div class="col-12 mb-10">
-                                                <div class="version-list d-flex justify-content-between">
-                                                    <div class="version-list__single d-flex mr-5">
-                                                        <div></div>
-                                                      
-                                                    </div>
-                                                    
-    
-                                                    <div class="has-subMenu-left  d-flex ">
-                                                        <ul class="subMenu mr-2">
-                                                            <button class="btn btn-sm btn-default btn-primary dropdown-toggle"
-                                                            type="button" data-toggle="modal" data-target="#modal-basic1"
-                                                            aria-haspopup="true" aria-expanded="false"  onclick="checkSMS()">
-                                                            <i class="la la-message"></i> SMS Jo'natish</button>
-                                                        </ul>
-                                                        <ul class="subMenu mr-2">
-                                                            <button class="btn btn-sm btn-default btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="la la-download"></i> Export </button>
-                                                        </ul>
-                                                       
-                                                    
-                                                       
-                                                        <ul class="subMenu mr-2">  <button class="btn btn-sm btn-default btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="la la-download"></i> Arxiv </button>
-                                                        </ul>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table class="table mb-0 table-borderless adv-table-students" data-sorting="true" data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="left" data-paging-size="10">
-                                            <thead>
-                                                <tr class="userDatatable-header">
-                                                    <th>
-                                                        <span class="userDatatable-title"></span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title">id</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="userDatatable-title">FIO</span>
-                                                    </th>
-                                                   
-                                                    <th data-type="html" data-name='position'>
-                                                        <span class="userDatatable-title">Telefon</span>
-                                                    </th>
-                                                    
-                                                    <th>
-                                                        <span class="userDatatable-title">Guruhlar</span>
-                                                    </th>
-                                                 
-                                                    <th>
-                                                        <span class="userDatatable-title ">Farzandi</span>
-                                                    </th>
-
-                                                    <th data-type="html" data-name='position'>
-                                                        <span class="userDatatable-title">Telefon</span>
-                                                    </th>
-
-                                                
-
-                                                    <th>
-                                                        <span class="userDatatable-title d-inline-block ">Amallar</span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for parent in parents %}
-                                                <tr>
-                                                    <td style="margin:auto;display: flex;justify-content:center;align-content:center;height: 100%;">
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                                <div class="checkbox-group-wrapper">
-                                                                    <div class="checkbox-group d-flex">
-                                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                            <input class=" checkbox-theme-default custom-checkbox checkbox-group__single d-flex check-grp-teacher-{{parent.id}} group-checkboxes" type="checkbox" id="check-grp-teacher-{{parent.id}}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a> -->
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">{{ forloop.counter }}</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <div class="userDatatable-inline-title">
-                                                                <a href="#" class="text-dark fw-500">
-                                                                    <h6>{{ parent.full_name}} </h6>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                           {{ parent.phone_number }}
-                                                        </div>
-                                                    </td>
-                                                   
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            -
-                                                        </div>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                        -
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="userDatatable-content">
-                                                            -
-                                                        </div>
-                                                    </td>
-                                                    
-                                                  
-                                                    <td>
-                                                        <div class="userDatatable-content d-inline-block">
-                                                            <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ...
-                                                        
-                                                    </td>
-                                                </tr>
-                                                 
-                                                {% endfor %}
-                                            
-                                            
-                                           
-                                                
-                                            </tbody>
-                                        </table>
-                              
-                                        <div class="d-flex align-items-center m-4">
-                                            <div class="custom-checkbox  check-all">
-                                                <input class="checkbox" type="checkbox" id="check-3">
-                                                <label for="check-3">
-                                                    Barchani tanlash
-                                                </label>
-                                            </div>
-                                        </div>
-            
-                                        
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mb-1">
+                <div class="card p-3">
+                    <div class="card-body p-1">
+                        <div
+                            class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-students">
+                            <form class="filter-form mb-4">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <input class="form-control mr-sm-2 box-shadow-none" type="text"
+                                            placeholder="Search...">
                                     </div>
-                                </div>
+                                    <div class="col-2">
+                                        <div class="atbd-select">
+                                            <select name="select-courses" id="select-courses"
+                                                class="form-control">
+                                                <option value="" selected disabled>Kurslar</option>
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="05">Option 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="atbd-select ">
+                                            <select name="select-groups" id="select-groups"
+                                                class="form-control">
+                                                <option value="" selected disabled>Guruhlar</option>
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="05">Option 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="atbd-select ">
+                                            <select name="select-teacher" id="select-teacher"
+                                                class="form-control">
+                                                <option value="" selected disabled>O'qituvchi</option>
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="05">Option 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="atbd-select ">
+                                            <select name="select-status" id="select-status"
+                                                class="form-control">
+                                                <option value="" selected disabled>Talaba Holati</option>
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="05">Option 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="atbd-select ">
+                                            <select name="select-status" id="select-status"
+                                                class="form-control">
+                                                <option value="" selected disabled>Moliyaviy Holati</option>
+                                                <option value="01">Option 1</option>
+                                                <option value="02">Option 2</option>
+                                                <option value="05">Option 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
+                                </div>
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-borderless adv-table-students"
+                                    data-sorting="true" data-filter-container="#filter-form-container"
+                                    data-paging-current="1" data-paging-position="left"
+                                    data-paging-size="10">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                            <th>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="custom-checkbox  check-all">
+                                                        <input class="checkbox" type="checkbox"
+                                                            id="check-3">
+                                                        <label for="check-3">
+                                                            <span
+                                                                class="checkbox-text userDatatable-title">Id</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">FIO</span>
+                                            </th>
+
+                                            <th data-type="html" data-name='position'>
+                                                <span class="userDatatable-title">Telefon</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Guruhlar</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title ">Farzandi</span>
+                                            </th>
+
+                                            <th data-type="html" data-name='position'>
+                                                <span class="userDatatable-title">Telefon</span>
+                                            </th>
+
+                                            <th data-type="html" data-name='position'>
+                                                <span class="userDatatable-title">Status</span>
+                                            </th>
+
+                                            <th>
+                                                <span
+                                                    class="userDatatable-title d-inline-block ">Amallar</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for parent in parents %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div
+                                                        class="userDatatable__imgWrapper d-flex align-items-center">
+                                                        <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                                <div
+                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                    <input class="checkbox studentCheckbox"
+                                                                        type="checkbox"
+                                                                        id="check-grp-{{student.id}}">
+                                                                    <label for="check-grp-{{student.id}}">
+                                                                        <span
+                                                                            class="checkbox-text userDatatable-title">#1</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="#" class="text-dark fw-500">
+                                                            <h6>{{ parent.full_name}} </h6>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    {{ parent.phone_number }}
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    -
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    -
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    -
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span
+                                                        class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <ul class="orderDatatable_actions mb-0 d-flex flex-wrap"
+                                                    style="justify-content: flex-start;">
+                                                    <li>
+                                                        <a href=""
+                                                            class="view">
+                                                            <span data-feather="eye"></span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href=""
+                                                            class="edit">
+                                                            <span data-feather="edit"></span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="remove">
+                                                            <span data-feather="trash-2"></span></a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between m-4">
+                                <nav class="atbd-page ml-auto">
+                                    <ul class="atbd-pagination d-flex">
+                                        <li class="atbd-pagination__item">
+                                            <a href="#"
+                                                class="atbd-pagination__link pagination-control"><span
+                                                    class="la la-angle-left"></span></a>
+                                            <a href="#" class="atbd-pagination__link"><span
+                                                    class="page-number">1</span></a>
+                                            <a href="#" class="atbd-pagination__link active"><span
+                                                    class="page-number">2</span></a>
+                                            <a href="#" class="atbd-pagination__link"><span
+                                                    class="page-number">3</span></a>
+                                            <a href="#"
+                                                class="atbd-pagination__link pagination-control"><span
+                                                    class="page-number">...</span></a>
+                                            <a href="#" class="atbd-pagination__link"><span
+                                                    class="page-number">12</span></a>
+                                            <a href="#"
+                                                class="atbd-pagination__link pagination-control"><span
+                                                    class="la la-angle-right"></span></a>
+                                            <a href="#" class="atbd-pagination__option">
+                                            </a>
+                                        </li>
+                                        <li class="atbd-pagination__item">
+                                            <div class="paging-option">
+                                                <select name="page-number" class="page-selection">
+                                                    <option value="20">20/page</option>
+                                                    <option value="40">40/page</option>
+                                                    <option value="60">60/page</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
 
-            <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
 
-
-                <div class="modal-dialog modal-md" role="document">
-                    <div class="modal-content modal-bg-white ">
-                        <div class="modal-header">
-            
-            
-            
-                            <h6 class="modal-title">Sms matni.</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span data-feather="x"></span></button>
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header">
+                    <h6 class="modal-title">Sms matni.</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#">
+                        <div class="form-row">
+                            <div class="sms-status-message"></div>
+                            <div class="form-group col-lg-12">
+                                <label for="id_message" class="modal-title">Xabar matni</label>
+                                <textarea type="text" name="id_message" id="id_message"
+                                    class="form-control form-control-sm border-light"
+                                    placeholder="Xabar matni..."></textarea>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <form action="#">
-                                <div class="form-row">
-                                    <div class="sms-status-message"></div>
-                                    <div class="form-group col-lg-12">
-                                        <label for="id_message" class="modal-title">Xabar matni</label>
-                                        <textarea type="text" name="id_message" id="id_message" class="form-control form-control-sm border-light" placeholder="Xabar matni..."></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" id="sendSMS">Jo'natish</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS" ,
+                        data-dismiss="modal">Bekor qilish</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="drawer-basic-wrap">
+        <div class="atbd-drawer drawer-account d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h3 class="drawer-title">Ota-ona qo'shish</h3>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div>
+            <!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content overflow-auto">
+                    <div class="drawer-account-form form-basic">
+                        <form action="{% url 'admintion:students' %}" method="post"
+                            class="student-add-form was-validate" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-row mx-n15 p-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationServer02"
+                                            class="il-gray fs-14 fw-500 align-center">Kursni tanlang</label>
+                                        <select
+                                            class="custom-select form-control select-arrow-none ih-medium radius-xs b-light shadow-none color-light form-course fs-14"
+                                            id="validationServer02"
+                                            aria-describedby="validationServer02Feedback" required>
+                                            <option selected disabled value="">Kursni tanlang</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Yaxshi!
+                                        </div>
+                                        <div id="validationServer04Feedback" class="invalid-feedback">
+                                            Iltimos Kursni tanlang
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationServer03"
+                                            class="il-gray fs-14 fw-500 align-center">Guruhni
+                                            tanlang</label>
+                                        <select
+                                            class="custom-select form-control select-arrow-none ih-medium radius-xs b-light shadow-none color-light form-group fs-14"
+                                            id="validationServer03"
+                                            aria-describedby="validationServer03Feedback" required>
+                                            <option selected disabled value="">Guruhni tanlang</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Yaxshi!
+                                        </div>
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            Iltimos Guruhni tanlang
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationServer05"
+                                            class="il-gray fs-14 fw-500 align-center">O'quvchi
+                                            tanlang</label>
+                                        <select
+                                            class="custom-select form-control select-arrow-none ih-medium radius-xs b-light shadow-none color-light form-student fs-14"
+                                            id="validationServer05"
+                                            aria-describedby="validationServer05Feedback" required>
+                                            <option selected disabled value="">O'quvchi tanlang</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Yaxshi!
+                                        </div>
+                                        <div id="validationServer05Feedback" class="invalid-feedback">
+                                            Iltimos o'quvchi tanlang
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name" class="il-gray fs-14 fw-500 align-center">Ota-ona
+                                            FIO</label>
+                                        <input name="text" type="text"
+                                            class="form-control ih-medium ip-light radius-xs b-light px-15 form-name"
+                                            id="name" placeholder="FIO" required>
+                                        <div class="valid-feedback">
+                                            Yaxshi!
+                                        </div>
+                                        <div id="validationServer05Feedback" class="invalid-feedback">
+                                            Iltimos ism-familiyani kiriting
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="phone" class="il-gray fs-14 fw-500 align-center">Telefon
+                                            raqami</label>
+                                        <input name="text" type="text"
+                                            class="form-control ih-medium ip-light radius-xs b-light px-15 form-phone"
+                                            id="phone" placeholder="+998********" maxlength="13"
+                                            value="+998" required>
+                                        <div class="valid-feedback">
+                                            Yaxshi!
+                                        </div>
+                                        <div id="validationServer05Feedback" class="invalid-feedback">
+                                            Iltimos telefon raqamini kiriting
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleFormControlSelect3"
+                                            class="il-gray fs-14 fw-500 align-center">Parol</label>
+                                        <input name="password" type="password"
+                                            class="form-control ih-medium ip-light radius-xs b-light px-15 form-password"
+                                            id="password" placeholder="parol" required>
+                                        <div class="valid-feedback">
+                                            Yaxshi!
+                                        </div>
+                                        <div id="validationServer05Feedback" class="invalid-feedback">
+                                            Iltimos parolni kiriting
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn-sm" id="sendSMS">Jo'natish</button>
-                            <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS", data-dismiss="modal">Bekor qilish</button>
-                        </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                        </form>
                     </div>
                 </div>
-            
-            
             </div>
-
-            <div class="drawer-basic-wrap">
-    <div class="atbd-drawer drawer-account d-none">
-      <div
-        class="atbd-drawer__header d-flex aling-items-center justify-content-between"
-      >
-        <h3 class="drawer-title">O'quvchi qo'shish</h3>
-        <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
-      </div>
-      <!-- ends: .atbd-drawer__header --> 
-      <div class="atbd-drawer__body">
-        <div class="drawer-content"> 
-          <div class="drawer-account-form form-basic">
-            
-              
-
-              
-
-              <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="a1" class="il-gray fs-14 fw-500 align-center" style="border-color:black">Ota-ona qo'shish</label>
-                        <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15 border-primary" id="a1" placeholder="">
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="a1" class="il-gray fs-14 fw-500 align-center">Guruh</label>
-                        <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15 border-primary">
-                            <option value="">Asistent</option>
-                            <option value="">oqituvchi</option>
-                        </select>
-                    </div>
-                </div>  
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="a2" class="il-gray fs-20 fw-500 align-center">O'quvchi</label>
-                        <select name="url" id="owner" class="form-control ih-medium ip-light radius-xs b-light px-15 border-primary">
-                            <option value="">Asistent</option>
-                            <option value="">oqituvchi</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="a2" class="il-gray fs-20 fw-500 align-center">FIO</label>
-                        <input type=" Text" class="form-control ih-medium ip-light radius-xs b-light px-15 border-primary" id="a2" placeholder="">
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group">
-                        <label for="a2" class="il-gray fs-14 fw-500 align-center">Telefon raqami</label>
-                        <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15 border-primary" id="a2" placeholder="998 *** ** **">
-                    </div>
-                </div>
-
-       
-
-       
-
-                  <!--           dssddff       -->
-          
-
-
-          
-            <div class="col-md-6">
-                <button type="button" class="btn btn-primary btn-sm mb-10">Parol qo'shish</button>
-            </div>
-           
-        <!--           dssddff       -->
-
-
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary btn-sm mb-10">Saqlash</button>
-           
-            </div>
-          
-            
-
-              
-
-
-            </div>
-            </div>
-         
-            
-          </div>
         </div>
-      </div>
-      <!-- ends: .atbd-drawer__body -->
+        <div class="atbd-drawer drawer-profile d-none">
+            <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                <h6 class="drawer-title">SMS yuborish</h6>
+                <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+            </div><!-- ends: .atbd-drawer__header -->
+            <div class="atbd-drawer__body">
+                <div class="drawer-content">
+                    <div class="drawer-account-form form-basic">
+                        <form action="#">
+                            <div class="form-row">
+
+                                <div class="form-group col-12">
+                                    <label for="description">Xabar matni</label>
+                                    <textarea name="description" id="description"
+                                        class="form-control form-control-sm"
+                                        placeholder="Xabar matnini kiriting..."></textarea>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <small id="small_code"></small>
+                                </div>
+                                <div class="form-group col-12">
+                                    <a href="./sms_yoriqnoma.html">SMSda simvollarni ishlatish bo'yicha
+                                        yo'riqnoma</a>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="btn btn-primary">Yuborish</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        </div>
+        <!-- ends: .atbd-drawer__body -->
     </div>
     <!-- ends: .atbd-drawer -->
 </div>
@@ -321,86 +484,120 @@
 
 {% block script %}
 <script>
-    function checkSMS(){
-    
-    var formData = new FormData();
-    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-    var checkboxes = document.getElementsByClassName('group-checkboxes');
-    for(var i=0;i<checkboxes.length;i++){
-        if(checkboxes[i].checked == true){
-            formData.append('parents', checkboxes[i].id.split("-")[3]);
+    function checkSMS() {
+
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        var checkboxes = document.getElementsByClassName('group-checkboxes');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked == true) {
+                formData.append('parents', checkboxes[i].id.split("-")[3]);
+            }
         }
-    }
-    fetch("{% url 'admintion:check-sms-availability' %}", {
-        method:'post',
-        headers:{
-            'Accept':'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: formData
-    })
-    .then(res=>res.json())
-    .then(res=>{
-        var div = document.getElementsByClassName('sms-status-message')[0];
-        //div.classList.add('d-flex m-2 p-2')
-        div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+        fetch("{% url 'admintion:check-sms-availability' %}", {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData
+        })
+            .then(res => res.json())
+            .then(res => {
+                var div = document.getElementsByClassName('sms-status-message')[0];
+                //div.classList.add('d-flex m-2 p-2')
+                div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
                          Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
                         sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
         `
-    })
-    .catch(err=>{
-        console.log(err);
-    })
-}
-var cancelBtn = document.getElementById('cancelSMS');
-        cancelBtn.addEventListener('click', ()=>{
-            var input = document.getElementById('id_message');
-            input.value = '';
-        })
-        
-        var sendSMS = document.getElementById('sendSMS');
-        sendSMS.addEventListener('click', ()=>{
-            var formData = new FormData();
-            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-            var input = document.getElementById('id_message');
-            formData.append('message', input.value);
-            var checkboxes = document.getElementsByClassName('group-checkboxes');
-            for(var i=0;i<checkboxes.length;i++){
-                if(checkboxes[i].checked == true){
-                    formData.append('parents', checkboxes[i].id.split("-")[3]);
-                }
-            } 
-            var url = "{% url 'admintion:send_sms_to_parent' %}"
-            fetch(url, {
-                method:'post',
-                headers:{
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: formData,
             })
-            .then(res=>{
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    var cancelBtn = document.getElementById('cancelSMS');
+    cancelBtn.addEventListener('click', () => {
+        var input = document.getElementById('id_message');
+        input.value = '';
+    })
+
+    var sendSMS = document.getElementById('sendSMS');
+    sendSMS.addEventListener('click', () => {
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        var input = document.getElementById('id_message');
+        formData.append('message', input.value);
+        var checkboxes = document.getElementsByClassName('group-checkboxes');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked == true) {
+                formData.append('parents', checkboxes[i].id.split("-")[3]);
+            }
+        }
+        var url = "{% url 'admintion:send_sms_to_parent' %}"
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+            .then(res => {
                 var status = res.status
-                if(status==200){
+                if (status == 200) {
                     alert("Xabar Ota-onalarga yuborildi.");
                     var input = document.getElementById('id_message');
                     input.value = '';
                 } else {
                     console.log(status)
                     alert("Ma'lumotlar to'liq kiritilmadi");
-                } 
+                }
             })
-        })
+    })
 
-        var checkAllBtn = document.getElementById('check-3');
-        console.log(checkAllBtn, checkAllBtn.checked)
-        checkAllBtn.addEventListener('click', ()=>{
-            var checkboxes = document.getElementsByClassName('group-checkboxes')
-            for(var i=0;i<checkboxes.length;i++){
-                checkboxes[i].checked = checkAllBtn.checked;
+    var checkAllBtn = document.getElementById('check-3');
+    console.log(checkAllBtn, checkAllBtn.checked)
+    checkAllBtn.addEventListener('click', () => {
+        var checkboxes = document.getElementsByClassName('group-checkboxes')
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkAllBtn.checked;
+        }
+    })
+
+    var formGroup = document.querySelector(".form-group")
+    var formCourse = document.querySelector(".form-course")
+    var formStudent = document.querySelector(".form-student")
+    var formName = document.querySelector(".form-name")
+    var formPhone = document.querySelector(".form-phone")
+    var formPassword = document.querySelector(".form-password")
+
+    function validation(element, action) {
+        element.addEventListener(action, (evt) => {
+            if (evt.target.value) {
+                evt.target.className = "is-valid form-control ih-medium ip-light radius-xs b-light";
+            } else {
+                evt.target.className = "is-invalid form-control ih-medium ip-light radius-xs b-light";
             }
-            
         })
+    }
 
-    
+    formPhone.addEventListener("input", (evt) => {
+        if (evt.target.value.length <= 4) {
+            evt.target.value = "+998"
+        }
+        if (evt.target.value.length <= 9) {
+            var value = "+" + evt.target.value.match(/\d/g).join("")
+            evt.target.value = value
+        }
+        if (evt.target.value.length == 12) {
+            validation(formPhone, "input")
+        }
+    })
+    validation(formGroup, "change")
+    validation(formCourse, "change")
+    validation(formStudent, "change")
+    validation(formName, "input")
+    validation(formPassword, "input")
+
+
 </script>
 {% endblock %}

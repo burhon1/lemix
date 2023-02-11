@@ -9,14 +9,19 @@ from user.data.chooses import COURSES_SEXES
 from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES, MESSAGE_STATUS
 from admintion.validators import validate_file_size
 
+class RoomImage(models.Model):
+    image = models.ImageField(upload_to='user/',null=True,blank=True)
+    room = models.ForeignKey('admintion.Room',on_delete=models.CASCADE,related_name='room_image',null=True,blank=True)
+
 class Room(models.Model):
     title = models.CharField(max_length=50)
     capacity = models.PositiveSmallIntegerField()
-    image = models.ImageField(upload_to='user/',null=True,blank=True)
-    status = models.BooleanField(default=False)
+    # images = models.ManyToManyField(RoomImage)
+    status = models.BooleanField(default=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
 
     rooms = rooms_manager.RoomManager()
+    objects = models.Manager()
 
     def __str__(self) -> str:
         return self.title
@@ -24,10 +29,13 @@ class Room(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=50)
     duration = models.CharField(max_length=50)
+    duration_type = models.PositiveSmallIntegerField(choices=chooses.COURCE_DURATION_TYPES,blank=True,null=True)
     lesson_duration = models.CharField(max_length=50)
+    lesson_duration_type = models.PositiveSmallIntegerField(choices=chooses.LESSON_DURATION_TYPES,blank=True,null=True)
     price = models.PositiveIntegerField()
+    price_type = models.PositiveSmallIntegerField(choices=chooses.PRICE_TYPES,blank=True,null=True)
     comment = models.TextField()
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(default=True)
     author = models.ForeignKey('user.CustomUser', models.SET_NULL, null=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
@@ -40,7 +48,7 @@ class Course(models.Model):
 class Teacher(models.Model):
     teacer_type = models.BooleanField(default=False)
     user = models.ForeignKey('user.CustomUser',on_delete=models.CASCADE)
-    status = models.BooleanField(default=False,null=True,blank=True)
+    status = models.BooleanField(default=True,null=True,blank=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
     teachers = teachers_manager.TeacherManager()
@@ -52,10 +60,8 @@ class GroupsDays(models.Model):
 
 class Group(models.Model):
     title = models.CharField(max_length=50)
-    comments = models.TextField(default="")
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name="group_teacher")
-    trainer = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name="trainer")
     room = models.ForeignKey(Room,on_delete=models.CASCADE)
     days = models.ManyToManyField(GroupsDays)
     pay_type = models.PositiveSmallIntegerField(choices=chooses.PAY_FORMS)
@@ -63,7 +69,9 @@ class Group(models.Model):
     start_date = models.DateField(null=True, blank=True)
     start_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
     end_time = models.TimeField(auto_now=False,auto_now_add=False,null=True, blank=True)
-    limit = models.PositiveIntegerField(default=0)
+    limit = models.PositiveIntegerField(default=0,null=True,blank=True)
+    trainer = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name="trainer",null=True,blank=True)
+    comments = models.TextField(default="",null=True,blank=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     
     groups = groups_manager.GroupManager()
@@ -138,6 +146,7 @@ class GroupStudents(models.Model):
     student = models.ForeignKey(Student, models.CASCADE, related_name='ggroups') #, related_name="groups")
     group   = models.ForeignKey(Group, models.CASCADE, related_name="students")
     status  = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
+    attend_date = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
     # activated_till = models.DateTimeField("O'quvchi uchun guruhning aktiv muddati", null=True)
     finished = models.BooleanField(default=False)
@@ -151,6 +160,7 @@ class Parents(models.Model):
     students = models.ManyToManyField(Student)
     passport = models.CharField("Passport", max_length=10, null=True)
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     objects = models.Manager()
     parents = parents_manager.ParentsManager()
 

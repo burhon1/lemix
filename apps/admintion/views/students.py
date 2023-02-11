@@ -16,57 +16,56 @@ from admintion.data.chooses import STUDENT_STATUS
 
 def students_view(request):
     context = {}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
     if request.method == "POST":
-        post = request.POST
-        groups = Group.objects.filter(name="Student")
-        status,obj = user_add(groups,request).values()
-        source=post.get('source',False)
-        comment=post.get('comment',False)
-        if status==200 and source:
-            student = Student(
-                source=get_object_or_404(Sources, pk=int(source)),
-                comment=comment,
-                user=obj
-            )
-            student.save()
-            StudentBalance.objects.create(student=student, title="Balans")
-            parent = post.get('parent_name',False)
-            pphone = post.get('parent_phone',False)
-            telegram = post.get('telegram_telegram',None)
-            passport = post.get('passport_passport', None)
-            group = post.get('group',False)
-            if parent and pphone:
-                try:
-                    fname, lname = parent.split(" ")
-                except ValueError:
-                    fname,lname = parent,''
-                data = {'first_name':fname, 'last_name':lname, 'phone':pphone}
-                parent_user,created = CustomUser.objects.get_or_create(phone=pphone)
-                parent_user.first_name = fname or parent_user.first_name
-                parent_user.last_name = lname or parent_user.last_name
-                if parent_user.password == '':
-                    parent_user.set_password(pphone)
-                parent_user.save()
-                parent, created = Parents.objects.get_or_create(user=parent_user)
-                parent.telegram = telegram or parent.telegram
-                parent.passport = passport or parent.passport
-                parent.students.add(student)
-                parent.save()
-            if group:
-                grop = GroupModel.objects.get(id=group)
-                set_student_group(student, grop)
-            return redirect('admintion:students')
-        else:
-            context['error'] = 'Malumotlar to\'liq kiritilmadi'  
-            return redirect(reverse('admintion:students')+f"?error={context['error']}")
-    ed_id=request.user.educenter
-    branch_id = int(request.session.get('branch_id',False))
-    if branch_id == 0:
-        educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
-    else:
-        educenter_ids = [branch_id]
-    
+        if educenter.count() == 1:
+            post = request.POST
+            groups = Group.objects.filter(name="Student")
+            status,obj = user_add(groups,request).values()
+            source=post.get('source',False)
+            comment=post.get('comment',False)
+            if status==200 and source:
+                student = Student(
+                    source=get_object_or_404(Sources, pk=int(source)),
+                    comment=comment,
+                    user=obj,
+                    educenter=educenter.first()
+                )
+                student.save()
+                StudentBalance.objects.create(student=student, title="Balans")
+                parent = post.get('parent_name',False)
+                pphone = post.get('parent_phone',False)
+                telegram = post.get('telegram_telegram',None)
+                passport = post.get('passport_passport', None)
+                group = post.get('group',False)
+                attend_date = post.get('attend',False) 
+                if parent and pphone:
+                    parent_user,created = CustomUser.objects.get_or_create(phone=pphone)
+                    parent_user.first_name = parent
+                    if parent_user.password == '':
+                        parent_user.set_password(pphone)
+                    parent_user.save()
+                    parent, created = Parents.objects.get_or_create(user=parent_user)
+                    parent.telegram = telegram or parent.telegram
+                    parent.passport = passport or parent.passport
+                    parent.educenter=educenter.first()
+                    parent.students.add(student)
+                    parent.save()
+                if group:
+                    grop = GroupModel.objects.get(id=group)
+                    set_student_group(student, grop,attend_date)
+                return redirect('admintion:students')
+            else:
+                context['error'] = 'Malumotlar to\'liq kiritilmadi'  
+                return redirect(reverse('admintion:students')+f"?error={context['error']}")
+        return redirect(reverse('admintion:teachers')+f"?error=Filyalni tanlang") 
+    educenter_ids=educenter.values_list('id',flat=True)
     context['students'] = Student.students.students(educenter_ids)
+    # context['groups_list'] = GroupModel.groups.groups(educenter_ids,short_info=True)
     context['sources'] = Sources.objects.all()
     context['students_count'] = context['students'].count()
     context=context|context['students'].students_by_status()
@@ -78,12 +77,11 @@ def students_view(request):
 
 def student_by_filter_view(request):
     context={}
-    ed_id=request.user.educenter
-    branch_id = int(request.session.get('branch_id',False))
-    if branch_id == 0:
-        educenter_ids = EduCenters.objects.filter(id=ed_id).values_list('id',flat=True)|EduCenters.objects.filter(parent__id=ed_id).values_list('id',flat=True)              
-    else:
-        educenter_ids = [branch_id]
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)   
 
     status = request.GET
     filter_keys=get_list_of_filter(status)

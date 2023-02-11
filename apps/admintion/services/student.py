@@ -4,10 +4,10 @@ from finance.models import StudentBalance
 from admintion.models import Group, Parents, Student, GroupStudents, Sources
 
 
-def set_student_group(student: Student, group: Group):
+def set_student_group(student: Student, group: Group,attend_date):
     # message: str = "Muvaffaqiyatli yaratildi"
     try:
-        GroupStudents.objects.create(student=student, group=group)
+        GroupStudents.objects.create(student=student, group=group,attend_date=attend_date)
         StudentBalance.objects.create(student=student, title=group.title)
     except:
         pass# message = "talaba guruhga avvaldan biriktirilgan"
