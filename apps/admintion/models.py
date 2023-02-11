@@ -146,7 +146,7 @@ class GroupStudents(models.Model):
     student = models.ForeignKey(Student, models.CASCADE, related_name='ggroups') #, related_name="groups")
     group   = models.ForeignKey(Group, models.CASCADE, related_name="students")
     status  = models.SmallIntegerField(choices=chooses.STUDENT_STATUS, default=1)
-    attend_date = models.DateField()
+    attend_date = models.DateField(blank=True,null=True)
     created = models.DateTimeField(auto_now_add=True)
     # activated_till = models.DateTimeField("O'quvchi uchun guruhning aktiv muddati", null=True)
     finished = models.BooleanField(default=False)
