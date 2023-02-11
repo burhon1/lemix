@@ -7,7 +7,7 @@ def dashboard(request):
     context = dict()
     group = request.user.groups.first()
     
-    if group.name == 'Direktor':
+    if group.name == 'Director':
         template_name = 'admintion/dashboard_director.html'
         context['is_director'] = True
         context.update(get_data_to_director(request.user))
