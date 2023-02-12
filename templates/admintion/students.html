@@ -79,9 +79,38 @@
             <div class="breadcrumb-main d-flex justify-content-between mt-4 align-items-center">
                 <h4 class=" breadcrumb-title" >O'quvchilar-{{ students_count|default:"0"}}ta </h4>
                 <div class="breadcrumb-action justify-content-center flex-wrap">
-                    <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account">
+                    <div class="has-subMenu-left  d-flex ">
+                        <ul class="subMenu mr-2">
+                            <button class="btn btn-sm btn-default btn-primary dropdown-toggle drawer-trigger"
+                                type="button" id="dropdownMenu2" data-drawer="profile"
+                                aria-haspopup="true" aria-expanded="false" onclick="checkedStudents()">
+                                <span data-feather="mail"></span> SMS Jo'natish</button>
+                        </ul>
+                        <ul class="subMenu mr-2">
+                            <button class="btn btn-sm btn-default btn-primary dropdown-toggle"
+                                type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-download"></i> Export </button>
+                        </ul>
+
+                        <ul class="subMenu mr-2"> <button
+                                class="btn btn-sm btn-default btn-primary dropdown-toggle"
+                                type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-upload"></i> Import </button>
+                        </ul>
+
+                        <ul class="subMenu mr-2"> <button
+                                class="btn btn-sm btn-default btn-primary dropdown-toggle"
+                                type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-archive"></i> Arxiv </button>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary btn-sm btn-squared drawer-trigger mb-10" data-drawer="account">
                         <i class="la la-plus"></i>O'quvchi qo'shish
                     </button>
+                   
                 </div>
             </div>
         </div>
@@ -166,37 +195,6 @@
                                                 <span>Muzlatilgan-{{nonactive_students|default:"0" }}ta</span>
                                             </div>
                                         </div>
-
-
-                                        <div class="has-subMenu-left  d-flex ">
-                                            <ul class="subMenu mr-2">
-                                                <button class="btn btn-sm btn-default btn-primary dropdown-toggle drawer-trigger"
-                                                    type="button" id="dropdownMenu2" data-drawer="profile"
-                                                    aria-haspopup="true" aria-expanded="false" onclick="checkedStudents()">
-                                                    <span data-feather="mail"></span> SMS Jo'natish</button>
-                                            </ul>
-                                            <ul class="subMenu mr-2">
-                                                <button class="btn btn-sm btn-default btn-primary dropdown-toggle"
-                                                    type="button" id="dropdownMenu2" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="la la-download"></i> Export </button>
-                                            </ul>
-
-                                            <ul class="subMenu mr-2"> <button
-                                                    class="btn btn-sm btn-default btn-primary dropdown-toggle"
-                                                    type="button" id="dropdownMenu2" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="la la-upload"></i> Import </button>
-                                            </ul>
-
-                                            <ul class="subMenu mr-2"> <button
-                                                    class="btn btn-sm btn-default btn-primary dropdown-toggle"
-                                                    type="button" id="dropdownMenu2" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="la la-archive"></i> Arxiv </button>
-                                            </ul>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
