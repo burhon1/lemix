@@ -373,7 +373,7 @@
     })
     
     function getCourseDetail(id){
-        var url = `/admintion/courses/${id}/detail/`;
+        var url = `/admintion/course/${id}/detail/`;
         fetch(url)
         .then(res=>{
             if (res.status==200){
@@ -418,7 +418,7 @@
 </script>
 <script type="text/javascript">
     var url_path = '/admintion/courses/filter?';
-    var detailUrl="/admintion/courses/<int:id>/detail/"
+    var detailUrl="/admintion/course/<int:id>/detail/"
     var params = {
         duration_type:'',
         status:''

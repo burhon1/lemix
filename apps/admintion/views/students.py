@@ -31,10 +31,11 @@ def students_view(request):
             if status==200 and source:
                 student = Student(
                     source=get_object_or_404(Sources, pk=int(source)),
-                    comment=comment,
                     user=obj,
                     educenter=educenter.first()
                 )
+                if comment:
+                    student.comment=comment
                 student.save()
                 StudentBalance.objects.create(student=student, title="Balans")
                 parent = post.get('parent_name',False)

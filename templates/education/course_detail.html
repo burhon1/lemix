@@ -1,700 +1,1809 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+
+    .v-num {
+        font-size: 14px;
+    }
+
+    .application-faqs .panel-title a {
+        font-size: 12px !important;
+    }
+
+    .forms-view {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .forms-view>.form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .table-responsive tr td>div {
+        text-transform: none;
+    }
+
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single {
+        height: 1.875rem;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        margin-right: 7px;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        width: auto !important;
+    }
+
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:before {
+        margin-top: 0;
+    }
+
+    #infoUser {
+        overflow: hidden;
+        height: 120px;
+    }
+</style>
+<style>
+    .alert-wrapper{
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10000;
+        margin: 20px auto;
+    }
+    .timer-indicator{
+        width: 100%;
+        height: 3px;
+    }
+    .timer-inner{
+        height: 3px;
+        position: relative;
+        animation: width 3s ease-in-out;
+    }
+    @keyframes width {
+        0%{
+            width: 0;
+        } 
+        100%{
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
 {% block content %}
 <div class="container-fluid">
-    <div class="social-dash-wrap">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="col-lg-12 p-0 ">
-                    <div class="card card-default card-md mb-4 mt-3 p-3">
-                            <ul class="atbd-breadcrumb nav">
-                                <li class="atbd-breadcrumb__item">
+    <div class="row mt-3">
 
-                                    <a href="#">
-                                        Kurslar
+        <div class="col-lg-12 mb-30">
+            <div class="profile-info-box row">
+                <form class="col-md-3 col-sm-12" id="formedit">
+                    <div class="card">
+                        <div class="card-header border-bottom-none">
+                            <h6>Matematika</h6>
+                            <div class="card-extra">
+                                <div class="dropdown dropdown-hover">
+                                    <a class="btn-link" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-more-horizontal">
+                                            <circle cx="12" cy="12" r="1" />
+                                            <circle cx="19" cy="12" r="1" />
+                                            <circle cx="5" cy="12" r="1" />
+                                        </svg>
+
                                     </a>
-                                    <span class="breadcrumb__seperator">
-                                        <span class="la la-slash"></span>
-                                    </span>
 
-
-                                </li>
-                                <li class="atbd-breadcrumb__item">
-                                    <a href="#">Matematika</a>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <!-- ends: .card -->
-                </div>
-
-            </div>
-            <!-- Profile Acoount End -->
-        </div>
-        <div class="row">
-            <div class="col-xxl-3 col-lg-3 col-sm-3">
-                <!-- Profile Acoount -->
-                <div class="card mb-25">
-                    <div class="card-body">
-                        <div class="mb-2 ml-2" style="font: size 30px; display: flex; justify-content: space-between;">
-                            <strong>Matematika</strong>
-                            <a href="#" class="ellipsis-more" role="button" id="ellipsis-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span data-feather="more-vertical"></span>
-                            </a>
-                        </div>
-                        <div>
-                            <ul>
-                                <li class="list-box__item"><strong>Davomiyligi:</strong> 6 oy</li>
-                                <li class="list-box__item"><strong>Narxi:</strong> 250 000 </li>
-                                <li class="list-box__item"><strong>Izoh:</strong> Izoh </li>
-                                <li class="list-box__item"><strong>Guruhlar:</strong> 4 </li>
-                                <li class="list-box__item"><strong>O'qituvchilar:</strong> 3 </li>
-                                <li class="list-box__item"><strong>O'quvchilar:</strong> 58 </li>
-                                <li class="list-box__item"><strong>Qarzdorlik:</strong>1 500 000</li>
-                                <li class="list-box__item"><strong>To'langan:</strong>2 500 000</li>
-                                
-                            </ul>
-                        </div>
-                        <!-- ends: .list-box -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-9 col-lg-9 col-sm-9">
-                <div class="knowledgebase-details knowledgebase-details--row m-0 pt-4 pb-4">
-                    <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                        <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                            <ul class="nav nav-tabs knowledgebase__nav" id="knowledgebase" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="plugins-tab" data-toggle="pill" 
-                                    href="#plugins" role="tab" aria-controls="plugins" aria-selected="true">Online darslar</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="themes-tab" data-toggle="pill"
-                                    href="#themes" role="tab" aria-controls="themes" aria-selected="false">Imtihonlar</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="extensions-tab" data-toggle="pill" 
-                                    href="#extensions" role="tab" aria-controls="extensions" aria-selected="false">Guruhlar</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="extensions1-tab" data-toggle="pill" 
-                                    href="#extensions1" role="tab" aria-controls="extensions1" aria-selected="false">Darajalar</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="extensions2-tab" data-toggle="pill" 
-                                    href="#extensions2" role="tab" aria-controls="extensions2" aria-selected="false">O'qituvchilar</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="extensions3-tab" data-toggle="pill" 
-                                    href="#extensions3" role="tab" aria-controls="extensions3" aria-selected="false">Kurs jadvali</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                            <div class="tab-content" id="knowledgebaseContent">
-                                <div class="tab-pane fade show active" id="plugins" role="tabpanel" aria-labelledby="plugins-tab">
-                                    <div class="card card-default card-md mb-4">
-                                        <div class="card-body">
-                                            <div class="atbd-empty text-center">
-                                                <div class="atbd-empty__image">
-        
-                                                    <img src="{% static 'img/3.svg' %}" alt="Admin Empty">
-        
-                                                </div>
-                                                <div class="atbd-empty__text">
-        
-                                                    <p>Materiallar hali yuklanmagan</p>
-                                                    <div class="atbd-empty__action">
-                                                        <button class="btn btn-primary btn-sm btn-squared">Qo'shish</button>
-                                                    </div>
-        
-                                                </div>
-                                            </div>
-        
-        
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-12 mb-1">
-                                    
-
-                                                    <div class="card-body p-1">
-                                                        <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-course-detail">
-                                                            <div class="table-responsive">
-                                                                <div id="filter-form-container"></div>
-                                                                <table class="table mb-0 table-borderless adv-table-course-detail" data-sorting="true"
-                                                                    data-filter-container="#filter-form-container" data-paging-current="1"
-                                                                    data-paging-position="right" data-paging-size="10">
-                                                                    <thead>
-                                                                        <tr class="userDatatable-header">
-                                                                            <th>
-                                                                                <span class="userDatatable-title">Nomi</span>
-                                                                            </th>
-                                                                            <th data-type="html" data-name='position'>
-                                                                                <span class="userDatatable-title">Qo'shilgan vaqt</span>
-                                                                            </th>
-                                                                            <th>
-                                                                                <span class="userDatatable-title">Muddat</span>
-                                                                            </th>
-                                                                            <th>
-                                                                                <span class="userDatatable-title ">Status</span>
-                                                                            </th>
-                                                                            <th>
-                                                                                <span class="userDatatable-title ">Savollar</span>
-                                                                            </th>
-                                                                            <th>
-                                                                                <span class="userDatatable-title ">Ishtirokchilar</span>
-                                                                            </th>
-                                                                            <th>
-                                                                                <span class="userDatatable-title ">Natija</span>
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="d-flex">
-                                                                                    <div class="userDatatable-inline-title">
-                                                                                        <a href="#" class="text-dark fw-500">
-                                                                                            <h6> Matematika b1</h6>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="userDatatable-content">
-                                                                                    10.07.2022
-                                                                                </div>
-                                                                            </td>
-                                    
-                                                                            <td>
-                                                                                <div class="userDatatable-content">
-                                                                                    14.07.2022 10:00-12:00
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="userDatatable-content">
-                                                                                    Bo'lib o'tgan
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="userDatatable-content">
-                                                                                    50
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="userDatatable-content">
-                                                                                    24 80%
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="userDatatable-content">
-                                                                                    90%
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                                <ul class="atbd-pagination d-flex my-3">
-                                                                    <li class="atbd-pagination__item">
-                                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                                                class="la la-angle-left"></span></a>
-                                                                        <a href="#" class="atbd-pagination__link active"><span
-                                                                                class="page-number">1</span></a>
-                                                                        <a href="#" class="atbd-pagination__link "><span class="page-number">2</span></a>
-                                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
-                                    
-                                    
-                                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                                                class="la la-angle-right"></span></a>
-                                                                        <a href="#" class="atbd-pagination__option">
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                    
-                                                    </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="extensions" role="tabpanel" aria-labelledby="extensions-tab">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-breadcrumb">
-                        
-                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
-                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                                                <span data-feather="search"></span>
-                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
-                                                            </form>
-                        
-                                                        </div>
-                                                        <div class="action-btn">
-                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
-                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
-                                                            </a>
-                        
-                                                            <!-- Modal -->
-                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content radius-xl">
-                                                                        <div class="modal-header">
-                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span data-feather="x"></span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="add-new-contact">
-                                                                                <form action="/">
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Email Address:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Phone Number:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Position:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Company Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
-                                                                                    </div>
-                        
-                                                                                    <div class="button-group d-flex pt-20">
-                        
-                        
-                        
-                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
-                                                                                        </button>
-                        
-                        
-                        
-                        
-                        
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Modal -->
-                        
-                        
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>
-                                            </div>
-                                        </div>
-                        
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-list-wrap mb-25">
-                                                    <div class="contact-list bg-white radius-xl w-100">
-                                                        <div class="table-responsive">
-                        
-                                                            <table class="table mb-0 table-borderless table-rounded">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <div class="d-flex align-items-center pl-5">
-                                                                                    <span>Guruh nomi</span>
-                                                                            </div>
-                                                                        </th>
-                                                                        <th class="c-email">
-                                                                            <span>Kurs turi</span>
-                                                                        </th>
-                                                                        <th class="c-company">
-                                                                            <span>O'qituvchisi</span>
-                                                                        </th>
-                                                                        <th class="c-position">
-                                                                            <span class="">Kunlari</span>
-                                                                        </th>
-                                                                        <th class="c-position">
-                                                                            <span class="">Muddati</span>
-                                                                        </th>
-                                                                        <th class="c-phone">
-                                                                            <span class="">Dars xonasi</span>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                        
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="contact-item d-flex align-items-center">
-                                                                                <div class="contact-personal-info d-flex">
-                                                                                    <a href="#" class="profile-image rounded-circle d-block m-0 wh-38" style="background-image:url('img/tm6.png'); background-size: cover;"></a>
-                                                                                    <div class="contact_title">
-                                                                                        <h6>
-                                                                                            <a>Guruh-1</a>
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                        
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">Matematika fani</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="com-name">Jo'rayev Xurshid</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="position">Dush/Chor/Juma 10:00-13:00</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">6 oy</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">1-xona</span>
-                                                                        </td>
-                                                                    </tr>                        
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- ends: col-12 -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="extensions1" role="tabpanel" aria-labelledby="extensions1-tab">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-breadcrumb">
-                        
-                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
-                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                                                    
-                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                                                <span data-feather="search"></span>
-                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
-                                                            </form>
-                        
-                                                        </div>
-                                                        <div class="action-btn">
-                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
-                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
-                                                            </a>
-                        
-                                                            <!-- Modal -->
-                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content radius-xl">
-                                                                        <div class="modal-header">
-                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span data-feather="x"></span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="add-new-contact">
-                                                                                <form action="/">
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Email Address:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Phone Number:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Position:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Company Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
-                                                                                    </div>
-                        
-                                                                                    <div class="button-group d-flex pt-20">
-                        
-                        
-                        
-                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
-                                                                                        </button>
-                        
-                        
-                        
-                        
-                        
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Modal -->
-                        
-                        
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>
-                                            </div>
-                                        </div>
-                        
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-list-wrap mb-25">
-                                                    <div class="contact-list bg-white radius-xl w-100">
-                                                        <div class="table-responsive">
-                        
-                                                            <table class="table mb-0 table-borderless table-rounded">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <div class="d-flex align-items-center pl-5">
-                                                                                    <span>Kurs nomi</span>
-                                                                            </div>
-                                                                        </th>
-                                                                        <th class="c-email">
-                                                                            <span>Oylik To'lovi</span>
-                                                                        </th>
-                                                                        <th class="c-company">
-                                                                            <span>Izoh</span>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                        
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="contact-item d-flex align-items-center">
-                                                                                <div class="contact-personal-info d-flex">
-                                                                                    <div class="contact_title">
-                                                                                        <h6>
-                                                                                            <a>Guruh-1</a>
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                        
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">250 000</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="com-name">Kursda 15 yoshga o'quvchilar o'qiydi</span>
-                                                                        </td>
-                                                                    </tr>   
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="contact-item d-flex align-items-center">
-                                                                                <div class="contact-personal-info d-flex">
-                                                                                    <div class="contact_title">
-                                                                                        <h6>
-                                                                                            <a>Guruh-2</a>
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                        
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">350 000</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="com-name">Kurs OTMga kiruvchilar uchun</span>
-                                                                        </td>
-                                                                    </tr>                                 
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- ends: col-12 -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="extensions2" role="tabpanel" aria-labelledby="extensions2-tab">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-breadcrumb">
-                        
-                                                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
-                                                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                                                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2" >
-                                                                <span data-feather="search"></span>
-                                                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search" placeholder="Qidirish" aria-label="Search">
-                                                            </form>
-                        
-                                                        </div>
-                                                        <div class="action-btn">
-                                                            <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#add-contact">
-                                                                <i class="las la-plus fs-16"></i>Yangi qo'shish
-                                                            </a>
-                        
-                                                            <!-- Modal -->
-                                                            <div class="modal fade add-contact" id="add-contact" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content radius-xl">
-                                                                        <div class="modal-header">
-                                                                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span data-feather="x"></span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="add-new-contact">
-                                                                                <form action="/">
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Email Address:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Email Address">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Phone Number:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Position:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Position">
-                                                                                    </div>
-                                                                                    <div class="form-group mb-20">
-                                                                                        <label>Company Name:</label>
-                                                                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
-                                                                                    </div>
-                        
-                                                                                    <div class="button-group d-flex pt-20">
-                        
-                        
-                        
-                                                                                        <button class="btn btn-primary btn-default btn-squared ">add new Contact
-                                                                                        </button>
-                        
-                        
-                        
-                        
-                        
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Modal -->
-                        
-                        
-                                                        </div>
-                                                    </div>
-                        
-                                                </div>
-                                            </div>
-                                        </div>
-                        
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xxl-12 ">
-                                                <div class="contact-list-wrap mb-25">
-                                                    <div class="contact-list bg-white radius-xl w-100">
-                                                        <div class="table-responsive">
-                        
-                                                            <table class="table mb-0 table-borderless table-rounded">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <div class="d-flex align-items-center pl-5">
-                                                                                    <span>F.I.O</span>
-                                                                            </div>
-                                                                        </th>
-                                                                        <th class="c-email">
-                                                                            <span>Telefon raqam</span>
-                                                                        </th>
-                                                                        <th class="c-company">
-                                                                            <span>Guruhlari</span>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                        
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="contact-item d-flex align-items-center">
-                                                                                <div class="contact-personal-info d-flex">
-                                                                                    <div class="contact_title">
-                                                                                        <h6>
-                                                                                            <a>Burhon Baqoyev</a>
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                        
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="email">99 999 87 65</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="com-name">Guruh-1</span>
-                                                                        </td>
-                                                                    </tr>                               
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- ends: col-12 -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="extensions3" role="tabpanel" aria-labelledby="extensions3-tab">
-                                    <div class="card card-default card-md mb-4">
-                                        <div class="col-lg-12 col-md-12 col-xxl-12 col- ">
-                                            <div class="atbd-empty text-center">
-                                                <div class="atbd-empty__image">
-        
-                                                    <img src="{% static 'img/3.svg' %}" alt="Admin Empty">
-        
-                                                </div>
-                                                <div class="atbd-empty__text">
-        
-                                                    <p>Materiallar hali yuklanmagan</p>
-                                                    <div class="atbd-empty__action">
-                                                        <button class="btn btn-primary btn-sm btn-squared">Qo'shish</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="dropdown-default">
+                                        <a class="dropdown-item drawer-trigger" href="#" id="edit_btn" data-drawer="account"
+                                            >Tahrirlash</a>
+                                        <a class="dropdown-item" href="#">Aktivlashtirish</a>
+                                        <a class="dropdown-item text-danger color-danger"
+                                            href="#">O'chirish</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="card-body">
+
+                            <ul class="v-history-list  pb-3 border-bottom" id="infoUser">
+                                <li class="w-100 mb-2"><span class="version-date">Kurs davomiyligi</span><span
+                                        class="version-name">6oy</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">Dars davomiyligi</span><span
+                                    class="version-name">2soat</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">Kurs narx</span><span
+                                        class="version-name">500 000 so'm</span></li>
+                            </ul>
+                            <ul class="v-history-list  py-3">
+                                <li class="w-100 mb-2"><span class="version-date">Guruhlar</span><span
+                                        class="version-name">4ta</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">O'qituvchilar</span><span
+                                        class="version-name">6ta</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">O'quvchilar</span><span
+                                    class="version-name">50ta</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">To'langan</span><span
+                                    class="version-name">2 400 000</span></li>
+                                <li class="w-100 mb-2"><span class="version-date">Qarzdorlik</span><span
+                                    class="version-name">6 400 000</span></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+
+
+
+                </form>
+
+
+                <form action="#" class="col-md-9 pl-0 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="tab-wrapper">
+
+                                <div class="atbd-tab tab-horizontal">
+                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-v-exams-tab" data-toggle="tab"
+                                                href="#tab-v-exams" role="tab" aria-controls="tab-v-exams"
+                                                aria-selected="false">Imtihonlar</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-v-groups-tab" data-toggle="tab"
+                                                href="#tab-v-groups" role="tab" aria-controls="tab-v-groups"
+                                                aria-selected="false">Guruhlar</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-v-teachers-tab" data-toggle="tab"
+                                                href="#tab-v-teachers" role="tab" aria-controls="tab-v-teachers"
+                                                aria-selected="false">O'qituvchilar</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-v-schedule-tab" data-toggle="tab"
+                                                href="#tab-v-schedule" role="tab" aria-controls="tab-v-schedule"
+                                                aria-selected="false">Kurs jadvali</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-v-students-tab" data-toggle="tab"
+                                                href="#tab-v-students" role="tab" aria-controls="tab-v-students"
+                                                aria-selected="false">O'quvchilar</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <!-- <div class="tab-pane active" id="tab-v-online-lessons" role="tabpanel"
+                                            aria-labelledby="tab-v-online-lessons-tab">
+                                            <div class="row">
+                                                <div class=" col-sm-12">
+                                                    <div class="card-single mb-4">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="online-header d-flex justify-content-end">
+                                                                    <button class="btn btn-primary btn-sm"> <span data-feather="plus"></span> Qo'shish</button>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div class="online-body">
+                                                                    <div class="atbd-empty text-center">
+                                                                        <div class="atbd-empty__image">
+                                                                            <img src="img/folders/1.svg" alt="Admin Empty">
+                                                                        </div>
+                                                                        <div class="atbd-empty__text">
+                                                                            <p class="">Bu kurs uchun materiallar hali yuklanmagan</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="tab-pane fade active show" id="tab-v-exams" role="tabpanel"
+                                            aria-labelledby="tab-v-exams-tab">
+                                                    <div class="card-single mb-4">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                                                <form class="filter-form mb-4">
+                                                                    <div class="row">
+                                                                        <div class="col-3">
+                                                                            <input class="form-control w-100 mr-sm-2 box-shadow-none" type="text" placeholder="Qidirish...">
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="atbd-select">
+                                                                                <select name="select-courses" id="select-courses" class="form-control w-100">
+                                                                                    <option value="" selected disabled>Barchasi</option>
+                                                                                    <option value="01">Option 1</option>
+                                                                                    <option value="02">Option 2</option>
+                                                                                    <option value="05">Option 3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="atbd-date-picker">
+                                                                                <div class="form-group mb-0 form-group-calender">
+                                                                                    <div class="position-relative">
+                                                                                        <input type="text" class="form-control form-control-default date-picker-disabled" placeholder="Sana" id="datepicker2">
+                                                                                        <a href="#"><span data-feather="calendar"></span></a>
+                                                                                    </div>
+                                                                                </div>
+                                    
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <button class="btn w-100 btn-add btn-primary btn-sm" type="button" data-toggle="modal" data-target="#modal-exams"> <span data-feather="plus"></span> Qo'shish</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-12 userDatatable ">
+                                                                    <div class="table-responsive mt-4">
+                                                                        <table class="table mb-0 table-borderless table-rounded">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>
+                                                                                        <div class="d-flex align-items-center">
+                                                                                            <span class="userDatatable-title">Nomi</span>
+                                                                                        </div>
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        <span>Qo’shilgan vaqt:</span>
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        <span>Muddat:</span>
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        <span>Status</span>
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        <span>Savollar</span>
+                                                                                    </th>  
+                                                                                    <th>
+                                                                                        <span>Ishtirokchilar</span>
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        <span>Natija</span>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="contact_title">
+                                                                                            <a href="#">Kellie Marquot</a>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>12.06.2022 14:12</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>14.06.2022 10:00 - 12:00</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>bo’lib o’tgan</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>90ta</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>42ta(87%)</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>78%</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="contact_title">
+                                                                                                <a href="#">Kellie Marquot</a>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>12.06.2022 14:12</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>14.06.2022 10:00 - 12:00</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>bo’lib o’tgan</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>90ta</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>42ta(87%)</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span>78%</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-v-groups" role="tabpanel"
+                                        aria-labelledby="tab-v-groups-tab">
+                                        <div class="row">
+                                            <div class=" col-sm-12">
+                                                <div class="card-single mb-4">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                                            <form class="filter-form mb-4">
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <input class="form-control w-100 mr-sm-2 box-shadow-none" type="text" placeholder="Qidirish...">
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <div class="atbd-select">
+                                                                            <select name="select-courses" id="select-courses" class="form-control w-100">
+                                                                                <option value="" selected disabled>Holati</option>
+                                                                                <option value="01">Option 1</option>
+                                                                                <option value="02">Option 2</option>
+                                                                                <option value="05">Option 3</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <button class="btn w-100 btn-add btn-primary btn-sm drawer-trigger" type="button" data-drawer="profile"> <span data-feather="plus"></span> Qo'shish</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-12 userDatatable ">
+                                                                <div class="table-responsive mt-4">
+                                                                    <table class="table mb-0 table-borderless table-rounded">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="custom-checkbox  check-all">
+                                                                                            <input class="checkbox" type="checkbox" id="check-3">
+                                                                                            <label for="check-3">
+                                                                                                <span class="checkbox-text userDatatable-title">Nomi</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </th>
+                                                                                <th>
+                                                                                    <span>O'qituvchi:</span>
+                                                                                </th>
+                                                                                <th>
+                                                                                    <span>Kurs vaqti:</span>
+                                                                                </th>
+                                                                                <th>
+                                                                                    <span>Muddati</span>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="contact-item d-flex align-items-center">
+                                                                                        <div class="contact-personal-wrap">
+                                                                                            <div class="checkbox-group-wrapper">
+                                                                                                <div class="checkbox-group d-flex">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
+                                                                                                        <label for="check-grp-c-8"></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="contact-personal-info d-flex">
+                                                                                            <div class="contact_title">
+                                                                                                    <a href="#">Kellie Marquot</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>Falonchi</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>Du,Se,Cho 12:00</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>06.01.2023 - 02.03.2024</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="contact-item d-flex align-items-center">
+                                                                                        <div class="contact-personal-wrap">
+                                                                                            <div class="checkbox-group-wrapper">
+                                                                                                <div class="checkbox-group d-flex">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
+                                                                                                        <label for="check-grp-c-8"></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="contact-personal-info d-flex">
+                                                                                            <div class="contact_title">
+                                                                                                    <a href="#">Kellie Marquot</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>Falonchi</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>Du,Se,Cho 12:00</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>06.01.2023 - 02.03.2024</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-v-teachers" role="tabpanel"
+                                        aria-labelledby="tab-v-teachers-tab">
+                                        <div class="row">
+                                            <div class=" col-sm-12">
+                                                <div class="card-single mb-4">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                                            <form class="filter-form mb-4">
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <input class="form-control w-100 mr-sm-2 box-shadow-none" type="text" placeholder="Qidirish...">
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <div class="atbd-select">
+                                                                            <select name="select-courses" id="select-courses" class="form-control w-100">
+                                                                                <option value="" selected disabled>Holati</option>
+                                                                                <option value="01">Option 1</option>
+                                                                                <option value="02">Option 2</option>
+                                                                                <option value="05">Option 3</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <button class="btn w-100 btn-add btn-primary btn-sm" data-toggle="modal" data-target="#modal-teachers" type="button"> <span data-feather="plus"></span> Qo'shish</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-12 userDatatable ">
+                                                                <div class="table-responsive mt-4">
+                                                                    <table class="table mb-0 table-borderless table-rounded">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="custom-checkbox  check-all">
+                                                                                            <input class="checkbox" type="checkbox" id="check-3">
+                                                                                            <label for="check-3">
+                                                                                                <span class="checkbox-text userDatatable-title">FIO</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </th>
+                                                                                <th>
+                                                                                    <span>Raqami</span>
+                                                                                </th>
+                                                                                <th>
+                                                                                    <span>Guruhlari</span>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="contact-item d-flex align-items-center">
+                                                                                        <div class="contact-personal-wrap">
+                                                                                            <div class="checkbox-group-wrapper">
+                                                                                                <div class="checkbox-group d-flex">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
+                                                                                                        <label for="check-grp-c-8"></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="contact-personal-info d-flex">
+                                                                                            <div class="contact_title">
+                                                                                                    <a href="#">Mr. Professor</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>+998976543211</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>
+                                                                                        Matematika-1, SAT-2
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="contact-item d-flex align-items-center">
+                                                                                        <div class="contact-personal-wrap">
+                                                                                            <div class="checkbox-group-wrapper">
+                                                                                                <div class="checkbox-group d-flex">
+                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
+                                                                                                        <label for="check-grp-c-8"></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="contact-personal-info d-flex">
+                                                                                            <div class="contact_title">
+                                                                                                    <a href="#">Mr. Professor</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>+998976543211</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span>
+                                                                                        Matematika-1, SAT-2
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                       
+                                        <div class="tab-pane fade" id="tab-v-students" role="tabpanel"
+                                            aria-labelledby="tab-v-students-tab">
+                                            <div class="row">
+                                                <div class=" col-sm-12">
+                                                    <div class="card-single mb-4">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                                                <form class="filter-form mb-4">
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <input class="form-control w-100 mr-sm-2 box-shadow-none" type="text" placeholder="Qidirish...">
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class="atbd-select">
+                                                                                <select name="select-courses" id="select-courses" class="form-control w-100">
+                                                                                    <option value="" selected disabled>Holati</option>
+                                                                                    <option value="01">Option 1</option>
+                                                                                    <option value="02">Option 2</option>
+                                                                                    <option value="05">Option 3</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <button class="btn w-100 btn-add btn-primary btn-sm drawer-trigger" data-drawer="basic" type="button"> <span data-feather="plus"></span> Qo'shish</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-12 userDatatable ">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mb-0 table-borderless adv-table-studentss" data-sorting="true"
+                                                                    data-filter-container="#filter-form-container" data-paging-current="1"
+                                                                    data-paging-position="left" data-paging-size="10">
+                                                                    <thead>
+                                                                        <tr class="userDatatable-header">
+                                                                            
+                                                                            <th>
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <div class="custom-checkbox  check-all">
+                                                                                        <input class="checkbox" type="checkbox" id="check-3">
+                                                                                        <label for="check-3">
+                                                                                            <span class="checkbox-text userDatatable-title">Id</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title">FIO</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title">Telefon</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title">Guruhlar</span>
+                                                                            </th>
+                                                                            <th>
+                                                                                <span class="userDatatable-title">Holati</span>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr id="student-id">
+                                                                            <td>
+                                                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                                    <div class="checkbox-group-wrapper">
+                                                                                        <div class="checkbox-group d-flex">
+                                                                                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                                <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-{{student.id}}">
+                                                                                                <label for="check-grp-{{student.id}}">
+                                                                                                    <span class="checkbox-text userDatatable-title">#1</span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-inline-title">
+                                                                                    <a href="" class="text-dark fw-500">
+                                                                                        <h6>Jonibek Negmurodov</h6>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    +998926543211
+                                                                                </div>
+                                                                            </td>
+                                    
+                                                                            <td>
+                                                                                <div class="userDatatable-content">
+                                                                                    4
+                                                                                </div>
+                                                                            </td>
+                                    
+                                                                            <td>
+                                                                                <div class="userDatatable-content d-inline-block">
+                                                                                        <span
+                                                                                        class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">
+                                                                                        aktiv
+                                                                                        </span>    
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
+</div>
+<div class="modal-basic modal" id="modal-exams" tabindex="-1" role="dialog"
+                aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Imtihon qo'shish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#">
+                                <label for="select-size-1"
+                                class="il-gray fs-14 fw-500 align-center">Test fromati</label>
+                                <div class="atbd-select mb-2">
+                                    <select name="select-size-1" id="select-size-1"
+                                        class="form-control  form-control-lg">
+                                        <option value="01">online 1</option>
+                                        <option value="02">offline 2</option>
+                                    </select>
+                                </div>
+                                <label for="select-size-1"
+                                class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                <div class="atbd-select">
+                                    <select name="select-size-1" id="select-size-1"
+                                        class="form-control  form-control-lg">
+                                        <option value="01">tur 1</option>
+                                        <option value="02">tur 2</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                    <input type="text" name="name" id="name"
+                                        class="form-control border-light"
+                                        placeholder="Nomini yozing">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="date" class="il-gray fs-14 fw-500 align-center">Kuni</label>
+                                        <input type="date" name="date" id="date"
+                                        class="form-control border-light">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="time" class="il-gray fs-14 fw-500 align-center">Vaqti</label>
+                                        <input type="time" name="time" id="time"
+                                        class="form-control border-light">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="duration" class="il-gray fs-14 fw-500 align-center">Imtihon davomiyligi</label>
+                                    <input type="text" name="duration" id="duration"
+                                        class="form-control border-light"
+                                        placeholder="Imthon davomiyligi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment" class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                    <textarea type="text" name="comment" id="comment"
+                                        class="form-control border-light"
+                                        rows="6"
+                                        placeholder="Izoh yozishingiz mumkin ...."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="file" class="il-gray fs-14 fw-500 align-center">Fayl</label>
+                                    <input type="file" name="file" id="file"
+                                        class="form-control border-light"
+                                        rows="6"
+                                       >
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor
+                                qilish</button>
+                            <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                        </div>
+                    </div>
+                </div>
 
+
+        </div>
+        <div class="modal-basic modal" id="modal-teachers" tabindex="-1" role="dialog"
+                aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+                            <h6 class="modal-title">O'qituvchi qo'shish</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span data-feather="x"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="was-validate" action="{% url 'admintion:teachers' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="validationServer01"
+                                                class="il-gray fs-14 fw-500 align-center">FIO</label>
+                                            <input name="first_name" type="text"
+                                                class="form-control radius-xs b-deep"
+                                                id="validationServer01" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="validationServer01"
+                                                class="il-gray fs-14 fw-500 align-center">Telefon</label>
+                                            <div class="w-100 d-flex ">
+                                                <input name="phone" type="text" style="display:inlinle;"
+                                                    class="form-control radius-xs b-deep phone-js"
+                                                    id="validationServer01" maxlength="13" value="+998" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="validationServer04"
+                                                class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                                <div class="atbd-select ">
+                                                    <select name="teacer_type"
+                                                        class="form-control b-light select-arrow-none radius-xs fs-14"
+                                                        id="validationServer04"
+                                                        aria-describedby="validationServer04Feedback" required>
+                                                        <option selected disabled value="">Tanlang</option>
+                                                        <option value="1">O'qituvchi</option>
+                                                        <option value="0">Yordamchi(support)</option>
+                                                    </select>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-group-calender mb-20">
+                                            <label for="datepicker"
+                                                class="il-gray fs-14 fw-500 align-center">Tug'ilgan
+                                                sanasi</label>
+                                            <div class="position-relative">
+                                                <input name="birthday" type="date"
+                                                    class="form-control radius-xs b-deep"
+                                                    id="datepicker" placeholder="2021-10-01">
+                                                <a href="#"><span data-feather="calendar"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="validationServer04"
+                                            class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                            <div class="atbd-select ">
+                                                <select name="gender"
+                                                    class="form-control select-arrow-none radius-xs b-light fs-14"
+                                                    id="validationServer04"
+                                                    aria-describedby="validationServer04Feedback" required>
+                                                    <option selected disabled value="">Tanlang</option>
+                                                    <option value="1">Erkak</option>
+                                                    <option value="2">Ayol</option>
+                                                </select>
+                                            </div>
+                                        
+
+                                    </div>
+                                    <div class="col-md-{% if educenters %}6{% else %}12{% endif %} col-md-6">
+                                        <div class="form-group">
+                                            <label for="validationServer01"
+                                                class="il-gray fs-14 fw-500 align-center">Manzil</label>
+                                            <input name="location" type="text"
+                                                class="form-control radius-xs b-deep"
+                                                id="validationServer01" required>
+                                        </div>
+                                    </div>
+                                    <!-- {% if educenters.count == 1 %}
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="validationServer05"
+                                                class="il-gray fs-14 fw-500 align-center">Filial</label>
+                                            <select hidden name="educenter"
+                                                class="custom-select form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                id="validationServer04"
+                                                aria-describedby="validationServer04Feedback" required>
+                                                <option selected disabled value="">Tanlang</option>
+                                                {% for edu in educenters %}
+                                                <option selected value="{{ edu.id }}"> {{ edu.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {% elif educenters.count > 1 %} -->
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="validationServer05"
+                                                class="il-gray fs-14 fw-500 align-center">Filiali</label>
+                                            <select name="educenter"
+                                                class="custom-select form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
+                                                id="validationServer04"
+                                                aria-describedby="validationServer04Feedback" required>
+                                                <option selected disabled value="">Tanlang</option>
+                                                {% for edu in educenters %}
+                                                <option value="{{ edu.id }}"> {{ edu.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {% endif %} -->
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor
+                                qilish</button>
+                            <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+
+        <div class="drawer-basic-wrap">
+            <div class="atbd-drawer drawer-account d-none">
+                <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                    <h3>Kurs qo'shish</h3>
+                    <h6 class="drawer-title"></h6>
+                    <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+                </div>
+                
+                <div class="atbd-drawer__body">
+        
+                    <div class="drawer-content">
+        
+                        <div class="drawer-account-form form-basic">
+        
+                            <form action="{% url 'admintion:courses' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                            <input name="title" type="text"
+                                                class="form-control b-deep" id="a1"
+                                                placeholder="Nomi">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="duration" class="il-gray fs-14 fw-500 align-center">Kurs davomiyligi</label>
+                                            <div class="d-flex align-items-baseline ">
+                                                <input name="duration" type="number"
+                                                class="form-control radius-xs b-deep" id="duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                                placeholder="Kurs davomiyligi">
+                                                <div class="atbd-select m-0 p-0">
+                                                    <select name="select-1" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        <option value="01">kun</option>
+                                                        <option value="02">oy</option>
+                                                        <option value="03">yil</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="lesson_duration" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
+                                            <div class="d-flex align-items-baseline ">
+                                                <input name="lesson_duration" type="number"
+                                                class="form-control radius-xs b-deep" id="lesson_duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                                placeholder="Kurs davomiyligi">
+                                                <div class="atbd-select m-0 p-0">
+                                                    <select name="select-1" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        <option value="01">daqiqa</option>
+                                                        <option value="02">soat</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="price" class="il-gray fs-14 fw-500 align-center">Narx</label>
+                                            <div class="d-flex align-items-baseline ">
+                                                <input name="price" type="number"
+                                                class="form-control radius-xs b-deep" id="price" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                                placeholder="Kurs davomiyligi">
+                                                <div class="atbd-select m-0 p-0">
+                                                    <select name="select-1" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        <option value="01">so'm</option>
+                                                        <option value="02">rubl</option>
+                                                        <option value="03">dollar</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-md-12">
+                                        <label for="exampleFormControlTextarea1"
+                                            class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                        <textarea name="comment" class="form-control b-deep" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
+                                    </div>
+        
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+            <div class="atbd-drawer drawer-profile d-none" style="overflow-y: scroll !important;">
+                <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                    <h3 class="drawer-title">Yangi guruh qo'shish</h3>
+                    <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+                </div>
+                <div>
+                    <!-- ends: .atbd-drawer__header -->
+                    <div class="atbd-drawer__body">
+                        <div class="drawer-content">
+                            <div class="drawer-account-form form-basic">
+                                <form action="{% url 'admintion:groups' %}" method="post" class="was-validate">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="row ">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                                    <input name="title" type="text"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-name" id="a1"
+                                                        placeholder="Nomi" required="True">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
+                                                    <select name="course" id="owner" required="True"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-course">
+                                                        {% for course in courses %}
+                                                        <option value="{{course.id}}">{{course.title}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
+                                                    <select name="status" id="owner"  required="True"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-status">
+                                                        <option value="1">tayyorlanmoqda</option>
+                                                        <option value="2">ishga tayyor</option>
+                                                        <option value="3">ishga tushgan</option>
+                                                        <option value="4">To'xtab turipdi</option>
+                                                        <option value="5">Tugatdi</option>
+                                                        <option value="6">Arxivchi</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center ">O'qituvchi</label>
+                                                    <select name="teacher" id="owner"  required="True"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-teacher">
+                                                        {% for teacher in teachers %}
+                                                        <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Yordamchi
+                                                        o'qituvchi</label>
+                                                    <select name="trainer" id="owner"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15">
+                                                        {% for trainer in trainers %}
+                                                        <option value="{{trainer.id}}">{{trainer.user.first_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona</label>
+                                                    <select name="room" id="owner"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-room">
+                                                        {% for room in rooms %}
+                                                        <option value="{{room.id}}">{{room.title}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card border-0  card-md-4 mb-30">
+                                                    <div class="card-body p-0">
+                                                        <label for="a2" class="il-gray fs-14 fw-500 align-center form-days">Kunlar</label>
+                                                        <div class="atbd-select ">
+                                                            <select name="days" id="select-search"
+                                                                class="form-control form-group" multiple="multiple">
+                                                                <option value="1">Du</option>
+                                                                <option value="2">Se</option>
+                                                                <option value="3">Chor</option>
+                                                                <option value="4">Pay</option>
+                                                                <option value="5">Ju</option>
+                                                                <option value="6">Sha</option>
+                                                                <option value="7">Yak</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">To'lov
+                                                        formati</label>
+                                                    <select name="pay_type" id="owner"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-payment">
+                                                        <option value="1">Darsbay</option>
+                                                        <option value="2">Oylik</option>
+                                                        <option value="3">Yillik</option>
+                                                        <option value="4">Modulli</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">
+                                                        Darsning boshlanish sanasi</label>
+                                                    <input type="date" required="True" name="start_date"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-start-date" id="Deadline"
+                                                        placeholder="Qaysi sanadan">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Dars boshlanish
+                                                        vaqti</label>
+                                                    <input type="time" name="start_time"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-start-time" id="a2"
+                                                        placeholder="time">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="a2" class="il-gray fs-14 fw-500 align-center">Tugash
+                                                        vaqti</label>
+                                                    <input type="time" name="end_time"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15 form-end-time" id="a2"
+                                                        placeholder="soni">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="id_limit" class="il-gray fs-14 fw-500 align-center">O'quvchilarning soniga chegara o'rnatish
+                                                        </label>
+                                                    <input type="number" name="limit"
+                                                        class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_limit"
+                                                        placeholder="soni">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="exampleFormControlTextarea1"
+                                                    class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                    name="comments" rows="2"></textarea>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary btn-sm  "
+                                                    style="margin-top:20px ;">Saqlash</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ends: .atbd-drawer__body -->
+            </div>
+            <!-- ends: .atbd-drawer -->
+            </div>
+         
+            <div class="atbd-drawer drawer-basic d-none" style="overflow: scroll; width: 700px;">
+                <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
+                    <h6 class="drawer-title">Yangi o'quvchi qo'shish</h6>
+                    <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+                </div><!-- ends: .atbd-drawer__header -->
+                <div class="atbd-drawer__body">
+                    <div class="drawer-content">
+                        <div class="drawer-account-form form-basic">
+                            <form action="{% url 'admintion:students' %}" method="post" class="student-add-form was-validate" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <div class="form-row mx-n15">
+                                        <div class="col-md-6 mb-3 px-15">
+                                            <label for="validationServer01" class="il-gray fs-14 fw-500 align-center">FIO</label>
+                                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light form-name" id="validationServer01" placeholder="Mark" required>
+                                            <div class="valid-feedback">
+                                                Yaxshi!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Ismni kiriting!
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3 px-15">
+                                            <label for="validationServer02" class="il-gray fs-14 fw-500 align-center">Telefon raqam</label>
+                                            <input type="text" class="form-control ih-medium ip-light radius-xs b-light form-phone" value="+998" maxlength="13" id="validationServer02" required>
+                                            <div class="valid-feedback">
+                                                Yaxshi!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Telefon raqamingizni kiriting!
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3 px-15">
+                                            <label for="validationServer12" class="il-gray fs-14 fw-500 align-center">Tug'ilgan
+                                                sanasi</label>
+                                            <div class="atbd-date-picker">
+                                                <div class="form-group mb-0 form-group-calender">
+                                                    <div class="position-relative">
+                                                        <input type="date" class="form-control ih-medium ip-light radius-xs b-light form-birthdate" id="validationServer12" placeholder="January 20, 2018" required>
+                                                        <div class="valid-feedback">
+                                                            Yaxshi!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Tug'ilgan kuningizni kiriting!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3 px-15">
+                                            <label for="validationServer04" class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                            <select class="custom-select form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light form-gender  fs-14" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                                                <option selected disabled value="">Jinsi</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                            </select>
+                                            <div class="valid-feedback">
+                                                Yaxshi!
+                                            </div>
+                                            <div id="validationServer04Feedback" class="invalid-feedback">
+                                                Iltimos jinsni tanlang
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleFormControlSelect3"
+                                            class="il-gray fs-14 fw-500 align-center">Manbasi</label>
+                                        <select name="source" class="form-control px-15" id="exampleFormControlSelect3" required>
+                                            {% for source in sources %}
+                                            <option value="{{ source.id }}">{{ source.title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="a10" class="il-gray fs-14 fw-500 align-center">Parol</label>
+                                        <input name="password" type="password"
+                                            class="form-control ih-medium ip-light radius-xs b-light px-15" id="a10"
+                                            placeholder="parol" required>
+                                    </div>
+                                    <div class="form-group form-element-textarea mb-20 col-md-12">
+                                        <label for="exampleFormControlTextarea1"
+                                            class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                        <textarea name="comment" class="form-control" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
+                                    </div>
+        
+                                    <div class="col-12 view-form form-row">
+        
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="buttons d-flex flex-wrap  w-100">
+                                            <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3 btn-parents"
+                                                >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-users">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                                    <circle cx="9" cy="7" r="4" />
+                                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3 btn-telegram">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+                                                    <line x1="22" y1="2" x2="11" y2="13" />
+                                                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3 btn-location">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-map-pin">
+                                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                                    <circle cx="12" cy="10" r="3" />
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3 btn-email">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
+                                                    <path
+                                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                                    <polyline points="22,6 12,13 2,6" />
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3 btn-pasport">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-file-text">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                    <polyline points="14 2 14 8 20 8" />
+                                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                                    <polyline points="10 9 9 9 8 9" />
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-circle btn-outline-primary  mr-3 btn-file">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-upload-cloud">
+                                                    <polyline points="16 16 12 12 8 16" />
+                                                    <line x1="12" y1="12" x2="12" y2="21" />
+                                                    <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+                                                    <polyline points="16 16 12 12 8 16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="text-right d-block col-12" onclick="handleAddGroup()">+Guruhga
+                                        qo'shish: </a>
+                                        <div class="group_add"></div>
+                                    <a href="#" class="text-right d-block col-12" onclick="handleAddTask()">+Topshiriq
+                                        qo’shish: </a>
+                                        <div class="task_add"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Saqlash</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- ends: .atbd-drawer__body -->
+        <div class="overlay-dark"></div>
+        <div class="overlay-dark-l2"></div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+
+    var wrapper = document.querySelector(".alert-wrapper")
+    
+    function getAlert(message, type, duration){
+        var alertElement = `
+        <div class="alert alert-${type}  alert-dismissible " role="alert">
+            <div class="alert-content">
+                <p>${message}</p>
+                <div class="timer-indicator bg-opacity-${type} mt-3">
+                    <div class="timer-inner bg-${type}"></div>
+                </div>
+                <button type="button" class="close text-capitalize" data-dismiss="alert" aria-label="Close">
+                    <span data-feather="x" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>`
+        wrapper.innerHTML = alertElement;
+        for(let i=0;i<=100;i++){
+                var timerIndicator = document.querySelector(".timer-inner")
+                timerIndicator.style.width = `${i}%`
+        }
+        setTimeout(function(){
+            $(document).find(`.alert-${type}`).remove();
+        },3000);
+    }
+
+    getAlert("asdasdasdasdasdasdasdasdasdas dsad dsada sadsa dasdasdasdasd","info")
+
+    function getSpinner(isActive, wrapper){
+        var spinnerElement = `
+            <span class="loader-overlay d-inline-block">
+                <div class="atbd-spin-dots spin-lg">
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                </div>
+            </span>
+        `
+
+        if(isActive){
+            wrapper.innerHTML = spinnerElement;
+        }
+    }
+
+    getSpinner(false, wrapper)
+
+    var form = document.querySelector('.view-form');
+    var formName = document.querySelector(".form-name");
+    var formPhone = document.querySelector(".form-phone");
+
+    function validation(element,action){
+        element.addEventListener(action,(evt)=>{
+        if(evt.target.value){
+            evt.target.className = "is-valid form-control form-control-sm border-light";
+        } else{
+            evt.target.className = "is-invalid form-control form-control-sm border-light";
+        }
+    })
+    }
+    validation(formName,"input")
+    validation(formPhone,"input")
+    
+
+    function handleAddItem(_id, names, labelName, typs, plcs,btn,isActive) {
+        var doc_id = document.querySelector('#' + _id)
+       
+        if (!doc_id) {
+            var wrap = document.createElement('div');
+            wrap.classList.add(...['form-group', 'row', 'w-100', 'mx-0', 'p-0', 'col-12']);
+            wrap.id = _id;
+            var label = document.createElement('label');
+            label.for = "a" + names[0];
+            label.classList.add(...['color-dark', 'fs-12', 'fw-500', 'col-md-12','pl-0']);
+            label.textContent = labelName;
+            wrap.appendChild(label);
+            typs.map((item, index) => {
+                var input = document.createElement('input');
+                input.type = item;
+                input.classList.add(...['col-md-' + Math.floor(11 / typs.length), 'form-control','form-control-sm', 'border-light', 'mr-2']);
+                input.id = "a" + names[index];
+                input.name = `${_id.split("-")[0]}_${names[index]}`;
+                input.placeholder = plcs[index];
+                wrap.appendChild(input);
+                input = null;
+            })
+            var img = document.createElement('p');
+            img.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+            img.className = "ml-auto";
+            img.addEventListener('click', function () {
+                document.querySelector('#' + _id).remove()
+                btn.className = "btn btn-icon btn-circle btn-outline-primary mr-3"
+                isActive = false;
+            })
+            wrap.appendChild(img);
+            form.appendChild(wrap);
+            label = null;
+            console.log(wrap)
+        }
+        else {
+            doc_id.remove()
+        }
+    }
+    
+    var  parentsBtn = document.querySelector(".btn-parents")
+    var  telegramBtn = document.querySelector(".btn-telegram")
+    var  locationBtn = document.querySelector(".btn-location")
+    var  emailBtn = document.querySelector(".btn-email")
+    var  pasportBtn = document.querySelector(".btn-pasport")
+    var  fileBtn = document.querySelector(".btn-file")
+
+    function setActiveBtn(btn, ...props){
+        var isActive = false;
+        btn.addEventListener("click",(evt)=>{
+            console.log(btn)
+        if(isActive){
+            btn.className = "btn btn-icon btn-circle btn-outline-primary mr-3"
+            isActive = false;
+        } else{
+            btn.className = "btn btn-icon btn-circle btn-primary mr-3"
+            isActive=true;
+        }
+        handleAddItem(...props,btn, isActive)
+    })
+    }
+    
+    setActiveBtn(parentsBtn, 'parent-23',['name','phone'],'Ota-ona',['text','text'],['Ota-ona...','(99) 134-56-87'])
+    setActiveBtn(telegramBtn, 'telegram-23',['telegram'],'Telegram',['text'],['(99) 134-56-87'])
+    setActiveBtn(locationBtn, 'location-23',['location'],'Manzil',['text'],['Manzil...'])
+    setActiveBtn(emailBtn, 'email-23',['location'],'Email',['email'],['Email...'])
+    setActiveBtn(pasportBtn, 'password-23',['password'],'Passport',['text'],['AA0000000'])
+    setActiveBtn(fileBtn, 'file-23',['file'],'Fayl Yuklash',['file'],['AA0000000'])
+
+    
+
+    // var cancelBtn = document.getElementById('cancelSMS');
+    // cancelBtn.addEventListener('click', ()=>{
+    //     var input = document.getElementById('id_message');
+    //     input.value = '';
+    // })
+
+    // var sendSMS = document.getElementById('sendSMS');
+    // sendSMS.addEventListener('click', ()=>{
+    //     var formData = new FormData();
+    //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    //     var input = document.getElementById('id_message');
+    //     formData.append('message', input.value);
+    //     var checkboxes = document.getElementsByClassName('studentCheckbox');
+    //     for(var i=0;i<checkboxes.length;i++){
+    //         if(checkboxes[i].checked == true){
+    //             formData.append('students', checkboxes[i].id.split('-')[2]);
+    //         }
+    //     }
+    //     var url = `{% url 'admintion:send_sms_to_student' %}`
+    //     fetch(url, {
+    //         method:'post',
+    //         headers:{
+    //             'X-CSRFToken': '{{ csrf_token }}'
+    //         },
+    //         body: formData,
+    //     })
+    //     .then(res=>{
+            
+    //         if(res.status==200){
+    //             alert("Xabar O'quvchilarga yuborildi.");
+    //             var input = document.getElementById('id_message');
+    //             input.value = '';
+    //         } else {
+    //             alert("Ma'lumotlar to'liq kiritilmadi");;
+    //         } 
+    //     })
+    // })
+
+    // function checkedStudents(){
+    //     var checkboxes = document.getElementsByClassName('studentCheckbox');
+    //     var leads = []
+    //     for(var i=0;i<checkboxes.length;i++){
+    //         if(checkboxes[i].checked == true) {
+    //             leads.push(checkboxes[i].id.split('-')[2]);
+    //         }
+    //     }
+    //     var formData = new FormData();
+    //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    //     for(var i=0;i< leads.length;i++){
+    //         formData.append('students', leads[i]);
+    //     }
+    //     // var url = "{% url 'admintion:check-sms-availability' %}";
+    //     fetch("{% url 'admintion:check-sms-availability' %}", {
+    //         method:'post',
+    //         headers:{
+    //             'Accept':'application/json',
+    //             'X-CSRFToken': '{{ csrf_token }}'
+    //         },
+    //         body: formData
+    //     })
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         var div = document.getElementsByClassName('sms-status-message')[0];
+    //         //div.classList.add('d-flex m-2 p-2')
+    //         div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
+    //                          Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
+    //                         sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
+    //         `
+    //     })
+    //     .catch(err=>{
+    //         console.log(err);
+    //     })
+    // }
+
+    // function handleStudentDelete(id){
+    //     var tr = document.querySelector(`#student-${id}`);
+    //     fetch(`/admintion/student/${id}/delete/`, {
+    //         method:'post',
+    //         headers:{
+    //             'Accept':'application/json',
+    //             'X-CSRFToken': '{{ csrf_token }}'
+    //         }
+    //     })
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //        if(res.status==302){
+    //         tr.remove();
+    //        }
+    //     })
+    //     .catch(err=>{
+            
+    //     })
+    // }
+    
+    function handleAddGroup(){
+        var group_add = document.querySelector('.group_add');
+        group_add.className='row w-100 group_add d-flex';
+        if(group_add.innerHTML){
+            group_add.innerHTML="";
+            return;
+        }
+        
+        // fetch("{% url 'admintion:group-list' %}", {
+        //     method:'post',
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'X-CSRFToken': '{{ csrf_token }}'
+        //     }
+        // })
+        // .then(res=>res.json())
+        // .then(res=>{
+        //    console.log(res)
+        //    var select = document.createElement('select');
+        //    var label = document.createElement('label')
+        //    select.name='group';
+        //    res.data.map((item)=>{
+        //         var option = document.createElement('option');
+        //         option.value = item.id;
+        //         option.textContent = item.title;
+        //         select.appendChild(option);
+        //    })
+        //    label.className='il-gray fs-14 fw-500 align-center';
+        //    select.className='form-control px-15';
+        //    wrap.appendChild(label);
+        //    wrap.appendChild(select)
+        //    group_add.appendChild(wrap)
+        // })
+        // .catch(err=>{
+        //     console.log(err)
+        // })
+        
+        ["Guruh","Vaqti"].map((item)=>{
+            if(item === "Vaqti"){
+                var wrap = document.createElement('div');
+                wrap.className='form-group col-md-6';
+                var calendar = `
+                    <div class="atbd-date-picker">
+                        <div class="form-group mb-0 form-group-calender">
+                            <div class="position-relative">
+                                <label for="datepickre2">${item}</label>
+                                <input type="date" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
+                                <a href="#"><span data-feather="calendar"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                `
+                wrap.innerHTML = calendar;
+                group_add.appendChild(wrap)
+            } else{
+            var wrap = document.createElement('div');
+            wrap.className='form-group col-md-6';
+            var select = document.createElement('select');
+            var label = document.createElement('label');
+            select.name=item;
+
+           ["option1","option2"].map((item)=>{
+                var option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item;
+                select.appendChild(option);
+           })
+           label.textContent=item;
+           label.className='il-gray fs-14 fw-500 align-center';
+           select.className='form-control px-15';
+           wrap.appendChild(label);
+           wrap.appendChild(select)
+           group_add.appendChild(wrap)
+            }
+            
+        })
+           
+    }
+
+    function handleAddTask(){
+        // var wrap = document.createElement('div');
+        // var group_add = document.querySelector('.task_add');
+        // group_add.className='row w-100 task_add';
+        // wrap.className='form-group col-md-12';
+        // if(group_add.innerHTML){
+        //     group_add.innerHTML="";
+        //     return;
+        // }
+        // fetch("{% url 'admintion:group-list' %}", {
+        //     method:'post',
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'X-CSRFToken': '{{ csrf_token }}'
+        //     }
+        // })
+        // .then(res=>res.json())
+        // .then(res=>{
+        //    console.log(res)
+        //    var select = document.createElement('select');
+        //    var label = document.createElement('label')
+        //    select.name='task';
+        //    res.data.map((item)=>{
+        //         var option = document.createElement('option');
+        //         option.value = item.id;
+        //         option.textContent = item.title;
+        //         select.appendChild(option);
+        //    })
+        //    label.className='il-gray fs-14 fw-500 align-center';
+        //    select.className='form-control px-15';
+        //    wrap.appendChild(label);
+        //    wrap.appendChild(select)
+        //    group_add.appendChild(wrap)
+        // })
+        // .catch(err=>{
+        //     console.log(err)
+        // })
+
+        var task_add = document.querySelector('.task_add');
+        task_add.className='row w-100 task_add d-flex';
+        if(task_add.innerHTML){
+            task_add.innerHTML="";
+            return;
+        }
+
+        ["Ma'sul","Topshiriq mavzusi","Vaqti","Topshiriq matni"].map((item)=>{
+            if(item === "Vaqti"){
+                var wrap = document.createElement('div');
+                wrap.className='form-group col-md-12';
+                var calendar = `
+                    <div class="atbd-date-picker">
+                        <div class="form-group mb-0 form-group-calender">
+                            <div class="position-relative">
+                                <label for="datepickre2">${item}</label>
+                                <input type="date" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
+                                <a href="#"><span data-feather="calendar"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                `
+                wrap.innerHTML = calendar;
+                task_add.appendChild(wrap)
+            } else if(item === "Topshiriq matni") {
+                console.log(item)
+                var wrap = document.createElement('div');
+                wrap.className='form-group col-md-12';
+                var textarea = `
+                        <label for="task-comment"
+                            class="il-gray fs-14 fw-500 align-center">${item}</label>
+                        <textarea name="comment" class="form-control" id="task-comment"
+                            rows="3"></textarea>
+                `
+                wrap.innerHTML= textarea;
+
+
+                task_add.appendChild(wrap)
+            }
+            else{
+            var wrap = document.createElement('div');
+            wrap.className='form-group col-md-6';
+            var select = document.createElement('select');
+            var label = document.createElement('label');
+            select.name=item;
+
+           ["option1","option2"].map((item)=>{
+                var option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item;
+                select.appendChild(option);
+           })
+           label.textContent=item;
+           label.className='il-gray fs-14 fw-500 align-center';
+           select.className='form-control px-15';
+           wrap.appendChild(label);
+           wrap.appendChild(select)
+           task_add.appendChild(wrap)
+            }
+            
+        })
+           
+    }
+
+</script>
 {% endblock %}

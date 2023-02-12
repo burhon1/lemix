@@ -161,6 +161,7 @@ class Parents(models.Model):
     passport = models.CharField("Passport", max_length=10, null=True)
     telegram = models.CharField("Telegram contact number", max_length=16, null=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    status = models.BooleanField(default=True)
     objects = models.Manager()
     parents = parents_manager.ParentsManager()
 

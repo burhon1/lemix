@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from admintion.models import Course,EduCenters
 from admintion.forms.courses import CourseForm
 from admintion.data.chooses import COURCE_DURATION_TYPES,LESSON_DURATION_TYPES,PRICE_TYPES
+from education.selectors import get_courses_data
 from user.utils import get_admins
 from admintion.utils import get_list_of_dict,get_list_of_filter
 
@@ -84,10 +85,11 @@ def course_delete_view(request, pk):
 
 @permission_required('admintion.view_course')
 def course_detail_view(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    return JsonResponse(
-        model_to_dict(course, exclude=('author'))
-        )
+    course = get_object_or_404(Course, id=pk)
+    context = dict()
+    context['course'] = get_courses_data([course], teacher=request.user.teacher_set.first())[0]
+    
+    return render(request,'education/course_detail.html', context) 
 
 
 @permission_required('admintion.change_course')

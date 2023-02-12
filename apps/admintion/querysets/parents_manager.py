@@ -20,9 +20,7 @@ class ParentsQueryset(QuerySet):
             'id',
             'user__first_name',
             'user__last_name',
-            'user__phone',
-            'telegram',
-            'passport'
+            'user__phone'
         ).annotate(
             full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
             phone_number = Concat(
@@ -35,7 +33,15 @@ class ParentsQueryset(QuerySet):
                 Substr(F('user__phone'),6,2),
                 Value(' '),
                 Substr(F('user__phone'),8,2)
-                )
+                ),
+            student_count = Count(F('students'), distinct=True)
+        )\
+        .values(
+            'id',
+            'full_name',
+            'phone_number',
+            'student_count',
+            'status'
         )
     
     def get_parent(self, student_id):

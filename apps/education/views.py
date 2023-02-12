@@ -476,6 +476,7 @@ def parents_list_view(request):
     context = {
         'parents': Parents.parents.parents()
         }
+    print(context['parents'] )   
     return render(request,'education/parents_list.html',context)
 
 def finance_list_view(request):

@@ -1,5 +1,89 @@
 {% extends 'atomic/theme.html' %} 
 {% load static %}
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+
+    .v-num {
+        font-size: 14px;
+    }
+
+    .application-faqs .panel-title a {
+        font-size: 12px !important;
+    }
+
+    .forms-view {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .forms-view>.form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .table-responsive tr td>div {
+        text-transform: none;
+    }
+
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single {
+        height: 1.875rem;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        margin-right: 7px;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        width: auto !important;
+    }
+
+    .atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:before {
+        margin-top: 0;
+    }
+
+    #infoUser {
+        overflow: hidden;
+        height: 120px;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <div class="atbd-page-content">
 
@@ -132,15 +216,7 @@
                                             </th>
 
                                             <th>
-                                                <span class="userDatatable-title">Guruhlar</span>
-                                            </th>
-
-                                            <th>
                                                 <span class="userDatatable-title ">Farzandi</span>
-                                            </th>
-
-                                            <th data-type="html" data-name='position'>
-                                                <span class="userDatatable-title">Telefon</span>
                                             </th>
 
                                             <th data-type="html" data-name='position'>
@@ -194,29 +270,23 @@
 
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    -
-                                                </div>
-                                            </td>
-
-
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    -
+                                                    {{parent.student_count}}
                                                 </div>
                                             </td>
 
                                             <td>
-                                                <div class="userDatatable-content">
-                                                    -
-                                                </div>
-                                            </td>
-
-
-                                            <td>
+                                                {% if parent.status %}
                                                 <div class="userDatatable-content d-inline-block">
                                                     <span
-                                                        class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                        class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
                                                 </div>
+                                                {% else %}
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span
+                                                        class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">Aktiv
+                                                        emas</span>
+                                                </div>
+                                                {% endif %}
                                             </td>
                                             <td>
                                                 <ul class="orderDatatable_actions mb-0 d-flex flex-wrap"
