@@ -74,6 +74,7 @@ def students_view(request):
     context['datas_of_group'] = list(GroupModel.groups.group_list(educenter_ids))
     context['datas_of_course'] = list(Course.courses.courses(educenter_ids,True))
     context['datas_of_status'] = get_list_of_dict(('id','title'),STUDENT_STATUS)
+    context['keys'] = ['check','title','course','teacher','days','times','total_student','course__price','action']
     return render(request,'admintion/students.html',context) 
 
 def student_by_filter_view(request):

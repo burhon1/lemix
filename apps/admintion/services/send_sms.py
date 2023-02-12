@@ -10,6 +10,7 @@ def get_token(email,password):
         "email":email,
         "password":password
     }
+    print(requests.post(endpoint, data=data2).json())
     vash_token_zdes=requests.post(endpoint, data=data2).json()['data']['token']
     return vash_token_zdes
 

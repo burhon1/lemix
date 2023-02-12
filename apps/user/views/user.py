@@ -36,7 +36,7 @@ def user_update_view(request, pk):
 @login_required
 def change_password_view(request):
     form = ChangePasswordForm(request.POST, instance=request.user)
-    print(request.POST, form.is_valid(), form.errors)
+    print(request.POST)
     if form.is_valid():
         form.save()
         messages.add_message(request, messages.SUCCESS, "Parol yangilandi.")
@@ -56,7 +56,7 @@ def gen_otp(request):
     sms_in = get_sms_integration(main=True)
     email, password = sms_in.email, sms_in.password
     message = f"Sizning vaqtinchalik parolingiz: {otp}.\n Uni hech kimga bermang."
-    status = send_message(request.user.phone, message, email, password)
+    status = send_message(request.user.phone, message, email, password,request)
     
     if status == 201:
         return JsonResponse({'message':'Xabar yuborildi', 'phone':request.user.phone}, status=201)
