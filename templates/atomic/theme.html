@@ -64,6 +64,47 @@
 
     today = dd + '/' + mm + '/' + yyyy;
     {% comment %} datapick = document.querySelector('#datepicker8').placeholder=today; {% endcomment %}
+    var wrapper = document.querySelector(".alert-wrapper")
+    function getAlert(message, type, duration){
+        var alertElement = `
+        <div class="alert alert-${type}  alert-dismissible " role="alert">
+            <div class="alert-content">
+                <p>${message}</p>
+                <div class="timer-indicator bg-opacity-${type} mt-3">
+                    <div class="timer-inner bg-${type}"></div>
+                </div>
+                <button type="button" class="close text-capitalize" data-dismiss="alert" aria-label="Close">
+                    <span data-feather="x" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>`
+        wrapper.innerHTML = alertElement;
+        for(let i=0;i<=100;i++){
+                var timerIndicator = document.querySelector(".timer-inner")
+                timerIndicator.style.width = `${i}%`
+        }
+        setTimeout(function(){
+            $(document).find(`.alert-${type}`).remove();
+        },3000);
+    }
+
+    function getSpinner(isActive, wrapper){
+        var spinnerElement = `
+            <span class="loader-overlay d-inline-block">
+                <div class="atbd-spin-dots spin-lg">
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                </div>
+            </span>
+        `
+
+        if(isActive){
+            wrapper.innerHTML = spinnerElement;
+        }
+    }
+
 </script>
 {% block script %}
 {% endblock %}

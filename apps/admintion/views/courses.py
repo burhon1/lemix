@@ -34,18 +34,19 @@ def courses_view(request):
             course_duration_type = post.get('course_duration_type',False)
             lesson_duration_type = post.get('lesson_duration_type',False)
             price_type = post.get('price_type',False)
-            if title and lesson_duration and duration and price and comment:
+            if title and lesson_duration and duration and price:
                 course = Course(
                     title=title,
                     duration=duration,
                     lesson_duration=lesson_duration,
                     price=price,
-                    comment=comment,
                     duration_type=course_duration_type,
                     lesson_duration_type=lesson_duration_type,
                     price_type=price_type,
                     educenter=educenter.first()
                 )
+                if comment:
+                    course.comment=comment
                 course.save()
                 return redirect(reverse('admintion:courses')+f"?success={True}")
             else:
@@ -89,7 +90,7 @@ def course_detail_view(request, pk):
     context = dict()
     context['course'] = get_courses_data([course], teacher=request.user.teacher_set.first())[0]
     
-    return render(request,'education/course_detail.html', context) 
+    return render(request,'admintion/course_detail.html', context) 
 
 
 @permission_required('admintion.change_course')
