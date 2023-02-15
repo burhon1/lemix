@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     'admintion',
     'student',
     'finance',
-    # 'django_user_agents',
-    # 'import_export',
+    'django_user_agents',
+    'import_export',
     'sms',
-    # 'django_cleanup.apps.CleanupConfig',
+    'django_cleanup.apps.CleanupConfig',
     'pyclick',
 
 ]

@@ -174,7 +174,7 @@ margin-right: 7px;
                                             
                                         </td>
                                         <td class="text-center">
-                                        {{ obj.phone }}
+                                        {{ obj.phone_number }}
                                         </td>
                                         <td>
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
@@ -216,7 +216,7 @@ margin-right: 7px;
         <!-- ends: .atbd-page-content -->
         
         {% if perms.admintion.add_educenters %}
-            <div class="modal-basic modal  fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
 
                 
                 <div class="modal-dialog " role="document">
@@ -307,22 +307,6 @@ margin-right: 7px;
                                         <input type="number" class="form-control" id="maxuser" placeholder="soni" name="max_students">
                                     </div>
                                     
-
-                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
-                                        <div class="countryOption">
-                                            <label for="cityOption">
-                                                Asosiy o'quv markazi
-                                            </label>
-                                            <select class="form-control" id="cityOption" name="parent">
-                                                <option value="">----</option>
-                                                {% for parent in form.fields.parent.queryset %}
-                                                <option value="{{parent.id}}"> {{parent.name}}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <small>Agar tanlanmasa, asosiy sifatida saqlanadi.</small>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="form-group mb-20 col-sm-12">
 
                                         <div class="checkbox-theme-default custom-checkbox ">
@@ -372,7 +356,7 @@ margin-right: 7px;
 
 
         {% if perms.admintion.change_educenters %}
-            <div class="modal-basic modal  fade show" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-basic modal" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
 
                 
                 <div class="modal-dialog " role="document">
@@ -455,22 +439,6 @@ margin-right: 7px;
                                         <input type="number" class="form-control" id="maxuser11" placeholder="soni" name="max_students">
                                     </div>
                                     
-
-                                    <div class="form-group mb-20 col-lg-6 col-sm-12">
-                                        <div class="countryOption">
-                                            <label for="countryOption">
-                                                Asosiy o'quv markazi
-                                            </label>
-                                            <select class="form-control" id="countryOption" name="parent">
-                                                <option value="">----</option>
-                                                {% for parent in form.fields.parent.queryset %}
-                                                    <option value="{{parent.id}}"> {{parent.name}}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <small>Agar tanlanmasa, asosiy sifatida saqlanadi.</small>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="form-group mb-20 col-sm-12">
 
                                         <div class="checkbox-theme-default custom-checkbox ">
@@ -518,7 +486,7 @@ margin-right: 7px;
         {% endif %}
 
         {% if perms.admintion.change_educenters %}
-            <div class="modal-basic modal  fade show" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
 
                 
                 <div class="modal-dialog " role="document">

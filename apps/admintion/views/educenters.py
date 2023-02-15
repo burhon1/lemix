@@ -6,20 +6,22 @@ from django.contrib.auth.decorators import permission_required
 
 from admintion.models import EduCenters, Regions, Districts
 from admintion.forms.educenters import EducentersForm
+from django.db.models import Q
 
 # @permission_required('admintion.view_educenters')
 def educenters_view(request):
+    ed_id=request.session.get('branch_id',False)
+    # qury = Q(id=ed_id)
+    # if int(ed_id) == 0:
+    #     qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenters = EduCenters.objects.filter(parent__id=request.user.educenter)
     if request.method == 'POST':
         form = EducentersForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save(request.user.educenter)
             return redirect(reverse('admintion:edu-centers')+"?status=ok")
-    else:
-        form = EducentersForm()
-    if request.user.groups.filter(name='Direktor'):
-        educenters = EduCenters.educenters.educenters()
-    else:
-        educenters = [request.user.educenter]
+    form = EducentersForm()
+  
     context = {
         'objects': educenters,
         'form': form,
