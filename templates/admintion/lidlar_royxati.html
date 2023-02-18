@@ -203,9 +203,7 @@ Lidlar Ro'yxati- Lemix
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
-                                        {% for lead in leads %}
+                                        {% for lead in objs %}
                                         <tr>
                                             <td>
                                                 <div class="d-flex">
@@ -228,25 +226,23 @@ Lidlar Ro'yxati- Lemix
                                                     <div class="userDatatable-inline-title">
                                                         <a href="{% url 'admintion:lead-detail' lead.id %}"
                                                             class="text-dark fw-500">
-                                                            <h6>{{ lead.user__first_name }} {{
-                                                                lead.user__last_name }}</h6>
+                                                            <h6>{{ lead.full_name }}</h6>
                                                         </a>
                                                         <p class="d-block mb-0">
-                                                            {{ lead.user__phone }}
+                                                            {{ lead.phone_number }}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    {{ lead.source|get_type_name:'source'}}
+                                                    {{ lead.source__title}}
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content d-inline-block">
                                                     <span
-                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">{{
-                                                        lead.status__status|default:'' }}</span>
+                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">{{lead.status__status|default:'' }}</span>
                                                 </div>
 
                                             </td>
@@ -262,18 +258,10 @@ Lidlar Ro'yxati- Lemix
                                                     <div class="userDatatable-inline-title">
                                                         <a href="#" class="text-dark fw-500">
                                                             <h6>
-                                                                {% if lead.author__first_name %}
-                                                                {{ lead.author__first_name }}
-                                                                {% endif %}
-                                                                {% if lead.author__first_name %}
-                                                                {{ lead.author__last_name }}
-                                                                {% endif %}
-                                                                {% if lead.via_form__title %}
+                                                                {{lead.author_name}}
                                                                 <small><span
-                                                                        class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola
-                                                                        orqali</span></small>
+                                                                        class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>
                                                                 {{ lead.via_form__title }}
-                                                                {% endif %}
                                                             </h6>
                                                         </a>
                                                         <p class="d-block mb-0">
@@ -625,9 +613,6 @@ Lidlar Ro'yxati- Lemix
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header">
-
-
-
                     <h6 class="modal-title">Lidni o'chirish</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span data-feather="x"></span></button>

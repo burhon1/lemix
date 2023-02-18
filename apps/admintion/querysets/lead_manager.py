@@ -21,10 +21,15 @@ class LeadQueryset(QuerySet):
             'user__first_name',
             'user__last_name',
             'user__phone',
-            # 'groups',
-            'status'
+            'source__title',
+            'status__status',
+            'comment',
+            'author__first_name',
+            'author__last_name',
+            'created_at'
         ).annotate(
             full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            author_name=Concat(F('author__first_name'),Value(' '),F('author__last_name')),
             phone_number = Concat(
                 Value('+998'),
                 Value(' ('),
