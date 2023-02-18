@@ -12,5 +12,5 @@ def branch_list(request):
 
 def user_groups(request):
     if request.user.is_authenticated:
-        return {'groups_list':request.user.groups.values_list('name',flat=True)}
+        return {'groups_name_list':list(request.user.groups.values_list('name',flat=True))}
     return {}    

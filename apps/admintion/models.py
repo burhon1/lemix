@@ -122,7 +122,7 @@ class FormLead(models.Model):
     status = models.ForeignKey(LeadStatus, models.SET_NULL, null=True, blank=True)
     comment = models.TextField()
     telegram = models.CharField("Telegramdagi nomeri", max_length=100, null=True)
-    parents = models.CharField("Ota-onasi", max_length=150, null=True)
+    parents = models.ForeignKey("admintion.Parents", models.SET_NULL, null=True, blank=True)
     p_phone = models.CharField(max_length=100, null=True)
     passport = models.CharField("Passport seriya va raqami", max_length=10, null=True)
     file = models.FileField(upload_to="leads", null=True, validators=[validate_file_size])
@@ -135,7 +135,7 @@ class FormLead(models.Model):
     purpose = models.CharField("O'qishdan maqsadi", max_length=300, null=True)
     user = models.OneToOneField('user.CustomUser', models.SET_NULL, null=True, related_name="lead")
     via_form = models.ForeignKey('LeadForms', models.SET_NULL, null=True)
-    # educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
     objects = models.Manager()
     leads = lead_manager.LeadManager()
     def __str__(self) -> str:

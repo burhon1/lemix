@@ -15,7 +15,29 @@ class LeadQueryset(QuerySet):
             full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
         )
 
-
+    def leads(self,educenter_id):
+        return self.get_info().filter(educenter__id__in=educenter_id).values(
+            'id',
+            'user__first_name',
+            'user__last_name',
+            'user__phone',
+            # 'groups',
+            'status'
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                )
+        )
+    
     def lead_list(self,id):
         return self.get_info().values(
             'id',
@@ -60,8 +82,8 @@ class LeadManager(Manager):
     def get_query_set(self):
         return LeadQueryset(self.model) 
     
-    def leads(self):
-        return self.get_query_set().leads() 
+    def leads(self,educenter_id):
+        return self.get_query_set().leads(educenter_id) 
 
     def leads_attendace(self,id):
         return self.get_query_set().leads_attendace(id)

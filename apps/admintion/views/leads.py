@@ -1,40 +1,71 @@
 from django.shortcuts import get_object_or_404, render,redirect
-from django.urls import reverse
+from django.contrib.auth.models import Group
 from django.http import JsonResponse
 from django.utils import timezone
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from admintion.forms.leads import LeadForm, DemoForm, DemoFormset
 from admintion.utils import convert_to_json
-from admintion.models import Course, FormLead, Group, GroupStudents, GroupsDays, LeadDemo, LeadStatus, TaskTypes, Tasks, Student,Sources
+from admintion.models import Course, FormLead, Group as GroupModel, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources
 from admintion.selectors import get_form_leads, get_demos, get_lead_tasks, get_next_lesson_date, select_groups_by_limit
 from admintion.data.chooses import GET_GROUPS_DAYS, STUDENT_SOURCES
+from user.services.users import user_add
 from user.models import CustomUser
 
 def leads_view(request):
-    template_name = 'admintion/lidlar_royxati.html'
-    activity = int(request.GET.get('status', 1))
-    if  activity == 2:
-        template_name = 'admintion/lidlar_arxiv.html' 
     context = dict()
     ed_id=request.session.get('branch_id',False)
-    qury = Q(educenter__id=ed_id)
-    if int(ed_id) == 0:
-        qury=(Q(educenter__id=request.user.educenter) | Q(educenter__parent__id=request.user.educenter))
-    context['leads'] = get_form_leads({'activity':activity}, (
-        'id', 'user__first_name', 'user__last_name', 'user__phone', 'status__status', 'comment', 'source', 'author', 'author__first_name', 'author__last_name', 'created_at', 'modified_at', 'via_form__title'))
-    
-    context['sources'] = Sources.objects.filter(qury) #[ {'id':key, 'source':value} for key, value in dict(STUDENT_SOURCES).items()]
+    qury = Q(id=ed_id)
+    educenter = EduCenters.objects.filter(qury)
+    if request.method=="POST":
+        post = request.POST
+        if educenter.count() == 1:
+            p_phone=post.get("phone",False)
+            source=post.get("manba",False)
+            status=post.get("hol",False)
+            comment=post.get("description",False)
+            parent=post.get("parent_name",False)
+            parent_phone=post.get("parent_phone",False)
+            groups = Group.objects.filter(name="Lead")
+            telegram = post.get('telegram_telegram',None)
+            passport = post.get('passport_passport', None)
+            location = post.get('location_location', None)
+            email = post.get('email_location', None)
+            file = request.FILES.get('file_file',None)
+            status,obj = user_add(groups,request, True)
+            if status==200:
+                source = Sources.objects.filter(id=source).first()
+                status = LeadStatus.objects.filter(id=status).first()
+                form_lead = FormLead(
+                    user=obj,
+                    source=source,
+                    p_phone=p_phone,
+                    status=status,
+                    educenter=educenter.first()
+                )
+                form_lead.telegram=telegram
+                form_lead.passport=passport
+                # form_lead.file=file
+                if comment:
+                    form_lead.comment=comment
+                if parent and parent_phone:
+                    parent_user,created = CustomUser.objects.get_or_create(phone=parent_phone)
+                    parent_user.first_name = parent
+                    if parent_user.password == '':
+                        parent_user.set_password(parent_phone)
+                    form_lead.parents=parent_user    
+                form_lead.save()  
+
+        return redirect(reverse('admintion:lead-list')+f"?error=Filyalni tanlang")        
+    educenter_ids=educenter.values_list('id',flat=True)
+    context['objs'] = FormLead.leads.leads(educenter_ids)
+    context['sources'] = Sources.objects.all() 
     context['lead_statuses'] = LeadStatus.objects.filter().values('id', 'status')
-    context['courses'] = Course.objects.filter(status=True).values('id', 'title')
-    groups = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
-    context['groups'] = select_groups_by_limit(groups)
+    context['groups'] = GroupModel.groups.group_list(educenter_ids)
     context['task_types'] = TaskTypes.objects.values('id', 'task_type')
-    context['days'] = GroupsDays.objects.values('id', 'days')
     context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
-    for day in context['days']:
-        day['day_name'] = dict(GET_GROUPS_DAYS)[day['days']]
-    return render(request,template_name, context)
+    return render(request,"admintion/lidlar_royxati.html", context)
 
 def lead_create_view(request):
     if request.method == 'POST':
@@ -60,7 +91,7 @@ def lead_detail_view(request, pk):
     context['lead_statuses'] = LeadStatus.objects.values('id', 'status')
     context['tasks'] = get_lead_tasks(lead)
     context['courses'] = Course.objects.filter(status=True).values('id', 'title')
-    groups = Group.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
+    groups = GroupModel.objects.filter(status__in=[2, 3, 4]).values('id', 'title', 'course__title')
     context['groups'] = select_groups_by_limit(groups)
     context['today_tasks'] = []
     temp = []

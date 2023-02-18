@@ -14,14 +14,20 @@ def user_add(groups,request, is_staff=False):
     educenter = request.session.get('branch_id',False)
     user = CustomUser.objects.filter(phone=phone)
     if not user.exists():
-        if  phone and birthday and gender and groups and ((first_name and last_name) or fio):
+        print(fio)
+        print(phone)
+        print(first_name)
+        if  phone and groups and ((first_name and last_name) or fio):
             custom_user = CustomUser.objects.create(
                 phone=phone,
-                birthday=birthday,
-                gender=gender,
-                is_staff=is_staff,
                 educenter=educenter
             )
+            if birthday:
+                custom_user.birthday=birthday
+            if gender:
+                custom_user.gender=gender
+            if is_staff:     
+                custom_user.is_staff=is_staff,
             if location:
                 custom_user.location=location
             if first_name and last_name:
