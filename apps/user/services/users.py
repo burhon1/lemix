@@ -1,6 +1,7 @@
 from django.utils import timezone
 from getmac import get_mac_address
 from user.models import CustomUser, UserDevices
+from django.contrib.auth.hashers import make_password
 
 def user_add(groups,request, is_staff=False):
     post = request.POST
@@ -14,11 +15,8 @@ def user_add(groups,request, is_staff=False):
     educenter = request.session.get('branch_id',False)
     user = CustomUser.objects.filter(phone=phone)
     if not user.exists():
-        print(fio)
-        print(phone)
-        print(first_name)
         if  phone and groups and ((first_name and last_name) or fio):
-            custom_user = CustomUser.objects.create(
+            custom_user = CustomUser(
                 phone=phone,
                 educenter=educenter
             )
@@ -27,16 +25,15 @@ def user_add(groups,request, is_staff=False):
             if gender:
                 custom_user.gender=gender
             if is_staff:     
-                custom_user.is_staff=is_staff,
+                custom_user.is_staff=is_staff
             if location:
                 custom_user.location=location
             if first_name and last_name:
                 custom_user.first_name=first_name   
                 custom_user.last_name=last_name 
             else:
-                custom_user.first_name = fio       
-            
-            custom_user.set_password(phone)
+                custom_user.first_name = fio   
+            custom_user.password = make_password(phone)
             custom_user.save()
             custom_user.groups.add(*groups)
             return {'status':200,'obj':custom_user}
@@ -47,6 +44,8 @@ def user_add(groups,request, is_staff=False):
             user.first_name=first_name
         if last_name:
             user.last_name=last_name
+        if fio:
+            user.last_name=fio    
         if phone:
             user.phone=phone
         if birthday:

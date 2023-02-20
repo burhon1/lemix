@@ -15,8 +15,8 @@ class LeadQueryset(QuerySet):
             full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
         )
 
-    def leads(self,educenter_id):
-        return self.get_info().filter(educenter__id__in=educenter_id).values(
+    def leads(self,educenter_id,activity):
+        return self.get_info().filter(educenter__id__in=educenter_id,activity=activity).values(
             'id',
             'user__first_name',
             'user__last_name',
@@ -26,6 +26,7 @@ class LeadQueryset(QuerySet):
             'comment',
             'author__first_name',
             'author__last_name',
+            'via_form__title',
             'created_at'
         ).annotate(
             full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
@@ -41,8 +42,61 @@ class LeadQueryset(QuerySet):
                 Value(' '),
                 Substr(F('user__phone'),8,2)
                 )
+        )\
+        .values(
+            'id',
+            'full_name',
+            'phone_number',
+            'source__title',
+            'status__status',
+            'comment',
+            'author_name',
+            'via_form__title',
+            'created_at'
         )
     
+    def leads_filter(self,filter_keys,educenter_ids):
+        return self.filter(educenter__id__in=educenter_ids)\
+            .filter(**filter_keys)\
+            .values(
+            'id',
+            'user__first_name',
+            'user__last_name',
+            'user__phone',
+            'source__title',
+            'status__status',
+            'comment',
+            'author__first_name',
+            'author__last_name',
+            'via_form__title',
+            'created_at'
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            author_name=Concat(F('author__first_name'),Value(' '),F('author__last_name')),
+            phone_number = Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                )
+        )\
+        .values(
+            'id',
+            'full_name',
+            'phone_number',
+            'source__title',
+            'status__status',
+            'comment',
+            'author_name',
+            'via_form__title',
+            'created_at'
+        )
+
     def lead_list(self,id):
         return self.get_info().values(
             'id',
@@ -87,8 +141,11 @@ class LeadManager(Manager):
     def get_query_set(self):
         return LeadQueryset(self.model) 
     
-    def leads(self,educenter_id):
-        return self.get_query_set().leads(educenter_id) 
+    def leads(self,educenter_id,activity=1):
+        return self.get_query_set().leads(educenter_id,activity) 
+
+    def leads_filter(self,filter_keys,educenter_ids):
+        return self.get_query_set().leads_filter(filter_keys,educenter_ids)    
 
     def leads_attendace(self,id):
         return self.get_query_set().leads_attendace(id)

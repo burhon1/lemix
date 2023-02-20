@@ -10,6 +10,7 @@ from admintion.utils import convert_to_json
 from admintion.models import Course, FormLead, Group as GroupModel, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources
 from admintion.selectors import get_form_leads, get_demos, get_lead_tasks, get_next_lesson_date, select_groups_by_limit
 from admintion.data.chooses import GET_GROUPS_DAYS, STUDENT_SOURCES
+from admintion.utils import get_list_of_filter
 from user.services.users import user_add
 from user.models import CustomUser
 
@@ -33,7 +34,7 @@ def leads_view(request):
             location = post.get('location_location', None)
             email = post.get('email_location', None)
             file = request.FILES.get('file_file',None)
-            status,obj = user_add(groups,request, True)
+            status,obj = user_add(groups,request,True).values()
             if status==200:
                 source = Sources.objects.filter(id=source).first()
                 status = LeadStatus.objects.filter(id=status).first()
@@ -56,7 +57,7 @@ def leads_view(request):
                         parent_user.set_password(parent_phone)
                     form_lead.parents=parent_user    
                 form_lead.save()  
-
+                return redirect(reverse('admintion:lead-list'))
         return redirect(reverse('admintion:lead-list')+f"?error=Filyalni tanlang")        
     educenter_ids=educenter.values_list('id',flat=True)
     context['objs'] = FormLead.leads.leads(educenter_ids)
@@ -65,7 +66,53 @@ def leads_view(request):
     context['groups'] = GroupModel.groups.group_list(educenter_ids)
     context['task_types'] = TaskTypes.objects.values('id', 'task_type')
     context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
+    context['keys'] = ['check',
+            'full_name',
+            'phone_number',
+            'source__title',
+            'status__status',
+            'comment',
+            'author_name',
+            'via_form__title',
+            'created_at','action']
     return render(request,"admintion/lidlar_royxati.html", context)
+
+def leads_filter_view(request):
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)   
+
+    status = request.GET
+    filter_keys=get_list_of_filter(status)
+
+    leads = list(FormLead.leads.leads_filter(filter_keys,educenter_ids))
+    
+    return JsonResponse({'data':leads,'status':200})
+
+def leads_archive_view(request):
+    context={}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    educenter = EduCenters.objects.filter(qury)
+    educenter_ids=educenter.values_list('id',flat=True)
+    context['objs'] = FormLead.leads.leads(educenter_ids,2)
+    context['sources'] = Sources.objects.all() 
+    context['lead_statuses'] = LeadStatus.objects.filter().values('id', 'status')
+    context['groups'] = GroupModel.groups.group_list(educenter_ids)
+    context['task_types'] = TaskTypes.objects.values('id', 'task_type')
+    context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
+    context['keys'] = ['check',
+            'full_name',
+            'phone_number',
+            'source__title',
+            'status__status',
+            'comment',
+            'author_name',
+            'via_form__title',
+            'created_at','action']
+    return render(request,"admintion/lidlar_arxiv.html", context)
 
 def lead_create_view(request):
     if request.method == 'POST':
@@ -78,7 +125,6 @@ def lead_create_view(request):
             lead_data = convert_to_json(lead, fields=('id', 'user', 'source_id', 'comment'))
             return JsonResponse(lead_data, status=201)
         else:
-            print(form.errors)
             return JsonResponse({'message': 'error occured'}, safe=False, status=400)
     return JsonResponse({'method':'get'}, status=400)
 
@@ -131,6 +177,7 @@ def lead_edit_view(request, pk):
 @login_required
 def lead_activity_change(request, pk:int, action:str):
     lead = get_object_or_404(FormLead, pk=pk)
+    message=None
     if lead.activity == 1 and action=='archive':
         lead.activity = 2
         lead.author = request.user 

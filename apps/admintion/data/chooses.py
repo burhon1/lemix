@@ -54,7 +54,7 @@ STUDENT_ATTANDENCE_TYPE = (
 
 LEAD_FORM_STATUS = (
     (1,'Aktiv'),
-    (2,'Muzlatilgan'),
+    (2,'Arxiv'),
     (3, "O'chirilgan")
 )
 

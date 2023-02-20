@@ -97,7 +97,7 @@ Lidlar Ro'yxati- Lemix
                                 <!-- <button class=" btn btn-primary btn-xs ml-3">Vazifalar</button> -->
                                 <a href="{% url 'admintion:forms' %}"
                                     class=" btn btn-primary btn-xs ml-3"> <span data-feather="file-text"></span>Formalar</a>
-                                <a href="{% url 'admintion:lead-list' %}?status=2"
+                                <a href="{% url 'admintion:lead-archive-list' %}"
                                     class=" btn btn-primary btn-xs ml-3"> <span data-feather="archive"></span>Arxiv</a>
                                 </div>
                         </div>
@@ -115,47 +115,46 @@ Lidlar Ro'yxati- Lemix
                                     </div>
                                     <div class="col-2">
                                         <div class="atbd-select">
-                                            <select name="select-courses" id="select-courses" class="form-control">
-                                                <option value="" selected disabled>Manba</option>
-                                                <option value="01">Option 1</option>
-                                                <option value="02">Option 2</option>
-                                                <option value="05">Option 3</option>
+                                            <select name="select-courses" id="select-courses" class="form-control" name="source__id" onchange="dropdownChanged(event,'source__id')">
+                                                <option value="0" selected>Manba</option>
+                                                {% for source in sources %}
+                                                <option value="{{source.id}}">{{source.title}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="atbd-select ">
-                                            <select name="select-groups" id="select-groups" class="form-control">
-                                                <option value="" selected disabled>Holati</option>
-                                                <option value="01">Option 1</option>
-                                                <option value="02">Option 2</option>
-                                                <option value="05">Option 3</option>
+                                            <select name="select-groups" id="select-groups" class="form-control" name="status__id" onchange="dropdownChanged(event,'status__id')">
+                                                <option value="0" selected>Holati</option>
+                                                {% for lead_status in lead_statuses %}
+                                                <option value="{{lead_status.id}}">{{lead_status.status}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="atbd-select ">
-                                            <select name="select-teacher" id="select-teacher" class="form-control">
-                                                <option value="" selected disabled>Xodimlar</option>
-                                                <option value="01">Option 1</option>
-                                                <option value="02">Option 2</option>
-                                                <option value="05">Option 3</option>
+                                            <select name="select-teacher" id="select-teacher" class="form-control" name="author__id" onchange="dropdownChanged(event,'author__id')">
+                                                <option value="0" selected>Xodimlar</option>
+                                                {% for lead_status in lead_statuses %}
+                                                <option value="{{lead_status.id}}">{{lead_status.status}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="atbd-date-ranger position-relative m-0 d-flex align-items-center">
                                             <div class="form-group mb-0">
-                                                <input type="text" name="date-range-from" class="form-control form-control-default" id="date-from-4" placeholder="Start" >
+                                                <input type="text" name="date-range-from" class="form-control form-control-default" id="date-from-4" placeholder="Start" name="created_at__gte" onchange="dropdownChanged(event,'created_at__gte')">
                                             </div>
                                             <span class="divider">-</span>
                                             <div class="form-group mb-0">
-                                                <input type="text" name="date-range-to" class="form-control form-control-default" id="date-to-4" placeholder="End" >
+                                                <input type="text" name="date-range-to" class="form-control form-control-default" id="date-to-4" placeholder="End" name="created_at__lte" onchange="dropdownChanged(event,'created_at__lte')">
                                             </div>
                                             <a class="date-picker-icon" href="#"><span data-feather="calendar"></span></a>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </form>
                             <div class="table-responsive">
@@ -298,7 +297,6 @@ Lidlar Ro'yxati- Lemix
                                                 </ul>
                                             </td>
                                         </tr>
-
                                         {% empty %}
 
                                         {% endfor %}
@@ -370,9 +368,6 @@ Lidlar Ro'yxati- Lemix
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header">
-
-
-
                     <h6 class="modal-title">Sms matni.</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span data-feather="x"></span></button>
@@ -392,7 +387,7 @@ Lidlar Ro'yxati- Lemix
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-sm" id="sendSMS">Jo'natish</button>
-                    <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS" ,
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancelSMS"
                         data-dismiss="modal">Bekor qilish</button>
                 </div>
             </div>
@@ -444,7 +439,7 @@ Lidlar Ro'yxati- Lemix
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label for="tel">Telefon raqam</label>
-                                    <input type="text" name="phone" id="tel"
+                                    <input type="text" name="phone" id="phone"
                                         class="form-control form-control-sm border-light"
                                         placeholder="(99) 123-45-67">
                                 </div>
@@ -941,29 +936,29 @@ Lidlar Ro'yxati- Lemix
         // }
 
 
-        // function changeLeadStatus(id,) {
-        //     var url = `/admintion/leads/${id}/archive/`;
-        //     fetch(url, {
-        //         method: 'get',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //         },
-        //     })
-        //         .then(res => {
-        //             window.location.reload()
-        //         })
-        //         .catch(err => {
-        //             console.log(err);
-        //         })
-        // }
+        function changeLeadStatus(id,) {
+            var url = `/admintion/leads/${id}/archive/`;
+            fetch(url, {
+                method: 'get',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            })
+                .then(res => {
+                    window.location.reload()
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
 
 
-        // function changeModal(id) {
-        //     console.log(id);
-        //     btn = document.getElementById('deleteBtn');
-        //     btn.setAttribute('onclick', `changeLeadStatus('${id}')`)
-        //     console.log(btn);
-        // }
+        function changeModal(id) {
+            console.log(id);
+            btn = document.getElementById('deleteBtn');
+            btn.setAttribute('onclick', `changeLeadStatus('${id}')`)
+            console.log(btn);
+        }
 
         // var cancelBtn = document.getElementById('cancelSMS');
         // cancelBtn.addEventListener('click', () => {
@@ -1433,12 +1428,14 @@ Lidlar Ro'yxati- Lemix
 
     </script>
     <script type="text/javascript">
-        var url_path = '/admintion/students/filter?';
+        var url_path = '/admintion/leads/filter?';
+        var detailUrl="/admintion/groups/<int:id>/detail/"
         var params = {
-            student__status:'',
-            group__id:'',
-            group__course__id:'',
-            group__teacher__id:''
+            source__id:'',
+            status__id:'',
+            author__id:'',
+            created_at__gte:'',
+            created_at__lte:''
         }
         function generate_path(){
             parms = new URLSearchParams(params);
@@ -1468,7 +1465,7 @@ Lidlar Ro'yxati- Lemix
             )
         }
     
-        function createCheckbox(dflex,student_id){
+        function createCheckbox(dflex,student_id,idx){
             var wrapimg = document.createElement('div');
             wrapimg.className='userDatatable__imgWrapper d-flex align-items-center';
             var checkboxWrap = document.createElement('div');                                 
@@ -1481,41 +1478,90 @@ Lidlar Ro'yxati- Lemix
             checkInput.className='checkbox studentCheckbox';
             checkInput.type='checkbox';
             checkInput.id=`check-grp-${student_id}`;
+            var label = document.createElement('label');
+            label.for = `check-grp-${student_id}`
+            var span = document.createElement('span');
+            span.className='checkbox-text userDatatable-title';
+            span.textContent=`#${++idx}`;
+            label.appendChild(span);
             checkboxTheme.appendChild(checkInput)
+            checkboxTheme.appendChild(label)
             checkboxGroup.appendChild(checkboxTheme)
             checkboxWrap.appendChild(checkboxGroup);
             wrapimg.appendChild(checkboxWrap);
             return wrapimg;
         }
     
-        function studentList(datas){
-            console.log(datas)
+        function createAction(detailU,_id,title){
+            var ul = document.createElement('ul');
+            ul.className="orderDatatable_actions mb-0 d-flex flex-wrap";
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.className='view';
+            a.href=detailU
+            a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
+            li.appendChild(a);
+            ul.appendChild(li);
+            var a = document.createElement('a');
+            var li = document.createElement('li');
+            a.className='edit';
+            a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
+            li.appendChild(a);
+            ul.appendChild(li);
+            var a = document.createElement('a');
+            var li = document.createElement('li');
+            a.className='remove';
+            a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
+            a.addEventListener('click',()=>setDelModal(_id,title))
+            li.appendChild(a);
+            ul.appendChild(li);
+            return ul;
+        }
+    
+        function dataList(datas){
             var tbody = document.querySelector('tbody');
     
             while(tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
                 }
-            datas.forEach(element => {
-                alert(3)
+            datas.forEach((element,idx) => {
                 var tr = document.createElement('tr');
                 tr.id = `student-${element.student_ids}`
-                var columns = ['check','id','fio','phone','group_count','attendance','balance','status','action']
+                var columns = {{keys|safe}};
                 
                 for(var i=0;i<columns.length;i++){
                     if(columns[i]=='check'){
                         var td = document.createElement('td');
                         var dflex = document.createElement('dev');
                         dflex.className='d-flex';
-                        dflex.appendChild(createCheckbox(dflex,element.student_ids));
+                        dflex.appendChild(createCheckbox(dflex,element.id,idx));
                         td.appendChild(dflex);
                         tr.appendChild(td);
                     }
-                    else if(columns[i] in ['fio','status','action','id']){
-    
-                        // <div class="userDatatable-content">
-                        //                             {{ student.payment|readable_soums }}
-                        //                         </div>
-                        
+                    else if(columns[i] == 'action'){
+                        var td = document.createElement('td');
+                        td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
+                        tr.appendChild(td);  
+                    }
+                    else if(columns[i] == 'status'){
+                        var td = document.createElement('td');
+                        if(element.status){
+                            td.innerHTML = `
+                            <div class="userDatatable-content d-inline-block">
+                                <span
+                                    class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
+                            </div>
+                            `
+                        }
+                        else{
+                            td.innerHTML = `
+                            <div class="userDatatable-content d-inline-block">
+                                <span
+                                    class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
+                            </div>
+                            `
+                        }
+                        tr.appendChild(td); 
                     }
                     else {
                         
@@ -1529,22 +1575,18 @@ Lidlar Ro'yxati- Lemix
                     }
                 }
                 tbody.appendChild(tr);
-                console.log(tbody)
                 var dvTd = document.createElement('div');
                 dvTd.className='userDatatable-content';
-    
-    
             });
         }
-        function _onStatusDropdownChanged (e,name){
-                
+        function dropdownChanged (e,name){
             var selected = e.target.value;
             if (selected != 0){
                 params[name]=e.target.value
             } else {
                 params[name]=''
             }
-            get_request(generate_path(),studentList)
+            get_request(generate_path(),dataList)
     
     }
     </script>
