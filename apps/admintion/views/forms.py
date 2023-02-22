@@ -13,7 +13,9 @@ def forms_view(request):
     if request.method == 'POST':
         form = LeadFormClass(request.POST, request.FILES)
         if form.is_valid():
-            obj = form.save()
+            obj = form.save(commit=False)
+            # obj.ed
+            obj.save()
             data = request.build_absolute_uri(reverse('lead_registration_view', args=[obj.id]))+'?title='+obj.title
             create_qrcode(data, obj)
             return JsonResponse({'id': obj.id}, status=201)

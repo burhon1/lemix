@@ -56,10 +56,7 @@ class LeadFormClass(forms.ModelForm):
                 name = title
         self.cleaned_data['title'] = title
         self.cleaned_data['name'] = name
-        
 
-        
-        print(self.cleaned_data)
         return self.cleaned_data
 
 

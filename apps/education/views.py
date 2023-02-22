@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes, FormLead, LeadDemo,Parents
+from admintion.models import Course, GroupStudents, Teacher, Group, Tasks, UserTaskStatus, TaskTypes, FormLead, LeadDemo,Parents,Group as GroupModel,EduCenters
 from admintion.selectors import set_tasks_status
 from education.models import FAQ, Lessons, Modules, Contents, Resources
 from education.selectors import get_courses, get_groups, get_lesson_contents_data, get_modules, get_modules_data, get_lessons, get_lessons_data, get_courses_data, get_courses_via_hws, get_groups_via_hws, get_students_data, get_contents, get_groups_data,get_leads_data,get_lead_homework_contents
@@ -76,7 +76,7 @@ def onlin_video_create_view(request, lesson_id):
     if request.method == 'POST':
         group = request.GET.get('group', None)
         if group:
-            group = get_object_or_404(Group, pk=group)
+            group = get_object_or_404(GroupModel, pk=group)
 
         lesson = get_object_or_404(Lessons, id=lesson_id)
         form = ContentForm(request.POST, request.FILES)
@@ -473,10 +473,18 @@ def students_list_view(request):
     return render(request,'education/students_list.html') 
 
 def parents_list_view(request):
-    context = {
-        'parents': Parents.parents.parents()
-        }
-    print(context['parents'] )   
+    context = {}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
+    if request.method == "POST":
+        post = request.POST
+    educenter_ids = educenter.values_list('id',flat=True)    
+    context['groups']  = list(GroupModel.groups.group_list(educenter_ids))
+    context['courses'] = list(Course.courses.courses(educenter_ids,True))
+    context['keys'] = ['check','title','course','teacher','days','times','total_student','course__price','action']
     return render(request,'education/parents_list.html',context)
 
 def finance_list_view(request):

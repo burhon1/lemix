@@ -431,14 +431,11 @@ align-items: center;
 
                             </div>
                             <div class="mb-3">
-
-
                                 <div class="checkbox-theme-default custom-checkbox ">
                                     <input class="checkbox" type="checkbox" id="id_english">
                                     <label for="id_english">
                                         <span class="checkbox-text">
                                             Ingliz tilida kiritish
-
                                         </span>
                                     </label>
                                 </div>
@@ -448,15 +445,6 @@ align-items: center;
                             
                         
                         </div>
-                    <div class="form-group col-lg-12">
-                        <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
-                        <select name="educenters" id="id_educenters" class="form-control-sm">
-                            <option value="">Hammasi</option>
-                            {% for option in form.fields.educenters.queryset %}
-                                <option value="{{option.id}}">{{ option.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
                     <div class="form-group col-lg-6">
                         <label for="id_courses"><b class="text-danger">*</b>Kurslarni tanlang</label>
                         <select name="courses" id="id_courses" class="form-control-sm border-light">

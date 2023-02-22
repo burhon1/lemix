@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q,F
 from admintion.forms.leads import LeadForm, DemoForm, DemoFormset
 from admintion.utils import convert_to_json
 from admintion.models import Course, FormLead, Group as GroupModel, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources
@@ -36,6 +36,11 @@ def leads_view(request):
             location = post.get('location_location', None)
             email = post.get('email_location', None)
             file = request.FILES.get('file_file',None)
+
+            task_date = post.get('task_date', None)
+            task_comment = post.get('task_comment', None)
+            task_who = post.get('task_who', None)
+            task_type = post.get('task_type', None)
             status,obj = user_add(groups,request,True).values()
             if status==200:
                 source = Sources.objects.filter(id=source).first()
@@ -58,7 +63,18 @@ def leads_view(request):
                     if parent_user.password == '':
                         parent_user.set_password(parent_phone)
                     form_lead.parents=parent_user    
-                form_lead.save()  
+                form_lead.save()
+                if task_date and task_who and task_type:
+                    whom=CustomUser.objects.get(pk=task_who)
+                    task_type=TaskTypes.objects.get(id=task_type)
+                    task = Tasks(
+                        comment=task_comment,
+                        deadline=task_date,
+                        author=request.user,
+                        task_type=task_type
+                    )
+                    task.save()
+                    task.whom.add(whom)
                 return redirect(reverse('admintion:lead-list'))
         return redirect(reverse('admintion:lead-list')+f"?error=Filyalni tanlang")        
     educenter_ids=educenter.values_list('id',flat=True)
@@ -66,8 +82,8 @@ def leads_view(request):
     context['sources'] = Sources.objects.all() 
     context['lead_statuses'] = LeadStatus.objects.filter().values('id', 'status')
     context['groups'] = GroupModel.groups.group_list(educenter_ids)
-    context['task_types'] = TaskTypes.objects.values('id', 'task_type')
-    context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
+    context['task_types'] = list(TaskTypes.objects.annotate(title=F('task_type')).values('id', 'title'))
+    context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
     context['keys'] = ['check',
             'full_name',
             'phone_number',
@@ -77,6 +93,7 @@ def leads_view(request):
             'author_name',
             'via_form__title',
             'created_at','action']
+    print(context['task_types'])
     return render(request,"admintion/lidlar_royxati.html", context)
 
 def leads_filter_view(request):

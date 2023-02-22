@@ -410,10 +410,11 @@
                                         <select
                                             class="custom-select form-control select-arrow-none ih-medium radius-xs b-light shadow-none color-light form-course fs-14"
                                             id="validationServer02"
-                                            aria-describedby="validationServer02Feedback" required>
-                                            <option selected disabled value="">Kursni tanlang</option>
-                                            <option>1</option>
-                                            <option>2</option>
+                                            aria-describedby="validationServer02Feedback" required name="course" onchange="selectStudent(event)">
+                                            <option selected value="">Kursni tanlang</option>
+                                            {% for course in courses %}
+                                            <option value="{{course.id}}">{{course.title}}</option>
+                                            {% endfor %}
                                         </select>
                                         <div class="valid-feedback">
                                             Yaxshi!
@@ -429,10 +430,8 @@
                                         <select
                                             class="custom-select form-control select-arrow-none ih-medium radius-xs b-light shadow-none color-light form-group fs-14"
                                             id="validationServer03"
-                                            aria-describedby="validationServer03Feedback" required>
+                                            aria-describedby="validationServer03Feedback" required name="group" onchange="selectStudent(event)">
                                             <option selected disabled value="">Guruhni tanlang</option>
-                                            <option>1</option>
-                                            <option>2</option>
                                         </select>
                                         <div class="valid-feedback">
                                             Yaxshi!
@@ -448,10 +447,8 @@
                                         <select
                                             class="custom-select form-control select-arrow-none ih-medium radius-xs b-light shadow-none color-light form-student fs-14"
                                             id="validationServer05"
-                                            aria-describedby="validationServer05Feedback" required>
-                                            <option selected disabled value="">O'quvchi tanlang</option>
-                                            <option>1</option>
-                                            <option>2</option>
+                                            aria-describedby="validationServer05Feedback" required name="student" onchange="selectStudent(event)">
+                                            <option selected disabled value="">O'quvchi tanlang</option>>
                                         </select>
                                         <div class="valid-feedback">
                                             Yaxshi!
@@ -667,7 +664,224 @@
     validation(formStudent, "change")
     validation(formName, "input")
     validation(formPassword, "input")
+</script>
+<script type="text/javascript">
+    var url_path = '/admintion/leads/filter?';
+    var detailUrl="/admintion/groups/<int:id>/detail/"
+    var params = {
+        source__id:'',
+        status__id:'',
+        author__id:'',
+        created_at__gte:'',
+        created_at__lte:''
+    }
+    function generate_path(url,params){
+        parms = new URLSearchParams(params);
+        return url+parms
+    }
+    //students list 
+    function request_form(url,headers,func){
+        return fetch(url, headers)
+        .then(res=>res.json())
+        .then(res=>{
+            if(res.status==200){
+                func(res.data)
+            } else {
+                alert("Ma'lumotlar to'liq kiritilmadi");;
+            } 
+        }).catch(err=>{  
+        })
+    }
+    function get_request(url,func){
+        return (
+            request_form(url,{
+            method:'get',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        },func)
+        )
+    }
 
+    function createCheckbox(dflex,student_id,idx){
+        var wrapimg = document.createElement('div');
+        wrapimg.className='userDatatable__imgWrapper d-flex align-items-center';
+        var checkboxWrap = document.createElement('div');                                 
+        checkboxWrap.className='checkbox-group-wrapper';
+        var checkboxGroup = document.createElement('div');
+        checkboxGroup.className='checkbox-group d-flex';
+        var checkboxTheme = document.createElement('div');
+        checkboxTheme.className='checkbox-theme-default custom-checkbox checkbox-group__single d-flex';
+        var checkInput = document.createElement('input');
+        checkInput.className='checkbox studentCheckbox';
+        checkInput.type='checkbox';
+        checkInput.id=`check-grp-${student_id}`;
+        var label = document.createElement('label');
+        label.for = `check-grp-${student_id}`
+        var span = document.createElement('span');
+        span.className='checkbox-text userDatatable-title';
+        span.textContent=`#${++idx}`;
+        label.appendChild(span);
+        checkboxTheme.appendChild(checkInput)
+        checkboxTheme.appendChild(label)
+        checkboxGroup.appendChild(checkboxTheme)
+        checkboxWrap.appendChild(checkboxGroup);
+        wrapimg.appendChild(checkboxWrap);
+        return wrapimg;
+    }
 
+    function createAction(detailU,_id,title){
+        var ul = document.createElement('ul');
+        ul.className="orderDatatable_actions mb-0 d-flex flex-wrap";
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.className='view';
+        a.href=detailU
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
+        li.appendChild(a);
+        ul.appendChild(li);
+        var a = document.createElement('a');
+        var li = document.createElement('li');
+        a.className='edit';
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
+        li.appendChild(a);
+        ul.appendChild(li);
+        var a = document.createElement('a');
+        var li = document.createElement('li');
+        a.className='remove';
+        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
+        a.addEventListener('click',()=>setDelModal(_id,title))
+        li.appendChild(a);
+        ul.appendChild(li);
+        return ul;
+    }
+
+    function dataList(datas){
+        var tbody = document.querySelector('tbody');
+
+        while(tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+            }
+        datas.forEach((element,idx) => {
+            var tr = document.createElement('tr');
+            tr.id = `student-${element.student_ids}`
+            var columns = {{keys|safe}};
+            
+            for(var i=0;i<columns.length;i++){
+                if(columns[i]=='check'){
+                    var td = document.createElement('td');
+                    var dflex = document.createElement('dev');
+                    dflex.className='d-flex';
+                    dflex.appendChild(createCheckbox(dflex,element.id,idx));
+                    td.appendChild(dflex);
+                    tr.appendChild(td);
+                }
+                else if(columns[i] == 'action'){
+                    var td = document.createElement('td');
+                    td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
+                    tr.appendChild(td);  
+                }
+                else if(columns[i] == 'status'){
+                    var td = document.createElement('td');
+                    if(element.status){
+                        td.innerHTML = `
+                        <div class="userDatatable-content d-inline-block">
+                            <span
+                                class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
+                        </div>
+                        `
+                    }
+                    else{
+                        td.innerHTML = `
+                        <div class="userDatatable-content d-inline-block">
+                            <span
+                                class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
+                        </div>
+                        `
+                    }
+                    tr.appendChild(td); 
+                }
+                else {
+                    
+                    var td = document.createElement('td');
+                    var dcontent = document.createElement('dev');
+                    // td.style.display='block'
+                    dcontent.className='userDatatable-content'
+                    td.textContent=element[columns[i]];
+                    // td.appendChild(dcontent);
+                    tr.appendChild(td);
+                }
+            }
+            tbody.appendChild(tr);
+            var dvTd = document.createElement('div');
+            dvTd.className='userDatatable-content';
+        });
+    }
+    function dropdownChanged (e,name){
+        var selected = e.target.value;
+        if (selected != 0){
+            params[name]=e.target.value
+        } else {
+            params[name]=''
+        }
+        get_request(generate_path(url_path,params),dataList)
+
+}
+var selectData = {
+        course:'',
+        group:''
+    }
+    function selectFunct(datas){
+        if(selectData['course']!=''){
+            var elmn = document.querySelector('#validationServer03');
+            var elmnstudent = document.querySelector('#validationServer05');
+            var option = document.createElement('option');
+            option.text="Guruhni tanlang";
+            option.selected=true;
+            option.disabled=false;
+            elmn.innerHTML="";
+            elmnstudent.innerHTML=""
+            
+            elmn.appendChild(option);
+            option = document.createElement('option');
+            option.text="O'quvchi tanlang";
+            option.selected=true;
+            option.disabled=false;
+            elmnstudent.appendChild(option)
+            datas.groups.forEach(item=>{
+                var option = document.createElement('option');
+                option.value=item.id
+                option.text=item.title
+                elmn.appendChild(option);
+            })
+        }
+        if(selectData['group']!=''){
+            var elmn = document.querySelector('#validationServer05');
+            var option = document.createElement('option');
+            option.text="O'quvchi tanlang";
+            option.selected=true;
+            option.disabled=false;
+            elmn.innerHTML="";
+            elmn.appendChild(option);
+            datas.students.forEach(item=>{
+                var option = document.createElement('option');
+                option.value=item.id
+                option.text=item.title
+                elmn.appendChild(option);
+            })
+        }
+        
+    }
+    function selectStudent(event){
+        if(event.target.name=='course'){
+            selectData['course'] = event.target.value;
+            selectData['group']='';
+        }
+        else if(event.target.name=='group'){
+            selectData['group']=event.target.value;
+            selectData['course']='';
+        }
+        get_request(generate_path('/admintion/parent/data?',selectData),selectFunct)
+    }
 </script>
 {% endblock %}

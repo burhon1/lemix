@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from admintion.views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms,reports, educenters, settings, dashboard
+from admintion.views import employes,rooms,courses,teachers,groups,students,forms,leads,tasks,sms,reports, educenters, settings, dashboard,parents
 app_name = 'admintion'
 
 urlpatterns = [
@@ -62,7 +62,7 @@ urlpatterns = [
     path('sms/send/group/', sms.send_sms_to_group, name='send_sms_to_group'),
     path('sms/send/teacher/', sms.send_sms_to_teacher, name='send_sms_to_teacher'),
     path('sms/send/parent/', sms.send_sms_to_parent, name='send_sms_to_parent'),
-        
+    path('parent/data/', parents.get_data_view, name='parents-get-data'),
     path('reports/', reports.reports_view, name='reports'),
     path('educenters/', educenters.educenters_view, name='edu-centers'),
     path('educenters/<int:pk>/delete/', educenters.educenter_delete_view, name='edu-centers-delete'),

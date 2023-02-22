@@ -305,7 +305,6 @@ Lidlar Ro'yxati- Lemix
                                 </table>
                             </div>
                         </div>
-
                         <!-- <div class="d-flex justify-content-sm-end justify-content-start pt-25">
                             <nav class="atbd-page ">
                                 <ul class="atbd-pagination d-flex">
@@ -667,273 +666,6 @@ Lidlar Ro'yxati- Lemix
     </script>
     <script>
 
-        // function reload() {
-        //     window.location.reload()
-        // }
-
-        // function createTasks(user, lead) {
-        //     console.log("create Tasks")
-
-        //     var url = `/education/task/add/`;
-
-        //     var formData = new FormData();
-        //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-
-        //     var taskSelected = document.querySelector('.tasksID');
-        //     if (taskSelected.value != 0) {
-        //         formData.append('task_type', taskSelected.value);
-        //     }
-        //     var responsibles = document.querySelector('#select-tag');
-        //     for (var i = 0; i < responsibles.selectedOptions.length; i++) {
-        //         formData.append('responsibles', responsibles.selectedOptions[i].value);
-        //     }
-
-        //     var deadline = document.querySelector('#deadline');
-        //     if (deadline.value != undefined || deadline.value != null) {
-        //         formData.append('deadline', deadline.value);
-        //     }
-        //     var comment = document.querySelector('#id_comment');
-        //     formData.append('comment', comment.value);
-
-        //     formData.append('user_status', 1);
-        //     formData.append('whom', user);
-        //     formData.append('leads', lead)
-        //     if (deadline.value && responsibles.selectedOptions.length && taskSelected.value) {
-        //         fetch(url, {
-        //             method: 'post',
-        //             headers: {
-        //                 'X-CSRFToken': '{{ csrf_token }}',
-        //             },
-        //             body: formData,
-        //         })
-        //             .then(res => {
-        //                 if (res.status == 201) {
-        //                     reload()
-        //                 }
-        //             })
-        //             .catch(err => {
-        //                 console.log(err);
-        //             })
-        //     } else {
-        //         reload()
-        //     }
-
-        // }
-        // var group = document.getElementsByClassName('demoID')[0];
-        // group.addEventListener('change', (event) => {
-        //     var url = `/admintion/group/${event.target.value}/data/`
-        //     fetch(url, {
-        //         method: 'get',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //         }
-        //     })
-        //         .then(res => res.json())
-        //         .then(res => {
-        //             var group_days = document.getElementById('select-tag-group-days');
-        //             group_days.options.length = 0;
-        //             for (var i = 0; i < res.group.dates.length; i++) {
-        //                 var option = new Option(`${res.group.dates[i].date}| ${res.group.dates[i].day}`, `${res.group.dates[i].date}`);
-        //                 group_days.add(option);
-        //             }
-        //         })
-        //         .catch(err => {
-        //             alert(err);
-        //         })
-        // })
-
-        // function createDemo(lead, user) {
-        //     var url = `/admintion/leads/add-demo/`;
-        //     var formData = new FormData();
-        //     var dates = document.getElementById('select-tag-group-days').selectedOptions;
-
-        //     formData.append('form-INITIAL_FORMS', 0);
-        //     formData.append('form-TOTAL_FORMS', dates.length);
-
-
-        //     for (var i = 0; i < dates.length; i++) {
-        //         if (document.querySelectorAll(".demoID")[0].value && document.querySelectorAll(".demoID")[0].value != 0) {
-        //             formData.append(`form-${i}-group`, document.querySelectorAll(".demoID")[0].value);
-        //         }
-        //         formData.append(`form-${i}-lead`, lead);
-        //         formData.append(`form-${i}-date`, dates[i].value)
-        //     }
-
-        //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-        //     fetch(url, {
-        //         method: 'post',
-        //         headers: {
-        //             'X-CSRFToken': '{{ csrf_token }}'
-        //         },
-        //         body: formData
-        //     })
-        //         .then(res => res.json())
-        //         .then(res => {
-        //             createTasks(user, lead);
-
-        //         })
-        //         .catch(err => {
-        //             console.log(err);
-        //         })
-        // }
-
-
-        // function createLead(id) {
-        //     var url = `/admintion/leads/create/`;
-        //     var formData = new FormData();
-        //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-        //     formData.append('user', id);
-
-
-        //     source = document.querySelector('#manba');
-        //     console.log("source: ", source.value)
-        //     if (source.value && source.value != 0) {
-        //         formData.append('source', source.value);
-        //     }
-
-
-        //     status = document.querySelector('#hol');
-        //     console.log("status: ", status, document.querySelector('#hol').value)
-        //     if (document.querySelector('#hol').value && document.querySelector('#hol').value != "0") {
-        //         formData.append('status', document.querySelector('#hol').value);
-        //     }
-
-        //     comment = document.querySelector('#description');
-        //     if (comment.value && comment.value != 0) {
-        //         formData.append('comment', comment.value);
-        //     }
-
-        //     parents = document.querySelector('#parents');
-        //     if (parents.value && parents.value != 0) {
-        //         formData.append('parents', parents.value);
-        //     }
-
-        //     p_phone = document.querySelector('#pparents');
-        //     if (p_phone.value && p_phone.value != 0) {
-        //         formData.append('p_phone', p_phone.value);
-        //     }
-
-        //     telegram = document.querySelector('#telegram_num');
-        //     if (telegram.value && telegram.value != 0) {
-        //         formData.append('telegram', telegram.value);
-        //     }
-
-
-
-        //     passport = document.querySelector('#id_passport');
-        //     if (passport.value && passport.value != 0) {
-        //         formData.append('passport', passport.value);
-        //     }
-
-        //     file = document.querySelector('#id_file');
-        //     if (file && file.files[0]) {
-        //         formData.append('file', file.files[0], file.files[0].name);
-        //     }
-
-
-
-        //     days = document.querySelector('#select-tag-days');
-        //     if (days.selectedOptions) {
-        //         var days_arr = []
-        //         for (var i = 0; i < days.selectedOptions.length; i++) {
-        //             days_arr.push(days.selectedOptions[i].value);
-        //         }
-        //         for (var i = 0; i < days_arr.length; i++) {
-        //             formData.append('days', days_arr[i]);
-        //         }
-        //         console.log(formData);
-        //     }
-
-        //     course = document.querySelectorAll('.course-select')[0];
-        //     if (course.value != "0") {
-        //         formData.append('course', document.querySelectorAll('.course-select')[0].value)
-        //     }
-
-        //     fetch(url, {
-        //         method: "post",
-        //         headers: {
-        //             'X-CSRFToken': '{{ csrf_token }}',
-        //         },
-        //         body: formData,
-        //     })
-        //         .then(res => res.json())
-        //         .then(res => {
-        //             if (res) {
-        //                 createDemo(res.id, id);
-        //             } else {
-        //                 alert("Ma'lumotlar to'liq kiritilmadi");;
-        //             }
-        //         })
-        //         .catch(err => {
-        //             alert(err);
-        //         })
-
-
-
-        // }
-
-        // function createUser() {
-        //     var url = `/user/create/`;
-        //     var formData = new FormData();
-        //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-        //     first_name = document.querySelector("#fio");
-        //     formData.append('first_name', fio.value.split(' ')[1]);
-        //     formData.append('last_name', fio.value.split(' ')[0]);
-       
-        //     phone = document.querySelector('#tel');
-            
-        //     formData.append('phone', phone.value);
-        //     formData.append('password', phone.value);
-        //     address = document.querySelector('#id_manzil');
-        //     if (address) {
-        //         formData.append('location', address.value);
-        //     }
-        //     email = document.querySelector('#id_email');
-        //     if (email) {
-        //         formData.append('email', email.value);
-        //     }
-        //     birthday = document.querySelector('#id_birthday');
-        //     if (birthday) {
-        //         formData.append('birthday', birthday.value);
-        //     }
-
-        //     var radiov1 = document.querySelector("#radio-vl1");
-        //     var radiov2 = document.querySelector("#radio-vl2");
-        //     if (radiov1) {
-        //         if(radiov1.checked == true){
-        //             formData.append('gender', '1');
-        //         }
-        //     }
-        //     else if (radiov2) {
-        //         if(radiov1.checked == true){
-        //             formData.append('gender', '2');
-        //         }
-                
-        //     }
-        //     fetch(url, {
-        //         method: "post",
-        //         headers: {
-        //             'X-CSRFToken': '{{ csrf_token }}',
-        //         },
-        //         body: formData,
-        //     })
-        //         .then(res => res.json())
-        //         .then(res => {
-        //             if (res) {
-        //                 createLead(res.id);
-        //             } else {
-        //                 alert("Ma'lumotlar to'liq kiritilmadi");;
-        //             }
-        //         })
-        //         .catch(err => {
-        //             alert(err);
-        //         })
-
-        // }
-
-        // function save() {
-        //     createUser();
-        // }
 
 
         function changeLeadStatus(id,) {
@@ -960,86 +692,6 @@ Lidlar Ro'yxati- Lemix
             console.log(btn);
         }
 
-        // var cancelBtn = document.getElementById('cancelSMS');
-        // cancelBtn.addEventListener('click', () => {
-        //     var input = document.getElementById('id_message');
-        //     input.value = '';
-        // })
-
-        // var sendSMS = document.getElementById('sendSMS');
-        // sendSMS.addEventListener('click', () => {
-        //     var formData = new FormData();
-        //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-        //     var input = document.getElementById('id_message');
-        //     formData.append('message', input.value);
-
-        //     var checkboxes = document.getElementsByClassName('leadCheckBox');
-        //     var leads = []
-        //     for (var i = 0; i < checkboxes.length; i++) {
-        //         if (checkboxes[i].checked == true) {
-        //             formData.append('leads', checkboxes[i].id.split('-')[2]);
-        //         }
-        //     }
-
-        //     var url = `{% url 'admintion:send_sms_to_lead' %}`
-        //     fetch(url, {
-        //         method: 'post',
-        //         headers: {
-        //             'X-CSRFToken': '{{ csrf_token }}'
-        //         },
-        //         body: formData,
-        //     })
-        //         .then(res => {
-        //             var status = res.status
-        //             return res;
-        //         })
-        //         .then(res => res.json())
-        //         .then(res => {
-        //             if (status == 200) {
-        //                 alert("Xabar Lidlarga yuborildi.");
-        //             } else {
-        //                 alert("Ma'lumotlar to'liq kiritilmadi");;
-        //             }
-        //         })
-        // })
-
-        // function checkedLeads() {
-        //     var checkboxes = document.getElementsByClassName('leadCheckBox');
-        //     var leads = []
-        //     for (var i = 0; i < checkboxes.length; i++) {
-        //         if (checkboxes[i].checked == true) {
-        //             leads.push(checkboxes[i].id.split('-')[2]);
-        //         }
-        //     }
-        //     var formData = new FormData();
-        //     formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-        //     for (var i = 0; i < leads.length; i++) {
-        //         formData.append('leads', leads[i]);
-        //     }
-        //     // var url = "{% url 'admintion:check-sms-availability' %}";
-        //     fetch("{% url 'admintion:check-sms-availability' %}", {
-        //         method: 'post',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'X-CSRFToken': '{{ csrf_token }}'
-        //         },
-        //         body: formData
-        //     })
-        //         .then(res => res.json())
-        //         .then(res => {
-        //             var div = document.getElementsByClassName('sms-status-message')[0];
-        //             //div.classList.add('d-flex m-2 p-2')
-        //             div.innerHTML = `<p class="mb-3">Sms yuboriladigan foydalanuvchilar soni: ${res.users}<br>
-        //                      Sizda jami ${res.sms_limit} ta miqdorida bonus sifatidagi smslar mavjud. Bu limit tugagach,
-        //                     sizdan sms integratsiya qilingan email va parol so'raladi.  </p>             
-        //     `
-        //         })
-        //         .catch(err => {
-        //             console.log(err);
-        //         })
-        // }
-
-        
         var formName = document.querySelector(".form-name");
         var formPhone = document.querySelector(".form-phone");
         var formDate = document.querySelector(".form-birthdate");
@@ -1057,26 +709,7 @@ Lidlar Ro'yxati- Lemix
         if(formDate){
             validation(formName,"input")
         }
-        // validation(formName,"input")
-        // alert(92)
-        // validation(formDate,"input")
-        // alert(93)
-        // validation(formGender,"change")
-
-        
-        // formPhone.addEventListener("input",(evt)=>{
-        //     if(evt.target.value.length<=4){
-        //         evt.target.value = "+998"
-        //     } 
-        //     if(evt.target.value.length<=9){
-        //         var value = "+" + evt.target.value.match(/\d/g).join("")
-        //         evt.target.value = value
-        //     }
-        //     if(evt.target.value.length==12){
-        //         validation(formPhone,"input")
-        //     }
-            
-        // })
+     
         
         var form = document.querySelector('.view-form');
         function handleAddItem(_id, names, labelName, typs, plcs, btn, isActive) {
@@ -1251,50 +884,21 @@ Lidlar Ro'yxati- Lemix
                 group_add.innerHTML="";
                 return;
             }
-            
-            // fetch("{% url 'admintion:group-list' %}", {
-            //     method:'post',
-            //     headers:{
-            //         'Accept':'application/json',
-            //         'X-CSRFToken': '{{ csrf_token }}'
-            //     }
-            // })
-            // .then(res=>res.json())
-            // .then(res=>{
-            //    console.log(res)
-            //    var select = document.createElement('select');
-            //    var label = document.createElement('label')
-            //    select.name='group';
-            //    res.data.map((item)=>{
-            //         var option = document.createElement('option');
-            //         option.value = item.id;
-            //         option.textContent = item.title;
-            //         select.appendChild(option);
-            //    })
-            //    label.className='il-gray fs-14 fw-500 align-center';
-            //    select.className='form-control px-15';
-            //    wrap.appendChild(label);
-            //    wrap.appendChild(select)
-            //    group_add.appendChild(wrap)
-            // })
-            // .catch(err=>{
-            //     console.log(err)
-            // })
+    
             
             ["Guruh","Vaqti"].map((item)=>{
                 if(item === "Vaqti"){
                     var wrap = document.createElement('div');
                     wrap.className='form-group col-md-6';
                     var calendar = `
-                        <div class="atbd-date-picker">
-                            <div class="form-group mb-0 form-group-calender">
-                                <div class="position-relative">
-                                    <label for="datepickre2">${item}</label>
-                                    <input type="text" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
-                                    <a href="#"><span data-feather="calendar"></span></a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="atbd-date-picker">
+                                        <div class="form-group mb-0 form-group-calender">
+                                            <div class="position-relative">
+                                                <label for="datepickre2">${item}</label>
+                                                <input type="date" class="form-control form-control-default hasDatepicker" id="datepicker4" placeholder="January 20, 2018">
+                                            </div>
+                                        </div>
+                                    </div>
                     `
                     wrap.innerHTML = calendar;
                     group_add.appendChild(wrap)
@@ -1377,7 +981,7 @@ Lidlar Ro'yxati- Lemix
                             <div class="form-group mb-0 form-group-calender">
                                 <div class="position-relative">
                                     <label for="datepickre2">${item}</label>
-                                    <input type="text" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
+                                    <input type="date" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018" name="task_date">
                                     <a href="#"><span data-feather="calendar"></span></a>
                                 </div>
                             </div>
@@ -1392,12 +996,10 @@ Lidlar Ro'yxati- Lemix
                     var textarea = `
                             <label for="task-comment"
                                 class="il-gray fs-14 fw-500 align-center">${item}</label>
-                            <textarea name="comment" class="form-control" id="task-comment"
+                            <textarea name="task_comment" class="form-control" id="task-comment"
                                 rows="3"></textarea>
-                    `
+                    `;
                     wrap.innerHTML= textarea;
-
-
                     task_add.appendChild(wrap)
                 }
                 else{
@@ -1406,11 +1008,20 @@ Lidlar Ro'yxati- Lemix
                 var select = document.createElement('select');
                 var label = document.createElement('label');
                 select.name=item;
+                var vals_options=[];
+                if(item == "Ma'sul"){
+                    select.name="task_who"
+                    vals_options = {{task_responsibles|safe}};
+                }
+                else {
+                    select.name="task_type"
+                    vals_options = {{task_types|safe}};
+                }
 
-               ["option1","option2"].map((item)=>{
+                vals_options.map((item)=>{
                     var option = document.createElement('option');
                     option.value = item.id;
-                    option.textContent = item;
+                    option.textContent = item.title;
                     select.appendChild(option);
                })
                label.textContent=item;

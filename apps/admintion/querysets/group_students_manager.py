@@ -90,6 +90,19 @@ class GroupStudentsQueryset(QuerySet):
             attendace = ArrayAgg(F('student__ggroups__attendance'), distinct=True)
         ).values('id','student_ids','fio','phone','student_status','group_count','payment','attendace')    
 
+    def student_list(self,filters,educenter_ids):
+        return self.filter(group__educenter__id__in=educenter_ids)\
+            .filter(**filters)\
+            .annotate(
+                student_ids=F('student__id'),
+                fio=Concat(
+                    F('student__user__first_name'),
+                    Value(' '),
+                    F('student__user__last_name'),
+                    Value(' '),
+                    F('student__user__middle_name')
+                    )
+            )
 class GroupStudentManager(Manager):
     def get_query_set(self):
         return GroupStudentsQueryset(self.model)
@@ -105,6 +118,9 @@ class GroupStudentManager(Manager):
 
     def student_filter(self,filters,educenter_ids):
         return self.get_query_set().student_filter(filters,educenter_ids)     
+
+    def student_list(self,filters,educenter_ids):
+        return self.get_query_set().student_list(filters,educenter_ids)
 
     def pay_by_lesson(self):
         return self.get_query_set().pay_by_lesson() 

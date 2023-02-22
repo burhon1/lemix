@@ -16,7 +16,6 @@ class StudentQueryset(QuerySet):
         )
 
     def students(self,educenter_ids):
-        # print(self.get_info(educenter_ids))
         return self.get_info(educenter_ids).values(
             'id',
             'user__first_name',
@@ -105,7 +104,7 @@ class StudentQueryset(QuerySet):
             sgroups = ArrayAgg(F('ggroups__group__title')),
         ).filter(id=id).first()
 
-    def setudent_list(self):
+    def student_list(self):
         return self.get_info().filter(status=1).values('id','full_name') 
 
     def students_by_status(self):
@@ -119,8 +118,16 @@ class StudentQueryset(QuerySet):
             'nonactive_students':self.filter(status=2).count(),
             'removed_students':self.filter(status=3).count()
         }
-    def student_filter(self,filters):
-        return self.filter(**filters)    
+    def student_filter(self,filters,educenter_ids):
+        return self.filter(educenter__id__in=educenter_ids).filter(**filters)    
+
+    def studet_short_list(self,filters,educenter_ids):
+        return self.filter(educenter__id__in=educenter_ids)\
+            .filter(**filters)\
+            .annotate(
+                full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name'))
+            )\
+            .values('id','full_name')
 
 class StudentManager(Manager):
     def get_query_set(self):
@@ -139,10 +146,13 @@ class StudentManager(Manager):
         return self.get_query_set().student_detail(id)
 
     def studet_list(self):
-        return self.get_query_set().setudent_list()
+        return self.get_query_set().student_list()
 
-    def student_filter(self,filters):
-        return self.get_query_set().student_filter(filters)
+    def studet_short_list(self):
+        return self.get_query_set().studet_short_list()    
+
+    def student_filter(self,filters,educenter_ids):
+        return self.get_query_set().student_filter(filters,educenter_ids)
 
     def students_by_status(self):
         return self.get_query_set().students_by_status()

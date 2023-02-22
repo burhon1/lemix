@@ -105,6 +105,10 @@ class GroupQueryset(QuerySet):
             days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
         )
 
+    def group_filter_list(self,filters,educenter_ids):
+        return self.filter(educenter__id__in=educenter_ids) \
+                    .filter(**filters).values('id','title')
+
     def pay_by_lesson(self):
         return self.filter(pay_type=1).annotate(
             students=Subquery(
@@ -133,7 +137,10 @@ class GroupManager(Manager):
         return self.get_query_set().group_list(educenter_id)   
 
     def group_filter(self,filters,educenter_ids):
-        return self.get_query_set().group_filter(filters,educenter_ids)   
+        return self.get_query_set().group_filter(filters,educenter_ids) 
+
+    def group_filter_list(self,filters,educenter_ids):
+        return self.get_query_set().group_filter_list(filters,educenter_ids)
 
     def group(self,id,educenter_ids):
         return self.get_query_set().group(id,educenter_ids)  

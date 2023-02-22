@@ -43,6 +43,14 @@ class UserQueryset(QuerySet):
                 Substr(F('phone'),8,2)
                 )
         )
+
+    def get_user_list(self,filters,educenter_ids):
+        return self.filter(educenter__in=educenter_ids) \
+        .filter(**filters) \
+        .annotate(
+            title=Concat('first_name', Value(' '), 'last_name')
+        ).values('id','title')
+
     def users(self,id):
         return self.get_info().exclude(id=id) 
 
@@ -55,6 +63,9 @@ class UserManager(Manager):
     
     def users(self,id):
         return self.get_query_set().users(id)
+
+    def get_user_list(self,filters,educenter_ids):
+        return self.get_query_set().get_user_list(filters,educenter_ids)   
 
     def user(self,id):
         return self.get_query_set().user(id)    
