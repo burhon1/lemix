@@ -880,6 +880,7 @@ Lidlar Ro'yxati- Lemix
         function handleAddGroup(){
             var group_add = document.querySelector('.group_add');
             group_add.className='row w-100 group_add d-flex';
+            var group_list = {{groups|safe}}
             if(group_add.innerHTML){
                 group_add.innerHTML="";
                 return;
@@ -895,7 +896,7 @@ Lidlar Ro'yxati- Lemix
                                         <div class="form-group mb-0 form-group-calender">
                                             <div class="position-relative">
                                                 <label for="datepickre2">${item}</label>
-                                                <input type="date" class="form-control form-control-default hasDatepicker" id="datepicker4" placeholder="January 20, 2018">
+                                                <input type="date" name="group_date" class="form-control form-control-default hasDatepicker" id="datepicker4" placeholder="January 20, 2018">
                                             </div>
                                         </div>
                                     </div>
@@ -907,12 +908,12 @@ Lidlar Ro'yxati- Lemix
                 wrap.className='form-group col-md-6';
                 var select = document.createElement('select');
                 var label = document.createElement('label');
-                select.name=item;
+                select.name="group";
 
-               ["option1","option2"].map((item)=>{
+                group_list.map((item)=>{
                     var option = document.createElement('option');
                     option.value = item.id;
-                    option.textContent = item;
+                    option.textContent = item.title;
                     select.appendChild(option);
                })
                label.textContent=item;
@@ -928,43 +929,6 @@ Lidlar Ro'yxati- Lemix
         }
 
         function handleAddTask(){
-            // var wrap = document.createElement('div');
-            // var group_add = document.querySelector('.task_add');
-            // group_add.className='row w-100 task_add';
-            // wrap.className='form-group col-md-12';
-            // if(group_add.innerHTML){
-            //     group_add.innerHTML="";
-            //     return;
-            // }
-            // fetch("{% url 'admintion:group-list' %}", {
-            //     method:'post',
-            //     headers:{
-            //         'Accept':'application/json',
-            //         'X-CSRFToken': '{{ csrf_token }}'
-            //     }
-            // })
-            // .then(res=>res.json())
-            // .then(res=>{
-            //    console.log(res)
-            //    var select = document.createElement('select');
-            //    var label = document.createElement('label')
-            //    select.name='task';
-            //    res.data.map((item)=>{
-            //         var option = document.createElement('option');
-            //         option.value = item.id;
-            //         option.textContent = item.title;
-            //         select.appendChild(option);
-            //    })
-            //    label.className='il-gray fs-14 fw-500 align-center';
-            //    select.className='form-control px-15';
-            //    wrap.appendChild(label);
-            //    wrap.appendChild(select)
-            //    group_add.appendChild(wrap)
-            // })
-            // .catch(err=>{
-            //     console.log(err)
-            // })
-
             var task_add = document.querySelector('.task_add');
             task_add.className='row w-100 task_add d-flex';
             if(task_add.innerHTML){

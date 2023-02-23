@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q,F
 from admintion.forms.leads import LeadForm, DemoForm, DemoFormset
 from admintion.utils import convert_to_json
-from admintion.models import Course, FormLead, Group as GroupModel, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources
+from admintion.models import Course, FormLead, Group as GroupModel, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources,LeadDemo,UserTaskStatus
 from admintion.selectors import get_form_leads, get_demos, get_lead_tasks, get_next_lesson_date, select_groups_by_limit
 from admintion.data.chooses import GET_GROUPS_DAYS, STUDENT_SOURCES
 from admintion.utils import get_list_of_filter
@@ -41,6 +41,8 @@ def leads_view(request):
             task_comment = post.get('task_comment', None)
             task_who = post.get('task_who', None)
             task_type = post.get('task_type', None)
+            group_date = post.get('group_date', None)
+            group = post.get('group', None)
             status,obj = user_add(groups,request,True).values()
             if status==200:
                 source = Sources.objects.filter(id=source).first()
@@ -67,21 +69,34 @@ def leads_view(request):
                 if task_date and task_who and task_type:
                     whom=CustomUser.objects.get(pk=task_who)
                     task_type=TaskTypes.objects.get(id=task_type)
+                    user_task = UserTaskStatus.objects.filter(whom="Lead")
                     task = Tasks(
                         comment=task_comment,
                         deadline=task_date,
                         author=request.user,
-                        task_type=task_type
+                        task_type=task_type,
+                        educenter=educenter.first(),
+                        user_status=user_task
                     )
+                    
                     task.save()
-                    task.whom.add(whom)
+                    if group_date and group:
+                        group =GroupModel.objects.filter(id=group).first()
+                        lead_demo = LeadDemo(
+                            lead=form_lead,
+                            group=group,
+                            date=group_date
+                        )
+                        lead_demo.save()
+                        task.leads.add(form_lead)
+                    task.responsibles.add(whom)
                 return redirect(reverse('admintion:lead-list'))
         return redirect(reverse('admintion:lead-list')+f"?error=Filyalni tanlang")        
     educenter_ids=educenter.values_list('id',flat=True)
     context['objs'] = FormLead.leads.leads(educenter_ids)
     context['sources'] = Sources.objects.all() 
     context['lead_statuses'] = LeadStatus.objects.filter().values('id', 'status')
-    context['groups'] = GroupModel.groups.group_list(educenter_ids)
+    context['groups'] = list(GroupModel.groups.group_list(educenter_ids))
     context['task_types'] = list(TaskTypes.objects.annotate(title=F('task_type')).values('id', 'title'))
     context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
     context['keys'] = ['check',
@@ -93,7 +108,7 @@ def leads_view(request):
             'author_name',
             'via_form__title',
             'created_at','action']
-    print(context['task_types'])
+    print(context['groups'])
     return render(request,"admintion/lidlar_royxati.html", context)
 
 def leads_filter_view(request):
