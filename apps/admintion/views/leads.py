@@ -69,7 +69,7 @@ def leads_view(request):
                 if task_date and task_who and task_type:
                     whom=CustomUser.objects.get(pk=task_who)
                     task_type=TaskTypes.objects.get(id=task_type)
-                    user_task = UserTaskStatus.objects.filter(whom="Lead")
+                    user_task = UserTaskStatus.objects.filter(whom="Lead").first()
                     task = Tasks(
                         comment=task_comment,
                         deadline=task_date,
