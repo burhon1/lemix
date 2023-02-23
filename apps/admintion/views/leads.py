@@ -26,7 +26,7 @@ def leads_view(request):
         if educenter.count() == 1:
             p_phone=post.get("phone",False)
             source=post.get("manba",False)
-            status=post.get("hol",False)
+            statu_leads=post.get("hol",False)
             comment=post.get("description",False)
             parent=post.get("parent_name",False)
             parent_phone=post.get("parent_phone",False)
@@ -46,7 +46,7 @@ def leads_view(request):
             status,obj = user_add(groups,request,True).values()
             if status==200:
                 source = Sources.objects.filter(id=source).first()
-                status = LeadStatus.objects.filter(id=status).first()
+                status = LeadStatus.objects.filter(id=statu_leads).first()
                 form_lead = FormLead(
                     user=obj,
                     source=source,
@@ -108,7 +108,6 @@ def leads_view(request):
             'author_name',
             'via_form__title',
             'created_at','action']
-    print(context['groups'])
     return render(request,"admintion/lidlar_royxati.html", context)
 
 def leads_filter_view(request):
