@@ -53,7 +53,7 @@ class LeadQueryset(QuerySet):
             'author_name',
             'via_form__title',
             'created_at'
-        )
+        ).order_by('-id')
     
     def leads_filter(self,filter_keys,educenter_ids):
         return self.filter(educenter__id__in=educenter_ids)\
