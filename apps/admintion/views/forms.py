@@ -12,6 +12,7 @@ from admintion.services.qrcode import create_qrcode
 def forms_view(request):
     if request.method == 'POST':
         form = LeadFormClass(request.POST, request.FILES)
+        print(form.errors.items())
         if form.is_valid():
             obj = form.save(commit=False)
             # obj.ed

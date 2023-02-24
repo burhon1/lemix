@@ -88,7 +88,7 @@
                                                 <span style="display:inline;"
                                                     class="selling-badge order-bg-opacity-primary color-primary">{{ task.user_status.whom }}</span>
                                                     <div>{% if task.user_status.id == 1 %}
-                                                        {% for user in task.leads.all %}<a href="{% url 'admintion:lead-detail' user.id %}" style="color: black;"> 1{{user.user.full_name|default:'' }}2<br></a>{% endfor %}
+                                                        {% for user in task.leads.all %}<a href="{% url 'admintion:lead-detail' user.id %}" style="color: black;"> {{user.user.full_name|default:'' }}<br></a>{% endfor %}
                                                         {% elif task.user_status.id == 3 %}
                                                         {% for user in task.groups.all %}<a href="{% url 'admintion:group-detail' user.id %}" style="color: black;"> {{user.title }}<br></a>{% endfor %}
                                                         {% elif task.user_status.id == 2 %}
@@ -98,7 +98,7 @@
                                                         {% elif task.user_status.id == 8 %}
                                                         {% for user in task.parents.all %}<a href="#" style="color: black;"> {{user.title }}<br></a>{% endfor %}
                                                         {% elif task.user_status.id == 7 %}
-                                                        {% for user in task.courses.all %}<a href="{% url 'admintion:course-detail' user.id %}" style="color: black;"> 4{{user.title }}<br></a>{% endfor %}
+                                                        {% for user in task.courses.all %}<a href="{% url 'admintion:course-detail' user.id %}" style="color: black;"> {{user.title }}<br></a>{% endfor %}
                                                         
                                                         {% endif %}
                                                     </div>
