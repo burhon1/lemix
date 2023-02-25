@@ -89,10 +89,25 @@ class LeadFormRegisterForm(forms.Form):
 
     def __init__(self, form:LeadForms, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.fields['educenters'].queryset = form.educenters.all() 
-        self.fields['courses'].queryset = form.courses.all()
-        self.fields['sources'].queryset = form.sources.all()
+        # print(form.educenters.count())
+        # self.fields['educenters'].queryset=None 
+        # self.fields['courses'].queryset = None
+        # self.fields['sources'].queryset = None
+        if form.educenters.count()==0:
+            self.fields['educenters'].queryset = form.educenters.all() 
+        else:
+            self.fields['educenters']=self.fields['educenters'] = forms.CharField(max_length=9, widget=forms.TextInput(
+        attrs={'name':'educenters', "value":form.educenters.first().id,"hidden":True}))   
+        if form.courses.count()==0:
+            self.fields['courses'].queryset = form.courses.all()
+        else:
+            self.fields['courses'] = forms.CharField(max_length=9, widget=forms.TextInput(
+        attrs={'name':'educenters', "value":form.courses.first().id,"hidden":True}))       
+        if form.sources.count()==0: 
+            self.fields['sources'].queryset = form.sources.all()  
+        else:
+            self.fields['sources'] = forms.CharField(max_length=9, widget=forms.TextInput(
+        attrs={'name':'educenters', "value":form.sources.first().id,"hidden":True}))         
         self.form = form
         fields = form.formfields_set.all().order_by('order')
         for field in fields:
@@ -126,9 +141,9 @@ class LeadFormRegisterForm(forms.Form):
             self.cleaned_data['lead'].update({'file': self.cleaned_data['File']})
         if 'Passport' in self.fields.keys():
             self.cleaned_data['lead'].update({'passport': self.cleaned_data.get('Passport')})
-        if 'courses' in self.fields.keys():
-            self.cleaned_data['lead'].update({'course': self.cleaned_data.get('courses')})
-        self.cleaned_data['lead'].update({'source': self.cleaned_data['sources'] or self.fields['sources'].queryset.first()})
+        # if 'courses' in self.fields.keys():
+        #     self.cleaned_data['lead'].update({'course': self.cleaned_data.get('courses')})
+        # self.cleaned_data['lead'].update({'source': self.cleaned_data['sources'] or self.fields['sources'].queryset.first()})
         self.cleaned_data['lead'].update({'comment':''})
         user_fields = ['user', 'lead', 'phone_number', 'telegram', 'first_name', 'last_name', 'middle_name', 'birthday', 'sources',
                 'Ismi', 'Familiya', 'Otasining ismi', 'Tug\'ilgan kuni', 'Manzil', 'File', 'Passport'

@@ -313,7 +313,7 @@ align-items: center;
     </div>
 </div>
 
-<div class="modal-basic modal fade show" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
 
 
     <div class="modal-dialog modal-md" role="document">
@@ -339,7 +339,7 @@ align-items: center;
 </div>
 
 
-<div class="modal-basic modal fade show" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
 
 
     <div class="modal-dialog modal-md" role="document">
@@ -577,15 +577,13 @@ align-items: center;
         </div><!-- ends: .atbd-drawer__header -->
         <div class="atbd-drawer__body" style="position: relative;overflow-y: scroll;height: 85vh;">
             <div class="drawer-content row" >
-             
                 <div class="columns-2 col-lg-12 p-0  pl-md-0">
                     <div class="bookmark-page__list p-0">
                         <div class="bookmark-single p-0">
                             <div class="bookmark-card card p-0 " style="border: none;" >
-                              
                                 <div class="card-body p-0" >
                                     <div class="tab-content" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                        <div class="tab-pane active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                             <div class="p-3">
                                                 <div class="addinputinfo">
                                                     <div class="form-group mb-2" id="0">
@@ -1421,6 +1419,7 @@ align-items: center;
             formData.append('comment',document.getElementById('id_comment').value);
             
             var educenters = document.getElementById('id_educenters').value;
+        
             if(educenters==""){
                 educenters = document.getElementById('id_educenters').options;
                 for(let i=0; i<educenters.length; i++){
@@ -1430,8 +1429,9 @@ align-items: center;
             } else{
                 formData.append('educenters',educenters);
             }
-
+            
             var sources = document.getElementById('id_sources').value;
+            
             if(sources==""){
                 sources = document.getElementById('id_sources').options;
                 for(let i=0; i<sources.length; i++){
@@ -1443,9 +1443,9 @@ align-items: center;
             }
 
             var courses = document.getElementById('id_courses').value;
+
             if(courses==""){
                 courses = document.getElementById('id_courses').options;
-                console.log("Courses: ", courses);
                 for(let i=0; i<courses.length; i++){
                     if(courses[i].value!=""){
                         formData.append('courses',courses[i].value);

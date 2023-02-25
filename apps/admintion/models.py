@@ -262,6 +262,9 @@ class LeadForms(models.Model):
     seen    = models.PositiveIntegerField(default=0)
     qrcode  = models.ImageField(upload_to='formleads', null=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 class Sources(models.Model):
     title = models.CharField(max_length=150, unique=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)

@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib import messages 
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from admintion.models import LeadForms,FormUniversalFields,FormFields,EduCenters,Contacts, LeadStatus
+from admintion.models import LeadForms,Course,Sources,FormUniversalFields,FormFields,EduCenters,Contacts, LeadStatus
 from admintion.forms.leads import LeadFormClass,FieldsFormSet,ContactsFormSet,LeadFormRegisterForm
 from admintion.services.qrcode import create_qrcode
 
@@ -12,11 +12,19 @@ from admintion.services.qrcode import create_qrcode
 def forms_view(request):
     if request.method == 'POST':
         form = LeadFormClass(request.POST, request.FILES)
-        print(form.errors.items())
         if form.is_valid():
             obj = form.save(commit=False)
-            # obj.ed
+            educenter = request.POST.get('educenters',None)
+            sources = request.POST.get('sources',None)
+            courses = request.POST.get('courses',None)
             obj.save()
+            if educenter is not None:
+                obj.educenters.add(EduCenters.objects.filter(id=educenter).first())
+            if sources is not None:
+                obj.sources.add(Sources.objects.filter(id=sources).first()) 
+            if courses is not None:
+                obj.courses.add(Course.objects.filter(id=courses).first())        
+            
             data = request.build_absolute_uri(reverse('lead_registration_view', args=[obj.id]))+'?title='+obj.title
             create_qrcode(data, obj)
             return JsonResponse({'id': obj.id}, status=201)
@@ -32,11 +40,8 @@ def forms_view(request):
 @login_required
 def form_delete_view(request, pk):
     instance = get_object_or_404(LeadForms, pk=pk)
-    if len(instance.sources.all()):
-        instance.delete()
-        message = "O'chirildi"
-    else:
-        message = f"Bu forma manbaaga bog'langan. Uni o'chirish uchun manbani o'chirishingiz kerak."
+    instance.delete()
+    message = "O'chirildi"
     return JsonResponse({'message':message}, status=204)
 
 @login_required
@@ -86,6 +91,7 @@ def form_update_view(request, pk):
         context['obj'].update({'sources':""})
     else:
         context['obj'].update({'sources':instance.sources.first().id})
+
     
     return JsonResponse(context, status=200)
 
@@ -177,7 +183,8 @@ def lead_registration_view(request, pk):
     leadform.seen += 1
     leadform.save(update_fields=['seen'])
     form = LeadFormRegisterForm(form=leadform)
-    context = {'pk':pk, 'title':leadform.title, 'main_edu': (leadform.educenters.filter(parent=None) or EduCenters.objects.filter(parent=None)).first(), 'educenters':leadform.educenters.all(), 'form':form}
+    print(leadform.educenters)
+    context = {'pk':pk, 'title':leadform.title, 'main_edu': '', 'educenters':leadform.educenters, 'form':form}
     context['contacts'] = leadform.contacts_set.all()
     if request.method == "POST":
         form = LeadFormRegisterForm(leadform, request.POST, request.FILES)
@@ -195,7 +202,7 @@ def lead_registration_view(request, pk):
             messages.add_message(request, messages.WARNING, 'Bu raqam oldin ro\'yxatdan o\'tgan.')
             return redirect(reverse('lead_registration_view', args=[pk])+f"?title={request.GET.get('title', '')}")
     else:
-        context['edu_count'] = len(context['educenters'])     
+        context['edu_count'] =  0    
     return render(request, "admintion/lead_form.html", context=context)
 
 
