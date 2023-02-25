@@ -93,17 +93,17 @@ class LeadFormRegisterForm(forms.Form):
         # self.fields['educenters'].queryset=None 
         # self.fields['courses'].queryset = None
         # self.fields['sources'].queryset = None
-        if form.educenters.count()==0:
+        if form.educenters.count()!=1:
             self.fields['educenters'].queryset = form.educenters.all() 
         else:
             self.fields['educenters']=self.fields['educenters'] = forms.CharField(max_length=9, widget=forms.TextInput(
         attrs={'name':'educenters', "value":form.educenters.first().id,"hidden":True}))   
-        if form.courses.count()==0:
+        if form.courses.count()!=1:
             self.fields['courses'].queryset = form.courses.all()
         else:
             self.fields['courses'] = forms.CharField(max_length=9, widget=forms.TextInput(
         attrs={'name':'educenters', "value":form.courses.first().id,"hidden":True}))       
-        if form.sources.count()==0: 
+        if form.sources.count()!=1: 
             self.fields['sources'].queryset = form.sources.all()  
         else:
             self.fields['sources'] = forms.CharField(max_length=9, widget=forms.TextInput(
