@@ -115,11 +115,11 @@ Lidlar Ro'yxati- Lemix
                                     </div>
                                     <div class="col-3">
                                         <div class="atbd-select ">
-                                            <select name="select-teacher" id="select-teacher" class="form-control">
-                                                <option value="" selected>Xodimlar</option name="author__id" onchange="dropdownChanged(event,'author__id')">
-                                                <option value="01">Option 1</option>
-                                                <option value="02">Option 2</option>
-                                                <option value="05">Option 3</option>
+                                            <select name="select-teacher" id="select-teacher" class="form-control" name="author__id" onchange="dropdownChanged(event,'author__id')">
+                                                <option value="0" selected>Xodimlar</option>
+                                                {% for task_responsible in task_responsibles %}
+                                                <option value="{{task_responsible.id}}">{{task_responsible.title}}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -154,9 +154,6 @@ Lidlar Ro'yxati- Lemix
                                                         </label>
                                                     </div>
                                                 </div>
-                                            </th>
-                                            <th>
-                                                <span class="userDatatable-title">Arxivlangan</span>
                                             </th>
                                             <!-- <th>
                                                 <span class="userDatatable-title">Manbasi</span>
@@ -219,20 +216,6 @@ Lidlar Ro'yxati- Lemix
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="d-flex">
-
-                                                    <div class="userDatatable-inline-title">
-                                                        <a href="#" class="text-dark fw-500 drawer-trigger"
-                                                            data-drawer="profile">
-                                                            <h6>{{ lead.user__first_name }} {{lead.user__last_name }} (Admin)</h6>
-                                                        </a>
-                                                        <p class="d-block mb-0">
-                                                            {{ lead.modified_at|date:'d.m.y H:i'}}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
                                             <!-- <td>
                                                 <div class="userDatatable-content">
                                                    Instagram
@@ -241,7 +224,7 @@ Lidlar Ro'yxati- Lemix
                                             <td>
                                                 <div class="userDatatable-content d-inline-block">
                                                     <span
-                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">{{lead.source__title }}</span>
+                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">{{lead.status__status }}</span>
                                                 </div>
 
                                             </td>
@@ -260,7 +243,17 @@ Lidlar Ro'yxati- Lemix
 
                                                     <div class="userDatatable-inline-title">
                                                         <a href="#" class="text-dark fw-500">
-                                                            <h6>{{ lead.author_name }}</h6>
+                                                            <h6>
+                                                                {% if lead.via_form__title %}
+                                                                <small>
+                                                                    <span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">
+                                                                        Havola orqali
+                                                                    </span>
+                                                                </small>{{ lead.via_form__title }}
+                                                                {% else %}
+                                                                {{lead.author_name}}
+                                                                {% endif %}
+                                                            </h6>
                                                         </a>
                                                         <p class="d-block mb-0">
                                                             {{ lead.created_at|date:'d/m/Y -H:i' }}
@@ -429,8 +422,6 @@ Lidlar Ro'yxati- Lemix
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog"
@@ -440,9 +431,6 @@ Lidlar Ro'yxati- Lemix
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content modal-bg-white ">
                     <div class="modal-header">
-
-
-
                         <h6 class="modal-title">Telefon qilish</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span data-feather="x"></span></button>
@@ -718,53 +706,87 @@ Lidlar Ro'yxati- Lemix
         datas.forEach((element,idx) => {
             var tr = document.createElement('tr');
             tr.id = `student-${element.student_ids}`
-            var columns = {{keys|safe}};
+            tr.innerHTML = `
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                        <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                    <input class="checkbox leadCheckBox" type="checkbox" id="check-grp-${element.id}">
+                                                                    <label for="check-grp-${element.id}"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="/admintion/leads/${element.id}/" class="text-dark fw-500">
+                                                            <h6>${element.full_name}</h6>
+                                                        </a>
+                                                        <p class="d-block mb-0">
+                                                            ${element.phone_number}  
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- <td>
+                                                <div class="userDatatable-content">
+                                                   ${element.source__title}
+                                                </div>
+                                            </td> -->
+                                            <td>
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">None</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    ${element.comment}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="#" class="text-dark fw-500">
+                                                            <h6>
+                                                                ${element.via_form__title!==null?'<small><span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>'+element.via_form__title:element.author_name}
+                                                                
+                                                            </h6>
+                                                        </a>
+                                                        <p class="d-block mb-0">
+                                                            ${element.formatted_date}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+
+                                                    <li>
+                                                        <a href="#" class="view drawer-trigger" data-drawer="account">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="edit" data-toggle="modal" data-target="#modal-basic2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="view" onclick="changeModal(${element.id},'activate','activateBtn')" data-toggle="modal" data-target="#modal-basic1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-ccw"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg></a>
+                                                    </li>
+                                                    <!-- <li>
+                                                        <a href="#" class="edit">
+                                                            <span data-feather="edit"></span></a>
+                                                    </li> -->
+                                                    <li>
+                                                        <a href="#" class="remove" onclick="changeModal(${element.id},'delete','deleteBtn')" data-toggle="modal" data-target="#modal-basic">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+            `
             
-            for(var i=0;i<columns.length;i++){
-                if(columns[i]=='check'){
-                    var td = document.createElement('td');
-                    var dflex = document.createElement('dev');
-                    dflex.className='d-flex';
-                    dflex.appendChild(createCheckbox(dflex,element.id,idx));
-                    td.appendChild(dflex);
-                    tr.appendChild(td);
-                }
-                else if(columns[i] == 'action'){
-                    var td = document.createElement('td');
-                    td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
-                    tr.appendChild(td);  
-                }
-                else if(columns[i] == 'status'){
-                    var td = document.createElement('td');
-                    if(element.status){
-                        td.innerHTML = `
-                        <div class="userDatatable-content d-inline-block">
-                            <span
-                                class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
-                        </div>
-                        `
-                    }
-                    else{
-                        td.innerHTML = `
-                        <div class="userDatatable-content d-inline-block">
-                            <span
-                                class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
-                        </div>
-                        `
-                    }
-                    tr.appendChild(td); 
-                }
-                else {
-                    
-                    var td = document.createElement('td');
-                    var dcontent = document.createElement('dev');
-                    // td.style.display='block'
-                    dcontent.className='userDatatable-content'
-                    td.textContent=element[columns[i]];
-                    // td.appendChild(dcontent);
-                    tr.appendChild(td);
-                }
-            }
             tbody.appendChild(tr);
             var dvTd = document.createElement('div');
             dvTd.className='userDatatable-content';

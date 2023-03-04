@@ -12,7 +12,6 @@ from django.contrib import messages
 def user_create_view(request):
     print(24)
     form = UserForm(request.POST or None)
-    print(form)
     if request.method == 'POST':
         if form.is_valid():
             user = form.save()

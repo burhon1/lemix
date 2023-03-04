@@ -57,10 +57,10 @@
                                                 <span data-feather="settings"></span>Qurilmalar</a>
                                             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
                                                 <span data-feather="key"></span>Parolni o’zgartirish</a>
-                                        
+                                                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-lead" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                                    <span data-feather="key"></span>Lead sozlamalari</a>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- Profile Acoount End -->
@@ -333,6 +333,104 @@
                                         </div>
                                         <!-- Edit Profile End -->
                                     </div>
+                                    <div class="tab-pane fade" id="v-pills-lead" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                        <!-- Edit Profile -->
+                                        <div class="card">
+                                            <div class="card-header  px-sm-25 px-3">
+                                                <div class="edit-profile__title">
+                                                    <h6>lead sozlamalar o'zgartirish</h6>
+                                                    <!-- <span class="fs-13 color-light fw-400">Change or reset your account
+                                                        password</span> -->
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-12">
+                                                        <div class="edit-profile__body mx-lg-20">
+                                                            <form id="" action="#" method="post"> {% csrf_token %}
+                                                                <div class="form-group mb-20">
+                                                                    <label for="source_id">Manbani kiriting</label>
+                                                                    <div class="position-relative row">
+                                                                        <div class="col-10"><input id="source_id" type="text" class="form-control pr-50" name="source" value=""></div>
+                                                                        <div class="col-2"><input type="submit" class="btn btn-primary btn-default btn-squared mr-15 text-capitalize"  value="Qo'shish" onclick="handleAddSource()"/></div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0 table-borderless adv-table-studentss" data-sorting="true"
+                                                    data-filter-container="#filter-form-container" data-paging-current="1"
+                                                    data-paging-position="left" data-paging-size="10">
+                                                    <thead>
+                                                        <tr class="userDatatable-header">
+                                                            
+                                                            <th>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="custom-checkbox  check-all">
+                                                                        <input class="checkbox" type="checkbox" id="check-3">
+                                                                        <label for="check-3">
+                                                                            <span class="checkbox-text userDatatable-title">Id</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Nomi</span>
+                                                            </th>
+                                                            <th>
+                                                                <span class="userDatatable-title">Amallar</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for source in sources %}
+                                                        <tr id="student-{{source.id}}">
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                        <div class="checkbox-group-wrapper">
+                                                                            <div class="checkbox-group d-flex">
+                                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                    <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-{{student.id}}">
+                                                                                    <label for="check-grp-{{source.id}}">
+                                                                                        <span class="checkbox-text userDatatable-title">#{{ forloop.counter }}</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {{source.title}}
+                                                            </td>
+                                                            <td>
+                                                                <ul class="orderDatatable_actions mb-0 d-flex flex-wrap" style="justify-content: flex-start;">
+                                                                    <li>
+                                                                        <a href="" class="view">
+                                                                            <span data-feather="eye"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="" class="edit">
+                                                                            <span data-feather="edit"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#" onclick="" class="remove">
+                                                                            <span data-feather="trash-2"></span></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Edit Profile End -->
+                                    </div>
                                  
                                 </div>
                             </div>
@@ -530,5 +628,31 @@
     	$("form#mainUpdate").trigger("submit")	
     })
 
+</script>
+<script>
+    function handleAddSource(){
+        var source = document.querySelector('[name="source"')
+        var url = "{% url 'admintion:sources' %}";
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        formData.append('source', source.value);
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            if(res.status==201){
+                return res;
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            alert(res)
+            // document.querySelector('#genOTPLabel').textContent = `Tekshirish maqsadida +998${res.phone} raqamiga 6 xonali kod jo'natildi`;
+        })
+    }
 </script>
 {% endblock %}

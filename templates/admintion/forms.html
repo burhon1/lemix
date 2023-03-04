@@ -244,12 +244,12 @@ align-items: center;
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                              {{ obj.formlead_set.all.count }}
+                                              {{ obj.send_count }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content d-inline-block">
-                                                <span class="selling-badge order-bg-opacity-{{obj.id|get_conversion_status}} color-{{obj.id|get_conversion_status}}">{{obj.id|get_conversion}}%</span>
+                                                <span class="selling-badge order-bg-opacity-{{obj.id|get_conversion_status}} color-{{obj.id|get_conversion_status}}">{{obj.conversion}}%</span>
                                                 <!-- <span class="selling-badge order-bg-opacity-warning color-warning">78%</span>
                                                 <span class="selling-badge order-bg-opacity-danger color-danger">78%</span> -->
                                             </div>
@@ -1420,37 +1420,19 @@ align-items: center;
             
             var educenters = document.getElementById('id_educenters').value;
         
-            if(educenters==""){
-                educenters = document.getElementById('id_educenters').options;
-                for(let i=0; i<educenters.length; i++){
-                    if(educenters[i].value!=""){
-                        formData.append('educenters',educenters[i].value);
-                }}
-            } else{
+            if(educenters!==""){
                 formData.append('educenters',educenters);
-            }
+            } 
             
             var sources = document.getElementById('id_sources').value;
             
             if(sources==""){
-                sources = document.getElementById('id_sources').options;
-                for(let i=0; i<sources.length; i++){
-                    if(sources[i].value!=""){
-                    formData.append('sources',sources[i].value);
-                }}
-            } else{
                 formData.append('sources',sources);
             }
 
             var courses = document.getElementById('id_courses').value;
 
             if(courses==""){
-                courses = document.getElementById('id_courses').options;
-                for(let i=0; i<courses.length; i++){
-                    if(courses[i].value!=""){
-                        formData.append('courses',courses[i].value);
-                }}
-            } else{
                 formData.append('courses',courses);
             }
 

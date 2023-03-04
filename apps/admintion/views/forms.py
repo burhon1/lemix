@@ -1,38 +1,52 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.forms.models import model_to_dict
+from django.db.models import Q
+from django.contrib.auth.models import Group
 from django.urls import reverse
 from django.contrib import messages 
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from admintion.models import LeadForms,Course,Sources,FormUniversalFields,FormFields,EduCenters,Contacts, LeadStatus
+from admintion.models import LeadForms,Course,Sources,FormLead,FormUniversalFields,FormFields,EduCenters,Contacts, LeadStatus
 from admintion.forms.leads import LeadFormClass,FieldsFormSet,ContactsFormSet,LeadFormRegisterForm
 from admintion.services.qrcode import create_qrcode
+from user.services.users import user_add
 
 @login_required
 def forms_view(request):
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
     if request.method == 'POST':
         form = LeadFormClass(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
-            educenter = request.POST.get('educenters',None)
-            sources = request.POST.get('sources',None)
-            courses = request.POST.get('courses',None)
-            obj.save()
-            if educenter is not None:
-                obj.educenters.add(EduCenters.objects.filter(id=educenter).first())
-            if sources is not None:
-                obj.sources.add(Sources.objects.filter(id=sources).first()) 
-            if courses is not None:
-                obj.courses.add(Course.objects.filter(id=courses).first())        
+            educenter = request.POST.get('educenters',False)
+            sources = request.POST.get('sources',False)
+            courses = request.POST.get('courses',False)
+    
+            # obj.save()
+            if educenter:
+                # obj.educenters.add(EduCenters.objects.filter(id=educenter).first())
+                obj.educenters = EduCenters.objects.filter(id=educenter).first()
+            if sources:
+                # obj.sources.add(Sources.objects.filter(id=sources).first()) 
+                obj.sources=Sources.objects.filter(id=sources).first() 
+            if courses:
+                # obj.courses.add(Course.objects.filter(id=courses).first())   
+                obj.courses = Course.objects.filter(id=courses).first()       
             
+            obj.save()
             data = request.build_absolute_uri(reverse('lead_registration_view', args=[obj.id]))+'?title='+obj.title
             create_qrcode(data, obj)
             return JsonResponse({'id': obj.id}, status=201)
         else:
             errors = dict(form.errors.items())
             return JsonResponse(errors, status=400, safe=False)
+    educenter_ids = educenter.values_list('id',flat=True)
     context = {
-        'objs': LeadForms.objects.all().order_by('-id'),
+        'objs':LeadForms.lead_forms.lead_forms(educenter_ids),
         'form': LeadFormClass(),
     }         
     return render(request,'admintion/forms.html',context) 
@@ -79,18 +93,19 @@ def form_update_view(request, pk):
             'name': instance.image.name,
             'url': instance.image.url
         }})
-    if len(instance.educenters.all())>1:
+    print(instance.educenters,8)
+    if instance.educenters is None:
         context['obj'].update({'educenters':""})
     else:
-        context['obj'].update({'educenters':instance.educenters.first().id})
-    if len(instance.courses.all())>1:
+        context['obj'].update({'educenters':instance.educenters.id})
+    if instance.courses is None:
         context['obj'].update({'courses':""})
     else:
-        context['obj'].update({'courses':instance.courses.first().id})
-    if len(instance.sources.all())>1:
+        context['obj'].update({'courses':instance.courses.id})
+    if instance.sources is None:
         context['obj'].update({'sources':""})
     else:
-        context['obj'].update({'sources':instance.sources.first().id})
+        context['obj'].update({'sources':instance.sources.id})
 
     
     return JsonResponse(context, status=200)
@@ -180,10 +195,14 @@ def contacts_delete_view(request, pk):
 
 def lead_registration_view(request, pk):
     leadform = get_object_or_404(LeadForms, pk=pk)
-    leadform.seen += 1
-    leadform.save(update_fields=['seen'])
+    is_seen = request.session.get('is_seen',False)
+
+    if not(is_seen):
+        request.session['is_seen']=1
+        leadform.seen += 1
+        leadform.save(update_fields=['seen'])
     form = LeadFormRegisterForm(form=leadform)
-    print(leadform.educenters)
+
     context = {'pk':pk, 'title':leadform.title, 'main_edu': '', 'educenters':leadform.educenters, 'form':form}
     context['contacts'] = leadform.contacts_set.all()
     if request.method == "POST":
@@ -204,5 +223,57 @@ def lead_registration_view(request, pk):
     else:
         context['edu_count'] =  0    
     return render(request, "admintion/lead_form.html", context=context)
+
+def lead_registration2_view(request, pk):
+    context={}
+    leadform = get_object_or_404(LeadForms, pk=pk)
+    if request.method == "POST":
+        post = request.POST
+        data = {}
+        if leadform.educenters is None:
+            data['educenter'] = EduCenters.objects.get(id=post.get('educenters'))
+        else:
+            data['educenter']= leadform.educenters
+        if  leadform.courses is None:  
+            data['course']=Course.objects.get(id=post.get('courses'))   
+        else:
+            data['course']= leadform.courses    
+        if leadform.sources is None:
+            data['source'] = Sources.objects.get(id=post.get('sources'))  
+        else:
+            data['source']= leadform.sources 
+        phone_number=post.get('phone',False)
+        telegram=post.get('telegram',False)
+        fio=post.get('fio',False)   
+        groups = Group.objects.filter(name="Lead")
+        status,obj = user_add(groups,request,True).values()
+        # for field in fields:
+        #     data['source']=
+        if phone_number and telegram and fio and status==200:
+            data['user']=obj
+            data['telegram']=telegram
+            data['via_form']=leadform
+            form_lead = FormLead(**data)
+            form_lead.save()
+            # context['first_name'] = fname if fname else ""
+            # context['last_name'] = lname if lname else ""
+            return render(request, "admintion/lead_form_success.html", context)
+    
+    is_seen = request.session.get('is_seen',False)
+    if not(is_seen):
+        request.session['is_seen']=leadform.id
+        leadform.seen += 1
+        leadform.save(update_fields=['seen'])
+    fields=leadform.formfields_set.all().order_by('order')
+    context['objs'] = leadform
+    context['fields'] = fields
+    if leadform.educenters is None:
+        context['educenters'] = EduCenters.objects.all().values('id','name')
+    if leadform.educenters is not None and leadform.courses is None:  
+        context['courses']=Course.objects.filter(educenter=leadform.educenters).values('id','title')
+    if leadform.sources is None:
+        context['sources'] = Sources.objects.all().values('id','title')    
+       
+    return render(request, "admintion/lead_form2.html",context=context)
 
 

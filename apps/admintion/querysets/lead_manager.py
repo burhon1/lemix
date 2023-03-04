@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,Q,TextField,Exists,OuterRef,Count,Sum
+from django.db.models import Value, Case, When,F,Manager,Func,CharField,Q,TextField,Exists,OuterRef,Count,Sum
 from django.db.models.functions import Concat,Substr,Cast
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models.query import QuerySet
@@ -83,7 +83,12 @@ class LeadQueryset(QuerySet):
                 Substr(F('user__phone'),6,2),
                 Value(' '),
                 Substr(F('user__phone'),8,2)
-                )
+                ),
+            formatted_date=Func(
+                F('created_at'),
+                Value('DD-MM-YYYY HH:MM:SS'),
+                function='to_char',
+                output_field=CharField())
         )\
         .values(
             'id',
@@ -94,7 +99,7 @@ class LeadQueryset(QuerySet):
             'comment',
             'author_name',
             'via_form__title',
-            'created_at'
+            'formatted_date'
         )
 
     def lead_list(self,id):

@@ -99,6 +99,7 @@ def leads_view(request):
     context['groups'] = list(GroupModel.groups.group_list(educenter_ids))
     context['task_types'] = list(TaskTypes.objects.annotate(title=F('task_type')).values('id', 'title'))
     context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
+    print(len(list(context['objs'])))
     context['keys'] = ['check',
             'full_name',
             'phone_number',
@@ -119,8 +120,9 @@ def leads_filter_view(request):
 
     status = request.GET
     filter_keys=get_list_of_filter(status)
-
-    leads = list(FormLead.leads.leads_filter(filter_keys,educenter_ids))
+    filter_keys['activity']=filter_keys.get('activity',1)
+    filter_keys['activity']=int(filter_keys['activity'])
+    leads = list(FormLead.leads.leads_filter(filter_keys,list(educenter_ids)))
     
     return JsonResponse({'data':leads,'status':200})
 
@@ -137,7 +139,7 @@ def leads_archive_view(request):
     context['lead_statuses'] = LeadStatus.objects.filter().values('id', 'status')
     context['groups'] = GroupModel.groups.group_list(educenter_ids)
     context['task_types'] = TaskTypes.objects.values('id', 'task_type')
-    context['task_responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True)).values('id', 'first_name', 'last_name')
+    context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
     context['keys'] = ['check',
             'full_name',
             'phone_number',
@@ -147,6 +149,7 @@ def leads_archive_view(request):
             'author_name',
             'via_form__title',
             'created_at','action']
+    
     return render(request,"admintion/lidlar_arxiv.html", context)
 
 def lead_create_view(request):

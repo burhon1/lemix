@@ -75,15 +75,12 @@
 </head>
 
 <body>
-    <main class="main-content bg-light">
-
+    <main class="main-content">
         <div class="signUP-admin">
             <div class="container-fluid">
                 <div class="row justify-content-center " style="background-color: #f4f5f7;">
-                  
                     <div class="col-xl-8 col-lg-7 col-md-7 col-sm-8">
                         <div class="signUp-admin-right  ">
-                           
                             <div class="row justify-content-center">
                                 <div class="col-xl-7 col-lg-10 col-md-12 ">
                                     <div class="edit-profile mt-md-25 mt-0">
@@ -98,7 +95,6 @@
                                                 </div>
                                             </div>
                                             <div class="card-body ">
-                                                
                                                 {% if messages %}
                                                     {% for message in messages %}
                                                         <div class="alert alert-{{message.tags}}">
@@ -107,44 +103,48 @@
                                                     {% endfor %}
                                                 {% endif %}
 
-                                                <form action="{% url 'lead_registration_view' pk %}" method="post" class="edit-profile__body" id="formID">
+                                                <form action="" method="post" class="edit-profile__body" id="formID">
                                                     {% csrf_token %}
-                                                    
-                                                    {% for field in form %}
-
-                                                    {% if field.name == 'phone_number' %}
+                                                    {% if not objs.educenters %}
+                                                    <select name="educenters" id="select-size-4" placeholder="Filialni tanlang" class="form-control  form-control-default mb-3" aria-describedby="select-size-4" required="" onchange="handleListCourse(event)">
+                                                        <option value="" selected="">Filialni tanlang</option>
+                                                        {% for educenter in educenters %}
+                                                        <option value="{{educenter.id}}">{{educenter.name}}</option>
+                                                        {% endfor %}
+                                                      </select>
+                                                    {% endif %}
+                                                    {% if courses %}
+                                                    <select name="courses" id="select-size-4" placeholder="Kursni tanlang" class="form-control  form-control-default mb-3" aria-describedby="select-size-4" required="">
+                                                        <option value="" selected="">Kursni tanlang</option>
+                                                      {% for course in courses %}
+                                                      <option value="{{course.id}}">{{course.title}}</option>
+                                                      {% endfor %}
+                                                    </select>
+                                                    {% else %}
+                                                    <select name="courses" id="select-size-4" placeholder="Kursni tanlang" class="form-control  form-control-default mb-3" aria-describedby="select-size-4" required="">
+                                                        <option value="" selected="">Kursni tanlang</option>
+                                                    </select>
+                                                    {% endif %}
+                                                    {% if not objs.sources %}
+                                                    <select name="sources" id="select-size-4" placeholder="Bizni qanday topdingiz?" class="form-control  form-control-default mb-3" aria-describedby="select-size-4" required="">
+                                                        <option value="" selected="">Bizni qanday topdingiz?</option>
+                                                      {% for source in sources %}
+                                                      <option value="{{source.id}}">{{source.title}}</option>
+                                                      {% endfor %}
+                                                      </select>
+                                                    {% endif %}
                                                         <div class="new"
                                                             style="display:flex; justify-content: flex-start;">
                                                             <label
                                                                 style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
                                                             <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone"
-                                                                placeholder="990001122" name="phone_number">
+                                                                placeholder="990001122" name="phone">
                                                         </div>
-                                                    {% else %}
-                                                        {{ field }}
-                                                    {% endif %}
-                                                    {% endfor %}
-
-                                                    
-                                                    <!-- <div class="form-group mb-15">
-                                                        <label for="password-field">password</label>
-                                                        <div class="position-relative">
-                                                            <input id="password-field" type="password" class="form-control" name="password" value="secret">
-                                                            <span class="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2"></span>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- <div class="signUp-condition">
-                                                        <div class="checkbox-theme-default custom-checkbox ">
-                                                            <input class="checkbox" type="checkbox" id="check-1">
-                                                            <label for="check-1">
-                                                                <span class="checkbox-text">Creating an account means you’re okay
-                                                                    with our <a href="#" class="color-secondary">Terms of
-                                                                        Service</a> and <a href="#" class="color-secondary">Privacy
-                                                                        Policy</a>
-                                                                    my preference</span>
-                                                            </label>
-                                                        </div>
-                                                    </div> -->
+                                                        <input type="text" name="telegram" class="form-control  form-control-default mb-3" placeholder="Telegram raqami" maxlength="15" required="" id="id_telegram">
+                                                        <input type="text" name="fio" class="form-control mb-3" placeholder="fio" id="">
+                                                        {% for field in fields %}
+                                                        <input type="text" name="id_{{field.title}}" class="form-control mb-3" placeholder="{{field.title}}" id="id_title">
+                                                        {% endfor %}
                                                     <div class="button-group d-flex m-0">
                                                         <button 
                                                         style="text-transform: none;margin: 0px;"
@@ -308,7 +308,34 @@
     <script src="{% static 'assets/theme_assets/js/leaflet-init.js' %}"></script>
 
     <script src="{% static 'assets/theme_assets/js/main.js' %}"></script>
-
+    <script>
+        function handleListCourse(e){
+            var educenter = document.querySelector('select[name="courses"]')
+            var formData = new FormData();
+            formData.append('educenters',e.target.value);
+            educenter.innerHTML=""
+            var option = document.createElement('option');
+            option.textContent="Kursni tanlang"
+            option.selected=true
+            educenter.appendChild(option);
+            fetch('{% url "admintion:get-course-list" %}', {
+                method: 'post',
+                headers: {
+                    'X-CSRFToken':'{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                res.objs.forEach(element => {
+                    option = document.createElement('option');
+                    option.value=element.id;
+                    option.textContent=element.title;
+                    educenter.appendChild(option);
+                });
+            })
+        }
+    </script>
     <!-- endinject-->
 </body>
 

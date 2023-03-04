@@ -33,9 +33,16 @@ def lid_arxiv_view(request):
 @login_required
 def onlin_view(request):
     context = dict()
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
+    educenter_ids=educenter.values_list('id',flat=True)
     teacher = Teacher.objects.filter(user=request.user).first()
-    context['courses'] = get_courses(request.user)
-    print(context)
+    # context['courses'] = get_courses(request.user)
+    context['courses'] = Course.courses.courses(educenter_ids)
+
     context['courses'] = get_courses_data(context['courses'], teacher=teacher)
     groups = get_groups(request.user)
     context['groups'] = get_groups_data(groups, teacher)
@@ -403,7 +410,7 @@ def create_lesson_view(request):
                 lesson.groups.add(*Group.objects.filter(course=lesson.module.course))
                 lesson.save()
             return JsonResponse({'lesson': model_to_dict(lesson, exclude=('groups',)), 'status': 201} )
-        print(form.errors)
+        
         return JsonResponse({'message': 'Forma to\'g\'ri to\'ldirmadingiz.', 'status':400})
     return JsonResponse({'status': 200})
 

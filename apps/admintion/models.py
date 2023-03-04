@@ -2,7 +2,7 @@ from django.db import models
 from admintion.querysets import (
     rooms_manager,groups_manager,students_manager,attendace_manager,teachers_manager, 
     parents_manager, payment_manager, group_students_manager, course_manager,lead_manager,
-    task_manager, educenters_managers, common_managers
+    task_manager, educenters_managers, common_managers,lead_forms_managers
 )
 from admintion.data import chooses
 from user.data.chooses import COURSES_SEXES
@@ -253,15 +253,16 @@ class LeadForms(models.Model):
     title = models.CharField(max_length=150, verbose_name="Forma sarlavhasi")
     image = models.ImageField(upload_to='forms',null=True,blank=True)
     comment = models.CharField(max_length=2000, null=True)
-    educenters = models.ManyToManyField(EduCenters)
-    courses = models.ManyToManyField(Course)
-    sources = models.ManyToManyField('Sources')
+    educenters = models.ForeignKey(EduCenters,on_delete=models.CASCADE, null=True, blank=True)
+    courses = models.ForeignKey(Course,on_delete=models.CASCADE, null=True, blank=True)
+    sources = models.ForeignKey('Sources',on_delete=models.CASCADE, null=True, blank=True)
     link    = models.URLField(verbose_name="Havola",null=True,blank=True)
     russian = models.BooleanField(default=False)
     english = models.BooleanField(default=False)
     seen    = models.PositiveIntegerField(default=0)
     qrcode  = models.ImageField(upload_to='formleads', null=True)
-
+    lead_forms = lead_forms_managers.LeadFormManager()
+    objects = models.Manager()
     def __str__(self) -> str:
         return self.name
 

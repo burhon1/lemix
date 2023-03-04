@@ -87,7 +87,7 @@ Lidlar Ro'yxati- Lemix
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-main d-flex justify-content-between mt-4 align-items-center">
-                        <h4 class=" breadcrumb-title" >Lidlar - {{leads.count}}ta</h4>
+                        <h4 class=" breadcrumb-title" >Lidlar - {{objs.count}}ta</h4>
                         <div class="breadcrumb-action justify-content-center flex-wrap">
                             <div class="has-subMenu-left  d-flex ">
                                 <button class="btn btn-primary btn-xs ml-3 drawer-trigger" data-drawer="profile"
@@ -137,8 +137,8 @@ Lidlar Ro'yxati- Lemix
                                         <div class="atbd-select ">
                                             <select name="select-teacher" id="select-teacher" class="form-control" name="author__id" onchange="dropdownChanged(event,'author__id')">
                                                 <option value="0" selected>Xodimlar</option>
-                                                {% for lead_status in lead_statuses %}
-                                                <option value="{{lead_status.id}}">{{lead_status.status}}</option>
+                                                {% for task_responsible in task_responsibles %}
+                                                <option value="{{task_responsible.id}}">{{task_responsible.title}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -146,7 +146,7 @@ Lidlar Ro'yxati- Lemix
                                     <div class="col-3">
                                         <div class="atbd-date-ranger position-relative m-0 d-flex align-items-center">
                                             <div class="form-group mb-0">
-                                                <input type="text" name="date-range-from" class="form-control form-control-default" id="date-from-4" placeholder="Start" name="created_at__gte" onchange="dropdownChanged(event,'created_at__gte')">
+                                                <input type="text" name="date-range-from" class="form-control form-control-default" id="date-from-4" placeholder="Start" name="created_at__gte" onchange="dropdownChanged(event,'created_at__gte');alert(5)">
                                             </div>
                                             <span class="divider">-</span>
                                             <div class="form-group mb-0">
@@ -253,14 +253,18 @@ Lidlar Ro'yxati- Lemix
                                             </td>
                                             <td>
                                                 <div class="d-flex">
-
                                                     <div class="userDatatable-inline-title">
                                                         <a href="#" class="text-dark fw-500">
                                                             <h6>
+                                                                {% if lead.via_form__title %}
+                                                                <small>
+                                                                    <span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">
+                                                                        Havola orqali
+                                                                    </span>
+                                                                </small>{{ lead.via_form__title }}
+                                                                {% else %}
                                                                 {{lead.author_name}}
-                                                                <small><span
-                                                                        class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>
-                                                                {{ lead.via_form__title }}
+                                                                {% endif %}
                                                             </h6>
                                                         </a>
                                                         <p class="d-block mb-0">
@@ -593,17 +597,11 @@ Lidlar Ro'yxati- Lemix
                 </div>
             </div><!-- ends: .atbd-drawer__body -->
         </div>
-
         <div class="overlay-dark"></div>
         <div class="overlay-dark-l2"></div>
     </div>
 
-
-
-
     <div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header">
@@ -622,18 +620,11 @@ Lidlar Ro'yxati- Lemix
                 </div>
             </div>
         </div>
-
-
     </div>
     <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-
-
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header">
-
-
-
                     <h6 class="modal-title">Lidni avtivlashtirish.</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span data-feather="x"></span></button>
@@ -647,8 +638,6 @@ Lidlar Ro'yxati- Lemix
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 <!-- ends: .atbd-page-content -->
@@ -661,13 +650,12 @@ Lidlar Ro'yxati- Lemix
             alert("malumotlar qo'shildi")
         }
         else if (params.has('error')) {
-            alert("Malumotlar to\'liq kiritilmadi")
+
+            getAlert(params.get("error"),'danger');
+            params.delete('error')
         }
     </script>
     <script>
-
-
-
         function changeLeadStatus(id,) {
             var url = `/admintion/leads/${id}/archive/`;
             fetch(url, {
@@ -686,7 +674,6 @@ Lidlar Ro'yxati- Lemix
 
 
         function changeModal(id) {
-            console.log(id);
             btn = document.getElementById('deleteBtn');
             btn.setAttribute('onclick', `changeLeadStatus('${id}')`)
             console.log(btn);
@@ -816,7 +803,7 @@ Lidlar Ro'yxati- Lemix
                     var input = document.getElementById('id_message');
                     input.value = '';
                 } else {
-                    alert("Ma'lumotlar to'liq kiritilmadi");;
+                    alert('sda')
                 } 
             })
         })
@@ -880,7 +867,7 @@ Lidlar Ro'yxati- Lemix
         function handleAddGroup(){
             var group_add = document.querySelector('.group_add');
             group_add.className='row w-100 group_add d-flex';
-            var group_list = {{groups|safe}}
+            var group_list = {{groups|safe}};
             if(group_add.innerHTML){
                 group_add.innerHTML="";
                 return;
@@ -1102,53 +1089,132 @@ Lidlar Ro'yxati- Lemix
             datas.forEach((element,idx) => {
                 var tr = document.createElement('tr');
                 tr.id = `student-${element.student_ids}`
-                var columns = {{keys|safe}};
+                tr.innerHTML = `
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                        <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                    <input class="checkbox leadCheckBox" type="checkbox" id="check-grp-23">
+                                                                    <label for="check-grp-23"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="/admintion/leads/${element.student_ids}/" class="text-dark fw-500">
+                                                            <h6> ${element.full_name}</h6>
+                                                        </a>
+                                                        <p class="d-block mb-0">
+                                                            ${element.phone_number} 
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    ${element.source__title} 
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content d-inline-block">
+                                                    <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"></span>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    ${element.comment}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable-inline-title">
+                                                        <a href="#" class="text-dark fw-500">
+                                                            <h6>
+                                                                ${element.via_form__title!==null?'<small><span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>'+element.via_form__title:element.author_name}
+                                                            </h6>
+                                                        </a>
+                                                        <p class="d-block mb-0">
+                                                            ${element.formatted_date}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+
+                                                    <li>
+                                                        <a href="#" class="view drawer-trigger" data-drawer="profile">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="edit" data-toggle="modal" data-target="#modal-phone">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                                                    </li>
+                                                    <!-- <li>
+                                                                <a href="#" class="view"  data-toggle="modal" data-target="#modal-basic1">
+                                                                    <span data-feather="rotate-ccw"></span></a>
+                                                            </li> -->
+                                                    <!-- <li>
+                                                                <a href="#" class="edit">
+                                                                    <span data-feather="edit"></span></a>
+                                                            </li> -->
+                                                    <li>
+                                                        <a href="#" class="remove" onclick="changeModal('23')" data-toggle="modal" data-target="#modal-basic">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                `
+                // var columns = {{keys|safe}};
                 
-                for(var i=0;i<columns.length;i++){
-                    if(columns[i]=='check'){
-                        var td = document.createElement('td');
-                        var dflex = document.createElement('dev');
-                        dflex.className='d-flex';
-                        dflex.appendChild(createCheckbox(dflex,element.id,idx));
-                        td.appendChild(dflex);
-                        tr.appendChild(td);
-                    }
-                    else if(columns[i] == 'action'){
-                        var td = document.createElement('td');
-                        td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
-                        tr.appendChild(td);  
-                    }
-                    else if(columns[i] == 'status'){
-                        var td = document.createElement('td');
-                        if(element.status){
-                            td.innerHTML = `
-                            <div class="userDatatable-content d-inline-block">
-                                <span
-                                    class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
-                            </div>
-                            `
-                        }
-                        else{
-                            td.innerHTML = `
-                            <div class="userDatatable-content d-inline-block">
-                                <span
-                                    class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
-                            </div>
-                            `
-                        }
-                        tr.appendChild(td); 
-                    }
-                    else {
+                // for(var i=0;i<columns.length;i++){
+                //     if(columns[i]=='check'){
+                //         var td = document.createElement('td');
+                //         var dflex = document.createElement('dev');
+                //         dflex.className='d-flex';
+                //         dflex.appendChild(createCheckbox(dflex,element.id,idx));
+                //         td.appendChild(dflex);
+                //         tr.appendChild(td);
+                //     }
+                //     else if(columns[i] == 'action'){
+                //         var td = document.createElement('td');
+                //         td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
+                //         tr.appendChild(td);  
+                //     }
+                //     else if(columns[i] == 'status'){
+                //         var td = document.createElement('td');
+                //         if(element.status){
+                //             td.innerHTML = `
+                //             <div class="userDatatable-content d-inline-block">
+                //                 <span
+                //                     class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
+                //             </div>
+                //             `
+                //         }
+                //         else{
+                //             td.innerHTML = `
+                //             <div class="userDatatable-content d-inline-block">
+                //                 <span
+                //                     class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
+                //             </div>
+                //             `
+                //         }
+                //         tr.appendChild(td); 
+                //     }
+                //     else {
                         
-                        var td = document.createElement('td');
-                        var dcontent = document.createElement('dev');
-                        // td.style.display='block'
-                        dcontent.className='userDatatable-content'
-                        td.textContent=element[columns[i]];
-                        // td.appendChild(dcontent);
-                        tr.appendChild(td);
-                    }
-                }
+                //         var td = document.createElement('td');
+                //         var dcontent = document.createElement('dev');
+                //         // td.style.display='block'
+                //         dcontent.className='userDatatable-content'
+                //         td.textContent=element[columns[i]];
+                //         // td.appendChild(dcontent);
+                //         tr.appendChild(td);
+                //     }
+                // }
                 tbody.appendChild(tr);
                 var dvTd = document.createElement('div');
                 dvTd.className='userDatatable-content';

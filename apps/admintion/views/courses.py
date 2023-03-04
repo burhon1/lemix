@@ -102,3 +102,10 @@ def course_update_view(request, pk):
         return redirect(reverse('admintion:courses')+f"?success={True}")
     else:
         return redirect(reverse('admintion:courses')+f"?error=Ma'lumotlar to'liq kiritilmadi.") 
+
+def get_course_list_view(request):
+    if request.method=='POST':
+        educenter = request.POST.get('educenters')
+        courses = Course.objects.filter(educenter__id=int(educenter)).values('id','title')
+        return JsonResponse({'objs':list(courses)})
+    return JsonResponse({}, status=200)

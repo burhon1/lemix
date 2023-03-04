@@ -8,6 +8,7 @@ urlpatterns = [
     path('employee/<int:id>/detail/',employes.employee_detail_view,name='employee-detail'),
     path('rooms/',rooms.rooms_view,name='rooms'),
     path('courses/',courses.courses_view,name='courses'),
+    path('get-course-list/',courses.get_course_list_view,name='get-course-list'),
     path('courses/filter/',courses.courses_by_filter_view,name='courses-filter'),
     path('courses/<int:pk>/delete/', courses.course_delete_view, name='course-delete'),
     path('courses/<int:pk>/detail/', courses.course_detail_view, name='course-detail'),
@@ -70,6 +71,7 @@ urlpatterns = [
     path('educenters/<int:pk>/update/', educenters.educenter_update_view, name='edu-centers-update'),
     path('connected_regs/', educenters.connected_regs, name='connected_regions'),
     path('settings/', settings.settings_view, name='settings'),
+    path('source/', settings.sources_view, name='sources'),
 
     path('', dashboard.dashboard, name='dashboard'),
     path('teacher/pay/', dashboard.teacher_pay, name='teacher_pay'),
