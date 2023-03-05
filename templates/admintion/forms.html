@@ -256,12 +256,6 @@ align-items: center;
                                         </td>
                                         <td>
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                            
-                                                   
-                                                    <li>
-                                                        <a href="#" class="view"  data-toggle="modal" data-target="#modal-">
-                                                            <span data-feather="eye"></span></a>
-                                                    </li>
                                                     <li>
                                                         <a href="#" class="edit drawer-multiTrigger" data-drawer="level-one" onclick="editForm('{{obj.id}}')">
                                                             <span data-feather="edit"></span></a>
@@ -447,15 +441,18 @@ align-items: center;
                             
                         
                         </div>
-                    <div class="form-group col-lg-12">
-                        <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
-                        <select name="educenters" id="id_educenters" class="form-control-sm">
-                            <option value="">Hammasi</option>
-                            {% for option in form.fields.educenters.queryset %}
-                                <option value="{{option.id}}">{{ option.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    {% if 'Director' in groups_name_list %}
+                        <div class="form-group col-lg-12">
+                            <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
+                            <select name="educenters" id="id_educenters" class="form-control-sm">
+                                <option value="">Hammasi</option>
+                                {% for option in form.fields.educenters.queryset %}
+                                    <option value="{{option.id}}">{{ option.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                    
                     <div class="form-group col-lg-6">
                         <label for="id_courses"><b class="text-danger">*</b>Kurslarni tanlang</label>
                         <select name="courses" id="id_courses" class="form-control-sm border-light">
@@ -680,7 +677,9 @@ align-items: center;
         document.getElementById('id_comment').value = "";
         document.getElementById('id_russian').checked = false;
         document.getElementById('id_english').checked = false;
-        document.getElementById('id_educenters').value = "";
+        if(document.getElementById('id_educenters')){
+            document.getElementById('id_educenters').value = "";
+        }
         document.getElementById('id_courses').value = "";
         document.getElementById('id_sources').value = "";
         document.getElementById('id_instagram').value = "";
@@ -1005,7 +1004,6 @@ align-items: center;
                 .then(res=>res.json())
                 .then(res=>{
                     res=res.objs;
-
                     genFields.length = 0;
                     for(var i=0;i<res.length;i++){
                         var field = {
@@ -1343,10 +1341,11 @@ align-items: center;
                         deletedContacts.length =0;
                         return ;
                     }
-                    alert("Kontaktlar o'chirilmadi.")
+                    getAlert("Kontaktlar o'chirilmadi.",'danger')
                 })
                 .catch(err=>{
                     alert(err);
+                    getAlert(err,'danger')
                 })
             }
 
@@ -1383,10 +1382,10 @@ align-items: center;
                 .then(res=>{
                     if(res.status==201){
                         contacts.length = 0;
-                        console.log("kontaktlar saqlandi.")
+                        getAlert('kontaktlar saqlandi.','success')
                         return res;
                     }else{
-                        alert('Xatolik sodir bo\'ldi');
+                        getAlert('Xatolik sodir bo\'ldi.','danger')
                     }
                 })
                 .then(res=>{
@@ -1394,6 +1393,7 @@ align-items: center;
                 })
                 .catch(err=>{
                     alert('Xatolik sodir bo\'ldi', err);
+                    getAlert('Xatolik sodir bo\'ldi. '+err,'danger')
                 })
                 getFormContacts(id)
                 return ;
@@ -1417,7 +1417,13 @@ align-items: center;
             formData.append('title',document.getElementById('id_title').value);
             formData.append('comment',document.getElementById('id_comment').value);
             
-            var educenters = document.getElementById('id_educenters').value;
+            var educenters = document.getElementById('id_educenters');
+            if(educenters){
+                educenters=educenters.value
+            }
+            else {
+                educenters=""
+            }
         
             if(educenters!==""){
                 formData.append('educenters',educenters);
@@ -1449,7 +1455,7 @@ align-items: center;
                 if(res.status == 201 || res.status == 200){
                     return res;
                 } else {
-                    alert('Xatolik yuz berdi. Kiritilgan qiymatlarni tekshiring.')
+                    getAlert('Xatolik yuz berdi. Kiritilgan qiymatlarni tekshiring.','danger')
                 }
                 
             })
@@ -1464,7 +1470,7 @@ align-items: center;
                 // }, 2500)
                 // window.location.assign(window.location.pathname)                
                 // refresh()
-                alert('Ma\'lumotlar saqlandi.')
+                getAlert('Ma\'lumotlar saqlandi.','danger')
                 refresh()
                 return res;
             })
@@ -1493,7 +1499,10 @@ align-items: center;
                     document.getElementById('id_comment').value = res.obj.comment;
                     document.getElementById('id_russian').checked = res.obj.russian;
                     document.getElementById('id_english').checked = res.obj.english;
-                    document.getElementById('id_educenters').value = res.obj.educenters;
+                    if(document.getElementById('id_educenters')){
+                        document.getElementById('id_educenters').value = res.obj.educenters;
+                    }
+                    
                     document.getElementById('id_courses').value = res.obj.courses;
                     document.getElementById('id_sources').value = res.obj.sources;
                 }
@@ -1519,7 +1528,7 @@ align-items: center;
             })
             .then(res=>res.json())
             .then(res=>{
-                    alert(res.message)
+                getAlert(res.message,'danger')
             })
         }
 

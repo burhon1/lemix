@@ -5,7 +5,7 @@ from django.db.models.query import QuerySet
 
 class LeadFormQueryset(QuerySet):
     def lead_forms(self,educenter_id):
-        return self.filter(educenters__id__in=educenter_id).annotate(
+        return self.filter(Q(educenters__id__in=educenter_id)|Q(educenters__isnull=True)).annotate(
             send_count=Count('formlead', distinct=True)
         )\
         .annotate(conversion=F('send_count')/Value(100.0)*F('seen'))\

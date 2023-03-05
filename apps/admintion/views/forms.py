@@ -22,14 +22,16 @@ def forms_view(request):
         form = LeadFormClass(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
-            educenter = request.POST.get('educenters',False)
+            educenters = request.POST.get('educenters',False)
             sources = request.POST.get('sources',False)
             courses = request.POST.get('courses',False)
     
             # obj.save()
-            if educenter:
+            if educenters:
                 # obj.educenters.add(EduCenters.objects.filter(id=educenter).first())
-                obj.educenters = EduCenters.objects.filter(id=educenter).first()
+                obj.educenters = EduCenters.objects.filter(id=educenters).first()
+            elif int(ed_id) != 0:
+                obj.educenters=educenter.first()     
             if sources:
                 # obj.sources.add(Sources.objects.filter(id=sources).first()) 
                 obj.sources=Sources.objects.filter(id=sources).first() 

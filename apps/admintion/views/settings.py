@@ -56,6 +56,11 @@ def settings_view(request):
 
 
 def sources_view(request):
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
     if request.method == "POST":
         title = request.POST.get('source',False)
         if title:
@@ -65,12 +70,11 @@ def sources_view(request):
                 name=source.title,
                 title="Ro'yxatdan o'tish"
             )
+            lead_form.sources=source
+            if int(ed_id) != 0:
+                lead_form.educenters = educenter.first()
             lead_form.save()
-            lead_form.sources.add(source)
-            educe_center = EduCenters.objects.all()
-            course = Course.objects.all()
-            lead_form.educenters.add(*educe_center)
-            lead_form.courses.add(*course)
+            
             data = request.build_absolute_uri(reverse('lead_registration_view', args=[lead_form.id]))+'?title='+lead_form.title
             create_qrcode(data, lead_form)
         return JsonResponse({})
