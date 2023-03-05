@@ -120,7 +120,7 @@
                                                       <option value="{{course.id}}">{{course.title}}</option>
                                                       {% endfor %}
                                                     </select>
-                                                    {% else %}
+                                                    {% elif not objs.educenters %}
                                                     <select name="courses" id="select-size-4" placeholder="Kursni tanlang" class="form-control  form-control-default mb-3" aria-describedby="select-size-4" required="">
                                                         <option value="" selected="">Kursni tanlang</option>
                                                     </select>

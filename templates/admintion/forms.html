@@ -408,39 +408,6 @@ align-items: center;
                             <label for="id_comment">Izoh</label>
                             <textarea name="comment" id="id_comment" style="min-height: 50px !important;" class="form-control border-light form-control-sm" placeholder="Izoh qoldiring"></textarea>
                         </div>
-                        <div class="form-group col-lg-12">
-                            <div class="mb-3">
-
-
-                                <div class="checkbox-theme-default custom-checkbox ">
-                                    <input class="checkbox" type="checkbox" id="id_russian" name="russian">
-                                    <label for="id_russian">
-                                        <span class="checkbox-text">
-                                            Rus tilida kiritish
-                                        </span>
-                                    </label>
-                                </div>
-
-
-                            </div>
-                            <div class="mb-3">
-
-
-                                <div class="checkbox-theme-default custom-checkbox ">
-                                    <input class="checkbox" type="checkbox" id="id_english">
-                                    <label for="id_english">
-                                        <span class="checkbox-text">
-                                            Ingliz tilida kiritish
-
-                                        </span>
-                                    </label>
-                                </div>
-
-
-                            </div>
-                            
-                        
-                        </div>
                     {% if 'Director' in groups_name_list %}
                         <div class="form-group col-lg-12">
                             <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
@@ -484,7 +451,6 @@ align-items: center;
                 </div>
                       
           <div class="col-12 mb-2">
-            
             <label for="owner" >Kontakt tugmachalarini qo'yish</label>
             <div class="forms w-100">
                 <div class="forms-view" id="parent">
@@ -534,6 +500,7 @@ align-items: center;
                     </div>
                 </div>
             </div>
+        </div>    
 <div class="buttons d-flex flex-wrap  w-100">
 
 <button class="btn btn-icon btn-circle btn-outline-primary  mr-3" onclick="handleClickIcon(0)">
@@ -675,13 +642,15 @@ align-items: center;
         document.getElementById('downloadImage').innerHTML = "";
         // document.getElementById('id_image').files.length = 0;
         document.getElementById('id_comment').value = "";
-        document.getElementById('id_russian').checked = false;
-        document.getElementById('id_english').checked = false;
         if(document.getElementById('id_educenters')){
             document.getElementById('id_educenters').value = "";
         }
-        document.getElementById('id_courses').value = "";
-        document.getElementById('id_sources').value = "";
+        if(document.getElementById('id_courses')){
+            document.getElementById('id_courses').value = "";
+        }
+        if(document.getElementById('id_sources')){
+            document.getElementById('id_sources').value = "";
+        }
         document.getElementById('id_instagram').value = "";
         document.getElementById('id_telegram').value = "";
         document.getElementById('id_phone_number').value = "";
@@ -1418,31 +1387,23 @@ align-items: center;
             formData.append('comment',document.getElementById('id_comment').value);
             
             var educenters = document.getElementById('id_educenters');
+
             if(educenters){
-                educenters=educenters.value
-            }
-            else {
-                educenters=""
-            }
-        
-            if(educenters!==""){
-                formData.append('educenters',educenters);
+                formData.append('educenters',educenters.value);
             } 
             
-            var sources = document.getElementById('id_sources').value;
+            var sources = document.getElementById('id_sources');
             
-            if(sources==""){
-                formData.append('sources',sources);
+            if(sources){
+                formData.append('sources',sources.value);
             }
 
-            var courses = document.getElementById('id_courses').value;
+            var courses = document.getElementById('id_courses');
 
-            if(courses==""){
-                formData.append('courses',courses);
+            if(courses){
+                formData.append('courses',courses.value);
             }
 
-            formData.append('russian',document.getElementById('id_russian').checked);
-            formData.append('english',document.getElementById('id_english').checked);
 
             fetch(url, {
                 method: 'post',
@@ -1470,7 +1431,7 @@ align-items: center;
                 // }, 2500)
                 // window.location.assign(window.location.pathname)                
                 // refresh()
-                getAlert('Ma\'lumotlar saqlandi.','danger')
+                getAlert('Ma\'lumotlar saqlandi.','success')
                 refresh()
                 return res;
             })
@@ -1497,14 +1458,16 @@ align-items: center;
                         
                     }
                     document.getElementById('id_comment').value = res.obj.comment;
-                    document.getElementById('id_russian').checked = res.obj.russian;
-                    document.getElementById('id_english').checked = res.obj.english;
                     if(document.getElementById('id_educenters')){
                         document.getElementById('id_educenters').value = res.obj.educenters;
                     }
+                    if(document.getElementById('id_courses')){
+                        document.getElementById('id_courses').value = res.obj.courses;
+                    }
+                    if(document.getElementById('id_sources')){
+                        document.getElementById('id_sources').value = res.obj.sources;
+                    }
                     
-                    document.getElementById('id_courses').value = res.obj.courses;
-                    document.getElementById('id_sources').value = res.obj.sources;
                 }
             })
 

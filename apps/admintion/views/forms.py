@@ -75,13 +75,37 @@ def form_detail_view(request, pk):
 def form_update_view(request, pk):
     instance = get_object_or_404(LeadForms, pk=pk)
     if request.method == 'POST':
+        print(request.POST)
         form = LeadFormClass(request.POST, request.FILES, instance=instance)
-        if form.is_valid():
-            obj = form.save()
-            return JsonResponse({'id': obj.id}, status=200)
-        else:
-            errors = dict(form.errors.items())
-            return JsonResponse(errors, status=400, safe=False)
+        post = request.POST
+        name=post.get('name',False)
+        title=post.get('title',False)
+        comment=post.get('comment',False)
+        educenters=post.get('educenters',False)
+        courses=post.get('courses',False)
+        sources=post.get('sources',False)
+        if name and title and comment:
+            instance.comment=comment
+            instance.title=title
+            instance.name=name
+            if educenters:
+                instance.educenters=EduCenters.objects.get(id=educenters) 
+            if courses:
+                instance.courses=Course.objects.get(id=courses) 
+            if sources:
+                instance.sources=Sources.objects.get(id=sources)  
+            instance.save()
+            return JsonResponse({'id': instance.id}, status=200)
+        else:      
+            return JsonResponse('', status=400, safe=False)            
+        # if 
+        # if form.is_valid():
+        #     print(form)
+        #     obj = form.save()
+        #     return JsonResponse({'id': obj.id}, status=200)
+        # else:
+        #     errors = dict(form.errors.items())
+        #     return JsonResponse(errors, status=400, safe=False)
     context = {
         'obj':model_to_dict(instance, fields=('id', 'title','name','comment','russian','english')),
         'fields': instance.formfields_set.all().values('id','key','order','required','title'),
@@ -95,7 +119,6 @@ def form_update_view(request, pk):
             'name': instance.image.name,
             'url': instance.image.url
         }})
-    print(instance.educenters,8)
     if instance.educenters is None:
         context['obj'].update({'educenters':""})
     else:
@@ -271,11 +294,11 @@ def lead_registration2_view(request, pk):
     context['fields'] = fields
     if leadform.educenters is None:
         context['educenters'] = EduCenters.objects.all().values('id','name')
-    if leadform.educenters is not None and leadform.courses is None:  
+    if (leadform.educenters is not None) and (leadform.courses is None):  
         context['courses']=Course.objects.filter(educenter=leadform.educenters).values('id','title')
     if leadform.sources is None:
         context['sources'] = Sources.objects.all().values('id','title')    
-       
+
     return render(request, "admintion/lead_form2.html",context=context)
 
 
