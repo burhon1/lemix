@@ -76,26 +76,31 @@ def form_detail_view(request, pk):
 def form_update_view(request, pk):
     instance = get_object_or_404(LeadForms, pk=pk)
     if request.method == 'POST':
-        print(request.POST)
         form = LeadFormClass(request.POST, request.FILES, instance=instance)
         post = request.POST
         name=post.get('name',False)
         title=post.get('title',False)
         comment=post.get('comment',False)
         educenters=post.get('educenters',False)
-        courses=post.get('courses',False)
-        sources=post.get('sources',False)
+        courses=int(post.get('courses',False))
+        sources=int(post.get('sources',False))
         if name and title:
             instance.title=title
             instance.name=name
             if comment:
                 instance.comment=comment
             if educenters:
-                instance.educenters=EduCenters.objects.get(id=educenters) 
+                instance.educenters=EduCenters.objects.get(id=educenters)
+            elif educenters == 0:
+                instance.educenters=None  
             if courses:
-                instance.courses=Course.objects.get(id=courses) 
+                instance.courses=Course.objects.get(id=courses)
+            elif courses == 0:
+                instance.courses=None
             if sources:
-                instance.sources=Sources.objects.get(id=sources)  
+                instance.sources=Sources.objects.get(id=sources) 
+            elif sources == 0:
+                instance.sources=None     
             instance.save()
             return JsonResponse({'id': instance.id}, status=200)
         else:      

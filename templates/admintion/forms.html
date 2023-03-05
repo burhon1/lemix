@@ -1389,19 +1389,25 @@ align-items: center;
             var educenters = document.getElementById('id_educenters');
 
             if(educenters){
-                formData.append('educenters',educenters.value);
+                educenters=educenters.value
+                if(educenters=="") educenters=0;
+                formData.append('educenters',educenters);
             } 
             
             var sources = document.getElementById('id_sources');
             
             if(sources){
-                formData.append('sources',sources.value);
+                sources=sources.value
+                if(sources=="") sources=0;
+                formData.append('sources',sources);
             }
 
             var courses = document.getElementById('id_courses');
 
             if(courses){
-                formData.append('courses',courses.value);
+                courses=courses.value
+                if(courses=="") courses=0;
+                formData.append('courses',courses);
             }
 
 
