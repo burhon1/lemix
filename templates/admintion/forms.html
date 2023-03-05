@@ -737,6 +737,7 @@ align-items: center;
             // Insert list items into DOM
             function createList() {
                 draggable_list.innerHTML='';
+                console.log(richestPeople);
                 [...richestPeople]
                     // .map(a => ({ value: a, sort: Math.random() }))
                     // .sort((a, b) => a.sort - b.sort)
@@ -1002,7 +1003,7 @@ align-items: center;
                 console.log("handleChecker", id)
                 var field = document.getElementById(`check-genfield-${id}`);
                 var index = IngenFieldsList(id);
-                if(index && field.checked==true){
+                if(index>=0 && field.checked==true){
                     genFields[index].checked = true;
                     delIndex = IndeletedFieldsList(genFields[index].title)
                     if(delIndex){
@@ -1013,12 +1014,11 @@ align-items: center;
                     )
                     }
                     
-                } else if (index && field.checked==false){
+                } else if (index>=0 && field.checked==false){
                     genFields[index].checked = false;
                     console.log("index: ", index, genFields[index].title);
                     index1 = InRichestPeopleList(genFields[index].title)
                     if(index1 > -1){
-                        
                         deletedFields.push(
                             richestPeople.splice(index1, 1)[0]
                         )
