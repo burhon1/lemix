@@ -235,6 +235,7 @@ align-items: center;
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                                                     </a>
                                             </div>
+                                           
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
@@ -243,12 +244,12 @@ align-items: center;
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                              {{ obj.send_count }}
+                                              {{ obj.formlead_set.all.count }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content d-inline-block">
-                                                <span class="selling-badge order-bg-opacity-{{obj.id|get_conversion_status}} color-{{obj.id|get_conversion_status}}">{{obj.conversion}}%</span>
+                                                <span class="selling-badge order-bg-opacity-{{obj.id|get_conversion_status}} color-{{obj.id|get_conversion_status}}">{{obj.id|get_conversion}}%</span>
                                                 <!-- <span class="selling-badge order-bg-opacity-warning color-warning">78%</span>
                                                 <span class="selling-badge order-bg-opacity-danger color-danger">78%</span> -->
                                             </div>
@@ -256,6 +257,12 @@ align-items: center;
                                         </td>
                                         <td>
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                            
+                                                   
+                                                    <li>
+                                                        <a href="#" class="view"  data-toggle="modal" data-target="#modal-">
+                                                            <span data-feather="eye"></span></a>
+                                                    </li>
                                                     <li>
                                                         <a href="#" class="edit drawer-multiTrigger" data-drawer="level-one" onclick="editForm('{{obj.id}}')">
                                                             <span data-feather="edit"></span></a>
@@ -408,18 +415,48 @@ align-items: center;
                             <label for="id_comment">Izoh</label>
                             <textarea name="comment" id="id_comment" style="min-height: 50px !important;" class="form-control border-light form-control-sm" placeholder="Izoh qoldiring"></textarea>
                         </div>
-                    {% if 'Director' in groups_name_list %}
                         <div class="form-group col-lg-12">
-                            <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
-                            <select name="educenters" id="id_educenters" class="form-control-sm">
-                                <option value="">Hammasi</option>
-                                {% for option in form.fields.educenters.queryset %}
-                                    <option value="{{option.id}}">{{ option.name}}</option>
-                                {% endfor %}
-                            </select>
+                            <div class="mb-3">
+
+
+                                <div class="checkbox-theme-default custom-checkbox ">
+                                    <input class="checkbox" type="checkbox" id="id_russian" name="russian">
+                                    <label for="id_russian">
+                                        <span class="checkbox-text">
+                                            Rus tilida kiritish
+                                        </span>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            <div class="mb-3">
+
+
+                                <div class="checkbox-theme-default custom-checkbox ">
+                                    <input class="checkbox" type="checkbox" id="id_english">
+                                    <label for="id_english">
+                                        <span class="checkbox-text">
+                                            Ingliz tilida kiritish
+
+                                        </span>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            
+                        
                         </div>
-                    {% endif %}
-                    
+                    <div class="form-group col-lg-12">
+                        <label for="id_educenters"><b class="text-danger">*</b>Filialni tanlang</label>
+                        <select name="educenters" id="id_educenters" class="form-control-sm">
+                            <option value="">Hammasi</option>
+                            {% for option in form.fields.educenters.queryset %}
+                                <option value="{{option.id}}">{{ option.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="form-group col-lg-6">
                         <label for="id_courses"><b class="text-danger">*</b>Kurslarni tanlang</label>
                         <select name="courses" id="id_courses" class="form-control-sm border-light">
@@ -642,15 +679,11 @@ align-items: center;
         document.getElementById('downloadImage').innerHTML = "";
         // document.getElementById('id_image').files.length = 0;
         document.getElementById('id_comment').value = "";
-        if(document.getElementById('id_educenters')){
-            document.getElementById('id_educenters').value = "";
-        }
-        if(document.getElementById('id_courses')){
-            document.getElementById('id_courses').value = "";
-        }
-        if(document.getElementById('id_sources')){
-            document.getElementById('id_sources').value = "";
-        }
+        document.getElementById('id_russian').checked = false;
+        document.getElementById('id_english').checked = false;
+        document.getElementById('id_educenters').value = "";
+        document.getElementById('id_courses').value = "";
+        document.getElementById('id_sources').value = "";
         document.getElementById('id_instagram').value = "";
         document.getElementById('id_telegram').value = "";
         document.getElementById('id_phone_number').value = "";
@@ -973,6 +1006,7 @@ align-items: center;
                 .then(res=>res.json())
                 .then(res=>{
                     res=res.objs;
+
                     genFields.length = 0;
                     for(var i=0;i<res.length;i++){
                         var field = {
@@ -1310,11 +1344,10 @@ align-items: center;
                         deletedContacts.length =0;
                         return ;
                     }
-                    getAlert("Kontaktlar o'chirilmadi.",'danger')
+                    alert("Kontaktlar o'chirilmadi.")
                 })
                 .catch(err=>{
                     alert(err);
-                    getAlert(err,'danger')
                 })
             }
 
@@ -1351,10 +1384,10 @@ align-items: center;
                 .then(res=>{
                     if(res.status==201){
                         contacts.length = 0;
-                        getAlert('kontaktlar saqlandi.','success')
+                        console.log("kontaktlar saqlandi.")
                         return res;
                     }else{
-                        getAlert('Xatolik sodir bo\'ldi.','danger')
+                        alert('Xatolik sodir bo\'ldi');
                     }
                 })
                 .then(res=>{
@@ -1362,7 +1395,6 @@ align-items: center;
                 })
                 .catch(err=>{
                     alert('Xatolik sodir bo\'ldi', err);
-                    getAlert('Xatolik sodir bo\'ldi. '+err,'danger')
                 })
                 getFormContacts(id)
                 return ;
@@ -1386,30 +1418,44 @@ align-items: center;
             formData.append('title',document.getElementById('id_title').value);
             formData.append('comment',document.getElementById('id_comment').value);
             
-            var educenters = document.getElementById('id_educenters');
-
-            if(educenters){
-                educenters=educenters.value
-                if(educenters=="") educenters=0;
+            var educenters = document.getElementById('id_educenters').value;
+        
+            if(educenters==""){
+                educenters = document.getElementById('id_educenters').options;
+                for(let i=0; i<educenters.length; i++){
+                    if(educenters[i].value!=""){
+                        formData.append('educenters',educenters[i].value);
+                }}
+            } else{
                 formData.append('educenters',educenters);
-            } 
+            }
             
-            var sources = document.getElementById('id_sources');
+            var sources = document.getElementById('id_sources').value;
             
-            if(sources){
-                sources=sources.value
-                if(sources=="") sources=0;
+            if(sources==""){
+                sources = document.getElementById('id_sources').options;
+                for(let i=0; i<sources.length; i++){
+                    if(sources[i].value!=""){
+                    formData.append('sources',sources[i].value);
+                }}
+            } else{
                 formData.append('sources',sources);
             }
 
-            var courses = document.getElementById('id_courses');
+            var courses = document.getElementById('id_courses').value;
 
-            if(courses){
-                courses=courses.value
-                if(courses=="") courses=0;
+            if(courses==""){
+                courses = document.getElementById('id_courses').options;
+                for(let i=0; i<courses.length; i++){
+                    if(courses[i].value!=""){
+                        formData.append('courses',courses[i].value);
+                }}
+            } else{
                 formData.append('courses',courses);
             }
 
+            formData.append('russian',document.getElementById('id_russian').checked);
+            formData.append('english',document.getElementById('id_english').checked);
 
             fetch(url, {
                 method: 'post',
@@ -1422,7 +1468,7 @@ align-items: center;
                 if(res.status == 201 || res.status == 200){
                     return res;
                 } else {
-                    getAlert('Xatolik yuz berdi. Kiritilgan qiymatlarni tekshiring.','danger')
+                    alert('Xatolik yuz berdi. Kiritilgan qiymatlarni tekshiring.')
                 }
                 
             })
@@ -1437,7 +1483,7 @@ align-items: center;
                 // }, 2500)
                 // window.location.assign(window.location.pathname)                
                 // refresh()
-                getAlert('Ma\'lumotlar saqlandi.','success')
+                alert('Ma\'lumotlar saqlandi.')
                 refresh()
                 return res;
             })
@@ -1464,16 +1510,11 @@ align-items: center;
                         
                     }
                     document.getElementById('id_comment').value = res.obj.comment;
-                    if(document.getElementById('id_educenters')){
-                        document.getElementById('id_educenters').value = res.obj.educenters;
-                    }
-                    if(document.getElementById('id_courses')){
-                        document.getElementById('id_courses').value = res.obj.courses;
-                    }
-                    if(document.getElementById('id_sources')){
-                        document.getElementById('id_sources').value = res.obj.sources;
-                    }
-                    
+                    document.getElementById('id_russian').checked = res.obj.russian;
+                    document.getElementById('id_english').checked = res.obj.english;
+                    document.getElementById('id_educenters').value = res.obj.educenters;
+                    document.getElementById('id_courses').value = res.obj.courses;
+                    document.getElementById('id_sources').value = res.obj.sources;
                 }
             })
 
@@ -1497,7 +1538,7 @@ align-items: center;
             })
             .then(res=>res.json())
             .then(res=>{
-                getAlert(res.message,'danger')
+                    alert(res.message)
             })
         }
 
@@ -1536,5 +1577,5 @@ align-items: center;
             savebtn.setAttribute('onclick',`saveBtn()`);
         }
         
-</script>
+        </script>
 {% endblock %}
