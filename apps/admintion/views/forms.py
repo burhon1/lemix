@@ -283,10 +283,11 @@ def lead_registration2_view(request, pk):
             # context['first_name'] = fname if fname else ""
             # context['last_name'] = lname if lname else ""
             return render(request, "admintion/lead_form_success.html", context)
+    # print(request.session['is_seen'])
+    is_seen = request.session.get(str(leadform.id)+'_seen',False)
     
-    is_seen = request.session.get('is_seen',False)
     if not(is_seen):
-        request.session['is_seen']=leadform.id
+        request.session[str(leadform.id)+'_seen']=leadform.id
         leadform.seen += 1
         leadform.save(update_fields=['seen'])
     fields=leadform.formfields_set.all().order_by('order')
