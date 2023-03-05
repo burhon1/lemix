@@ -44,6 +44,7 @@ def forms_view(request):
             create_qrcode(data, obj)
             return JsonResponse({'id': obj.id}, status=201)
         else:
+            print(form.errors.items())
             errors = dict(form.errors.items())
             return JsonResponse(errors, status=400, safe=False)
     educenter_ids = educenter.values_list('id',flat=True)
@@ -84,10 +85,11 @@ def form_update_view(request, pk):
         educenters=post.get('educenters',False)
         courses=post.get('courses',False)
         sources=post.get('sources',False)
-        if name and title and comment:
-            instance.comment=comment
+        if name and title:
             instance.title=title
             instance.name=name
+            if comment:
+                instance.comment=comment
             if educenters:
                 instance.educenters=EduCenters.objects.get(id=educenters) 
             if courses:
@@ -268,15 +270,13 @@ def lead_registration2_view(request, pk):
         else:
             data['source']= leadform.sources 
         phone_number=post.get('phone',False)
-        telegram=post.get('telegram',False)
         fio=post.get('fio',False)   
         groups = Group.objects.filter(name="Lead")
         status,obj = user_add(groups,request,True).values()
         # for field in fields:
         #     data['source']=
-        if phone_number and telegram and fio and status==200:
+        if phone_number and fio and status==200:
             data['user']=obj
-            data['telegram']=telegram
             data['via_form']=leadform
             form_lead = FormLead(**data)
             form_lead.save()

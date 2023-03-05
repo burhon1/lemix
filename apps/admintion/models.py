@@ -252,7 +252,7 @@ class LeadForms(models.Model):
     name  = models.CharField(max_length=150, verbose_name="Forma nomi", null=True, blank=True)
     title = models.CharField(max_length=150, verbose_name="Forma sarlavhasi")
     image = models.ImageField(upload_to='forms',null=True,blank=True)
-    comment = models.CharField(max_length=2000, null=True)
+    comment = models.CharField(max_length=2000, null=True,blank=True)
     educenters = models.ForeignKey(EduCenters,on_delete=models.CASCADE, null=True, blank=True)
     courses = models.ForeignKey(Course,on_delete=models.CASCADE, null=True, blank=True)
     sources = models.ForeignKey('Sources',on_delete=models.CASCADE, null=True, blank=True)

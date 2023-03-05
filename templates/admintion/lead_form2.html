@@ -133,15 +133,15 @@
                                                       {% endfor %}
                                                       </select>
                                                     {% endif %}
+                                                    <input type="text" name="fio" class="form-control mb-3" placeholder="fio" id="">
                                                         <div class="new"
                                                             style="display:flex; justify-content: flex-start;">
                                                             <label
                                                                 style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
                                                             <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone"
-                                                                placeholder="990001122" name="phone">
+                                                                placeholder="" name="phone">
                                                         </div>
-                                                        <input type="text" name="telegram" class="form-control  form-control-default mb-3" placeholder="Telegram raqami" maxlength="15" required="" id="id_telegram">
-                                                        <input type="text" name="fio" class="form-control mb-3" placeholder="fio" id="">
+                                                        
                                                         {% for field in fields %}
                                                         <input type="text" name="id_{{field.title}}" class="form-control mb-3" placeholder="{{field.title}}" id="id_title">
                                                         {% endfor %}
