@@ -17,8 +17,14 @@ class LeadFormQueryset(QuerySet):
             conversion=Cast(Round2(Case(When(seen=0,then=Value(0)),
                             default=(F('send_count')*1.0)/F('seen')*100,
                             output_field=FloatField())), output_field=CharField())
-            )\
-        .values('id','name','title','link','qrcode','seen','send_count','conversion').order_by('-id')
+            ).annotate(
+            color=Case(
+            When(conversion__lt=30,then=Value('danger')),
+            When(conversion__lt=69,then=Value('warning')),
+            When(conversion__lt=101,then=Value('success')),
+            default=Value('dark')
+            )
+        ).values('id','name','title','link','qrcode','seen','send_count','conversion','color').order_by('-id')
 
 class LeadFormManager(Manager):
     def get_query_set(self):
