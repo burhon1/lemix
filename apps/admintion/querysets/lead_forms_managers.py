@@ -8,7 +8,7 @@ class LeadFormQueryset(QuerySet):
         return self.filter(Q(educenters__id__in=educenter_id)|Q(educenters__isnull=True)).annotate(
             send_count=Count('formlead', distinct=True)
         )\
-        .annotate(conversion=F('send_count')/Value(100.0)*F('seen'))\
+        .annotate(conversion=F('seen')/Value(100.0)*F('send_count'))\
         .values('id','name','title','link','qrcode','seen','send_count','conversion').order_by('-id')
 
 class LeadFormManager(Manager):
