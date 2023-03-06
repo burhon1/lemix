@@ -224,7 +224,7 @@ Lidlar Ro'yxati- Lemix
                                             <td>
                                                 <div class="userDatatable-content d-inline-block">
                                                     <span
-                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">{{lead.status__status }}</span>
+                                                        class="bg-opacity-{{status__color}}  color-{{status__color}} rounded-pill userDatatable-content-status active">{{lead.status__status|default:'' }}</span>
                                                 </div>
 
                                             </td>
@@ -736,7 +736,7 @@ Lidlar Ro'yxati- Lemix
                                             </td> -->
                                             <td>
                                                 <div class="userDatatable-content d-inline-block">
-                                                    <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">None</span>
+                                                    <span class="bg-opacity-${element.status__color}  color-${element.status__color} rounded-pill userDatatable-content-status active">${element.status__status}</span>
                                                 </div>
                                             </td>
                                             <td>

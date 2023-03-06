@@ -13,6 +13,7 @@ from admintion.data.chooses import GET_GROUPS_DAYS, STUDENT_SOURCES
 from admintion.utils import get_list_of_filter
 from user.services.users import user_add
 from user.models import CustomUser
+from django.contrib import messages
 
 def leads_view(request):
     context = dict()
@@ -30,68 +31,74 @@ def leads_view(request):
             comment=post.get("description",False)
             parent=post.get("parent_name",False)
             parent_phone=post.get("parent_phone",False)
-            groups = Group.objects.filter(name="Lead")
-            telegram = post.get('telegram_telegram',None)
-            passport = post.get('passport_passport', None)
-            location = post.get('location_location', None)
-            email = post.get('email_location', None)
-            file = request.FILES.get('file_file',None)
+            if p_phone and source and statu_leads:
+                groups = Group.objects.filter(name="Lead")
+                telegram = post.get('telegram_telegram',None)
+                passport = post.get('passport_passport', None)
+                location = post.get('location_location', None)
+                email = post.get('email_location', None)
+                file = request.FILES.get('file_file',None)
 
-            task_date = post.get('task_date', None)
-            task_comment = post.get('task_comment', None)
-            task_who = post.get('task_who', None)
-            task_type = post.get('task_type', None)
-            group_date = post.get('group_date', None)
-            group = post.get('group', None)
-            status,obj = user_add(groups,request,True).values()
-            if status==200:
-                source = Sources.objects.filter(id=source).first()
-                status = LeadStatus.objects.filter(id=statu_leads).first()
-                form_lead = FormLead(
-                    user=obj,
-                    source=source,
-                    p_phone=p_phone,
-                    status=status,
-                    educenter=educenter.first()
-                )
-                form_lead.telegram=telegram
-                form_lead.passport=passport
-                # form_lead.file=file
-                if comment:
-                    form_lead.comment=comment
-                if parent and parent_phone:
-                    parent_user,created = CustomUser.objects.get_or_create(phone=parent_phone)
-                    parent_user.first_name = parent
-                    if parent_user.password == '':
-                        parent_user.set_password(parent_phone)
-                    form_lead.parents=parent_user    
-                form_lead.save()
-                if task_date and task_who and task_type:
-                    whom=CustomUser.objects.get(pk=task_who)
-                    task_type=TaskTypes.objects.get(id=task_type)
-                    user_task = UserTaskStatus.objects.filter(whom="Lead").first()
-                    task = Tasks(
-                        comment=task_comment,
-                        deadline=task_date,
+                task_date = post.get('task_date', None)
+                task_comment = post.get('task_comment', None)
+                task_who = post.get('task_who', None)
+                task_type = post.get('task_type', None)
+                group_date = post.get('group_date', None)
+                group = post.get('group', None)
+                status,obj = user_add(groups,request,True).values()
+                if status==200:
+                    source = Sources.objects.filter(id=source).first()
+                    status = LeadStatus.objects.filter(id=statu_leads).first()
+                    form_lead = FormLead(
+                        user=obj,
+                        source=source,
+                        p_phone=p_phone,
+                        status=status,
                         author=request.user,
-                        task_type=task_type,
-                        educenter=educenter.first(),
-                        user_status=user_task
+                        educenter=educenter.first()
                     )
-                    
-                    task.save()
-                    if group_date and group:
-                        group =GroupModel.objects.filter(id=group).first()
-                        lead_demo = LeadDemo(
-                            lead=form_lead,
-                            group=group,
-                            date=group_date
+                    form_lead.telegram=telegram
+                    form_lead.passport=passport
+                    # form_lead.file=file
+                    if comment:
+                        form_lead.comment=comment
+                    if parent and parent_phone:
+                        parent_user,created = CustomUser.objects.get_or_create(phone=parent_phone)
+                        parent_user.first_name = parent
+                        if parent_user.password == '':
+                            parent_user.set_password(parent_phone)
+                        form_lead.parents=parent_user    
+                    form_lead.save()
+                    if task_date and task_who and task_type:
+                        whom=CustomUser.objects.get(pk=task_who)
+                        task_type=TaskTypes.objects.get(id=task_type)
+                        user_task = UserTaskStatus.objects.filter(whom="Lead").first()
+                        task = Tasks(
+                            comment=task_comment,
+                            deadline=task_date,
+                            author=request.user,
+                            task_type=task_type,
+                            educenter=educenter.first(),
+                            user_status=user_task
                         )
-                        lead_demo.save()
-                        task.leads.add(form_lead)
-                    task.responsibles.add(whom)
-                return redirect(reverse('admintion:lead-list'))
-        return redirect(reverse('admintion:lead-list')+f"?error=Filyalni tanlang")        
+                        
+                        task.save()
+                        if group_date and group:
+                            group =GroupModel.objects.filter(id=group).first()
+                            lead_demo = LeadDemo(
+                                lead=form_lead,
+                                group=group,
+                                date=group_date
+                            )
+                            lead_demo.save()
+                            task.leads.add(form_lead)
+                        task.responsibles.add(whom)
+                    return redirect(reverse('admintion:lead-list'))
+            else:
+                messages.error(request, f"Majburiy maydonlarni to'ldiring!") 
+                return redirect(reverse('admintion:lead-list')+f"") 
+        messages.error(request, f"Filyalni tanlang")    
+        return redirect(reverse('admintion:lead-list')+f"")        
     educenter_ids=educenter.values_list('id',flat=True)
     context['objs'] = FormLead.leads.leads(educenter_ids)
     context['sources'] = Sources.objects.all() 
@@ -99,7 +106,7 @@ def leads_view(request):
     context['groups'] = list(GroupModel.groups.group_list(educenter_ids))
     context['task_types'] = list(TaskTypes.objects.annotate(title=F('task_type')).values('id', 'title'))
     context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
-    print(len(list(context['objs'])))
+    print(list(context['objs'])[3])
     context['keys'] = ['check',
             'full_name',
             'phone_number',

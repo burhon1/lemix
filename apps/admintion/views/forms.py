@@ -274,7 +274,8 @@ def lead_registration2_view(request, pk):
         else:
             data['source']= leadform.sources 
         phone_number=post.get('phone',False)
-        fio=post.get('fio',False)   
+        fio=post.get('fio',False) 
+        data['status'] = LeadStatus.objects.get_or_create(status='Telefon qilish',color='danger')
         groups = Group.objects.filter(name="Lead")
         status,obj = user_add(groups,request,True).values()
         # for field in fields:

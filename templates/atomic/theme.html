@@ -136,6 +136,9 @@
     }
 
 </script>
+        {% for message in messages %}
+        <script>getAlert("{{message}}",'danger');</script>
+        {% endfor %}
 {% block script %}
 {% endblock %}
 </html>

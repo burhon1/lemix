@@ -8,6 +8,14 @@ Lidlar Ro'yxati- Lemix
 
 {% block style %}
 <style>
+    .error
+    {
+    color: red;
+    }
+    .msg
+    {
+    display:none;
+    }
     .cardPay {
         position: relative;
     }
@@ -240,8 +248,7 @@ Lidlar Ro'yxati- Lemix
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content d-inline-block">
-                                                    <span
-                                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">{{lead.status__status|default:'' }}</span>
+                                                    <span class="bg-opacity-{{status__color}}  color-{{status__color}} rounded-pill userDatatable-content-status active">{{lead.status__status|default:'' }}</span>
                                                 </div>
 
                                             </td>
@@ -261,7 +268,7 @@ Lidlar Ro'yxati- Lemix
                                                                     <span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">
                                                                         Havola orqali
                                                                     </span>
-                                                                </small>{{ lead.via_form__title }}
+                                                                </small>
                                                                 {% else %}
                                                                 {{lead.author_name}}
                                                                 {% endif %}
@@ -431,24 +438,24 @@ Lidlar Ro'yxati- Lemix
             <div class="atbd-drawer__body">
                 <div class="drawer-content">
                     <div class="drawer-account-form form-basic">
-                        <form action="{% url 'admintion:lead-list' %}" method="post">
+                        <form action="{% url 'admintion:lead-list' %}" method="post" id="form">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label for="fio">Ism</label>
+                                    <label for="fio"><b class="text-danger">*</b>Ism</label>
                                     <input type="text" name="fio" id="fio"
                                         class="form-control form-control-sm border-light"
                                         placeholder="Isminggiz...">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label for="tel">Telefon raqam</label>
-                                    <input type="text" name="phone" id="phone"
+                                    <label for="tel"><b class="text-danger">*</b>Telefon raqam</label>
+                                    <input name="phone" id="phone"
                                         class="form-control form-control-sm border-light"
-                                        placeholder="(99) 123-45-67">
+                                        placeholder="** ***_**_**" type="text"  maxlength="9">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label for="manba">Manbasi</label>
-                                    <select name="manba" id="manba" class="form-control-sm border-light">
+                                    <label for="manba"><b class="text-danger">*</b>Manbasi</label>
+                                    <select name="manba" id="manba" class="form-control-sm border-light" required>
                                         <option value="0">-----------</option>
                                         {% for source in sources %}
                                         <option value="{{source.id}}">{{ source.title }}</option>
@@ -456,8 +463,8 @@ Lidlar Ro'yxati- Lemix
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label for="hol">Holati</label>
-                                    <select name="hol" id="hol" class="form-control-sm border-light">
+                                    <label for="hol"><b class="text-danger">*</b>Holati</label>
+                                    <select name="hol" id="hol" class="form-control-sm border-light" required>
                                         <option value="0">-----------</option>
                                         {% for status in lead_statuses %}
                                         <option value="{{status.id}}">{{ status.status }}</option>
@@ -644,17 +651,6 @@ Lidlar Ro'yxati- Lemix
 
     {% endblock %}
     {% block script %}
-    <script>
-        var params = new URLSearchParams(window.location.search)
-        if (params.has('success')) {
-            alert("malumotlar qo'shildi")
-        }
-        else if (params.has('error')) {
-
-            getAlert(params.get("error"),'danger');
-            params.delete('error')
-        }
-    </script>
     <script>
         function changeLeadStatus(id,) {
             var url = `/admintion/leads/${id}/archive/`;
@@ -1119,7 +1115,7 @@ Lidlar Ro'yxati- Lemix
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content d-inline-block">
-                                                    <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"></span>
+                                                    <span class="bg-opacity-${element.status__color}  color-${element.status__color} rounded-pill userDatatable-content-status active">${element.status__status}</span>
                                                 </div>
                                             </td>
 
@@ -1133,7 +1129,7 @@ Lidlar Ro'yxati- Lemix
                                                     <div class="userDatatable-inline-title">
                                                         <a href="#" class="text-dark fw-500">
                                                             <h6>
-                                                                ${element.via_form__title!==null?'<small><span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>'+element.via_form__title:element.author_name}
+                                                                ${element.via_form__title!==null?'<small><span class="bg-opacity-primary  color-primary b-2 userDatatable-content-status active">Havola orqali</span></small>':element.author_name}
                                                             </h6>
                                                         </a>
                                                         <p class="d-block mb-0">

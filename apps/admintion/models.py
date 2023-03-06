@@ -116,6 +116,7 @@ class Payment(models.Model):
 
 class LeadStatus(models.Model):
     status = models.CharField("Status nomi", max_length=200)
+    color = models.CharField("Status rangi", max_length=200, null=True, blank=True)
     
 class FormLead(models.Model):
     source = models.ForeignKey('Sources', models.SET_NULL, null=True) #models.PositiveSmallIntegerField(choices=chooses.STUDENT_SOURCES, null=True)
