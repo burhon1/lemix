@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from admintion.models import LeadForms,Course,Sources,FormLead,FormUniversalFields,FormFields,EduCenters,Contacts, LeadStatus
-from admintion.forms.leads import LeadFormClass,FieldsFormSet,ContactsFormSet,LeadFormRegisterForm
+from admintion.forms.leads import LeadFormClass,LeadSaveFormClass,FieldsFormSet,ContactsFormSet,LeadFormRegisterForm
 from admintion.services.qrcode import create_qrcode
 from user.services.users import user_add
 
@@ -19,13 +19,12 @@ def forms_view(request):
         qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
     educenter = EduCenters.objects.filter(qury)
     if request.method == 'POST':
-        form = LeadFormClass(request.POST, request.FILES)
+        form = LeadSaveFormClass(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             educenters = request.POST.get('educenters',False)
             sources = request.POST.get('sources',False)
             courses = request.POST.get('courses',False)
-    
             # obj.save()
             if educenters:
                 # obj.educenters.add(EduCenters.objects.filter(id=educenter).first())
@@ -44,14 +43,14 @@ def forms_view(request):
             create_qrcode(data, obj)
             return JsonResponse({'id': obj.id}, status=201)
         else:
-            print(form.errors.items())
             errors = dict(form.errors.items())
+            print(errors)
             return JsonResponse(errors, status=400, safe=False)
     educenter_ids = educenter.values_list('id',flat=True)
     context = {
         'objs':LeadForms.lead_forms.lead_forms(educenter_ids),
         'form': LeadFormClass(),
-    }         
+    }       
     return render(request,'admintion/forms.html',context) 
 
 @login_required

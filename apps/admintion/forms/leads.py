@@ -38,6 +38,35 @@ class LeadFormClass(forms.ModelForm):
 
     def clean(self):
         title = self.cleaned_data.get('title')
+        print(self.cleaned_data.get('sources'))
+        titles = [ obj['title'] for obj in list(self._meta.model.objects.values('title'))]
+        name = self.cleaned_data.get('name', None)
+        if self.instance is None:
+            if title in titles:
+                i = 1
+                while f"{title} {i}" in titles: 
+                    i += 1
+                title = f"{title} {i}"
+            names = [ obj['name'] for obj in list(self._meta.model.objects.values('name'))]
+            if name in names:
+                i = 1
+                while f"{name} {i}" in names: 
+                    i += 1
+                name = f"{name} {i}"
+            if name is None:
+                name = title
+        self.cleaned_data['title'] = title
+        self.cleaned_data['name'] = name
+        return self.cleaned_data
+
+class LeadSaveFormClass(forms.ModelForm):
+    class Meta:
+        model = LeadForms
+        exclude = ('link','seen','qrcode','educenters','sources','courses')
+
+    def clean(self):
+        title = self.cleaned_data.get('title')
+        print(self.cleaned_data.get('sources'))
         titles = [ obj['title'] for obj in list(self._meta.model.objects.values('title'))]
         name = self.cleaned_data.get('name', None)
         if self.instance is None:
