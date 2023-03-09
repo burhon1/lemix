@@ -69,6 +69,9 @@ def groups_view(request):
                             
                 group.save()
                 group.days.add(*days)
+                valuenext= request.POST.get('next',False)
+                if valuenext:
+                    return redirect(valuenext)
                 return redirect('admintion:groups')
             else: 
                 context['error'] = 'Malumotlar to\'liq kiritilmadi'  

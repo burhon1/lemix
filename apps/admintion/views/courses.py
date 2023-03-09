@@ -5,9 +5,9 @@ from django.forms import model_to_dict
 from django.db.models import Q
 from django.contrib.auth.decorators import permission_required, login_required
 from django.core.exceptions import PermissionDenied
-from admintion.models import Course,EduCenters
+from admintion.models import Course,EduCenters,Group,Teacher,Room,Student
 from admintion.forms.courses import CourseForm
-from admintion.data.chooses import COURCE_DURATION_TYPES,LESSON_DURATION_TYPES,PRICE_TYPES
+from admintion.data.chooses import COURCE_DURATION_TYPES,LESSON_DURATION_TYPES,PRICE_TYPES, GROUPS_DAYS,GROUPS_STATUS
 from education.selectors import get_courses_data
 from user.utils import get_admins
 from admintion.utils import get_list_of_dict,get_list_of_filter
@@ -74,6 +74,7 @@ def courses_by_filter_view(request):
 
     courses = list(Course.courses.course_filter(filter_keys,educenter_ids))
     return JsonResponse({'data':courses,'status':200})
+
 @permission_required('admintion.delete_course')
 def course_delete_view(request, pk):
     if request.method == 'POST':
@@ -86,10 +87,25 @@ def course_delete_view(request, pk):
 
 @permission_required('admintion.view_course')
 def course_detail_view(request, pk):
-    course = get_object_or_404(Course, id=pk)
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
     context = dict()
-    context['course'] = get_courses_data([course], teacher=request.user.teacher_set.first())[0]
-    
+    # context['course'] = get_courses_data([course], teacher=request.user.teacher_set.first())[0]
+    educenter_ids = educenter.values_list('id',flat=True)             
+    teacher = Teacher.teachers.teacher_all(educenter_ids) 
+    context['teachers'] = teacher.main_teacher()
+    context['trainers'] = teacher.trainer_list() 
+    context['rooms'] = Room.rooms.rooms(educenter_ids)
+    context['groups'] = Group.groups.groups_by_course(educenter_ids,pk)
+    context['days'] = [{'id':i[0],'title':i[1]} for i in GROUPS_DAYS]
+    context['group_status'] = [{'id':i[0],'title':i[1]} for i in GROUPS_STATUS] 
+    context['course_id']=pk
+    context['course'] = Course.courses.course(pk)
+    context['teachers_list']=Teacher.teachers.teachers_by_course(educenter_ids,pk)
+    context['student_list']=Student.students.students_by_course(educenter_ids,pk)
     return render(request,'admintion/course_detail.html', context) 
 
 

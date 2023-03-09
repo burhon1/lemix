@@ -8,6 +8,7 @@ urlpatterns = [
     path('employee/<int:id>/detail/',employes.employee_detail_view,name='employee-detail'),
     path('rooms/',rooms.rooms_view,name='rooms'),
     path('courses/',courses.courses_view,name='courses'),
+    # path('course/<int:id>/detail/',courses.course_detail_view,name='course-detail'),
     path('get-course-list/',courses.get_course_list_view,name='get-course-list'),
     path('courses/filter/',courses.courses_by_filter_view,name='courses-filter'),
     path('courses/<int:pk>/delete/', courses.course_delete_view, name='course-delete'),

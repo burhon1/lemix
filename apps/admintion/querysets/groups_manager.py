@@ -26,15 +26,20 @@ class GroupQueryset(QuerySet):
                 'room__title',
                 'start_date',
                 'limit',
+                'start_date'
             ).annotate(
                 course=F("course__title"),
                 teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
                 times = Concat(Substr(Cast(F('start_time'), TextField()),1,5),Value('-'),Substr(Cast(F('end_time'), TextField()),1,5),output_field=CharField()),
                 total_student=Count('students',distinct=True),
                 days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
+                formatted_date=Func(
+                    F('start_date'),
+                    Value('DD-MM-YYYY'),
+                    function='to_char',
+                    output_field=CharField()
                 )
-            for item in datas:
-                item['days'] = 'as'   
+                )
         return datas         
                 
     def groups(self, educenter_ids,short_info=False):
@@ -56,10 +61,11 @@ class GroupQueryset(QuerySet):
                 'course__price',
                 'days',
                 'limit',
+                'formatted_date'
             )
         return self.get_info(educenter_ids).values(
                 *columns
-            )  
+            ).order_by('-id')  
     def group_list(self,educenter_id):
         return self.get_info(educenter_id,True)        
 
@@ -105,6 +111,9 @@ class GroupQueryset(QuerySet):
             days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
         )
 
+    def groups_by_course(self,course_id,educenter_ids,short_info):
+        return self.filter(course__id=course_id).groups(educenter_ids,short_info=short_info)
+
     def group_filter_list(self,filters,educenter_ids):
         return self.filter(educenter__id__in=educenter_ids) \
                     .filter(**filters).values('id','title')
@@ -132,6 +141,9 @@ class GroupManager(Manager):
 
     def groups(self,educenter_ids, short_info=False):
         return self.get_query_set().groups(educenter_ids,short_info=short_info) 
+    
+    def groups_by_course(self,educenter_ids, course_id, short_info=False):
+        return self.get_query_set().groups_by_course(course_id,educenter_ids,short_info) 
 
     def group_list(self,educenter_id):
         return self.get_query_set().group_list(educenter_id)   

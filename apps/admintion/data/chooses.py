@@ -124,3 +124,13 @@ MESSAGE_STATUS = (
     (6, 'REJECTD'),
     (7, 'DELETED'),
 )
+
+EXAM_FORMAT = (
+    (1,'online'),
+    (2,'offline')
+)
+
+EXAM_TYPE = (
+    (1,'tur 1'),
+    (2,'tur 2')
+)

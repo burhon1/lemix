@@ -1,5 +1,6 @@
 {% extends 'atomic/theme.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block style %}
 <style>
     .cardPay {
@@ -83,44 +84,16 @@
         height: 120px;
     }
 </style>
-<style>
-    .alert-wrapper{
-        position: absolute;
-        top: 0%;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10000;
-        margin: 20px auto;
-    }
-    .timer-indicator{
-        width: 100%;
-        height: 3px;
-    }
-    .timer-inner{
-        height: 3px;
-        position: relative;
-        animation: width 3s ease-in-out;
-    }
-    @keyframes width {
-        0%{
-            width: 0;
-        } 
-        100%{
-            width: 100%;
-        }
-    }
-</style>
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
     <div class="row mt-3">
-
         <div class="col-lg-12 mb-30">
             <div class="profile-info-box row">
                 <form class="col-md-3 col-sm-12" id="formedit">
                     <div class="card">
                         <div class="card-header border-bottom-none">
-                            <h6>Matematika</h6>
+                            <h6>{{course.title}}</h6>
                             <div class="card-extra">
                                 <div class="dropdown dropdown-hover">
                                     <a class="btn-link" href="#">
@@ -149,19 +122,19 @@
 
                             <ul class="v-history-list  pb-3 border-bottom" id="infoUser">
                                 <li class="w-100 mb-2"><span class="version-date">Kurs davomiyligi</span><span
-                                        class="version-name">6oy</span></li>
+                                        class="version-name">{{course.course_duration}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Dars davomiyligi</span><span
-                                    class="version-name">2soat</span></li>
+                                    class="version-name">{{course.course_lesson_duration}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Kurs narx</span><span
-                                        class="version-name">500 000 so'm</span></li>
+                                        class="version-name">{{course.course_price}}</span></li>
                             </ul>
                             <ul class="v-history-list  py-3">
                                 <li class="w-100 mb-2"><span class="version-date">Guruhlar</span><span
-                                        class="version-name">4ta</span></li>
+                                        class="version-name">{{course.group_count}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">O'qituvchilar</span><span
-                                        class="version-name">6ta</span></li>
+                                        class="version-name">{{course.teacher_count}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">O'quvchilar</span><span
-                                    class="version-name">50ta</span></li>
+                                    class="version-name">{{course.student_count}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">To'langan</span><span
                                     class="version-name">2 400 000</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Qarzdorlik</span><span
@@ -196,11 +169,6 @@
                                             <a class="nav-link" id="tab-v-teachers-tab" data-toggle="tab"
                                                 href="#tab-v-teachers" role="tab" aria-controls="tab-v-teachers"
                                                 aria-selected="false">O'qituvchilar</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-v-schedule-tab" data-toggle="tab"
-                                                href="#tab-v-schedule" role="tab" aria-controls="tab-v-schedule"
-                                                aria-selected="false">Kurs jadvali</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="tab-v-students-tab" data-toggle="tab"
@@ -422,6 +390,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
+                                                                            {% for group in groups %}
                                                                             <tr>
                                                                                 <td>
                                                                                     <div class="contact-item d-flex align-items-center">
@@ -429,59 +398,30 @@
                                                                                             <div class="checkbox-group-wrapper">
                                                                                                 <div class="checkbox-group d-flex">
                                                                                                     <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
-                                                                                                        <label for="check-grp-c-8"></label>
+                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-{{group.id}}">
+                                                                                                        <label for="check-grp-c-{{group.id}}"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="contact-personal-info d-flex">
                                                                                             <div class="contact_title">
-                                                                                                    <a href="#">Kellie Marquot</a>
+                                                                                                    <a href="{% url 'admintion:group-detail' id=group.id %}">{{group.title}}</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <span>Falonchi</span>
+                                                                                    <span>{{group.teacher}}</span>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <span>Du,Se,Cho 12:00</span>
+                                                                                    <span>{{group.days|readable_days3}} {{group.times}}</span>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <span>06.01.2023 - 02.03.2024</span>
+                                                                                    <span>{{group.formatted_date}}</span>
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="contact-item d-flex align-items-center">
-                                                                                        <div class="contact-personal-wrap">
-                                                                                            <div class="checkbox-group-wrapper">
-                                                                                                <div class="checkbox-group d-flex">
-                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
-                                                                                                        <label for="check-grp-c-8"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="contact-personal-info d-flex">
-                                                                                            <div class="contact_title">
-                                                                                                    <a href="#">Kellie Marquot</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span>Falonchi</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span>Du,Se,Cho 12:00</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span>06.01.2023 - 02.03.2024</span>
-                                                                                </td>
-                                                                            </tr>
+                                                                            {% endfor %}
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -545,6 +485,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
+                                                                            {% for teacher in teachers_list %}
                                                                             <tr>
                                                                                 <td>
                                                                                     <div class="contact-item d-flex align-items-center">
@@ -552,57 +493,29 @@
                                                                                             <div class="checkbox-group-wrapper">
                                                                                                 <div class="checkbox-group d-flex">
                                                                                                     <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
-                                                                                                        <label for="check-grp-c-8"></label>
+                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-{{teacher.id}}">
+                                                                                                        <label for="check-grp-c-{{teacher.id}}"></label>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="contact-personal-info d-flex">
                                                                                             <div class="contact_title">
-                                                                                                    <a href="#">Mr. Professor</a>
+                                                                                                    <a href="{% url 'admintion:teacher-detail' teacher.id %}">{{teacher.full_name}}</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <span>+998976543211</span>
+                                                                                    <span>{{teacher.phone_number}}</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <span>
-                                                                                        Matematika-1, SAT-2
+                                                                                        {{teacher.groups_list|readable_days3|default:'Guruhlari yoq'}}
                                                                                     </span>
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="contact-item d-flex align-items-center">
-                                                                                        <div class="contact-personal-wrap">
-                                                                                            <div class="checkbox-group-wrapper">
-                                                                                                <div class="checkbox-group d-flex">
-                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-8">
-                                                                                                        <label for="check-grp-c-8"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="contact-personal-info d-flex">
-                                                                                            <div class="contact_title">
-                                                                                                    <a href="#">Mr. Professor</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span>+998976543211</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span>
-                                                                                        Matematika-1, SAT-2
-                                                                                    </span>
-                                                                                </td>
-                                                                            </tr>
+                                                                            {% endfor %}
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -676,6 +589,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
+                                                                        {% for student in student_list %}
                                                                         <tr id="student-id">
                                                                             <td>
                                                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -684,7 +598,7 @@
                                                                                             <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
                                                                                                 <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-{{student.id}}">
                                                                                                 <label for="check-grp-{{student.id}}">
-                                                                                                    <span class="checkbox-text userDatatable-title">#1</span>
+                                                                                                    <span class="checkbox-text userDatatable-title">#{{forloop.counter}}</span>
                                                                                                 </label>
                                                                                             </div>
                                                                                         </div>
@@ -693,20 +607,20 @@
                                                                             </td>
                                                                             <td>
                                                                                 <div class="userDatatable-inline-title">
-                                                                                    <a href="" class="text-dark fw-500">
-                                                                                        <h6>Jonibek Negmurodov</h6>
+                                                                                    <a href="{% url 'admintion:student-detail' student.id %}" class="text-dark fw-500">
+                                                                                        <h6>{{student.full_name}}</h6>
                                                                                     </a>
                                                                                 </div>
                                                                             </td>
                                                                             <td>
                                                                                 <div class="userDatatable-content">
-                                                                                    +998926543211
+                                                                                    {{student.phone_number}}
                                                                                 </div>
                                                                             </td>
                                     
                                                                             <td>
                                                                                 <div class="userDatatable-content">
-                                                                                    4
+                                                                                    {{student.group_count}}
                                                                                 </div>
                                                                             </td>
                                     
@@ -714,11 +628,12 @@
                                                                                 <div class="userDatatable-content d-inline-block">
                                                                                         <span
                                                                                         class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">
-                                                                                        aktiv
+                                                                                        aktiv{{student.group_count}}
                                                                                         </span>    
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
+                                                                        {% endfor %}
                                                                     </tbody>
                                                                     </table>
                                                                 </div>
@@ -823,135 +738,103 @@
         <div class="modal-basic modal" id="modal-teachers" tabindex="-1" role="dialog"
                 aria-hidden="true">
                 <div class="modal-dialog modal-md" role="document">
+                    
                     <div class="modal-content modal-bg-white ">
-                        <div class="modal-header">
-                            <h6 class="modal-title">O'qituvchi qo'shish</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span data-feather="x"></span></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="was-validate" action="{% url 'admintion:teachers' %}" method="post">
-                                {% csrf_token %}
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="validationServer01"
-                                                class="il-gray fs-14 fw-500 align-center">FIO</label>
-                                            <input name="first_name" type="text"
-                                                class="form-control radius-xs b-deep"
-                                                id="validationServer01" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="validationServer01"
-                                                class="il-gray fs-14 fw-500 align-center">Telefon</label>
-                                            <div class="w-100 d-flex ">
-                                                <input name="phone" type="text" style="display:inlinle;"
-                                                    class="form-control radius-xs b-deep phone-js"
-                                                    id="validationServer01" maxlength="13" value="+998" required>
+                        <form class="was-validate" action="{% url 'admintion:teachers' %}" method="post">
+                            <div class="modal-header">
+                                <h6 class="modal-title">O'qituvchi qo'shish</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span data-feather="x"></span></button>
+                            </div>
+                            <div class="modal-body">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="validationServer01"
+                                                    class="il-gray fs-14 fw-500 align-center">FIO</label>
+                                                <input name="fio" type="text"
+                                                    autocomplete="off"
+                                                    class="form-control radius-xs b-deep"
+                                                    id="validationServer01" required>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
+        
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="validationServer01"
+                                                    class="il-gray fs-14 fw-500 align-center">Telefon</label>
+                                                <div class="w-100 d-flex ">
+                                                    <input name="phone" type="text" style="display:inlinle;"
+                                                        autocomplete="off"
+                                                        class="form-control radius-xs b-deep phone-js"
+                                                        id="validationServer01" maxlength="13" value="+998" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="validationServer04"
+                                                    class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                                    <div class="atbd-select ">
+                                                        <select name="teacer_type"
+                                                            class="form-control b-light select-arrow-none radius-xs fs-14"
+                                                            id="validationServer04"
+                                                            aria-describedby="validationServer04Feedback" required>
+                                                            <option selected disabled value="">Tanlang</option>
+                                                            <option value="1">O'qituvchi</option>
+                                                            <option value="0">Yordamchi(support)</option>
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-calender mb-20">
+                                                <label for="datepicker"
+                                                    class="il-gray fs-14 fw-500 align-center">Tug'ilgan
+                                                    sanasi</label>
+                                                <div class="position-relative">
+                                                    <input name="birthday" type="text"
+                                                        autocomplete="off"
+                                                        class="form-control radius-xs b-deep"
+                                                        id="datepicker" placeholder="2021-10-01">
+                                                    <a href="#"><span data-feather="calendar"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <label for="validationServer04"
-                                                class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                                class="il-gray fs-14 fw-500 align-center">Jinsi</label>
                                                 <div class="atbd-select ">
-                                                    <select name="teacer_type"
-                                                        class="form-control b-light select-arrow-none radius-xs fs-14"
+                                                    <select name="gender"
+                                                        class="form-control select-arrow-none radius-xs b-light fs-14"
                                                         id="validationServer04"
                                                         aria-describedby="validationServer04Feedback" required>
                                                         <option selected disabled value="">Tanlang</option>
-                                                        <option value="1">O'qituvchi</option>
-                                                        <option value="0">Yordamchi(support)</option>
+                                                        <option value="1">Erkak</option>
+                                                        <option value="2">Ayol</option>
                                                     </select>
                                                 </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-group-calender mb-20">
-                                            <label for="datepicker"
-                                                class="il-gray fs-14 fw-500 align-center">Tug'ilgan
-                                                sanasi</label>
-                                            <div class="position-relative">
-                                                <input name="birthday" type="date"
+                                        <div class="col-md-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="validationServer01"
+                                                    class="il-gray fs-14 fw-500 align-center">Manzil</label>
+                                                <input name="location" type="text" 
+                                                    autocomplete="off"
                                                     class="form-control radius-xs b-deep"
-                                                    id="datepicker" placeholder="2021-10-01">
-                                                <a href="#"><span data-feather="calendar"></span></a>
+                                                    id="validationServer01" required>
+                                                    <input type="hidden" name="next" value="{{ request.get_full_path }}"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="validationServer04"
-                                            class="il-gray fs-14 fw-500 align-center">Jinsi</label>
-                                            <div class="atbd-select ">
-                                                <select name="gender"
-                                                    class="form-control select-arrow-none radius-xs b-light fs-14"
-                                                    id="validationServer04"
-                                                    aria-describedby="validationServer04Feedback" required>
-                                                    <option selected disabled value="">Tanlang</option>
-                                                    <option value="1">Erkak</option>
-                                                    <option value="2">Ayol</option>
-                                                </select>
-                                            </div>
-                                        
-
-                                    </div>
-                                    <div class="col-md-{% if educenters %}6{% else %}12{% endif %} col-md-6">
-                                        <div class="form-group">
-                                            <label for="validationServer01"
-                                                class="il-gray fs-14 fw-500 align-center">Manzil</label>
-                                            <input name="location" type="text"
-                                                class="form-control radius-xs b-deep"
-                                                id="validationServer01" required>
-                                        </div>
-                                    </div>
-                                    <!-- {% if educenters.count == 1 %}
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="validationServer05"
-                                                class="il-gray fs-14 fw-500 align-center">Filial</label>
-                                            <select hidden name="educenter"
-                                                class="custom-select form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
-                                                id="validationServer04"
-                                                aria-describedby="validationServer04Feedback" required>
-                                                <option selected disabled value="">Tanlang</option>
-                                                {% for edu in educenters %}
-                                                <option selected value="{{ edu.id }}"> {{ edu.name }} </option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    {% elif educenters.count > 1 %} -->
-                                    <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="validationServer05"
-                                                class="il-gray fs-14 fw-500 align-center">Filiali</label>
-                                            <select name="educenter"
-                                                class="custom-select form-control select-arrow-none ih-medium  radius-xs b-light shadow-none color-light  fs-14"
-                                                id="validationServer04"
-                                                aria-describedby="validationServer04Feedback" required>
-                                                <option selected disabled value="">Tanlang</option>
-                                                {% for edu in educenters %}
-                                                <option value="{{ edu.id }}"> {{ edu.name }} </option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    {% endif %} -->
-                                    <div class="col-md-12 d-flex justify-content-between">
-                                        <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor
-                                qilish</button>
-                            <button type="button" class="btn btn-primary btn-sm">Saqlash</button>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor
+                                    qilish</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -1074,15 +957,14 @@
                                                         placeholder="Nomi" required="True">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 d-none">
                                                 <div class="form-group">
                                                     <label for="a1" class="il-gray fs-14 fw-500 align-center">Kurs</label>
                                                     <select name="course" id="owner" required="True"
                                                         class="form-control ih-medium ip-light radius-xs b-light px-15 form-course">
-                                                        {% for course in courses %}
-                                                        <option value="{{course.id}}">{{course.title}}</option>
-                                                        {% endfor %}
+                                                        <option value="{{course_id}}"></option>
                                                     </select>
+                                                    <input type="hidden" name="next" value="{{ request.get_full_path }}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -1090,12 +972,9 @@
                                                     <label for="a2" class="il-gray fs-14 fw-500 align-center">Statusi</label>
                                                     <select name="status" id="owner"  required="True"
                                                         class="form-control ih-medium ip-light radius-xs b-light px-15 form-status">
-                                                        <option value="1">tayyorlanmoqda</option>
-                                                        <option value="2">ishga tayyor</option>
-                                                        <option value="3">ishga tushgan</option>
-                                                        <option value="4">To'xtab turipdi</option>
-                                                        <option value="5">Tugatdi</option>
-                                                        <option value="6">Arxivchi</option>
+                                                        {% for status in group_status %}
+                                                        <option value="{{status.id}}">{{status.title}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -1105,7 +984,7 @@
                                                     <select name="teacher" id="owner"  required="True"
                                                         class="form-control ih-medium ip-light radius-xs b-light px-15 form-teacher">
                                                         {% for teacher in teachers %}
-                                                        <option value="{{teacher.id}}">{{teacher.user.first_name}}</option>
+                                                        <option value="{{teacher.id}}">{{teacher.full_name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -1117,7 +996,7 @@
                                                     <select name="trainer" id="owner"
                                                         class="form-control ih-medium ip-light radius-xs b-light px-15">
                                                         {% for trainer in trainers %}
-                                                        <option value="{{trainer.id}}">{{trainer.user.first_name}}</option>
+                                                        <option value="{{trainer.id}}">{{trainer.full_name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -1391,57 +1270,13 @@
             </div><!-- ends: .atbd-drawer__body -->
         <div class="overlay-dark"></div>
         <div class="overlay-dark-l2"></div>
+        
+        
+        
         </div>
 {% endblock %}
 {% block script %}
 <script>
-
-    var wrapper = document.querySelector(".alert-wrapper")
-    
-    function getAlert(message, type, duration){
-        var alertElement = `
-        <div class="alert alert-${type}  alert-dismissible " role="alert">
-            <div class="alert-content">
-                <p>${message}</p>
-                <div class="timer-indicator bg-opacity-${type} mt-3">
-                    <div class="timer-inner bg-${type}"></div>
-                </div>
-                <button type="button" class="close text-capitalize" data-dismiss="alert" aria-label="Close">
-                    <span data-feather="x" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>`
-        wrapper.innerHTML = alertElement;
-        for(let i=0;i<=100;i++){
-                var timerIndicator = document.querySelector(".timer-inner")
-                timerIndicator.style.width = `${i}%`
-        }
-        setTimeout(function(){
-            $(document).find(`.alert-${type}`).remove();
-        },3000);
-    }
-
-    getAlert("asdasdasdasdasdasdasdasdasdas dsad dsada sadsa dasdasdasdasd","info")
-
-    function getSpinner(isActive, wrapper){
-        var spinnerElement = `
-            <span class="loader-overlay d-inline-block">
-                <div class="atbd-spin-dots spin-lg">
-                    <span class="spin-dot badge-dot dot-primary"></span>
-                    <span class="spin-dot badge-dot dot-primary"></span>
-                    <span class="spin-dot badge-dot dot-primary"></span>
-                    <span class="spin-dot badge-dot dot-primary"></span>
-                </div>
-            </span>
-        `
-
-        if(isActive){
-            wrapper.innerHTML = spinnerElement;
-        }
-    }
-
-    getSpinner(false, wrapper)
-
     var form = document.querySelector('.view-form');
     var formName = document.querySelector(".form-name");
     var formPhone = document.querySelector(".form-phone");
@@ -1804,6 +1639,5 @@
         })
            
     }
-
 </script>
 {% endblock %}

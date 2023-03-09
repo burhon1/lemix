@@ -6,7 +6,7 @@ from admintion.querysets import (
 )
 from admintion.data import chooses
 from user.data.chooses import COURSES_SEXES
-from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES, MESSAGE_STATUS
+from admintion.data.chooses import TASK_STATUS, TEACHER_TYPE, MESSAGE_TYPE,CONTACT_TYPES, MESSAGE_STATUS,EXAM_FORMAT,EXAM_TYPE
 from admintion.validators import validate_file_size
 
 class RoomImage(models.Model):
@@ -318,3 +318,18 @@ class Districts(models.Model):
     
     def __str__(self):
         return self.name
+    
+
+class Exam(models.Model):
+    format = models.PositiveSmallIntegerField(choices=EXAM_FORMAT, default=1)  
+    type = models.PositiveSmallIntegerField(choices=EXAM_TYPE, default=1)   
+    title = models.CharField(max_length=100)
+    day = models.DateField()
+    time = models.TimeField()
+    duration = models.CharField(max_length=100)
+    comment = models.TextField()
+    file = models.FileField(upload_to='educenters/')
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title 

@@ -104,6 +104,24 @@ class StudentQueryset(QuerySet):
             sgroups = ArrayAgg(F('ggroups__group__title')),
         ).filter(id=id).first()
 
+    def students_by_course(self,educenter_ids,pk):
+        return self.filter(ggroups__group__course__id=pk)\
+                    .annotate(
+                        full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+                        phone_number=Concat(
+                            Value('+998'),
+                            Value(' ('),
+                            Substr(F('user__phone'),1,2),
+                            Value(') '),
+                            Substr(F('user__phone'),3,3),
+                            Value(' '),
+                            Substr(F('user__phone'),6,2),
+                            Value(' '),
+                            Substr(F('user__phone'),8,2)
+                            ),
+                        group_count=Count(F('ggroups__group__id'),distinct=True)
+                    ).values('id','full_name','phone_number','group_count','status')
+
     def student_list(self):
         return self.get_info().filter(status=1).values('id','full_name') 
 
@@ -135,6 +153,9 @@ class StudentManager(Manager):
     
     def students(self,educenter_ids):
         return self.get_query_set().students(educenter_ids) 
+    
+    def students_by_course(self,educenter_ids,pk):
+        return self.get_query_set().students_by_course(educenter_ids,pk)
 
     def students_attendace(self,id):
         return self.get_query_set().students_attendace(id)
