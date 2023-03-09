@@ -42,7 +42,7 @@ class CoursesQueryset(QuerySet):
                         student_count=Count('group__students', distinct=True),
                         course_duration=Case(
                                     When(duration_type=1,then=Concat(F('duration'),Value(' '),Value('kun'))), 
-                                    When(duration_type=1,then=Concat(F('duration'),Value(' '),Value('oy'))), 
+                                    When(duration_type=2,then=Concat(F('duration'),Value(' '),Value('oy'))), 
                                     default= Concat(F('duration'),Value(' '),Value('yil')),
                                     output_field=CharField()
                         ),
@@ -53,7 +53,7 @@ class CoursesQueryset(QuerySet):
                         ),
                         course_price=Case(
                                     When(price_type=1,then=Concat(F('price'),Value(' '),Value('so\'m'))), 
-                                    When(price_type=1,then=Concat(F('price'),Value(' '),Value('rubl'))), 
+                                    When(price_type=2,then=Concat(F('price'),Value(' '),Value('rubl'))), 
                                     default= Concat(F('duration'),Value(' '),Value('dollar')),
                                     output_field=CharField()
                         ),
@@ -63,7 +63,7 @@ class CoursesQueryset(QuerySet):
                                     default=Value('0ta(0)'),
                                     output_field=CharField()
                         )
-                    ).values('id','title','course_duration','course_lesson_duration','course_price','group_count','teacher_count','student_count').first()
+                    ).values('id','title','course_duration','course_lesson_duration','course_price','group_count','teacher_count','student_count','duration','duration_type','lesson_duration','lesson_duration_type','price','price_type','comment').first()
 
 class CoursesManager(Manager):
     def get_query_set(self):

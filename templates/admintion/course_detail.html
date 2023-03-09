@@ -628,8 +628,7 @@
                                                                                 <div class="userDatatable-content d-inline-block">
                                                                                         <span
                                                                                         class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">
-                                                                                        aktiv{{student.group_count}}
-                                                                                        </span>    
+                                                                                        aktiv</span>    
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -844,7 +843,7 @@
         <div class="drawer-basic-wrap">
             <div class="atbd-drawer drawer-account d-none">
                 <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
-                    <h3>Kurs qo'shish</h3>
+                    <h3>Kurs yangilash</h3>
                     <h6 class="drawer-title"></h6>
                     <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
                 </div>
@@ -855,7 +854,7 @@
         
                         <div class="drawer-account-form form-basic">
         
-                            <form action="{% url 'admintion:courses' %}" method="post">
+                            <form  method="post" action="{% url 'admintion:course-detail' course.id %}">
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-12">
@@ -863,7 +862,7 @@
                                             <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
                                             <input name="title" type="text"
                                                 class="form-control b-deep" id="a1"
-                                                placeholder="Nomi">
+                                                placeholder="Nomi" value="{{course.title}}">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -872,12 +871,12 @@
                                             <div class="d-flex align-items-baseline ">
                                                 <input name="duration" type="number"
                                                 class="form-control radius-xs b-deep" id="duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
-                                                placeholder="Kurs davomiyligi">
+                                                placeholder="Kurs davomiyligi" value="{{course.duration}}">
                                                 <div class="atbd-select m-0 p-0">
-                                                    <select name="select-1" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
-                                                        <option value="01">kun</option>
-                                                        <option value="02">oy</option>
-                                                        <option value="03">yil</option>
+                                                    <select name="course_duration_type" id="select-1" sele="{{course.duration_type}}" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        <option value="1" {% if course.duration_type == 1 %}selected{% endif %}>kun</option>
+                                                        <option value="2" {% if course.duration_type == 2 %}selected{% endif %}>oy</option>
+                                                        <option value="3" {% if course.duration_type == 3 %}selected{% endif %}>yil</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -890,11 +889,11 @@
                                             <div class="d-flex align-items-baseline ">
                                                 <input name="lesson_duration" type="number"
                                                 class="form-control radius-xs b-deep" id="lesson_duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
-                                                placeholder="Kurs davomiyligi">
+                                                placeholder="Kurs davomiyligi" value="{{course.lesson_duration}}">
                                                 <div class="atbd-select m-0 p-0">
-                                                    <select name="select-1" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
-                                                        <option value="01">daqiqa</option>
-                                                        <option value="02">soat</option>
+                                                    <select name="lesson_duration_type" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        <option value="1" {% if course.lesson_duration_type == 1 %}selected{% endif %}>daqiqa</option>
+                                                        <option value="2" {% if course.lesson_duration_type == 2 %}selected{% endif %}>soat</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -906,12 +905,12 @@
                                             <div class="d-flex align-items-baseline ">
                                                 <input name="price" type="number"
                                                 class="form-control radius-xs b-deep" id="price" style="border-top-right-radius:0;border-bottom-right-radius:0;"
-                                                placeholder="Kurs davomiyligi">
+                                                placeholder="Kurs davomiyligi" value="{{course.price}}">
                                                 <div class="atbd-select m-0 p-0">
-                                                    <select name="select-1" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
-                                                        <option value="01">so'm</option>
-                                                        <option value="02">rubl</option>
-                                                        <option value="03">dollar</option>
+                                                    <select name="price_type" id="select-1" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        <option value="1" {% if course.price_type == 1 %}selected{% endif %}>so'm</option>
+                                                        <option value="2" {% if course.price_type == 2 %}selected{% endif %}>rubl</option>
+                                                        <option value="3" {% if course.price_type == 3 %}selected{% endif %}>dollar</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -922,7 +921,7 @@
                                         <label for="exampleFormControlTextarea1"
                                             class="il-gray fs-14 fw-500 align-center">Izoh</label>
                                         <textarea name="comment" class="form-control b-deep" id="exampleFormControlTextarea1"
-                                            rows="3"></textarea>
+                                            rows="3" value="{{course.comment}}"></textarea>
                                     </div>
         
                                     <div class="modal-footer">

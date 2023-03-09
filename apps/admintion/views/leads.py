@@ -106,7 +106,7 @@ def leads_view(request):
     context['groups'] = list(GroupModel.groups.group_list(educenter_ids))
     context['task_types'] = list(TaskTypes.objects.annotate(title=F('task_type')).values('id', 'title'))
     context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
-    print(list(context['objs'])[3])
+
     context['keys'] = ['check',
             'full_name',
             'phone_number',
