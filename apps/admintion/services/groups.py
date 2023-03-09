@@ -5,10 +5,11 @@ from admintion.utilts.users import get_days,get_month,get_attendace_days
 from admintion.templatetags.custom_tags import attendance_result
 from datetime import date,datetime
 
-def get_attendace(id,start_date,day_today=date.today()):
+def get_attendace(id,start_date,educenter_ids,day_today=date.today()):
     context = {}
-    context['students'] = Student.students.student_balances(id)
-    context['students_attendace'] = Student.students.students_attendace(id)
+    # print( Student.students.student_balances(id))
+    context['students'] = Student.students.student_balances(id,educenter_ids)
+    context['students_attendace'] = Student.students.students_attendace(id,educenter_ids)
     context['leads_attendace'] = FormLead.leads.leads_attendace(id)
     datas = []
     context['leads_attendace'] = list(context['leads_attendace']) 

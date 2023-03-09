@@ -130,8 +130,9 @@ def group_detail_view(request,id):
     if group is None:
         raise Http404("Bunday guruh mavjud emas.")
     context = {'date': timezone.now().date(), 'form': GroupForm(), 'group':group, 'group_obj':group1}
-    context = context | get_attendace(id,context['group']['start_date'])
-    context['student_list'] = Student.students.studet_list()
+    # print(get_attendace(id,context['group']['start_date'],educenter_ids=educenter_ids))
+    context = context | get_attendace(id,context['group']['start_date'],educenter_ids=educenter_ids)
+    context['student_list'] = Student.students.studet_list(educenter_ids)
     context['tasks'] = Tasks.tasks.group_tasks(id=id)
     context['today_tasks'] = len([task for task in context['tasks'] if task['deadline'].date() == timezone.now().date()])
     context['task_types'] = TaskTypes.objects.all()
@@ -148,11 +149,16 @@ def group_delete_view(request, id):
 
 def get_attendace_view(request):
     context = {}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)  
     data = json.loads(request.body)
     year_month = data['date']
     take_date = datetime.strptime(year_month+'-01','%Y-%m-%d') 
-    context['group'] = Group.groups.group(data['group_id'])
-    context = context | get_attendace(data['id'],context['group']['start_date'],take_date)
+    context['group'] = Group.groups.group(data['group_id'],educenter_ids)
+    context = context | get_attendace(data['id'],context['group']['start_date'],educenter_ids,take_date)
     context['students_attendace']=list(context['students_attendace'])
     
     del context['students']

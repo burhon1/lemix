@@ -41,8 +41,8 @@ class StudentQueryset(QuerySet):
             attendace = ArrayAgg(F('ggroups__attendance'), distinct=True)
         ).order_by('-id')
 
-    def students_attendace(self,id):
-        return self.get_info().filter(ggroups__group__id=id).values(
+    def students_attendace(self,id,educenter_ids):
+        return self.get_info(educenter_ids).filter(ggroups__group__id=id).values(
             'id',
             'full_name'
         ).annotate(
@@ -57,8 +57,8 @@ class StudentQueryset(QuerySet):
             )),
         )
 
-    def student_balances(self,id):
-        return self.get_info().filter(ggroups__id=id).values(
+    def student_balances(self,id,educenter_ids):
+        return self.get_info(educenter_ids).filter(ggroups__id=id).values(
             'id',
             'full_name',
             'payment__paid',
@@ -122,8 +122,8 @@ class StudentQueryset(QuerySet):
                         group_count=Count(F('ggroups__group__id'),distinct=True)
                     ).values('id','full_name','phone_number','group_count','status')
 
-    def student_list(self):
-        return self.get_info().filter(status=1).values('id','full_name') 
+    def student_list(self,educenter_ids):
+        return self.get_info(educenter_ids).filter(status=1).values('id','full_name') 
 
     def students_by_status(self):
         # from admintion.data import chooses
@@ -157,17 +157,17 @@ class StudentManager(Manager):
     def students_by_course(self,educenter_ids,pk):
         return self.get_query_set().students_by_course(educenter_ids,pk)
 
-    def students_attendace(self,id):
-        return self.get_query_set().students_attendace(id)
+    def students_attendace(self,id,educenter_ids):
+        return self.get_query_set().students_attendace(id,educenter_ids)
         
-    def student_balances(self,id):
-        return self.get_query_set().student_balances(id)
+    def student_balances(self,id,educenter_ids):
+        return self.get_query_set().student_balances(id,educenter_ids)
 
     def student_detail(self, id):
         return self.get_query_set().student_detail(id)
 
-    def studet_list(self):
-        return self.get_query_set().student_list()
+    def studet_list(self,educenter_ids):
+        return self.get_query_set().student_list(educenter_ids)
 
     def studet_short_list(self):
         return self.get_query_set().studet_short_list()    
