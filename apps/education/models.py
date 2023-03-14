@@ -40,6 +40,7 @@ class Lessons(models.Model):
 
     def __str__(self):
         return '%s-%s' %(self.title, self.module.title)
+    
 class Contents(models.Model):
     lesson       = models.ForeignKey(Lessons, models.CASCADE, verbose_name="Dars", related_name="contents")
     groups       = models.ManyToManyField(Group, blank=True)

@@ -913,7 +913,7 @@
                         <div class="form-group mb-0 form-group-calender">
                             <div class="position-relative">
                                 <label for="datepickre2">${item}</label>
-                                <input type="text" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
+                                <input type="date" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
                                 <a href="#"><span data-feather="calendar"></span></a>
                             </div>
                         </div>
@@ -922,7 +922,6 @@
                 wrap.innerHTML = calendar;
                 task_add.appendChild(wrap)
             } else if(item === "Topshiriq matni") {
-                console.log(item)
                 var wrap = document.createElement('div');
                 wrap.className='form-group col-md-12';
                 var textarea = `

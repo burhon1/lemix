@@ -89,17 +89,14 @@ margin-right: 7px;
                         <div class="tab-wrapper">
                             <div class="atbd-tab tab-horizontal">
                                 <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                    {% if is_teacher is False %}
                                     <li class="nav-item">
                                         <a class="nav-link active" id="tab-v-1-tab" data-toggle="tab" href="#tab-v-1" role="tab" aria-controls="tab-v-1" aria-selected="true">Kurslar</a>
                                     </li>
-                                    {% endif %}
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab-v-2-tab" data-toggle="tab" href="#tab-v-2" role="tab" aria-controls="tab-v-2" aria-selected="false">Guruhlar</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    {% if is_teacher is False %}
                                     <div class="tab-pane active" id="tab-v-1" role="tabpanel" aria-labelledby="tab-v-1-tab">
                                         <div class="userDatatable global-shadow border-0 bg-white w-100">
                                             <div class="table-responsive">
@@ -179,29 +176,26 @@ margin-right: 7px;
                                                         </td> -->
                                                         <td>
                                                             <div class="userDatatable-content">
-                                                              {{ course.contents }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-                                                              {{ course.video_contents }} ta, 
+                                                              {{ course.content_count }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                                              {{ course.video_count }} ta, 
                                                                  <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                                                                 {{ course.text_contents }}ta, 
+                                                                 {{ course.text_count }}ta, 
                                                                   <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 
-                                                                   {{ course.homework_contents }}ta,
+                                                                   {{ course.homework_count }}ta,
                                                                    <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> 
-                                                                    {{ course.test_contents }}ta)
+                                                                    {{ course.test_count }}ta)
                                                             </div>
                                                         </td>
                                                        
                                                       
                                                     </tr>
                                                     {% endfor %}
-        
-        
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
-                                    {% endif %}
-                                    <div class="tab-pane fade {% if is_teacher %}show active{% endif %}" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
+                                    <div class="tab-pane fade" id="tab-v-2" role="tabpanel" aria-labelledby="tab-v-2-tab">
                                         <div class="userDatatable global-shadow border-0 bg-white w-100">
                                             <div class="table-responsive">
                                                 <table class="table mb-0 table-borderless">
@@ -262,46 +256,42 @@ margin-right: 7px;
                                                         </td>
                                                         <td>
                                                             <div class="userDatatable-content">
-                                                            <a href="{% url 'education:onlins' group.course.id %}?group={{group.id}}">
+                                                            <a href="{% url 'education:onlins' group.course__id %}?group={{group.id}}">
                                                                 {{ group.title }}
                                                                 </a>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="userDatatable-content d-inline-block">
-                                                               {{ group.course.title }}
+                                                               {{ group.course_title }}
                                                             </div>
                                                            
                                                         </td>
                                                         <td>
                                                             <div class="userDatatable-content">
-                                                                {{ group.teacher|default:''}}
+                                                                {{ group.teacher_fio|default:''}}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="userDatatable-content">
-                                                                {{ group.contents }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-                                                                {{ group.video_contents }} ta, 
+                                                                {{ group.content_count }} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                                                {{ group.video_count }} ta, 
                                                                    <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                                                                   {{ group.text_contents }}ta, 
+                                                                   {{ group.text_count }}ta, 
                                                                     <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 
-                                                                     {{ group.homework_contents }}ta,
+                                                                     {{ group.homework_count }}ta,
                                                                      <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> 
-                                                                      {{ group.test_contents }}ta)
+                                                                      {{ group.test_count }}ta)
                                                               </div>
                                                         </td>
                                                        
                                                     </tr>
-                                                    
                                                     {% endfor %}
-        
-        
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
-                                   
                                 </div>
                             </div>
 

@@ -1,4 +1,4 @@
-from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,Subquery,CharField,TextField,Exists,OuterRef,Count
+from django.db.models import Value, Case, When,F,Manager,Func,IntegerField,Subquery,CharField,TextField,Sum,OuterRef,Count
 from django.contrib.postgres.aggregates import ArrayAgg
 # from django.contrib.postgres.functions import ToArray
 from django.db.models.functions import Concat,Substr,Cast
@@ -111,6 +111,38 @@ class GroupQueryset(QuerySet):
             days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
         )
 
+    def group_content(self,educenter_id):
+        return self.filter(educenter__id__in=educenter_id)\
+                    .annotate(
+                        course_title=F("course__title"),
+                        teacher_fio=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
+                        video_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=1, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        text_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=2, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        test_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=3, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        homework_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=4, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        content_count=Count('modules__lessons__contents', distinct=True),
+                    ).values('id','title','course_title','teacher_fio','video_count','text_count','test_count','homework_count','content_count','course__id').order_by('-id')
+
     def groups_by_course(self,course_id,educenter_ids,short_info):
         return self.filter(course__id=course_id).groups(educenter_ids,short_info=short_info)
 
@@ -147,6 +179,9 @@ class GroupManager(Manager):
 
     def group_list(self,educenter_id):
         return self.get_query_set().group_list(educenter_id)   
+    
+    def group_content(self,educenter_id):
+        return self.get_query_set().group_content(educenter_id)
 
     def group_filter(self,filters,educenter_ids):
         return self.get_query_set().group_filter(filters,educenter_ids) 

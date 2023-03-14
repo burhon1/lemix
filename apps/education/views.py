@@ -33,6 +33,7 @@ def lid_arxiv_view(request):
 @login_required
 def onlin_view(request):
     context = dict()
+    print(request.user)
     ed_id=request.session.get('branch_id',False)
     qury = Q(id=ed_id)
     if int(ed_id) == 0:
@@ -41,13 +42,14 @@ def onlin_view(request):
     educenter_ids=educenter.values_list('id',flat=True)
     teacher = Teacher.objects.filter(user=request.user).first()
     # context['courses'] = get_courses(request.user)
-    context['courses'] = Course.courses.courses(educenter_ids)
+    context['courses'] = Course.courses.course_contents(educenter_ids)
 
-    context['courses'] = get_courses_data(context['courses'], teacher=teacher)
-    groups = get_groups(request.user)
-    context['groups'] = get_groups_data(groups, teacher)
+    # context['courses'] = get_courses_data(context['courses'], teacher=teacher)
+    # groups = get_groups(request.user)
+    context['groups'] = GroupModel.groups.group_content(educenter_ids)
+    # print(context['courses'])
     context['is_teacher'] = bool(teacher)
-    
+
     return render(request,'education/onlin.html', context) 
 
 @login_required
@@ -261,6 +263,7 @@ def onlins_view(request,id):
     context['modules'] = get_modules(course, request.user, group=group)
     module_id = request.GET.get('m', None)
     filter_kwargs = {'groups__id': group.id} if group else dict()
+    print(filter_kwargs)
     if module_id:
         filter_kwargs = {'module_id': module_id,}
     context['lessons'] = get_lessons(course, request.user, **filter_kwargs)

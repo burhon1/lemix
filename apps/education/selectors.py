@@ -288,9 +288,10 @@ def get_lessons_data(lessons):
     return data
 
 def get_lessons(course:Course, user:CustomUser, **filter_kwargs):
+
     user_role = get_user_role(user)
     if user_role and user_role.name in ['Teacher', 'Asistent']:
-        if filter_kwargs['groups__id']:
+        if filter_kwargs.get('groups__id',False):
             group = Group.objects.filter(id=filter_kwargs['groups__id']).first()
             authors = [group.teacher.user ] if group and group.teacher else []
             authors.append(group.trainer.user) if group and group.trainer else authors

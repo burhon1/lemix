@@ -1,4 +1,4 @@
-from django.db.models import Value, Count,Case, When,F,Manager, TextField, CharField
+from django.db.models import Value, Count,Case, When,F,Manager, TextField, CharField,IntegerField,Sum
 from django.db.models.functions import Cast, Concat, Substr
 from django.db.models.query import QuerySet
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -65,6 +65,38 @@ class CoursesQueryset(QuerySet):
                         )
                     ).values('id','title','course_duration','course_lesson_duration','course_price','group_count','teacher_count','student_count','duration','duration_type','lesson_duration','lesson_duration_type','price','price_type','comment').first()
 
+    def course_contents(self,educenter_id):
+        return self.filter(educenter__id__in=educenter_id)\
+                    .annotate(
+                        student_count=Count('modules__lessons__contents', distinct=True),
+                        group_count=Count('group', distinct=True),
+                        video_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=1, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        text_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=2, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        test_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=3, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        homework_count=Sum(Case(
+                            # This could depend on the related name for the paragraph -> document relationship
+                            When(modules__lessons__contents__content_type=4, then=Value(1)),
+                            default=Value(0),
+                            output_field=IntegerField(),
+                        )),
+                        content_count=Count('modules__lessons__contents', distinct=True),
+                    ).values('id','title','group_count','video_count','text_count','test_count','homework_count','content_count').order_by('-id')
+
 class CoursesManager(Manager):
     def get_query_set(self):
         return CoursesQueryset(self.model)
@@ -74,6 +106,9 @@ class CoursesManager(Manager):
 
     def course_filter(self,filters,educenter_ids):
         return self.get_query_set().course_filter(filters,educenter_ids)  
+    
+    def course_contents(self,educenter_id):
+        return self.get_query_set().course_contents(educenter_id)
 
     def course(self, id):
         return self.get_query_set().course(id)
