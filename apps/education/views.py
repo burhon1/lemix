@@ -427,7 +427,7 @@ def modules_view(request):
                 module.groups=group
                 
             elif request.user.is_superuser:
-                module.groups=Group.objects.filter(course_id=int(request.POST.get('course')))
+                module.groups=group
                 
             module.save()
             data = model_to_dict(module, fields=('id', 'title'))
