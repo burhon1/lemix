@@ -111,8 +111,11 @@ class GroupQueryset(QuerySet):
             days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
         )
 
-    def group_content(self,educenter_id):
-        return self.filter(educenter__id__in=educenter_id)\
+    def group_content(self,educenter_id,user):
+        data = self.filter(educenter__id__in=educenter_id)
+        if user is not None:
+            data = data.filter(teacher__user=user)
+        return data\
                     .annotate(
                         course_title=F("course__title"),
                         teacher_fio=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
@@ -180,8 +183,8 @@ class GroupManager(Manager):
     def group_list(self,educenter_id):
         return self.get_query_set().group_list(educenter_id)   
     
-    def group_content(self,educenter_id):
-        return self.get_query_set().group_content(educenter_id)
+    def group_content(self,educenter_id,user=None):
+        return self.get_query_set().group_content(educenter_id,user)
 
     def group_filter(self,filters,educenter_ids):
         return self.get_query_set().group_filter(filters,educenter_ids) 

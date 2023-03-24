@@ -16,7 +16,7 @@ CONTENT_CHOICES = (
     (1, "Video"),
     (2, "Maqola"),
     (3, "Test"),
-    (4, "Uy vazifasi"),
+    (4, "Vazifa"),
 )
 
 LESSONS_STATUS_CHOICES = (

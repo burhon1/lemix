@@ -207,9 +207,11 @@ def get_groups_data(groups, teacher: Teacher=None):
     data = list()
     admins = get_admins()
     for group in groups:
+        print(group.trainer)
         dct = model_to_dict(group, fields=('id', 'title', 'teacher'))
         dct['teacher'] = f"{group.teacher.user.full_name()}"
-        dct['trainer'] = f"{group.trainer.user.full_name()}"
+        if group.trainer is not None:
+            dct['trainer'] = f"{group.trainer.user.full_name()}"
         dct['course'] = {
             'title': group.course.title, 'id': group.course.id
         }

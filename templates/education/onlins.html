@@ -219,6 +219,8 @@
                             <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('course','{{course.id}}','{{course.title}}')" id="globeDeleteBtn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                                   O'chirish</a>
+
+                      
                     </div>
                        
                       
@@ -391,9 +393,7 @@
                                                         <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('lesson','{{lesson.id}}','{{lesson.title}}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                                                                 O'chirish</a>
-                    
-                                                    
-                                                </div>  
+                                                    </div>  
                                                 
                                             </h4>
                                         </div>
@@ -486,6 +486,9 @@
                         <label for="a10" class="il-gray fs-14 fw-500 align-center">Bo'lim nomini kiriting</label>
                         <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="module" id="a10" placeholder="">
                     </div>
+                   
+                   
+
                     <div class="form-group form-element-textarea mb-20">
                         <label for="a11" class="il-gray fs-14 fw-500 align-center">
                             Qisqacha ma'lumot</label>
@@ -499,18 +502,11 @@
             </div>
         </div>
     </div>
-
-
 </div>
 <div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
-
-
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title"> Dars qo'shish</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
@@ -549,14 +545,9 @@
 </div>
 {% for lesson in lessons %}
 <div class="modal-basic modal" id="modal-basic3-{{ lesson.id }}" tabindex="-1" role="dialog" aria-hidden="true">
-
-
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title">  {{ lesson.id }} chi darsga qanday dars(kontent) qo'shmoqchisiz?</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
@@ -579,14 +570,10 @@
             </div>
         </div>
     </div>
-
-
 </div>
 {% endfor %}
 
 <div class="modal-basic modal" id="modal-basic-edit" tabindex="-1" role="dialog" aria-hidden="true">
-
-
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
@@ -597,25 +584,6 @@
             </div>
             <div class="modal-body">
                 <form action="#">
-                
-                    {% comment %} <div class="form-group">
-                        <label for="module_select" class="il-gray fs-14 fw-500 align-center">Bo'limni tanlang</label>
-                        <select class="form-control px-15 "  id="module_select" name="module">
-                            <option data-select2-id="2">---</option>
-                            {% for module in modules %}
-                            <option value="{{ module.id}}">{{ module.title }}</option>
-                            {% endfor %}
-                        </select>  </div>
-                  
-                    <div class="form-group">
-                        <label for="a14" class="il-gray fs-14 fw-500 align-center">Dars nomini kiriting</label>
-                        <input name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a14" placeholder="">
-                    </div>
-                    <div class="form-group form-element-textarea mb-20">
-                        <label for="a13" class="il-gray fs-14 fw-500 align-center">
-                            Dars haqida qisqacha</label>
-                        <textarea class="form-control" id="a13" rows="3" name="comment"></textarea>
-                    </div> {% endcomment %}
                 </form>
             </div>
             <div class="modal-footer">
@@ -624,8 +592,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 
@@ -652,14 +618,9 @@
 
 </div>
 <div class="modal-basic modal" id="modal-basic-delete" tabindex="-1" role="dialog" aria-hidden="true">
-
-
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title"> O'chirish</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
@@ -676,8 +637,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 <div class="drawer-basic-wrap">
@@ -1169,7 +1128,7 @@
             }).then(res=>res.json()).then(res=>{
                 var select = document.getElementById('module_select');
                 res = res.modules;
-                while (0< select.options.length) {
+                while (0< select.options.length) {getLessons
                     select.options[0].remove();
                 }
 
@@ -1277,11 +1236,9 @@
             let deleteBtn = document.getElementById('delete_button');
             deleteBtn.setAttribute('onclick', `deleteObj('${type}', '${id}')`);
             modal_body.innerHTML = `<p>Rostan ham ${title} ${type}ni o'chirishni xohlaysizmi?</p>`;
-            console.log(deleteBtn);
         }
         
         function activateModal(type, id, action){
-            
             // type: module, lesson, content, course
             var modal = document.getElementById('modal-basic-active');
             console.log("modal:", modal);
@@ -1345,9 +1302,8 @@
             .catch(err=>{
                 console.log(err);
             })
-    }
+        }
         function EditModalOpen(type, id){
-            console.log("Edit Modal: ", type, id);
             var url = `/education/onlines/update/${type}/${id}/`
             fetch(url, {
                 method: 'get',

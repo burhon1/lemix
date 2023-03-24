@@ -8,11 +8,13 @@ from education.querysets import modules, lessons, contents, resources, tests, qu
 
 class Modules(models.Model):
     course = models.ForeignKey(Course, models.CASCADE, verbose_name="Kurs", related_name="modules")
-    groups = models.ManyToManyField(Group, blank=True)
+    groups = models.ForeignKey(Group, models.SET_NULL, null=True,blank=True)
     title  = models.CharField("Modul sarlavhasi", max_length=300)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     order  = models.IntegerField("Dars o'rni", default=1)
     comment= models.TextField(null=True,blank=True)
+    educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
+    status       = models.BooleanField("Dars tayyormi?", default=False)
     objects = models.Manager()
     modules = modules.ModulesManager()
     class Meta:
@@ -25,12 +27,13 @@ class Modules(models.Model):
 
 class Lessons(models.Model):
     module = models.ForeignKey(Modules, models.CASCADE, verbose_name="Modul", related_name="lessons")
-    groups = models.ManyToManyField(Group, blank=True)
+    groups = models.ForeignKey(Group, models.SET_NULL, null=True,blank=True)
     title  = models.CharField("Mavzu sarlavhasi", max_length=300)
     order  = models.IntegerField("Dars o'rni", default=1)
     content_type = models.SmallIntegerField("Content Type", choices=LESSONS_CHOICES, default=1)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     comment= models.TextField(null=True,blank=True)
+    status       = models.BooleanField("Material tayyormi?", default=False)
     objects = models.Manager()
     lessons = lessons.LessonsManager()
     class Meta:
@@ -43,7 +46,7 @@ class Lessons(models.Model):
     
 class Contents(models.Model):
     lesson       = models.ForeignKey(Lessons, models.CASCADE, verbose_name="Dars", related_name="contents")
-    groups       = models.ManyToManyField(Group, blank=True)
+    groups       = models.ForeignKey(Group, models.SET_NULL, null=True,blank=True)
     title        = models.CharField("Sarlavha", max_length=300)
     content_type = models.SmallIntegerField("Content Type", choices=CONTENT_CHOICES, default=1)
     video        = models.FileField("Video Material", validators=[FileExtensionValidator(['mp4'])], null=True, blank=True)

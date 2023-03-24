@@ -40,6 +40,9 @@ class ModulesQueryset(QuerySet):
             author = Concat(F('author__last_name'), Value(' '), F('author__first_name')),
             lessons = ArrayAgg(F('lessons'), distinct=True)
         ).filter(course_id=course_id).order_by('order')
+    
+    def module_list(self,filter_keys):
+        return self.filter(filter_keys).values('id','title').order_by('order')
 
 class ModulesManager(Manager):
     def get_query_set(self):
@@ -47,6 +50,9 @@ class ModulesManager(Manager):
 
     def modules(self):
         return self.get_query_set().modules()
+
+    def module_list(self,filter_keys):
+        return self.get_query_set().module_list(filter_keys)
 
     def module(self, id: int):
         return self.get_query_set().module(id)

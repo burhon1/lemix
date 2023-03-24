@@ -1,0 +1,930 @@
+{% extends 'atomic/theme.html' %}
+{% load static %}
+{% block title %}
+    Kurs tarkibi-Lemix
+{% endblock %}
+{% block style %}
+<style>
+    .cardPay {
+        position: relative;
+    }
+
+    .cardPay:hover {
+        border: 1px solid #5f63f2;
+
+    }
+
+    .cardPay:hover::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        height: 100%;
+        width: 100%;
+        background-color: #5f63f288;
+    }
+
+    .feature-card--1 figcaption h5 {
+        margin: 0 0 0.5rem 0 !important;
+    }
+
+    .feature-cards:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #5f63f2;
+    }
+
+    .atbd-tab .tab-content p {
+        font-size: 12px !important;
+    }
+
+    .v-num {
+        font-size: 14px;
+    }
+
+    .application-faqs .panel-title a {
+        font-size: 12px !important;
+    }
+
+    .forms-view {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .forms-view>.form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .table-responsive tr td>div {
+        text-transform: none;
+    }
+
+    .atbd-select .select2-selection,
+    .select2-container--default .select2-selection--single {
+        height: 1.875rem;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        margin-right: 7px;
+    }
+
+    #drag_item {
+        cursor: move;
+    }
+
+    :root {
+        --border-color: #e3e5e4;
+        --background-color: #c3c7ca;
+        --text-color: #34444f;
+    }
+
+    .draggable-list {
+        /* border: 1px solid var(--border-color); */
+        color: var(--text-color);
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .draggable-list li {
+        background-color: #fff;
+        display: flex;
+        flex: 1;
+    }
+
+    .draggable-list li:not(:last-of-type) {
+        /* border-bottom: 1px solid var(--border-color); */
+    }
+
+    .draggable-list .number {
+        background-color: var(--background-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .draggable-list li.over .draggable {
+        background-color: #eaeaea;
+    }
+
+    .draggable-list .person-name {
+        margin: 0 20px 0 0;
+    }
+
+    .draggable-list li.right .person-name {
+        color: #3ae374;
+    }
+
+    .draggable-list li.wrong .person-name {
+        color: #ff3838;
+    }
+
+    .draggable {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        flex: 1;
+    }
+
+    .check-btn {
+        background-color: var(--background-color);
+        border: none;
+        color: var(--text-color);
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .check-btn:active {
+        transform: scale(0.98);
+    }
+
+    .check-btn:focus {
+        outline: none;
+    }
+</style>
+{% endblock %}
+
+{% comment %}  {% endcomment %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mt-3 px-3">
+        <div class="card col-12">
+            <div class="card-header  border-bottom-0" style="padding: 0.75rem 0rem;">
+                <h4 class="fw-500" style="text-transform: none; font-size: 20px;">Barcha moduldagi darslar : 
+                    {{course.content_count}} ta (<svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                    {{course.video_count}} ta, 
+                    <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    {{course.text_count}}ta, 
+                     <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 
+                     {{course.homework_count}}ta,
+                      <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> 
+                      {{course.test_count}}ta)
+                </h4>
+                <div class="buttons d-flex ">
+                    {% if course.status %}
+                    <span role="button" class="selling-badge order-bg-opacity-success color-success mx-1" id="course_status">Aktiv</span>
+                    {% else %}
+                    <span role="button" class="selling-badge order-bg-opacity-secondary color-secondary mx-1" id="course_status">Muzlatilgan</span>
+                    {% endif %}
+                    <span role="button" class="selling-badge order-bg-opacity-primary color-primary mx-1 cursor-pointer" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">...</span>
+                  
+                    <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"/></svg>
+                              Yuqoriga ko'tarish</a>
+                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
+                                 Pastga tushirish</a>
+                        
+                            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" onclick="activateModal('course', {{course.id}}, {% if course.status %} 'draft' {% else %} 'activate' {% endif %})">
+                                {% if not course.status %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-success">Aktivlashtirish</span>
+                                {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>muzlatish
+                                {% endif %}
+                                </a>
+                        <a class="dropdown-item" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                               Tahrirlash</a>
+                        <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('course','{{course.id}}','{{course.title}}')" id="globeDeleteBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                              O'chirish</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-xl-3 col-sm-5">
+            <!-- Card 1 -->
+            <div class="card shadow-lg">
+                <div class="card-body p-0">
+                    <div class="faqs-wrapper">
+                        <div class="px-30 pt-35 ">
+                            <span
+                                class="px-20 py-2 fs-14 rounded-pill bg-normal color-light">Bo'limlar</span>
+                        </div>
+                        <div class="faqs-wrapper-tab p-15 pt-25 pb-30">
+                            <div class="nav flex-column text-left mb-2" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill"
+                                    href="#v-pills-all" role="tab" aria-controls="v-pills-all"
+                                    aria-selected="true">
+                                    <span class="dot bg-primary"></span>Barchasi</a>
+                                {% for module in modules %}
+                                <a class="nav-link" id="v-pills-{{module.id}}-tab" data-toggle="pill"
+                                    href="#v-pills-{{module.id}}" role="tab" aria-controls="v-pills-{{module.id}}"
+                                    aria-selected="false" onclick="handleOpenClose({{module.id}})">
+                                    <span class="dot bg-warning"></span>
+                                    {{module.title}}
+                                </a>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                        <div class="pb-30 px-30 ">
+                            <button class="btn btn-primary btn-xs mb-2" data-toggle="modal"
+                                data-target="#modal-basic">+ Bo'lim qo'shish</button>
+                            <button class="btn btn-primary btn-xs" data-toggle="modal"
+                                data-target="#modal-basic2">+ Yangi dars qo'shish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- ends: col -->
+        <div class="col-xl-9 col-sm-7">
+            <div class="mb-30">
+                <div class="tab-content" id="v-pills-tabContent">
+                    {% for module in modules_list %}
+                    <div class="tab-pane active" id="v-pills-{{module.id}}" role="tabpanel"
+                        aria-labelledby="v-pills-{{module.id}}-tab">
+                        <!-- Edit Profile -->
+                        <div class="card h-100 shadow-lg pb-md-50 pb-30 mb-md-50 mb-30">
+                            <div class="card-header px-30 pt-0 pb-0 border-bottom-0"
+                                style="min-height: 20px;">
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="application-faqs">
+                                    <div class="panel-group" id="accordion-{{module.id}}" role="tablist"
+                                        aria-multiselectable="true">
+                                        <!-- panel 1 -->
+                                        {% for lesson in module.data %}
+                                        <div class="panel {% if forloop.counter == 1 %}panel-default{% endif %}">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title d-flex">
+                                                    <a data-toggle="collapse" data-parent="#accordion-{{module.id}}"
+                                                        href="#collapseOne-{{module.id}}-{{lesson.id}}" aria-expanded="true"
+                                                        aria-controls="collapseOne-{{module.id}}-{{lesson.id}}">
+                                                        {{forloop.counter}}|{{lesson.title}}
+                                                    </a>
+                                                    <button
+                                                        class="btn btn-light px-2  d-flex justify-content-center align-items-center mr-2"
+                                                        data-toggle="modal" data-target="#modal-basic3" onclick="handleAddLesson({{lesson.id}},'{{lesson.title}}')">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            style="margin-right: 0;" width="16" height="16"
+                                                            viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-plus-circle">
+                                                            <circle cx="12" cy="12" r="10" />
+                                                            <line x1="12" y1="8" x2="12" y2="16" />
+                                                            <line x1="8" y1="12" x2="16" y2="12" />
+                                                        </svg>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2" id="todo10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            style="margin: auto;" width="16" height="16"
+                                                            viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-more-horizontal">
+                                                            <circle cx="12" cy="12" r="1" />
+                                                            <circle cx="19" cy="12" r="1" />
+                                                            <circle cx="5" cy="12" r="1" />
+                                                        </svg>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-chevron-up">
+                                                                <polyline points="18 15 12 9 6 15" />
+                                                            </svg>
+                                                            Yuqoriga ko'tarish
+                                                        </a>
+                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-chevron-down">
+                                                                    <polyline points="6 9 12 15 18 9" />
+                                                            </svg>
+                                                            Pastga tushirish
+                                                        </a>
+                                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-active" onclick="activateModal('lesson', '{{lesson.id}}',{% if lesson.lesson_status == 1 %}  'draft' {% else %} 'activate' {% endif %})">
+                                                            {% if lesson.lesson_status == 1 %}
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-success">Aktivlashtirish</span>
+                                                            {% else %}
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>muzlatish
+                                                            {% endif %}
+                                                            </a>
+                                                        <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#modal-basic-edit"  onclick="EditModalOpen('lesson', '{{lesson.id}}')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                                                Tahrirlash</a>
+                                                        <a class="dropdown-item text-danger" href="#"  data-toggle="modal" data-target="#modal-basic-delete"  onclick="deleteModal('lesson','{{lesson.id}}','{{lesson.title}}')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                                                O'chirish</a>
+                                                    </div> 
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne-{{module.id}}-{{lesson.id}}" class="panel-collapse collapse in {% if forloop.counter == 1 %}show{% endif %}"
+                                                role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <ul class="draggable-list" id="draggable-list-{{module.id}}-{{lesson.id}}">
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Edit Profile End -->
+            </div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                aria-labelledby="v-pills-profile-tab">
+            </div>
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                aria-labelledby="v-pills-messages-tab">
+            </div>
+            <div class="tab-pane fade " id="v-pills-settings" role="tabpanel"
+                aria-labelledby="v-pills-settings-tab">
+            </div>
+            <div class="tab-pane fade" id="v-pills-notification" role="tabpanel"
+                aria-labelledby="v-pills-notification-tab">
+            </div>
+            <div class="tab-pane fade" id="v-pills-support" role="tabpanel"
+                aria-labelledby="v-pills-support-tab">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+                <h6 class="modal-title">Bo'lim qo'shish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    <div class="form-group">
+                        <label for="a10" class="il-gray fs-14 fw-500 align-center">Bo'lim nomini kiriting</label>
+                        <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="module" id="a10" placeholder="">
+                    </div>
+                   
+                   
+
+                    <div class="form-group form-element-textarea mb-20">
+                        <label for="a11" class="il-gray fs-14 fw-500 align-center">
+                            Qisqacha ma'lumot</label>
+                        <textarea class="form-control" name="description" id="a11" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm" onClick="CreateModule({{course.id}})">Saqlash</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+                <h6 class="modal-title"> Dars qo'shish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                
+                    <div class="form-group">
+                        <label for="module_select" class="il-gray fs-14 fw-500 align-center">Bo'limni tanlang</label>
+                        <select class="form-control px-15 "  id="module_select" name="module">
+                            <option data-select2-id="2">---</option>
+                            {% for module in modules %}
+                            <option value="{{ module.id}}">{{ module.title }}</option>
+                            {% endfor %}
+                        </select>  </div>
+                  
+                    <div class="form-group">
+                        <label for="a14" class="il-gray fs-14 fw-500 align-center">Dars nomini kiriting</label>
+                        <input name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a14" placeholder="">
+                    </div>
+                    <div class="form-group form-element-textarea mb-20">
+                        <label for="a13" class="il-gray fs-14 fw-500 align-center">
+                            Dars haqida qisqacha</label>
+                        <textarea class="form-control" id="a13" rows="3" name="comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick='CreateLesson()'>Saqlash</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-basic modal" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+                <h6 class="modal-title">  <span></span> chi darsga qanday dars(kontent) qo'shmoqchisiz?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between">
+                    <a href="" id="video_url" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                      Video </a>
+                       <a href="" id="text_url"  class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                     Matnli </a>
+                       <a href="" id="test_url" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                       Test </a>
+                       <a href="" id="hwork_url" class="btn btn-light p-2 d-flex mr-5 justify-content-center align-items-center mr-2">
+                        Uyga vazifa </a>
+                       </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button> -->
+                <!-- <button type="button" class="btn btn-primary btn-sm">Saqlash</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-basic modal fade" id="modal-basic-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+                <h6 class="modal-title"> <span></span> O'chirish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+                    <input name="type" hidden="true" value="" id="id_type">
+                    <input name="id" hidden="true" value="" id="obj_id">
+
+            </div>
+            <div class="modal-body">
+               <!--<p></p> -->Kursni haqiqatdan ham o'chirmoqchimisiz
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Bekor qilish</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="delete_button">O'chirish</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-basic modal" id="modal-basic-active" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+                <h6 class="modal-title"> Faollashtirish</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+               {% comment %} <p></p> {% endcomment %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Yopish</button>
+                <button type="button" class="btn btn-primary btn-sm" id="activateButton">Faollashtirish</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-basic modal" id="modal-basic-edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <div class="modal-header">
+
+                <h6 class="modal-title"> Tahrirlash</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span data-feather="x"></span></button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilish</button>
+                <button type="button" class="btn btn-primary btn-sm" id="editButton">Saqlash</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $('#v-pills-all-tab').click(function () {
+        $('.tab-content > .tab-pane').addClass('active');
+    });
+    function handleOpenClose(_id){
+        document.querySelectorAll('.tab-content > .tab-pane').forEach(item=>{
+            item.classList.remove('active')
+        })
+    }
+    var forms = document.querySelectorAll('.forms-view')
+    for (let i = 0; i < forms.length; i++) {
+        forms[i].style.display = 'none'
+    }
+    var array = []
+    function handleClickIcon(x) {
+        if (array.includes(x)) {
+            forms[array[array.indexOf(x)]].style.display = 'none';
+            array = array.filter(e => e != x);
+        }
+        else {
+            forms[x].style.display = 'flex';
+            array.push(x)
+        }
+        console.log(array)
+        //   forms.forEach((e)=>  console.log(e.innerHTML=''))
+    }
+
+
+    {% comment %} const draggable_list = document.getElementById('draggable-list'); {% endcomment %}
+    {% comment %} const check = document.getElementById('check'); {% endcomment %}
+    const richestPeople = [
+        { name: '1-Dars', type: 'Video' },
+        { name: '2-Dars', type: 'File' },
+        { name: '3-Dars', type: 'Vazifa' },
+        { name: '4-Dars', type: 'Test' }
+    ];
+    const datasList = {{modules_list|safe}};
+    {% comment %} console.log(datasList) {% endcomment %}
+
+    // Store listitems
+    const listItems = [];
+
+    let dragStartIndex;
+
+    createList();
+
+
+    // Insert list items into DOM
+    function createList() {
+        datasList.forEach(item=>{
+            
+
+            item.data.forEach(val=>{
+                const draggable_list = document.getElementById('draggable-list-'+item.id+'-'+val.id);
+                val.content
+                .forEach((person,index)=>{
+                    const listItem = document.createElement('li');
+                    listItem.setAttribute('data-index', index);
+                    listItem.innerHTML = `
+                    <div class="d-flex justify-content-between draggable"  draggable="true">
+                                                            <div class="col-lg-6 d-flex align-items-center">
+                                                                <svg id="drag_item" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                                                            ${person.content_type == "Video" ?
+                                            ' <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>'
+                                            : person.content_type == "File" ?
+                                                ' <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+                                                : person.content_type == "Vazifa" ?
+                                                    '<svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> '
+                                                    : person.content_type == "Test" ?
+                                                        '<svg class="ml-1" xmlns="http://www.w3.org/2000/svg" style="transform: scale(.7);color: #272b41;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> '
+                                                        : ""
+                                        }
+                                                                <h5 class="ml-1 d-flex">${person.title} &nbsp; <div class="text-small text-light">${person.content_type} </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6  d-flex  justify-content-end align-items-center">
+                                                                <button class="btn btn-light p-2 d-flex justify-content-center align-items-center mr-2" id="todo10"
+                                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto;" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-more-horizontal">
+                                                                        <circle cx="12" cy="12" r="1" />
+                                                                        <circle cx="19" cy="12" r="1" />
+                                                                        <circle cx="5" cy="12" r="1" />
+                                                                    </svg>
+                                                                    <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start"
+                                                                        style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                                class="feather feather-chevron-up">
+                                                                                <polyline points="18 15 12 9 6 15" />
+                                                                            </svg>
+                                                                            Yuqoriga ko'tarish</a>
+                                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                                class="feather feather-chevron-down">
+                                                                                <polyline points="6 9 12 15 18 9" />
+                                                                            </svg>
+                                                                            Pastga tushirish</a>
+                                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-basic-active"
+                                                                            onclick="activateModal('content', '${person.id}',  '${(person.status == 1) ?  'draft' : 'activate'}')">
+                                                                            ${person.status == 1? ('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#20c997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-success">Aktivlashtirish</span>'):
+                                                                            ('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause-circle"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>muzlatish')}
+                                                                            </a>
+                                                                        <a class="dropdown-item" href="/education/online_hwork/update/${person.id}/" onclick='window.location.replace("/education/online_hwork/update/${person.id}/");'>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                                class="feather feather-edit">
+                                                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                                                            </svg>
+                                                                            Tahrirlash</a>
+                                                                        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#modal-basic-delete"
+                                                                            onclick="deleteModal('content','${person.id}','${person.title}')">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                                class="feather feather-x-circle">
+                                                                                <circle cx="12" cy="12" r="10" />
+                                                                                <line x1="15" y1="9" x2="9" y2="15" />
+                                                                                <line x1="9" y1="9" x2="15" y2="15" />
+                                                                            </svg>
+                                                                            O'chirish</a>
+                                                                    </div>
+                                                                </button>
+                                                                <svg id="drag_item" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                                                            
+                                                            </div>
+                                                        </div> 
+
+                    `;
+                    listItems.push(listItem);
+                    draggable_list.appendChild(listItem);
+                })
+            }) 
+        })
+    }
+    function dragStart() {
+        // console.log('Event: ', 'dragstart');
+        dragStartIndex = +this.closest('li').getAttribute('data-index');
+    }
+
+    function dragEnter() {
+        // console.log('Event: ', 'dragenter');
+        this.classList.add('over');
+    }
+
+    function dragLeave() {
+        // console.log('Event: ', 'dragleave');
+        this.classList.remove('over');
+    }
+
+    function dragOver(e) {
+        // console.log('Event: ', 'dragover');
+        e.preventDefault();
+    }
+
+    function dragDrop() {
+        // console.log('Event: ', 'drop');
+        const dragEndIndex = +this.getAttribute('data-index');
+        swapItems(dragStartIndex, dragEndIndex);
+
+        this.classList.remove('over');
+    }
+
+    // Swap list items that are drag and drop
+    function swapItems(fromIndex, toIndex) {
+        const itemOne = listItems[fromIndex].querySelector('.draggable');
+        const itemTwo = listItems[toIndex].querySelector('.draggable');
+
+        listItems[fromIndex].appendChild(itemTwo);
+        listItems[toIndex].appendChild(itemOne);
+    }
+
+    // Check the order of list items
+    function checkOrder() {
+        listItems.forEach((listItem, index) => {
+            const personName = listItem.querySelector('.draggable').innerText.trim();
+
+            if (personName !== richestPeople[index]) {
+                listItem.classList.add('wrong');
+            } else {
+                listItem.classList.remove('wrong');
+                listItem.classList.add('right');
+            }
+        });
+    }
+
+    function addEventListeners() {
+        const draggables = document.querySelectorAll('.draggable');
+        const dragListItems = document.querySelectorAll('.draggable-list li');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', dragStart);
+        });
+
+        dragListItems.forEach(item => {
+            item.addEventListener('dragover', dragOver);
+            item.addEventListener('drop', dragDrop);
+            item.addEventListener('dragenter', dragEnter);
+            item.addEventListener('dragleave', dragLeave);
+        });
+    }
+
+    {% comment %} check.addEventListener('click', checkOrder); {% endcomment %}
+</script>
+<script>
+    function CreateModule(id){
+        var url = `/education/onlines/modules/${window.location.search}`;
+        var formData = new FormData();
+        formData.append('title', document.getElementById('a10').value);
+        formData.append('comment', document.getElementById('a11').value);
+        formData.append('course', id);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        fetch(url, {
+            method: 'POST',
+            header:{
+                'Accept': 'application/json',
+                "X-CSRFToken": "{{csrf_token}}",
+            },
+            body: formData,
+        }).then(res=>res.json())
+        .then(res=>{
+            document.getElementById('a10').value = '';
+            document.getElementById('a11').value = '';
+            var div = document.getElementById('v-pills-tab');
+            window.location.reload()
+            
+            
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    } 
+    function CreateLesson(){
+        var url = `/education/onlines/lessons/create/${window.location.search}`;
+        var formData = new FormData();
+        var module = document.getElementById('module_select').value;
+        formData.append('module', module );
+        formData.append('title', document.getElementById('a14').value);
+        formData.append('comment', document.getElementById('a13').value);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        console.log(formData);
+        fetch(url, {
+            method: 'post',
+            header:{
+                'Accept': 'application/json',
+                "X-CSRFToken": "{{csrf_token}}",
+            },
+            body: formData,
+        })
+        .then(res=>res.json()).then(res=>{
+            document.getElementById('a14').value = null;
+            document.getElementById('a13').value = null;
+            {% comment %} getLessons(module, ''); {% endcomment %}
+            window.location.assign(window.location.href);
+            window.location.reload()
+        })
+    }
+    function handleAddLesson(lesson_id,lesson_title)
+    {
+        const videoUrl = `/education/online_video/create/${lesson_id}/{% if request.GET.group %}?group={{request.GET.group}}{% endif %}`;
+        const hworkUrl = `/education/online_hwork/create/${lesson_id}/{% if request.GET.group %}?group={{request.GET.group}}{% endif %}`;
+        const textUrl = `/education/online_text/create/${lesson_id}/{% if request.GET.group %}?group={{request.GET.group}}{% endif %}`;
+        document.querySelector('#video_url').href=videoUrl;
+        document.querySelector('#text_url').href=textUrl;
+        document.querySelector('#hwork_url').href=hworkUrl;
+        document.querySelector('#modal-basic3 .modal-title span').innerHTML=lesson_title;
+    }
+    function deleteObj(type, id){
+        var url = `/education/onlines/delete/${type}/${id}/`;
+
+        fetch(url, {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken':'{{ csrf_token }}'
+            },
+        })
+        .then(res=>{
+            window.location.assign(window.location.href);
+            window.location.reload()
+        })
+        .catch(err=>{
+            alert(err);
+        })
+    }
+    function deleteModal(type, id, title){
+        // type: module, lesson, content, course  
+        var modal = document.getElementById('modal-basic-delete');
+        var modal_body = modal.getElementsByClassName('modal-body')[0];
+        $('#modal-basic-delete').modal('show');
+        let deleteBtn = document.getElementById('delete_button');
+        deleteBtn.setAttribute('onclick', `deleteObj('${type}', '${id}')`);
+        modal_body.innerHTML = `<p>Rostan ham ${title} ${type}ni o'chirishni xohlaysizmi?</p>`;
+    }
+    function deleteModule(id){
+        console.log("delete Module")
+    }
+    function activateObj(action, type, id){
+        // `activate` or `draft` in action
+        var url = `/education/onlines/${action}/${type}/${id}/`;
+        fetch(url, {
+            method: 'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        })
+        .then(res=>{
+            window.location.assign(window.location.href);
+            window.location.reload()
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
+    function activateModal(type, id, action){
+
+        // type: module, lesson, content, course
+        var modal = document.getElementById('modal-basic-active');
+        var modal_body = modal.getElementsByClassName('modal-body')[0];
+        var modal_title = modal.getElementsByClassName('modal-title')[0];
+        modal_title.innerHTML= `<p>${action == 'activate' ? 'Faollashtirish' : 'Muzlatish' }</p>`
+        modal_body.innerHTML = `<p>Faollashtirilgan kontentlar va darslar o'quvchilarga ko'rinadi. Muzlatilgan kontentlarni esa, o'quvchilar ko'ra olmaydilar.</p>`
+        let activateBtn = document.getElementById('activateButton');
+        activateBtn.setAttribute('onClick', `activateObj('${action}', '${type}', '${id}')`);
+        activateBtn.textContent = `${action == 'activate' ? 'Faollashtirish' : 'Muzlatish'}`
+        const myModal = new bootstrap.Modal(document.getElementById('modal-basic-active')); // creating modal object
+        myModal.show(); // sh
+    }
+    function deleteLesson(id){
+        console.log("delete Lesson")
+    }
+    function deleteContent(id){
+        console.log("delete Content")
+    }
+    function saveEdit(type, id){
+        var url = `/education/onlines/update/${type}/${id}/`;
+        var formData = new FormData();
+        var title = document.getElementById('id_title').value;
+        if (title != '' || title!=null){
+            formData.append('title', title)
+        }
+        var comment = document.getElementById('id_comment').value;
+        if (comment != '' || comment!=null){
+            formData.append('comment', comment)
+        }            
+        formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
+        fetch(url, {
+            method: 'post',
+            headers:{
+                //'Accept':'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: formData,
+        })
+        .then(res=>res.json()).then(res=>{
+            window.location.reload()
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    function EditModalOpen(type, id){
+        
+        var url = `/education/onlines/update/${type}/${id}/`
+        fetch(url, {
+            method: 'get',
+            headers:{
+                'Accept':'application/json',
+            },
+        })
+        .then(res=>res.json()).then(res=>{
+            console.log(res);
+
+            var modal = document.getElementById('modal-basic-edit');
+            var form = modal.getElementsByTagName('form')[0];
+            form.innerHTML = "";
+            form.innerHTML += `<div class="form-group">
+                <label for="id_title" class="il-gray fs-14 fw-500 align-center">Dars nomini kiriting</label>
+                <input name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_title" placeholder="" value="${res.title}">
+            </div>
+            
+            `;
+
+            form.innerHTML +=`<div class="form-group">
+                <label for="id_comment" class="il-gray fs-14 fw-500 align-center">Darsga izoh kiriting</label>
+                <textarea name="title" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="id_comment" placeholder="">${res.comment}</textarea>
+            </div>
+            `
+            var editBtn = document.getElementById('editButton');
+            editBtn.setAttribute('onclick', `saveEdit('${type}', '${id}')`)
+
+        })
+        .catch(err=>{
+            console.log("err", err)
+     })
+    }
+</script>
+{% endblock %}

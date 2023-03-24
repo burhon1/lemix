@@ -29,6 +29,9 @@ class EduCentersQuerySet(QuerySet):
 
     def educenter_id_list(self,id):
         # print(self.filter(id=1),3)
+        return self.filter(Q(id=id)).values('id','name')
+
+    def educenter_id_for_list(self,id):
         return self.filter(Q(id=id)|Q(parent__id=id)).values('id','name')
 
     def educenter(self, id):
@@ -43,5 +46,8 @@ class EduCentersManager(Manager):
 
     def educenter_id_list(self,id):
         return self.get_query_set().educenter_id_list(id)
+    
+    def educenter_id_for_list(self,id):
+        return self.get_query_set().educenter_id_for_list(id)
     def educenter(self, id):
         return self.get_query_set().educenter(id)

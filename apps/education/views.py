@@ -33,22 +33,29 @@ def lid_arxiv_view(request):
 @login_required
 def onlin_view(request):
     context = dict()
-    print(request.user)
+    filter_keys = {}
     ed_id=request.session.get('branch_id',False)
     qury = Q(id=ed_id)
     if int(ed_id) == 0:
         qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
     educenter = EduCenters.objects.filter(qury)
     educenter_ids=educenter.values_list('id',flat=True)
+    if request.user.groups.filter(name='Teacher').exists():
+        context['is_teacher'] = True
+        context['courses'] = Course.courses.course_contents(educenter_ids,request.user)
+        context['groups'] = GroupModel.groups.group_content(educenter_ids,request.user)
+    else:
+        context['courses'] = Course.courses.course_contents(educenter_ids)
+        context['groups'] = GroupModel.groups.group_content(educenter_ids)    
     teacher = Teacher.objects.filter(user=request.user).first()
     # context['courses'] = get_courses(request.user)
-    context['courses'] = Course.courses.course_contents(educenter_ids)
+    
 
     # context['courses'] = get_courses_data(context['courses'], teacher=teacher)
     # groups = get_groups(request.user)
-    context['groups'] = GroupModel.groups.group_content(educenter_ids)
+    
     # print(context['courses'])
-    context['is_teacher'] = bool(teacher)
+    
 
     return render(request,'education/onlin.html', context) 
 
@@ -101,9 +108,9 @@ def onlin_video_create_view(request, lesson_id):
                 content.video_link =  createVideo(request.scheme, video_url=video_url, name=content.title) # youtube_link_formatter(video_url)
             content.save()
             if group:
-                content.groups.add(group)
+                content.groups=group
             elif request.user.is_superuser:
-                content.groups.add(*Group.objects.filter(course=lesson.module.course))
+                content.groups=group
             data = model_to_dict(content, fields=('id', 'title'))
             data['redirect_id'] = content.lesson.module.course.id
             data['group'] = request.GET.get('group', None)
@@ -127,9 +134,9 @@ def onlin_text_view(request, lesson_id):
             content.lesson = lesson
             content.save()
             if group:
-                content.groups.add(group)
+                content.groups=group
             elif request.user.is_superuser:
-                content.groups.add(*Group.objects.filter(course=lesson.module.course))
+                content.groups=group
             context = dict()
             context = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             context['redirect_id'] = content.lesson.module.course.id
@@ -198,16 +205,15 @@ def onlin_hwork_create_view(request, lesson_id):
             content.author = request.user 
             content.content_type = 4 # CONTENT_CHOICES
             content.lesson = lesson
-            content.save()
+            
             try:
                 group = request.GET.get('group',None)
                 group = Group.objects.get(id=group)
-                content.groups.add(group)
-                content.save()
+                content.groups=group
             except:
                 if request.user in get_admins():
-                    content.groups.add(*Group.objects.filter(course=lesson.module.course))
-                    content.save()
+                    content.groups=group
+            content.save()
             data = model_to_dict(content, fields=('id', 'lesson', 'text', 'required', 'status'))
             data['redirect_id'] = content.lesson.module.course.id
             data['group'] = request.GET.get('group', None)
@@ -263,14 +269,67 @@ def onlins_view(request,id):
     context['modules'] = get_modules(course, request.user, group=group)
     module_id = request.GET.get('m', None)
     filter_kwargs = {'groups__id': group.id} if group else dict()
-    print(filter_kwargs)
     if module_id:
         filter_kwargs = {'module_id': module_id,}
     context['lessons'] = get_lessons(course, request.user, **filter_kwargs)
     context['lessons'] = get_lessons_data(context['lessons'])
     
     context['modules'] = get_modules_data(context['modules'], group=group, authors=admins)
-    return render(request,'education/onlins.html', context) 
+    return render(request,'education/onlins.html', context)
+
+
+def onlin_lessons_view(request,id):
+    context={}
+    from django.contrib.postgres.aggregates import ArrayAgg,JSONBAgg
+    from django.contrib.postgres.expressions import ArraySubquery
+    from django.db.models.expressions import RawSQL
+    from django.db.models.functions import JSONObject as jsonobject
+    from django.db.models import F,OuterRef,Count,Case,Value,When
+    filter_keys = {}
+    filter_keys=Q(course__id=id)&Q(groups__isnull = True)
+    lesson_filters = Q(module__id=OuterRef("pk"))&Q(groups__isnull = True)
+    content_filters = Q(lesson__id=OuterRef("pk"))&Q(groups__isnull = True)
+    group = request.GET.get('group', None)
+    flkeys=Q(lessons__groups__isnull=True)
+    if group is not None:
+        flkeys=Q(lessons__groups__isnull=True) | Q(lessons__groups__id=group)
+        filter_keys=Q(course__id=id)|Q(Q(course__id=id)&Q(groups__id=group))
+        lesson_filters = Q(Q(module__id=OuterRef("pk")) & Q(groups__isnull = True))|Q(Q(module__id=OuterRef("pk"))&Q(groups__id=group))
+        # content_filters=Q(Q(lesson__id=OuterRef("pk")) & Q(groups__isnull = True))|Q(Q(lesson__id=OuterRef("pk"))&Q(groups__id=group))
+        content_filters=Q(lesson__id=OuterRef("pk"))|Q(Q(lesson__id=OuterRef("pk"))&Q(groups__id=group))
+        # lesson_filters=Q(module__id=OuterRef("pk"))|Q(Q(module__id=OuterRef("pk"))&Q(groups__id=group))
+    context['modules'] = Modules.modules.module_list(filter_keys)
+    # course = Modules.objects.annotate(data=JSONBAgg(city=F("course__title"), zip=F("course__id"))).values('data','id','title')
+    contents_subquery = Contents.objects.filter(content_filters)\
+                        .annotate(
+                            content_type_name=Case(
+                                When(content_type=1,then=Value('Video')),
+                                When(content_type=2,then=Value('Maqola')),
+                                When(content_type=3,then=Value('Test')),
+                                default=Value('Uy vazifasi')
+                            ),
+                            content_status=Case(
+                                When(status=True,then=Value(1)),
+                                default=Value(0)
+                            )
+                        )\
+                        .annotate(
+                            contents=jsonobject(id=F('id'),title=F("title"), content_type=F("content_type_name"),status=F('content_status'))
+                        ).values_list("contents").order_by('order')
+    subquery = Lessons.objects.filter(lesson_filters)\
+        .values('id','title',content=ArraySubquery(contents_subquery)).order_by('order')\
+            .annotate(
+                contents=jsonobject(id=F('id'),
+                title=F("title"),
+                content=F("content"),
+                lesson_status=Case(
+                                When(status=True,then=Value(1)),
+                                default=Value(0)
+                            )
+            )).values_list("contents")
+    context['modules_list'] = list(Modules.objects.filter(flkeys).filter(Q(course__id=id)).annotate(lesson_count=Count('lessons')).filter(lesson_count__gt=0).values('id','title',data=ArraySubquery(subquery)))
+    context['course']=Course.courses.course_content(id,group)
+    return render(request,'education/online_lesson_detail.html', context) 
 
 @login_required
 def online_delete_view(request, id):
@@ -331,6 +390,8 @@ def online_activate_view(request, action:str, type: str, pk:int):
     if request.method == 'POST':
         if type == 'course':
             obj = get_object_or_404(Course, pk=pk)
+            obj.status=not(obj.status)
+            obj.save()
             modules = obj.modules.all()
             contents = Contents.objects.filter(lesson__module__in=modules)
             contents.update(status=ACTIONS[action])
@@ -360,14 +421,15 @@ def modules_view(request):
         if form.is_valid():
             module = form.save(commit=False)
             module.author=request.user
-            module.save()
+            
 
             if group and type(group) == Group:
-                module.groups.add(group)
-                module.save()
+                module.groups=group
+                
             elif request.user.is_superuser:
-                module.groups.add(*Group.objects.filter(course_id=int(request.POST.get('course'))))
-                module.save()
+                module.groups=Group.objects.filter(course_id=int(request.POST.get('course')))
+                
+            module.save()
             data = model_to_dict(module, fields=('id', 'title'))
             data['status'] = False
             return JsonResponse(data, status=201)
@@ -407,10 +469,10 @@ def create_lesson_view(request):
         if form.is_valid():
             lesson = form.save(author=request.user)
             if group:
-                lesson.groups.add(group)
+                lesson.groups=group
                 lesson.save()
             elif request.user.is_superuser:
-                lesson.groups.add(*Group.objects.filter(course=lesson.module.course))
+                lesson.groups=group
                 lesson.save()
             return JsonResponse({'lesson': model_to_dict(lesson, exclude=('groups',)), 'status': 201} )
         

@@ -21,7 +21,8 @@ urlpatterns = [
     path('online_hwork/update/<int:pk>/',onlin_hwork_view,name='onlin_hwork'),
     path('online_hwork/delete/<int:pk>/',onlin_hwork_delete_view,name='onlin_delete'),
     path('online_hwork/create/<int:lesson_id>/',onlin_hwork_create_view,name='onlin_hwork_create'),
-    path('onlines/<int:id>/',onlins_view,name='onlins'),
+    path('onlines/<int:id>/',onlin_lessons_view,name='onlins'),
+    path('online/lessons/<int:id>/',onlin_lessons_view,name='onlins-lessons'),
     path('onlines/update/<str:type>/<int:pk>/', online_update_view, name='online_update'),
     path('onlines/delete/<str:type>/<int:pk>/', online_delete2_view, name='online_delete2'),
     
