@@ -1,1 +1,5 @@
-## My first heading
+## Groups modelidagi qiymatlar
+{+ 	Admintion +}
+{+ 	Director +}
+{+ 	Lead +}
+{+ 	Student +}
