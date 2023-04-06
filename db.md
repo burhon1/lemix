@@ -1,5 +1,5 @@
 ## Groups modelidagi qiymatlar
-{+ 	Admintion +}
-{+ 	Director +}
-{+ 	Lead +}
-{+ 	Student +}
+- {+ 	Admintion +}
+- {+ 	Director +}
+- {+ 	Lead +}
+- {+ 	Student +}
