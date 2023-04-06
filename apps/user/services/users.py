@@ -3,11 +3,15 @@ from getmac import get_mac_address
 from user.models import CustomUser, UserDevices
 from django.contrib.auth.hashers import make_password
 
-def user_add(groups,request, is_staff=False):
-    post = request.POST
+def user_add(groups,request, is_staff=False,is_api=False):
+    if is_api:
+        post=request.data
+    else:    
+        post = request.POST
     first_name = post.get('first_name',False)
     last_name = post.get('last_name',False)
     phone = post.get('phone',False)
+    password = post.get('password',False)
     birthday = post.get('birthday',False)
     gender = post.get('gender',False)
     location = post.get('location',False)
@@ -33,7 +37,10 @@ def user_add(groups,request, is_staff=False):
                 custom_user.last_name=last_name 
             else:
                 custom_user.first_name = fio   
-            custom_user.password = make_password(phone)
+            if password:
+                custom_user.password = make_password(password)
+            else:
+                custom_user.password = make_password(phone)    
             custom_user.save()
             custom_user.groups.add(*groups)
             return {'status':200,'obj':custom_user}

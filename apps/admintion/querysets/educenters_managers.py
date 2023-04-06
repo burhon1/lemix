@@ -37,6 +37,13 @@ class EduCentersQuerySet(QuerySet):
     def educenter(self, id):
         return self.educenters().filter(pk=id).first()
 
+    def parent_educenters(self):
+        return self.filter(parent__isnull=True)\
+            .annotate(
+                full_name=Concat(F('director__first_name'),Value(' '),F('director__last_name'))
+            )\
+            .values('id','name','full_name')
+    
 class EduCentersManager(Manager):
     def get_query_set(self):
         return EduCentersQuerySet(self.model)
@@ -47,6 +54,9 @@ class EduCentersManager(Manager):
     def educenter_id_list(self,id):
         return self.get_query_set().educenter_id_list(id)
     
+    def parent_educenters(self):
+        return self.get_query_set().parent_educenters()
+
     def educenter_id_for_list(self,id):
         return self.get_query_set().educenter_id_for_list(id)
     def educenter(self, id):

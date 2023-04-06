@@ -25,7 +25,6 @@ def dashboard(request):
     return render(request, template_name, context)
 
 
-
 def teacher_pay(request):
     context = dict()
     return render(request, 'teachers/teacher_pay.html', context)

@@ -16,6 +16,7 @@ urlpatterns = [
     path('register/',include('admintion.form_urls')),
     path('sms/', include('sms.urls')),
     path('pyclick/', include('pyclick.urls')),
+    path('api/', include('api.urls')),
 
 ]
 

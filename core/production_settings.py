@@ -15,7 +15,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lemixprod',
         'USER': 'lemixproduser', #  djangouser  postgres
-        'PASSWORD': '1',
+        'PASSWORD': 'Hh*-u9^.nR{<6qAr',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
