@@ -14,7 +14,7 @@ class Modules(models.Model):
     order  = models.IntegerField("Dars o'rni", default=1)
     comment= models.TextField(null=True,blank=True)
     educenter = models.ForeignKey('admintion.EduCenters', models.SET_NULL, null=True)
-    status       = models.BooleanField("Dars tayyormi?", default=False)
+    status       = models.BooleanField("Dars tayyormi?", default=True)
     objects = models.Manager()
     modules = modules.ModulesManager()
     class Meta:
@@ -33,7 +33,7 @@ class Lessons(models.Model):
     content_type = models.SmallIntegerField("Content Type", choices=LESSONS_CHOICES, default=1)
     author = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     comment= models.TextField(null=True,blank=True)
-    status       = models.BooleanField("Material tayyormi?", default=False)
+    status       = models.BooleanField("Material tayyormi?", default=True)
     objects = models.Manager()
     lessons = lessons.LessonsManager()
     class Meta:
@@ -62,7 +62,7 @@ class Contents(models.Model):
     closed_at    = models.DateTimeField("Yopilish vaqti",null=True, blank=True)
     author       = models.ForeignKey(CustomUser, models.SET_NULL, null=True)
     required     = models.BooleanField("Dars tugatilmasa keyingi dars ko'rinmasinmi?", default=False)
-    status       = models.BooleanField("Material tayyormi? ", default=False)
+    status       = models.BooleanField("Material tayyormi? ", default=True)
     objects = models.Manager()
     contents = contents.ContentsManager()
     class Meta:

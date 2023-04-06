@@ -131,14 +131,16 @@ def group_detail_view(request,id):
         raise Http404("Bunday guruh mavjud emas.")
     context = {'date': timezone.now().date(), 'form': GroupForm(), 'group':group, 'group_obj':group1}
     # print(get_attendace(id,context['group']['start_date'],educenter_ids=educenter_ids))
-    context = context | get_attendace(id,context['group']['start_date'],educenter_ids=educenter_ids)
-    context['student_list'] = Student.students.studet_list(educenter_ids)
+    context = context | get_attendace(id,context['group']['start_date'],educenter_ids=educenter_ids,group_days=group['days'])
+    context['student_list'] = Student.students.studet_list(educenter_ids,group_id=id)
+    
     context['tasks'] = Tasks.tasks.group_tasks(id=id)
     context['today_tasks'] = len([task for task in context['tasks'] if task['deadline'].date() == timezone.now().date()])
     context['task_types'] = TaskTypes.objects.all()
     context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
     context['balances'] = StudentBalance.objects.filter(title=context['group']['title'])
-    return  render(request,'admintion/group.html',context)
+    # context['atds'] = GroupStudents.custom_manager.student_attendances()
+    return render(request,'admintion/group.html',context)
 
 def group_delete_view(request, id):
     student = get_object_or_404(Group, pk=id)
@@ -156,9 +158,9 @@ def get_attendace_view(request):
     educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)  
     data = json.loads(request.body)
     year_month = data['date']
-    take_date = datetime.strptime(year_month+'-01','%Y-%m-%d') 
+    take_date = datetime.strptime(year_month+'-01','%Y-%m-%d').date() 
     context['group'] = Group.groups.group(data['group_id'],educenter_ids)
-    context = context | get_attendace(data['id'],context['group']['start_date'],educenter_ids,take_date)
+    context = context | get_attendace(data['id'],context['group']['start_date'],educenter_ids,take_date,context['group']['days'])
     context['students_attendace']=list(context['students_attendace'])
     
     del context['students']
@@ -171,20 +173,22 @@ def change_attendace_view(request):
     gr_student, created = GroupStudents.objects.get_or_create(
         student_id=data['id'],group_id=data['group_id'])
     attendace = Attendace.objects.filter(group_student=gr_student,date=data['date'])
-    
+
     if attendace.exists():
         attendace=attendace.first()
         attendace.status=data['status']
-        attendace.save()
     else:
         attendace = Attendace(
            group_student=gr_student,
            status=data['status'],
            date=data['date'],
            creator=request.user
-        )
-        attendace.save() 
-
+        )  
+    if data['status']==1 or data['status']==4:
+        attendace.comment=data['comment']
+    if data.get('reasen',False):
+        attendace.reasen=data.get('reasen',False)    
+    attendace.save() 
     return JsonResponse({'status':201,'count':0})
 
 def change_lead_attendace_view(request):

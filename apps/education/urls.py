@@ -69,4 +69,5 @@ urlpatterns = [
     path('homeworks/lead/<int:pk>/', lead_homeworks_in_group, name='student_homeworks'),
 
     path('homeworks/<str:action>/<int:pk>/', homework_edit_view, name="homework-edit"),
+    path('change-order/<str:type_obj>/<int:id>/<str:action>/',change_order,name='change-order')
 ]

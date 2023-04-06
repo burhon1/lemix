@@ -55,6 +55,14 @@ class StudentQueryset(QuerySet):
                 Cast('ggroups__attendance__date', TextField()),
                 filter=Q(ggroups__attendance__date__isnull=False
             )),
+            comment=ArrayAgg(
+                Cast('ggroups__attendance__comment', TextField()),
+                filter=Q(ggroups__attendance__comment__isnull=False
+            )),
+            reasen=ArrayAgg(
+                Cast('ggroups__attendance__reasen', TextField()),
+                filter=Q(ggroups__attendance__comment__isnull=False
+            ))
         )
 
     def student_balances(self,id,educenter_ids):
@@ -122,8 +130,8 @@ class StudentQueryset(QuerySet):
                         group_count=Count(F('ggroups__group__id'),distinct=True)
                     ).values('id','full_name','phone_number','group_count','status')
 
-    def student_list(self,educenter_ids):
-        return self.get_info(educenter_ids).filter(status=1).values('id','full_name') 
+    def student_list(self,educenter_ids,group_id):
+        return self.get_info(educenter_ids).filter(status=1).exclude(ggroups__group__id=group_id).values('id','full_name') 
 
     def students_by_status(self):
         # from admintion.data import chooses
@@ -166,8 +174,8 @@ class StudentManager(Manager):
     def student_detail(self, id):
         return self.get_query_set().student_detail(id)
 
-    def studet_list(self,educenter_ids):
-        return self.get_query_set().student_list(educenter_ids)
+    def studet_list(self,educenter_ids,group_id=None):
+        return self.get_query_set().student_list(educenter_ids,group_id)
 
     def studet_short_list(self):
         return self.get_query_set().studet_short_list()    

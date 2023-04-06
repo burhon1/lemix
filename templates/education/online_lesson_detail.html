@@ -287,7 +287,7 @@
                                                         </svg>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start" style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                        <a class="dropdown-item" style="text-transform: none;" href="#" onclick="changeOrderObj('lesson',{{lesson.id}},'up')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-up">
@@ -295,7 +295,7 @@
                                                             </svg>
                                                             Yuqoriga ko'tarish
                                                         </a>
-                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                        <a class="dropdown-item" style="text-transform: none;" href="#" onclick="changeOrderObj('lesson',{{lesson.id}},'down')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                                     class="feather feather-chevron-down">
@@ -604,14 +604,14 @@
                                                                     </svg>
                                                                     <div class="dropdown-menu" aria-labelledby="todo10" x-placement="left-start"
                                                                         style="position: absolute; transform: translate3d(-190px, 14px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                                        <a class="dropdown-item" style="text-transform: none;" href="#" onclick="changeOrderObj('content',${person.id},'up')">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                                                 class="feather feather-chevron-up">
                                                                                 <polyline points="18 15 12 9 6 15" />
                                                                             </svg>
                                                                             Yuqoriga ko'tarish</a>
-                                                                        <a class="dropdown-item" style="text-transform: none;" href="#">
+                                                                        <a class="dropdown-item" style="text-transform: none;" href="#" onclick="changeOrderObj('content',${person.id},'down')">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                                                 class="feather feather-chevron-down">
@@ -657,26 +657,31 @@
     }
     function dragStart() {
         // console.log('Event: ', 'dragstart');
+        console.log(this.closest('li'))
         dragStartIndex = +this.closest('li').getAttribute('data-index');
     }
 
     function dragEnter() {
         // console.log('Event: ', 'dragenter');
         this.classList.add('over');
+        console.log(23)
     }
 
     function dragLeave() {
         // console.log('Event: ', 'dragleave');
         this.classList.remove('over');
+        console.log(23)
     }
 
     function dragOver(e) {
         // console.log('Event: ', 'dragover');
         e.preventDefault();
+        console.log(23)
     }
 
     function dragDrop() {
         // console.log('Event: ', 'drop');
+        console.log(23)
         const dragEndIndex = +this.getAttribute('data-index');
         swapItems(dragStartIndex, dragEndIndex);
 
@@ -685,6 +690,7 @@
 
     // Swap list items that are drag and drop
     function swapItems(fromIndex, toIndex) {
+        console.log(23)
         const itemOne = listItems[fromIndex].querySelector('.draggable');
         const itemTwo = listItems[toIndex].querySelector('.draggable');
 
@@ -917,5 +923,23 @@
             console.log("err", err)
      })
     }
+    function changeOrderObj(type,id,action){
+        var url = `/education/change-order/${type}/${id}/${action}/`;
+        fetch(url, {
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'X-CSRFToken':'{{ csrf_token }}'
+            },
+        })
+        .then(res=>{
+            window.location.assign(window.location.href);
+            window.location.reload()
+        })
+        .catch(err=>{
+            alert(err);
+        })
+    }
+    
 </script>
 {% endblock %}

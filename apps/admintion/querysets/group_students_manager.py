@@ -103,6 +103,10 @@ class GroupStudentsQueryset(QuerySet):
                     F('student__user__middle_name')
                     )
             )
+    
+    def student_attendances(self):
+        return self
+    
 class GroupStudentManager(Manager):
     def get_query_set(self):
         return GroupStudentsQueryset(self.model)
@@ -121,6 +125,9 @@ class GroupStudentManager(Manager):
 
     def student_list(self,filters,educenter_ids):
         return self.get_query_set().student_list(filters,educenter_ids)
+
+    def student_attendances(self):
+        return self.student_attendances()
 
     def pay_by_lesson(self):
         return self.get_query_set().pay_by_lesson() 

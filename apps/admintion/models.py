@@ -95,6 +95,8 @@ class Student(models.Model):
 class Attendace(models.Model):
     # student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendace')
     status = models.SmallIntegerField(choices=chooses.STUDENT_ATTANDENCE_TYPE,null=True,blank=True)
+    comment = models.TextField(null=True,blank=True)
+    reasen = models.SmallIntegerField(choices=chooses.STUDENT_REASEN_TYPE,null=True,blank=True)
     date = models.DateField()
     group_student = models.ForeignKey("GroupStudents", models.SET_NULL, null=True,related_name='attendance')
     created = models.DateTimeField(auto_now_add=True, null=True)

@@ -35,7 +35,7 @@ def get_days(start_date,finis_date=None,days=[1,3,5]):
         for day in days:
             day = formas[int(day)]
             if week[day] != 0:
-                datas.append(datetime.strptime(f'{finis_date.year}-{finis_date.month}-{week[day]}', "%Y-%m-%d"))  
+                datas.append(datetime.strptime(f'{finis_date.year}-{finis_date.month}-{week[day]}', "%Y-%m-%d").date())  
     return datas 
 
 def get_attendace_days(start_date,finis_date=None,days=[1,3,5]):

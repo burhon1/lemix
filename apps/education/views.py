@@ -106,11 +106,12 @@ def onlin_video_create_view(request, lesson_id):
             video_url = form.cleaned_data.get('video_link', None)
             if video_url:
                 content.video_link =  createVideo(request.scheme, video_url=video_url, name=content.title) # youtube_link_formatter(video_url)
-            content.save()
+            
             if group:
                 content.groups=group
             elif request.user.is_superuser:
                 content.groups=group
+            content.save()
             data = model_to_dict(content, fields=('id', 'title'))
             data['redirect_id'] = content.lesson.module.course.id
             data['group'] = request.GET.get('group', None)
@@ -304,7 +305,7 @@ def onlin_lessons_view(request,id):
                         .annotate(
                             content_type_name=Case(
                                 When(content_type=1,then=Value('Video')),
-                                When(content_type=2,then=Value('Maqola')),
+                                When(content_type=2,then=Value('Matn')),
                                 When(content_type=3,then=Value('Test')),
                                 default=Value('Uy vazifasi')
                             ),
@@ -314,8 +315,8 @@ def onlin_lessons_view(request,id):
                             )
                         )\
                         .annotate(
-                            contents=jsonobject(id=F('id'),title=F("title"), content_type=F("content_type_name"),status=F('content_status'))
-                        ).values_list("contents").order_by('order')
+                            contents=jsonobject(id=F('id'),title=F("title"), content_type=F("content_type_name"),status=F('content_status')),order_num=F('order')
+                        ).order_by('order_num').values_list("contents")
     subquery = Lessons.objects.filter(lesson_filters)\
         .values('id','title',content=ArraySubquery(contents_subquery)).order_by('order')\
             .annotate(
@@ -326,9 +327,10 @@ def onlin_lessons_view(request,id):
                                 When(status=True,then=Value(1)),
                                 default=Value(0)
                             )
-            )).values_list("contents")
+            ),order_num=F('order')).order_by('order_num').values_list("contents")
     context['modules_list'] = list(Modules.objects.filter(flkeys).filter(Q(course__id=id)).annotate(lesson_count=Count('lessons')).filter(lesson_count__gt=0).values('id','title',data=ArraySubquery(subquery)))
     context['course']=Course.courses.course_content(id,group)
+
     return render(request,'education/online_lesson_detail.html', context) 
 
 @login_required
@@ -470,10 +472,9 @@ def create_lesson_view(request):
             lesson = form.save(author=request.user)
             if group:
                 lesson.groups=group
-                lesson.save()
             elif request.user.is_superuser:
                 lesson.groups=group
-                lesson.save()
+            lesson.save()
             return JsonResponse({'lesson': model_to_dict(lesson, exclude=('groups',)), 'status': 201} )
         
         return JsonResponse({'message': 'Forma to\'g\'ri to\'ldirmadingiz.', 'status':400})
@@ -754,6 +755,7 @@ def check_permission(request, homework):
                 return True
         return False
     return True
+
 @login_required
 def homework_edit_view(request, action, pk):
     ACTIONS = {
@@ -782,6 +784,7 @@ def homework_edit_view(request, action, pk):
 
 
 def lead_homeworks_in_group(request, pk):
+
     demo = get_object_or_404(LeadDemo, pk=pk)
     lead = demo.lead
     group = demo.group
@@ -815,3 +818,28 @@ def lead_homeworks_in_group(request, pk):
             dct['status'] = 1   
         data.append(dct)
     return JsonResponse(data, safe=False)
+
+def change_order(request,type_obj,id,action):
+    obj=None
+    obj_list={'lesson':Lessons,'content':Contents}
+    
+    obj=obj_list.get(type_obj)
+    change_obj=obj.objects.filter(id=id).first()
+    change_obj2=None
+    order_query='order'
+    is_change=False
+    filter_fk={'module':change_obj.module} if type_obj=='lesson' else {'lesson':change_obj.lesson}
+    if action=='up':
+        order_query='-order'
+    change_obj2=obj.objects.exclude(id=id).filter(**filter_fk).order_by(order_query)[0]
+    if action=='up' and change_obj2.order<change_obj.order:
+        is_change=True
+    elif action=='down' and change_obj2.order>change_obj.order:
+        is_change=True
+    if is_change:
+        val=change_obj.order
+        change_obj.order=change_obj2.order
+        change_obj2.order=val
+        change_obj2.save()
+        change_obj.save()
+    return JsonResponse({})

@@ -14,6 +14,9 @@ class LessonAddForm(forms.ModelForm):
     def save(self, author:CustomUser):
         self.instance = super().save(commit=False)
         self.instance.author = author
+        order_lesson = Lessons.objects.filter(module=self.instance.module).order_by('-order').first()
+        if order_lesson is not None:
+            self.instance.order=order_lesson.order+1
         self.instance.save()
         return self.instance
 

@@ -1,0 +1,8 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=pastgres
+  ports:
+    5432:5432

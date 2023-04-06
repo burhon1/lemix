@@ -46,11 +46,18 @@ STUDENT_SOURCES = (
 )
 
 STUDENT_ATTANDENCE_TYPE = (
-    (1,'Bor edi'),
-    (2,'Yoq'),
-    (3,'Kechikdi')
+    (1,'Kechikdi'),
+    (2,'Keldi'),
+    (3,'Sababsiz'),
+    (4,'Sababli')
 )
 
+STUDENT_REASEN_TYPE = (
+    (1,"Qattiq kasal bo'lgan"),
+    (2,'Talaba viloyatga ketgan'),
+    (3,'2-darsga kelmadi'),
+    (4,'3-darsga kelmadi')
+)
 
 LEAD_FORM_STATUS = (
     (1,'Aktiv'),
