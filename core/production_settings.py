@@ -13,8 +13,8 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lemix',
-        'USER': 'djangouser', #  djangouser  postgres
+        'NAME': 'lemixprod',
+        'USER': 'lemixproduser', #  djangouser  postgres
         'PASSWORD': '1',
         'HOST': '127.0.0.1',
         'PORT': '5432',
