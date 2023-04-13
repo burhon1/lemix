@@ -371,9 +371,9 @@
                                                                                             </div>
                                                                                         </th>
                                                                                         <th>FIO</th>
-                                                                                        <th>Foiz</th>
+                                                                                        <th>Foi</th>
                                                                                         {% for day in days %}
-                                                                                        <th class="day_title">{{day.day}}</th>
+                                                                                        <th class="day_title">{{day|slice:"-2:"}}</th>
                                                                                         {% endfor %}
                                                                                     </tr>
                                                                                 </thead>

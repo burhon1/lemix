@@ -61,7 +61,6 @@ def teacher_delete_view(request, id):
     teacher = get_object_or_404(Teacher, pk=id)
     if request.method == 'POST':
         user = teacher.user
-        # teacher.delete()
         user.delete()
         status = 204
     else:
