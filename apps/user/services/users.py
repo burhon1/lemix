@@ -17,11 +17,12 @@ def user_add(groups,request, is_staff=False,is_api=False):
     location = post.get('location',False)
     fio = post.get('fio',False)
     educenter = request.session.get('branch_id',False)
-    user = CustomUser.objects.filter(phone=phone)
+    print(phone.replace("+998",""))
+    user = CustomUser.objects.filter(phone=phone.replace("+998",""))
     if not user.exists():
         if  phone and groups and ((first_name and last_name) or fio):
             custom_user = CustomUser(
-                phone=phone,
+                phone=phone.replace("+998",""),
                 educenter=educenter
             )
             if birthday:
@@ -40,7 +41,7 @@ def user_add(groups,request, is_staff=False,is_api=False):
             if password:
                 custom_user.password = make_password(password)
             else:
-                custom_user.password = make_password(phone)    
+                custom_user.password = make_password(phone.replace("+998",""))    
             custom_user.save()
             custom_user.groups.add(*groups)
             return {'status':200,'obj':custom_user}
@@ -54,7 +55,7 @@ def user_add(groups,request, is_staff=False,is_api=False):
         if fio:
             user.last_name=fio    
         if phone:
-            user.phone=phone
+            user.phone=phone.replace("+998","")
         if birthday:
             user.birthday=birthday
         if gender:

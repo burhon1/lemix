@@ -860,43 +860,6 @@
     }
 
     function handleAddTask(){
-        // var wrap = document.createElement('div');
-        // var group_add = document.querySelector('.task_add');
-        // group_add.className='row w-100 task_add';
-        // wrap.className='form-group col-md-12';
-        // if(group_add.innerHTML){
-        //     group_add.innerHTML="";
-        //     return;
-        // }
-        // fetch("{% url 'admintion:group-list' %}", {
-        //     method:'post',
-        //     headers:{
-        //         'Accept':'application/json',
-        //         'X-CSRFToken': '{{ csrf_token }}'
-        //     }
-        // })
-        // .then(res=>res.json())
-        // .then(res=>{
-        //    console.log(res)
-        //    var select = document.createElement('select');
-        //    var label = document.createElement('label')
-        //    select.name='task';
-        //    res.data.map((item)=>{
-        //         var option = document.createElement('option');
-        //         option.value = item.id;
-        //         option.textContent = item.title;
-        //         select.appendChild(option);
-        //    })
-        //    label.className='il-gray fs-14 fw-500 align-center';
-        //    select.className='form-control px-15';
-        //    wrap.appendChild(label);
-        //    wrap.appendChild(select)
-        //    group_add.appendChild(wrap)
-        // })
-        // .catch(err=>{
-        //     console.log(err)
-        // })
-
         var task_add = document.querySelector('.task_add');
         task_add.className='row w-100 task_add d-flex';
         if(task_add.innerHTML){
@@ -913,7 +876,7 @@
                         <div class="form-group mb-0 form-group-calender">
                             <div class="position-relative">
                                 <label for="datepickre2">${item}</label>
-                                <input type="date" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018">
+                                <input type="date" class="form-control form-control-default" id="datepicker2" placeholder="January 20, 2018" name="task_date">
                                 <a href="#"><span data-feather="calendar"></span></a>
                             </div>
                         </div>
@@ -922,17 +885,16 @@
                 wrap.innerHTML = calendar;
                 task_add.appendChild(wrap)
             } else if(item === "Topshiriq matni") {
+                console.log(item)
                 var wrap = document.createElement('div');
                 wrap.className='form-group col-md-12';
                 var textarea = `
                         <label for="task-comment"
                             class="il-gray fs-14 fw-500 align-center">${item}</label>
-                        <textarea name="comment" class="form-control" id="task-comment"
+                        <textarea name="task_comment" class="form-control" id="task-comment"
                             rows="3"></textarea>
-                `
+                `;
                 wrap.innerHTML= textarea;
-
-
                 task_add.appendChild(wrap)
             }
             else{
@@ -941,11 +903,20 @@
             var select = document.createElement('select');
             var label = document.createElement('label');
             select.name=item;
+            var vals_options=[];
+            if(item == "Ma'sul"){
+                select.name="task_who"
+                vals_options = {{task_responsibles|safe}};
+            }
+            else {
+                select.name="task_type"
+                vals_options = {{task_types|safe}};
+            }
 
-           ["option1","option2"].map((item)=>{
+            vals_options.map((item)=>{
                 var option = document.createElement('option');
                 option.value = item.id;
-                option.textContent = item;
+                option.textContent = item.title;
                 select.appendChild(option);
            })
            label.textContent=item;

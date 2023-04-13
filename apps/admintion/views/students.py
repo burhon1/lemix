@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from django.db.models import Q
+from django.db.models import Q,F
 from django.urls import reverse
 from django.http import JsonResponse
 from admintion.utils import get_list_of_dict,get_list_of_filter
@@ -8,7 +8,7 @@ from user.services.users import user_add, CustomUser
 from django.contrib.auth.models import Group
 from django.utils import timezone
 import json
-from admintion.models import EduCenters,Course,Student,Teacher, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
+from admintion.models import EduCenters,UserTaskStatus,Course,Student,Teacher, Group as GroupModel,GroupStudents, Parents, TaskTypes, Sources, Tasks
 from admintion.selectors import get_student_courses, get_student_groups, get_student_attendaces, get_student_unwritten_groups,get_student_report
 from admintion.services.student import set_student_group, set_student_group_status, update_student
 from admintion.templatetags.custom_tags import readable_days
@@ -44,8 +44,12 @@ def students_view(request):
                 passport = post.get('passport_passport', None)
                 group = post.get('group',False)
                 attend_date = post.get('attend',False) 
+                task_date = post.get('task_date', None)
+                task_comment = post.get('task_comment', None)
+                task_who = post.get('task_who', None)
+                task_type = post.get('task_type', None)
                 if parent and pphone:
-                    parent_user,created = CustomUser.objects.get_or_create(phone=pphone)
+                    parent_user,created = CustomUser.objects.get_or_create(phone=pphone.replace("+998",""))
                     parent_user.first_name = parent
                     if parent_user.password == '':
                         parent_user.set_password(pphone)
@@ -59,6 +63,20 @@ def students_view(request):
                 if group:
                     grop = GroupModel.objects.get(id=group)
                     set_student_group(student, grop,attend_date)
+                if task_date and task_who and task_type:
+                    whom=CustomUser.objects.get(pk=task_who)
+                    task_type=TaskTypes.objects.get(id=task_type)
+                    user_task = UserTaskStatus.objects.filter(whom="Student").first()
+                    task = Tasks(
+                        comment=task_comment,
+                        deadline=task_date,
+                        author=request.user,
+                        task_type=task_type,
+                        educenter=educenter.first(),
+                        user_status=user_task
+                    )
+                        
+                    task.save()    
                 return redirect('admintion:students')
             else:
                 context['error'] = 'Malumotlar to\'liq kiritilmadi'  
@@ -75,6 +93,8 @@ def students_view(request):
     context['datas_of_course'] = list(Course.courses.courses(educenter_ids,True))
     context['datas_of_status'] = get_list_of_dict(('id','title'),STUDENT_STATUS)
     context['keys'] = ['check','title','course','teacher','days','times','total_student','course__price','action']
+    context['task_types'] = list(TaskTypes.objects.annotate(title=F('task_type')).values('id', 'title'))
+    context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
     return render(request,'admintion/students.html',context) 
 
 def student_by_filter_view(request):
