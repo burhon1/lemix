@@ -8,7 +8,7 @@ from admintion.models import EduCenters, Regions, Districts
 from admintion.forms.educenters import EducentersForm
 from django.db.models import Q
 
-# @permission_required('admintion.view_educenters')
+@permission_required('admintion.view_educenters')
 def educenters_view(request):
     ed_id=request.session.get('branch_id',False)
     # qury = Q(id=ed_id)

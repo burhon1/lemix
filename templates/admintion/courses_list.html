@@ -9,8 +9,7 @@
             <div class="col-lg-12 d-flex breadcrumb-main justify-content-between align-items-center">
                 <h4>Kurslar-{{objs.count}}ta </h4>
                 <h4 class="text-capitalize breadcrumb-title"></h4>
-                <button class="btn btn-primary btn-default btn-squared mb-10 mr-2 drawer-trigger" onclick="checkSMS()"  data-drawer="profile">SMS jo'natish</button>
-                {% if perms.admintion.add_courses %}
+                {% if perms.admintion.add_course %}
                 <button class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account"> Kurs
                     qo'shish
                 </button>
