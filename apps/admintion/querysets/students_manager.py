@@ -78,8 +78,8 @@ class StudentQueryset(QuerySet):
     def students_by_status(self, status: int=1):
         return self.get_info().filter(status=status)
     
-    def student_detail(self, id: int):
-        return self.get_info().values(
+    def student_detail(self, id: int,educenter_ids):
+        return self.get_info(educenter_ids).values(
             'id',
             'groups',
             'status',
@@ -171,8 +171,8 @@ class StudentManager(Manager):
     def student_balances(self,id,educenter_ids):
         return self.get_query_set().student_balances(id,educenter_ids)
 
-    def student_detail(self, id):
-        return self.get_query_set().student_detail(id)
+    def student_detail(self, id,educenter_ids):
+        return self.get_query_set().student_detail(id,educenter_ids)
 
     def studet_list(self,educenter_ids,group_id=None):
         return self.get_query_set().student_list(educenter_ids,group_id)
