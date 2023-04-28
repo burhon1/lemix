@@ -215,7 +215,12 @@ def change_lead_attendace_view(request):
 
 def group_detail_data(request, id: int):
     context = dict()
-    context['group'] = Group.groups.group(id)
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter_ids = EduCenters.objects.filter(qury).values_list('id',flat=True)  
+    context['group'] = Group.groups.group(id,educenter_ids)
     context['group']['dates'] = get_next_n_group_dates(10, context['group'])
     return JsonResponse(context)
 

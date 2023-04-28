@@ -51,7 +51,7 @@ def settings_view(request):
         form = EduCentersForm(instance=educenter)
     context['educenter'] = educenter
     context['form'] = form
-    context['sources'] = Sources.objects.all()
+    context['sources'] = Sources.objects.all().order_by('-id')
     return render(request, 'admintion/umumiy_sozlamalar.html', context)
 
 

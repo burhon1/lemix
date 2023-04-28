@@ -593,7 +593,6 @@
     validation(formGender,"change")
     
     formPhone.addEventListener("input",(evt)=>{
-        console.log("xxxx")
         if(evt.target.value.length<=4){
             evt.target.value = "+998"
         } 
@@ -604,7 +603,6 @@
         if(evt.target.value.length==12){
             validation(formPhone,"input")
         }
-        
     })
 
     function handleAddItem(_id, names, labelName, typs, plcs) {

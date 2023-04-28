@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q,F
 from admintion.forms.leads import LeadForm, DemoForm, DemoFormset
 from admintion.utils import convert_to_json
-from admintion.models import Course, FormLead, Group as GroupModel, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources,LeadDemo,UserTaskStatus
+from admintion.models import Course, FormLead, Group as GroupModel,Parents, GroupStudents, GroupsDays, EduCenters, LeadStatus, TaskTypes, Tasks, Student,Sources,LeadDemo,UserTaskStatus
 from admintion.selectors import get_form_leads, get_demos, get_lead_tasks, get_next_lesson_date, select_groups_by_limit
 from admintion.data.chooses import GET_GROUPS_DAYS, STUDENT_SOURCES
 from admintion.utils import get_list_of_filter
@@ -67,7 +67,8 @@ def leads_view(request):
                         parent_user.first_name = parent
                         if parent_user.password == '':
                             parent_user.set_password(parent_phone)
-                        form_lead.parents=parent_user    
+                        p_objs,_ = Parents.objects.get_or_create(user=parent_user)
+                        form_lead.parents=p_objs    
                     form_lead.save()
                     if task_date and task_who and task_type:
                         whom=CustomUser.objects.get(pk=task_who)

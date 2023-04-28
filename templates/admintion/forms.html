@@ -1508,6 +1508,7 @@ align-items: center;
             fetch(url)
             .then(res=>res.json())
             .then(res=>{
+                console.log(res.link)
                 var modalQrCode = document.getElementById('modalQrCode');
                 modalQrCode.setAttribute('src', res.image)
                 modalQrCode.src = window.location.origin+res.image
@@ -1517,9 +1518,9 @@ align-items: center;
                 var copyLink = document.getElementById('copyLink')
                 copyLink.textContent = 'Linkdan nusxa olish'
                 var input = copyLink.parentElement.getElementsByTagName('input')[0]
-                input.value = res.link;
+                input.value = res.link.toString().replace('127.0.0.1:8000','t.lemix.uz');
                 navigator.clipboard.writeText(input.value) 
-                document.getElementById('openLink').setAttribute('href',res.link)
+                document.getElementById('openLink').setAttribute('href',res.link.toString().replace('127.0.0.1:8000','t.lemix.uz'))
                 document.getElementById('saveQRCode').setAttribute('href', res.image)
 
             })

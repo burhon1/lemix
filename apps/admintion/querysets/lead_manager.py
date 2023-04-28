@@ -34,14 +34,7 @@ class LeadQueryset(QuerySet):
             author_name=Concat(F('author__first_name'),Value(' '),F('author__last_name')),
             phone_number = Concat(
                 Value('+998'),
-                Value(' ('),
-                Substr(F('user__phone'),1,2),
-                Value(') '),
-                Substr(F('user__phone'),3,3),
-                Value(' '),
-                Substr(F('user__phone'),6,2),
-                Value(' '),
-                Substr(F('user__phone'),8,2)
+                F('user__phone'),
                 )
         )\
         .values(
