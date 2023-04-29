@@ -1519,7 +1519,7 @@ align-items: center;
                 copyLink.textContent = 'Linkdan nusxa olish'
                 var input = copyLink.parentElement.getElementsByTagName('input')[0]
                 input.value = res.link.toString().replace('127.0.0.1:8000','t.lemix.uz');
-                navigator.clipboard.writeText(input.value) 
+                copyText(res.link.toString().replace('127.0.0.1:8000','t.lemix.uz')) 
                 document.getElementById('openLink').setAttribute('href',res.link.toString().replace('127.0.0.1:8000','t.lemix.uz'))
                 document.getElementById('saveQRCode').setAttribute('href', res.image)
 
@@ -1529,6 +1529,53 @@ align-items: center;
         document.getElementById('copyLink').addEventListener('click', (event)=>{
             event.target.textContent = 'Nusxa olindi.'
         })
+
+        function copyText(textToCopy) {
+            if (navigator.clipboard && window.isSecureContext) {
+
+                // navigator clipboard api method'
+                navigator.clipboard.writeText(textToCopy).then(
+                    function () {
+                        /* clipboard successfully set */
+                        console.log(successMessage)
+                    },
+                    function () {
+                        /* clipboard write failed */
+                        console.warn(errorMessage)
+                    }
+                )
+            } else
+                if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            
+                // text area method
+                var textarea = document.createElement("textarea");
+                textarea.value = textarea.textContent = textToCopy;
+                textarea.style.opacity = "0"; 
+            
+                document.body.appendChild(textarea);
+                textarea.focus();
+                    textarea.select();
+            
+                    var selection = document.getSelection();
+                    var range = document.createRange();
+                    
+                    range.selectNode(textarea);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+            
+                try {
+                    var successful = document.execCommand('copy'); // Security exception may be thrown by some browsers.
+                    var msg = successful ? console.log(successMessage) : console.warn(errorMessage);
+                }
+                catch (ex) {
+                    console.warn(errorMessage, ex);
+                }
+                finally {
+                    selection.removeAllRanges();
+                    document.body.removeChild(textarea);
+                }
+            }
+        }
 
         function AddForm(){
             clearDrawer()
