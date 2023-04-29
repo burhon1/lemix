@@ -1519,10 +1519,9 @@ align-items: center;
                 copyLink.textContent = 'Linkdan nusxa olish'
                 var input = copyLink.parentElement.getElementsByTagName('input')[0]
                 input.value = res.link.toString().replace('127.0.0.1:8000','t.lemix.uz');
-                copyText(res.link.toString().replace('127.0.0.1:8000','t.lemix.uz')) 
                 document.getElementById('openLink').href=res.link.toString().replace('127.0.0.1:8000','t.lemix.uz')
                 document.getElementById('saveQRCode').setAttribute('href', res.image)
-
+                copyText(res.link.toString().replace('127.0.0.1:8000','t.lemix.uz')) 
             })
         }
 
