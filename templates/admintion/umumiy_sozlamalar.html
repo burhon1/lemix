@@ -408,16 +408,11 @@
                                                             <td>
                                                                 <ul class="orderDatatable_actions mb-0 d-flex flex-wrap" style="justify-content: flex-start;">
                                                                     <li>
-                                                                        <a href="" class="view">
-                                                                            <span data-feather="eye"></span></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="" class="edit">
+                                                                        <a href="" class="edit" onclick="editForm('{{source.id}}')" data-toggle="modal" data-target="#modal-basic4">
                                                                             <span data-feather="edit"></span></a>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="#" onclick="" class="remove">
-                                                                            <span data-feather="trash-2"></span></a>
+                                                                        <a href="#" onclick='deleteFormModal({{source.id}},"{{source.title}}")' class="remove" data-toggle="modal" data-target="#modal-basic3"><span data-feather="trash-2"></span></a>
                                                                     </li>
                                                                 </ul>
                                                             </td>
@@ -430,7 +425,6 @@
                                         </div>
                                         <!-- Edit Profile End -->
                                     </div>
-                                 
                                 </div>
                             </div>
                         </div>
@@ -442,29 +436,20 @@
          <!-- ends: .atbd-page-content -->
 
          <div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content modal-bg-white ">
                     <div class="modal-header">
-
-
-
                         <h6 class="modal-title">Tasdiqlash</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span data-feather="x"></span></button>
                     </div>
                     <div class="modal-body">
-                                        <form>
-
-                                            <div class="form-group mb-20">
-                                                <label for="ID_otp" id="genOTPLabel">Tekshirish maqsadida +998 99 123-45-67 raqamiga 6 xonali kod jo'natildi</label>
-                                                <input type="text" class="form-control" id="ID_otp" placeholder="*** ***" name="otp">
-                                            </div>
-                                         
-                                           
-                                        </form>
-                                  
+                        <form>
+                            <div class="form-group mb-20">
+                                <label for="ID_otp" id="genOTPLabel">Tekshirish maqsadida +998 99 123-45-67 raqamiga 6 xonali kod jo'natildi</label>
+                                <input type="text" class="form-control" id="ID_otp" placeholder="*** ***" name="otp">
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Bekor qilsish</button>
@@ -472,22 +457,15 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
         <!-- ends: .modal-Basic -->
 
              <!-- ends: .atbd-page-content -->
 
             <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-
-
                 <div class="modal-dialog modal-md" role="document">
                     <div class="modal-content modal-bg-white ">
                         <div class="modal-header">
-
-
-
                             <h6 class="modal-title">O'chirish</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span data-feather="x"></span></button>
@@ -496,8 +474,6 @@
                             <form id="removeDeviceForm" action="" method="post"> {% csrf_token %}
                                 <p>Qurilma haqidatdan ham o'chirilsinmi?</p>
                             </form>
-                            
-                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-lighten btn-sm" data-dismiss="modal">Bekor qilish</button>
@@ -505,88 +481,41 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <!-- ends: .modal-Basic -->
-
-{% endblock %}
-
-{% block customizer %}
-    <div class="overlay-dark-sidebar"></div>
-    <div class="customizer-overlay"></div>
-    <a href="#" class="customizer-trigger">
-        <span data-feather="settings"></span></a>
-    <div class="customizer-wrapper">
-        <div class="customizer">
-            <div class="customizer__head">
-                <h4 class="customizer__title">Customizer</h4>
-                <span class="customizer__sub-title">Sahifa ko'rinishini o'zingizga moslab oling.</span>
-                <a href="#" class="customizer-close">
-                    <span data-feather="x"></span></a>
+            <div class="modal-basic modal" id="modal-basic3" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+                            <h6 class="modal-title"></h6>
+                        </div>
+                        <div class="modal-body">
+                           Rostan ham ushbu manbani o'chirib yubormoqchimisiz?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Ortga</button>
+                            <button type="button" class="btn btn-danger btn-sm" id="FormdeleteBtn">O'chirish</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="customizer__body">
-                <div class="customizer__single">
-                    <h4>Layout Type</h4>
-                    <ul class="customizer-list d-flex layout">
-                        <li class="customizer-list__item">
-                            <a href="#ltr" class="active">
-                                <img src="{% static 'img/ltr.png' %}" alt="">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
-                        <li class="customizer-list__item">
-                            <a href="#rtl" class=""> 
-                                <img src="{% static 'img/rtl.png' %}" alt="">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
-                    </ul>
+            <div class="modal-basic modal" id="modal-basic4" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content modal-bg-white ">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Manbani yangilash</h6>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-12"><input id="source_id" type="text" class="form-control pr-50" name="source" value=""></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm" data-dismiss="modal">Ortga</button>
+                            <button type="button" class="btn btn-primary btn-sm" id="FormdeleteBtnUpdate">Yangilash</button>
+                        </div>
+                    </div>
                 </div>
-                <!-- ends: .customizer__single -->
-
-                <div class="customizer__single">
-                    <h4>Sidebar Type</h4>
-                    <ul class="customizer-list d-flex l_sidebar">
-                        <li class="customizer-list__item">
-                            <a href="#" data-layout="light" class="active">
-                                <img src="{% static 'img/light.png' %}" alt="">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
-                        <li class="customizer-list__item">
-                            <a href="#" data-layout="dark">
-                                <img src="{% static 'img/dark.png' %}" alt="">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- ends: .customizer__single -->
-
-                <div class="customizer__single">
-                    <h4>Navbar Type</h4>
-                    <ul class="customizer-list d-flex l_navbar">
-                        <li class="customizer-list__item">
-                            <a href="#" data-layout="side" class="active">
-                                <img src="{% static 'img/side.png' %}" alt="">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
-                        <li class="customizer-list__item top">
-                            <a href="#" data-layout="side"> <!-- top -->
-                                <img src="{% static 'img/top.png' %}" alt="">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- ends: .customizer__single -->
             </div>
-        </div>
-    </div>
 {% endblock %}
-
 
 {% block script %}
 <script>
@@ -639,11 +568,12 @@
 </script>
 <script>
     function handleAddSource(){
-        var source = document.querySelector('[name="source"')
+        var source = document.querySelector('input[name="source"')
         var url = "{% url 'admintion:sources' %}";
         var formData = new FormData();
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
         formData.append('source', source.value);
+        getSpinner(true, wrapper)
         fetch(url, {
             method:'post',
             headers:{
@@ -652,14 +582,89 @@
             body: formData,
         })
         .then(res=>{
-            if(res.status==201){
-                window.parent.location = window.parent.location.href+"?tab=v-pills-lead";
-            }
+            getSpinner(false, document.body)
+            //get full URL
+            var currURL= window.location.href; //get current address
+            
+            //Get the URL between what's after '/' and befor '?' 
+            //1- get URL after'/'
+            var afterDomain= currURL.substring(currURL.lastIndexOf('/') + 1);
+            //2- get the part before '?'
+            var beforeQueryString= afterDomain.split("?")[0]; 
+            location.assign(beforeQueryString+"?tab=v-pills-lead");
+            // document.querySelector('#genOTPLabel').textContent = `Tekshirish maqsadida +998${res.phone} raqamiga 6 xonali kod jo'natildi`;
         })
+    }
+    function handleChangeSource(_id){
+        var source = document.querySelector('#modal-basic4 input')
+        var url = `/admintion/source/${_id}/update/`;
+        var formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        formData.append('source', source.value);
+        getSpinner(true, wrapper)
+        fetch(url, {
+            method:'post',
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData,
+        })
+        .then(res=>{
+            getSpinner(false, wrapper)
+            //get full URL
+            var currURL= window.location.href; //get current address
+            
+            //Get the URL between what's after '/' and befor '?' 
+            //1- get URL after'/'
+            var afterDomain= currURL.substring(currURL.lastIndexOf('/') + 1);
+            //2- get the part before '?'
+            var beforeQueryString= afterDomain.split("?")[0]; 
+            location.assign(beforeQueryString+"?tab=v-pills-lead");
+            // document.querySelector('#genOTPLabel').textContent = `Tekshirish maqsadida +998${res.phone} raqamiga 6 xonali kod jo'natildi`;
+        })
+    }
+    function clearForm(){
+        let input = document.querySelector("#modal-basic4 input")
+        input.value=""
+    }
+    function editForm(id){
+        clearForm();
+        var url = `/admintion/source/${id}/`;
+        fetch(url)
         .then(res=>res.json())
         .then(res=>{
-            window.parent.location = window.parent.location.href+"?tab=v-pills-lead";
-            // document.querySelector('#genOTPLabel').textContent = `Tekshirish maqsadida +998${res.phone} raqamiga 6 xonali kod jo'natildi`;
+            if(res.obj){
+                let input = document.querySelector("#modal-basic4 input")
+                input.value = res.obj.title;
+                document.querySelector("#modal-basic4 #FormdeleteBtnUpdate").setAttribute('onclick',`handleChangeSource(${res.obj.id})`);
+            }
+        })
+    }
+    function deleteFormModal(id, title){
+        var btn = document.getElementById('FormdeleteBtn');
+        btn.setAttribute('onclick',`deleteForm(${id})`);
+
+        var modal = document.getElementById('modal-basic3')
+        modalTitle = modal.getElementsByClassName('modal-title')[0]
+        modalTitle.textContent = title
+    
+        return ;
+    }
+    function deleteForm(id){
+        var url = `/admintion/source/${id}/delete/`;
+        getSpinner(true, wrapper)
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            getSpinner(false, wrapper)
+            var currURL= window.location.href; //get current address
+            
+            //Get the URL between what's after '/' and befor '?' 
+            //1- get URL after'/'
+            var afterDomain= currURL.substring(currURL.lastIndexOf('/') + 1);
+            //2- get the part before '?'
+            var beforeQueryString= afterDomain.split("?")[0]; 
+            location.assign(beforeQueryString+"?tab=v-pills-lead");
         })
     }
 </script>

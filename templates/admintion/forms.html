@@ -307,16 +307,10 @@ align-items: center;
 </div>
 
 <div class="modal-basic modal" id="modal-basic" tabindex="-1" role="dialog" aria-hidden="true">
-
-
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title"></h6>
-                
             </div>
             <div class="modal-body">
                Rostan ham ushbu formani o'chirib yubormoqchimisiz?
@@ -327,8 +321,6 @@ align-items: center;
             </div>
         </div>
     </div>
-
-
 </div>
 
 
@@ -376,8 +368,6 @@ align-items: center;
 
 </div>
 <div class="drawer-multiLevel" style="overflow-y: scroll;">
-
-
     <div class="atbd-drawer drawer-level-one" style="overflow-y: scroll;">
         <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
             <h6 class="drawer-title">Forma qo'shish</h6>
@@ -393,12 +383,9 @@ align-items: center;
                             <input type="text" name="name" id="id_name" class="form-control form-control-sm border-light" placeholder="forma nomi...">
                         </div>
                         <div class="form-group col-lg-6 custom-file ">
-
                             <label for="id_image">Rasm yuklang</label>
                             <div id="downloadImage"></div>
                             <input  class="form-control form-control-sm border-light align-items-center" type="file" id="id_image" name="image">
-                            
-
                         </div>
                         <div class="form-group col-lg-12">
                             <label for="id_title"><b class="text-danger">*</b>Sarlavha</label>
@@ -448,10 +435,8 @@ align-items: center;
                         <button type="button" class="btn btn-primary col-12 ml-3 btn-xs btn-default btn-squared drawer-multiTrigger" data-drawer="level-two" onclick="getUniversalFields()">Maydon qo'shish</button>
         
                     </div>
-                </div>
-                      
+                </div> 
           <div class="col-12 mb-2">
-            
             <label for="owner" >Kontakt tugmachalarini qo'yish</label>
             <div class="forms w-100">
                 <div class="forms-view" id="parent">
@@ -553,10 +538,8 @@ align-items: center;
 
                                                         <input type="text" class="form-control form-control-default border-info" placeholder="" id="fieldInput">
                                                         <!-- <svg id="0" class="deleteinputInfo" onclick="handledeleteinfo(0)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> -->
-                
                                                     </div>
                                                 </div>
-                                                
                                                 <div class="btn btn-xs btn-primary mt-2" onclick="createUniversalFields()">Yangi ma'lumot qo'shish</div>
                                             </div>
                                             <div class="todo-task table-responsive todo-task1">
@@ -1016,7 +999,6 @@ align-items: center;
                     
                 } else if (index>=0 && field.checked==false){
                     genFields[index].checked = false;
-                    console.log("index: ", index, genFields[index].title);
                     index1 = InRichestPeopleList(genFields[index].title)
                     if(index1 > -1){
                         deletedFields.push(

@@ -134,17 +134,10 @@
                                                       </select>
                                                     {% endif %}
                                                     <input type="text" name="fio" class="form-control mb-3" placeholder="Ismingizni kiriting" id="">
-                                                        <div class="new"
-                                                            style="display:flex; justify-content: flex-start;">
-                                                            <label
-                                                                style="border-right-style:none; border: 1px solid #e3e6ef;border-radius: 4px;display: flex;align-items: center;padding: 10px 20px;height: 48px;border-right: none;border-top-right-radius: 0;border-bottom-right-radius: 0;" class="border-right-0;">+998</label>
-                                                            <input type="text" class="form-control" style="border-left-style:none;border-top-left-radius: 0;border-bottom-left-radius: 0;" id="phone"
-                                                                placeholder="** ***_**_**" name="phone" maxlength="9">
-                                                        </div>
-                                                        
-                                                        {% for field in fields %}
-                                                        <input type="text" name="id_{{field.title}}" class="form-control mb-3" placeholder="{{field.title}}" id="id_title">
-                                                        {% endfor %}
+                                                    <input type="text" name="phone" class="form-control mb-3" placeholder="" value="+998" id="" maxlength="13">
+                                                    {% for field in fields %}
+                                                    <input type="text" name="id_{{field.title}}" class="form-control mb-3" placeholder="{{field.title}}" id="id_title">
+                                                    {% endfor %}
                                                     <div class="button-group d-flex m-0">
                                                         <button 
                                                         style="text-transform: none;margin: 0px;"
@@ -277,6 +270,18 @@
 
     <script src="{% static 'assets/theme_assets/js/main.js' %}"></script>
     <script>
+        document.querySelector('input[name="phone"]').addEventListener('input',function(evt){
+            if(evt.target.value.length<=4){
+                evt.target.value = "+998"
+            } 
+            if(evt.target.value.length<=13){
+                var value = "+" + evt.target.value.match(/\d/g).join("")
+                evt.target.value = value
+            }
+            if(evt.target.value.length==12){
+                validation(input,"input")
+            }
+        })
         function handleListCourse(e){
             var educenter = document.querySelector('select[name="courses"]')
             var formData = new FormData();

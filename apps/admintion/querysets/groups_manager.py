@@ -88,7 +88,10 @@ class GroupQueryset(QuerySet):
             ).filter(id=id).first()
 
     def group_filter(self,filters,educenter_ids):
-        return self.filter(educenter__id__in=educenter_ids) \
+        return self.filter(educenter__id__in=educenter_ids)\
+        .annotate(
+            group_days = ArrayAgg(Cast('days__days', TextField()),distinct=True)
+        ) \
         .filter(**filters) \
         .values(
                 'id',
@@ -102,13 +105,13 @@ class GroupQueryset(QuerySet):
                 'room__title',
                 'start_date',
                 'limit',
+                'group_days'
             )\
         .annotate(
             course=F("course__title"),
             teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
             times = Concat(Substr(Cast(F('start_time'), TextField()),1,5),Value('-'),Substr(Cast(F('end_time'), TextField()),1,5),output_field=CharField()),
-            total_student=Count('students',distinct=True),
-            days = ArrayAgg(Cast('days__days', TextField()),distinct=True),
+            total_student=Count('students',distinct=True)
         )
 
     def group_content(self,educenter_id,user):
@@ -150,7 +153,7 @@ class GroupQueryset(QuerySet):
         return self.filter(course__id=course_id).groups(educenter_ids,short_info=short_info)
 
     def group_filter_list(self,filters,educenter_ids):
-        return self.filter(educenter__id__in=educenter_ids) \
+        return self.get_info(educenter_ids)\
                     .filter(**filters).values('id','title')
 
     def pay_by_lesson(self):

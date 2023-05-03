@@ -56,6 +56,7 @@ def settings_view(request):
 
 
 def sources_view(request):
+
     ed_id=request.session.get('branch_id',False)
     qury = Q(id=ed_id)
     if int(ed_id) == 0:
@@ -77,5 +78,24 @@ def sources_view(request):
             
             data = request.build_absolute_uri(reverse('lead_registration_view', args=[lead_form.id]))+'?title='+lead_form.title
             create_qrcode(data, lead_form)
-        return JsonResponse({})
+            return JsonResponse({"status":201})
+        return JsonResponse({"status":401})
     return redirect('admintion:settings')
+
+def source_detail_view(request,id):
+    obj = Sources.objects.get(id=id)
+    return JsonResponse({"status":200,"obj":{'id':obj.id,"title":obj.title}})
+
+def source_update_view(request,id):
+    if request.method == "POST":
+        source = request.POST.get('source',False)
+        obj = Sources.objects.get(id=id)
+        if source:
+            obj.title=source
+            obj.save()
+    return JsonResponse({'status':201})
+
+def source_delete_view(request,id):
+    obj = Sources.objects.get(id=id)
+    obj.delete()
+    return JsonResponse({'status':204,"message":"Manba o'chirildi"})

@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-2 px-1">
                                     <div class="atbd-select">
-                                        <select name="select-groups" id="select-groups" class="form-control" onchange="dropdownChanged(event,'group__id')">
+                                        <select name="select-groups" id="select-groups" class="form-control" onchange="dropdownChanged(event,'id')">
                                             <option value="0" selected>Guruhlar</option>
                                             {% for group in groups_list %}
                                             <option value="{{group.id}}">{{group.title}}</option>
@@ -187,15 +187,9 @@
                                         <td>
                                             <ul class="orderDatatable_actions mb-0 d-flex flex-wrap" style="justify-content: flex-start;">
                                                 <li>
-                                                    <a href="#" class="view">
-                                                        <span data-feather="eye"></span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="edit">
-                                                        <span data-feather="edit"></span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" onclick="handleStudentDelete({{student.id}})" class="remove">
+                                                    <a href="#" onclick="setDelModal({{group.id}},'{{group.title}}')"
+                                                    data-toggle="modal"
+                                                    data-target="#modal-basic1" class="remove">
                                                         <span data-feather="trash-2"></span></a>
                                                 </li>
                                             </ul>
@@ -205,9 +199,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        
-
                     </div>
                 </div>
             </div>
@@ -216,10 +207,7 @@
 </div>
 <!--   oqituvchi qoshish-->
 
-
-<div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
-                
-                
+<div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">        
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
@@ -244,8 +232,29 @@
             </div>
         </div>
     </div>
+</div>
 
-
+<div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white ">
+            <form class="form-group" method="post" id="delForm">
+                <div class="modal-header">
+                    {% csrf_token %}
+                    <h6 class="modal-title">Haqiqatdan ushbu guruhni (<span id="courseTitle"></span> guruhi) ni o'chirmoqchimisiz?</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span data-feather="x"></span></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <p>Guruhni o'chirish o'quvchilarga va ba'zi tizimdagi ba'zi xatoliklarga olib kelishi mumkin.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Orqaga</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 
@@ -429,7 +438,6 @@
                                 <label for="description">Xabar matni</label>
                                 <textarea name="description" id="description" class="form-control form-control-sm" placeholder="Xabar matnini kiriting..."></textarea>
                             </div>
-                            
                             <div class="form-group col-12">
                                 <small id="small_code"></small>
                             </div>
@@ -444,47 +452,18 @@
                 </div>
             </div>
         </div><!-- ends: .atbd-drawer__body -->
-    </div>
-    <div class="modal-basic modal" id="modal-basic1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <form class="form-group" method="post" id="delForm">
-                    <div class="modal-header">
-                        {% csrf_token %}
-                        <h6 class="modal-title">Rostan ham kurs (<span id="courseTitle"></span> kursi) ni o'chirmoqchimisiz?</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
-                            <span data-feather="x"></span></button>
-                    </div>
-                    <div class="modal-body">
-                        
-                        <p>Kursni o'chirish, unga bog'langan, darslik va dars ishlanmalar, guruhlarning yo'qolishiga olib kelishi mumkin.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="closeModal()">Orqaga</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
     </div>
 </div>
 
-
 <div class="overlay-dark"></div>
 <div class="overlay-dark-l2"></div>
-
-
-
-
-
-
 
 {% endblock %}
 
 
 {% block script %}
 <script>
-
     var formName = document.querySelector(".form-name");
     var formCourse = document.querySelector(".form-course");
     var formStatus = document.querySelector(".form-status");
@@ -645,6 +624,15 @@
         )
     }
 
+    function generate_days(days){
+        let dayVal="";
+        const weekDays = ['Du','Se','Chor','Pay','Ju','Sha','Yak'];
+        for(let i=0;i<days.length;i++){
+            dayVal=dayVal+weekDays[parseInt(days[i])-1]+'/';
+        }
+        return dayVal;
+    }
+
     function createCheckbox(dflex,student_id,idx){
         var wrapimg = document.createElement('div');
         wrapimg.className='userDatatable__imgWrapper d-flex align-items-center';
@@ -672,88 +660,94 @@
         return wrapimg;
     }
 
-    function createAction(detailU,_id,title){
-        var ul = document.createElement('ul');
-        ul.className="orderDatatable_actions mb-0 d-flex flex-wrap";
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.className='view';
-        a.href=detailU
-        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
-        li.appendChild(a);
-        ul.appendChild(li);
-        var a = document.createElement('a');
-        var li = document.createElement('li');
-        a.className='edit';
-        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
-        li.appendChild(a);
-        ul.appendChild(li);
-        var a = document.createElement('a');
-        var li = document.createElement('li');
-        a.className='remove';
-        a.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
-        a.addEventListener('click',()=>setDelModal(_id,title))
-        li.appendChild(a);
-        ul.appendChild(li);
-        return ul;
-    }
 
     function dataList(datas){
         var tbody = document.querySelector('tbody');
-
+        console.log(datas)
         while(tbody.firstChild) {
             tbody.removeChild(tbody.firstChild);
             }
         datas.forEach((element,idx) => {
             var tr = document.createElement('tr');
+
             tr.id = `student-${element.student_ids}`
-            var columns = {{keys|safe}};
+            tr.innerHTML = `
+            <tr>
+                <td>
+                    <div class="d-flex">
+                        <div class="userDatatable__imgWrapper d-flex align-items-center">
+                            <div class="checkbox-group-wrapper">
+                                <div class="checkbox-group d-flex">
+                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                        <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-${element.id}">
+                                        <label for="check-grp-${element.id}">
+                                            <span class="checkbox-text userDatatable-title">#${++idx}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <div class="userDatatable-inline-title">
+                            <a href="/admintion/groups/${element.id}/detail/" class="text-dark fw-500">
+                                <h6>${element.title}</h6>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="userDatatable-content">
+                        ${element.course__title}
+                    </div>
+                </td>
+
+                <td>
+                    <div class="userDatatable-content">
+                        <a href="/admintion/groups/${element.id}/detail/" style="color:black;">${element.teacher}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="userDatatable-content">
+                        ${generate_days(element.group_days)}
+                    </div>
+                </td>
+                <td>
+                    <div class="userDatatable-content">
+                        ${element.times}
+                    </div>
+                </td>
+                <td>
+                    <div class="userDatatable-content">
+                        ${element.total_student}
+                    </div>
+                </td>
+                <td>
+                    <div class="userDatatable-content">
+                        ${element.course__price}
+                    </div>
+                </td>
+                <td>
+                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap" style="justify-content: flex-start;">
+                        <li>
+                            <a href="#" class="view">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                        </li>
+                        <li>
+                            <a href="#" class="edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="handleStudentDelete()" class="remove">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            `;
             
-            for(var i=0;i<columns.length;i++){
-                if(columns[i]=='check'){
-                    var td = document.createElement('td');
-                    var dflex = document.createElement('dev');
-                    dflex.className='d-flex';
-                    dflex.appendChild(createCheckbox(dflex,element.id,idx));
-                    td.appendChild(dflex);
-                    tr.appendChild(td);
-                }
-                else if(columns[i] == 'action'){
-                    var td = document.createElement('td');
-                    td.appendChild(createAction(detailUrl.replace("<int:id>",element.id),element.id,element.title));
-                    tr.appendChild(td);  
-                }
-                else if(columns[i] == 'status'){
-                    var td = document.createElement('td');
-                    if(element.status){
-                        td.innerHTML = `
-                        <div class="userDatatable-content d-inline-block">
-                            <span
-                                class="bg-opacity-success color-success rounded-pill userDatatable-content-status active">Aktiv</span>
-                        </div>
-                        `
-                    }
-                    else{
-                        td.innerHTML = `
-                        <div class="userDatatable-content d-inline-block">
-                            <span
-                                class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active">No Faol</span>
-                        </div>
-                        `
-                    }
-                    tr.appendChild(td); 
-                }
-                else {
-                    
-                    var td = document.createElement('td');
-                    var dcontent = document.createElement('dev');
-                    // td.style.display='block'
-                    dcontent.className='userDatatable-content'
-                    td.textContent=element[columns[i]];
-                    // td.appendChild(dcontent);
-                    tr.appendChild(td);
-                }
-            }
             tbody.appendChild(tr);
             var dvTd = document.createElement('div');
             dvTd.className='userDatatable-content';

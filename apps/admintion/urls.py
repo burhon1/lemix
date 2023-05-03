@@ -73,6 +73,9 @@ urlpatterns = [
     path('connected_regs/', educenters.connected_regs, name='connected_regions'),
     path('settings/', settings.settings_view, name='settings'),
     path('source/', settings.sources_view, name='sources'),
+    path('source/<int:id>/', settings.source_detail_view, name='sources'),
+    path('source/<int:id>/update/', settings.source_update_view, name='sources_update'),
+    path('source/<int:id>/delete/', settings.source_delete_view, name='sources_delete'),
 
     path('', dashboard.dashboard, name='dashboard'),
     path('teacher/pay/', dashboard.teacher_pay, name='teacher_pay'),

@@ -90,7 +90,7 @@ def groups_view(request):
     context['days'] = [{'id':i[0],'title':i[1]} for i in GROUPS_DAYS]
     context['group_status'] = [{'id':i[0],'title':i[1]} for i in GROUPS_STATUS] 
     context['keys'] =  ['check','title','course','teacher','days','times','total_student','course__price','action']
-    
+    print(context['groups'])
     return render(request,'admintion/groups.html',context)
 
 def group_list_view(request):
@@ -108,7 +108,6 @@ def groups_by_filter_view(request):
 
     status = request.GET
     filter_keys=get_list_of_filter(status)
-
     groups = list(Group.groups.group_filter(filter_keys,educenter_ids))
     return JsonResponse({'data':groups,'status':200})
 
@@ -230,6 +229,11 @@ def add_student_view(request,id):
     if request.method == "POST":
         student = request.POST.get('student',False)
         if student:
+            print(student)
+            group = Group.objects.get(id=id)
+            student= Student.objects.get(id=student)
+            group_student = GroupStudents(student=student,group=group)
+            group_student.save()
             return redirect('admintion:group-detail',id=id)
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  

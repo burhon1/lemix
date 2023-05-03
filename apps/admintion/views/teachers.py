@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from django.http import JsonResponse
 
-@permission_required('admintion.teacher_view')
+
 def teachers_view(request):
     context = {}
     ed_id=request.session.get('branch_id',False)
