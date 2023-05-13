@@ -14,7 +14,13 @@ def add_task(request):
             form.save_m2m()
             return JsonResponse({'status':'ok'}, status=201)        
         else:
-            print(form.errors)
             return JsonResponse(form.errors, safe=False, status=400)
     return JsonResponse(["So'rov metodi to'g'ri emas"], safe=False, status=400)
     
+
+def tasks_view(request):
+    if request.method == "POST":
+        pass
+        deadline = request.POST.get('deadline',False)
+        description = request.POST.get('description',False)
+    pass

@@ -58,7 +58,6 @@ class TasksQueryset(QuerySet):
         return self.get_info().values(
             'id', 
             'deadline',
-            
             'user_status',
             'status',
             'created_at',

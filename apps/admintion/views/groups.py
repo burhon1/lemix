@@ -15,6 +15,8 @@ from admintion.services.groups import get_attendace
 from admintion.forms.groups import GroupForm
 from finance.models import StudentBalance
 from admintion.utils import get_list_of_dict,get_list_of_filter
+from admintion.utilts.groups import diffrent_minut
+
 
 def groups_view(request):
     context = {}
@@ -137,6 +139,7 @@ def group_detail_view(request,id):
     context['today_tasks'] = len([task for task in context['tasks'] if task['deadline'].date() == timezone.now().date()])
     context['task_types'] = TaskTypes.objects.all()
     context['responsibles'] = CustomUser.objects.filter(Q(is_superuser=True)|Q(is_staff=True))
+    context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
     context['balances'] = StudentBalance.objects.filter(title=context['group']['title'])
     # context['atds'] = GroupStudents.custom_manager.student_attendances()
     return render(request,'admintion/group.html',context)
@@ -172,7 +175,7 @@ def change_attendace_view(request):
     gr_student, created = GroupStudents.objects.get_or_create(
         student_id=data['id'],group_id=data['group_id'])
     attendace = Attendace.objects.filter(group_student=gr_student,date=data['date'])
-
+    message = ""
     if attendace.exists():
         attendace=attendace.first()
         attendace.status=data['status']
@@ -183,12 +186,16 @@ def change_attendace_view(request):
            date=data['date'],
            creator=request.user
         )  
-    if data['status']==1 or data['status']==4:
+    if data['status']==1:
+        min = diffrent_minut(gr_student.group.start_time,data.get('delay'))
+        attendace.comment=data.get('delay')+f" ({int(min)}-daqiqa kechikildi)"
+        message=attendace.comment
+    if data['status']==4:
         attendace.comment=data['comment']
     if data.get('reasen',False):
         attendace.reasen=data.get('reasen',False)    
     attendace.save() 
-    return JsonResponse({'status':201,'count':0})
+    return JsonResponse({'status':201,'count':0,'message':attendace.comment})
 
 def change_lead_attendace_view(request):
     data = json.loads(request.body)
@@ -228,14 +235,20 @@ def add_student_view(request,id):
     context={}
     if request.method == "POST":
         student = request.POST.get('student',False)
+        attend_date = request.POST.get('attendace',False)
         if student:
-            print(student)
             group = Group.objects.get(id=id)
             student= Student.objects.get(id=student)
-            group_student = GroupStudents(student=student,group=group)
-            group_student.save()
-            return redirect('admintion:group-detail',id=id)
+            if student and attend_date:
+                attend_date=datetime.strptime(attend_date, '%Y-%m-%d').date()
+                if group.start_date<=attend_date:
+                    group_student = GroupStudents(student=student,group=group,attend_date=attend_date)
+                    group_student.save()
+                    return JsonResponse({'status':201,'count':0}) 
+                return JsonResponse({'status':403,'message':f"O'quvchini qo'shish muddati ${group.start_date}dan kichik bo'lmasin"})
+            return JsonResponse({'status':403,'message':f"Talaba yoki o'qush kununi kiriting"})
         else:
             context['error'] = 'Malumotlar to\'liq kiritilmadi'  
             return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
     return JsonResponse({'status':201,'count':0}) 
+

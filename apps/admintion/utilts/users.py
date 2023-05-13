@@ -27,7 +27,7 @@ def get_days(start_date,finis_date=None,days=[1,3,5]):
     if finis_date and start_date and finis_date.year==start_date.year and finis_date.month==start_date.month:
         for week in data:
             for day in days:
-                day = int(day)
+                day = int(day)-1
                 if week[day] != 0 and start_date.day<=week[day]:
                     datas.append(datetime(finis_date.year, finis_date.month, week[day]).strftime('%Y-%m-%d'))  
         return datas

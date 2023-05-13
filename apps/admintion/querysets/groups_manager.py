@@ -25,8 +25,7 @@ class GroupQueryset(QuerySet):
                 'title',
                 'room__title',
                 'start_date',
-                'limit',
-                'start_date'
+                'limit'
             ).annotate(
                 course=F("course__title"),
                 teacher=Concat(F('teacher__user__first_name'),Value(' '),F('teacher__user__last_name')),
@@ -82,7 +81,7 @@ class GroupQueryset(QuerySet):
                 'start_date',
                 'days',
                 'limit',
-                'pay_type', 'status', 'comments'
+                'pay_type', 'status', 'comments','start_time'
             ).annotate(
                 groupdays = F('days'),
             ).filter(id=id).first()

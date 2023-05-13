@@ -13,12 +13,12 @@
       duration: "medium",
       changeMonth: true,
       changeYear: true,
-      yearRange: "1989:2022",
+      yearRange: "1989:2023",
     });
     $("#datepicker9").datepicker({
       dateFormat: 'yy-mm-dd',
       timeFormat: ' hh:ii:ss',
-      showWeek: true
+      showWeek: false
     });
     $("#datepicker8").datepicker({
       dateFormat: "yy-mm-dd",
