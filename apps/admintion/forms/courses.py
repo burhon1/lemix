@@ -6,4 +6,4 @@ from admintion.models import Course
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        exclude = ('author', )
+        exclude = ('author','educenter' )

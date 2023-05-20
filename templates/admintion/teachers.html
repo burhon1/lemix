@@ -137,7 +137,7 @@
                                                         <ul class="orderDatatable_actions m-0 d-flex ml-0 justify-content-center "
                                                             style="width:25%;">
                                                             <li>
-                                                                <a href="#" class="edit w-33">
+                                                                <a href="#" class="edit" onclick="getTeacherDetail('{{obj.id}}')"  data-toggle="modal" data-target="#modal-basic2">
                                                                     <span data-feather="edit"></span></a>
                                                             </li>
                                                             <li>
@@ -178,6 +178,108 @@
             </div>
         </div>
     </div>
+    <div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content modal-bg-white ">
+                <form method="POST" id="updateForm">{% csrf_token %}
+                    <div class="modal-header">
+                        <h6 class="modal-title"> Tahrirlash</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span data-feather="x"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">FIO</label>
+                                    <input name="fio" type="text"
+                                        autocomplete="off"
+                                        class="form-control radius-xs b-deep"
+                                        id="fio" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Telefon</label>
+                                    <div class="w-100 d-flex ">
+                                        <input name="phone" type="text" style="display:inlinle;"
+                                            autocomplete="off"
+                                            class="form-control radius-xs b-deep phone-js"
+                                            id="phone_number" maxlength="13" value="+998" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="validationServer04"
+                                        class="il-gray fs-14 fw-500 align-center">Turi</label>
+                                        <div class="atbd-select ">
+                                            <select name="teacer_type"
+                                                class="form-control b-light select-arrow-none radius-xs fs-14"
+                                                id="teacher_type"
+                                                aria-describedby="validationServer04Feedback" required>
+                                                <option selected disabled value="">Tanlang</option>
+                                                <option value="1">O'qituvchi</option>
+                                                <option value="0">Yordamchi(support)</option>
+                                            </select>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-calender mb-20">
+                                    <label for="datepicker"
+                                        class="il-gray fs-14 fw-500 align-center">Tug'ilgan
+                                        sanasi</label>
+                                    <div class="position-relative">
+                                        <input name="birthday" type="text"
+                                            autocomplete="off"
+                                            class="form-control radius-xs b-deep"
+                                            id="datepicker" placeholder="2021-10-01">
+                                        <a href="#"><span data-feather="calendar"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationServer04"
+                                    class="il-gray fs-14 fw-500 align-center">Jinsi</label>
+                                    <div class="atbd-select ">
+                                        <select name="gender"
+                                            class="form-control select-arrow-none radius-xs b-light fs-14"
+                                            id="gender"
+                                            aria-describedby="validationServer04Feedback" required>
+                                            <option selected disabled value="">Tanlang</option>
+                                            <option value="1">Erkak</option>
+                                            <option value="2">Ayol</option>
+                                        </select>
+                                    </div>
+                                
+
+                            </div>
+                            <div class="col-md-6 col-md-6">
+                                <div class="form-group">
+                                    <label for="validationServer01"
+                                        class="il-gray fs-14 fw-500 align-center">Manzil</label>
+                                    <input name="location" type="text" 
+                                        autocomplete="off"
+                                        class="form-control radius-xs b-deep"
+                                        id="location" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="drawer-basic-wrap">
         <div class="atbd-drawer drawer-account d-none">
             <div class="atbd-drawer__header d-flex aling-items-center justify-content-between">
@@ -188,7 +290,7 @@
             <div class="atbd-drawer__body">
                 <div class="drawer-content">
                     <div class="drawer-account-form form-basic">
-                        <form class="was-validate" action="{% url 'admintion:teachers' %}" method="post">
+                        <form class="was-validate" action="{% url 'admintion:teachers' %}" method="post" id="updateForm">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
@@ -239,7 +341,7 @@
                                             <input name="birthday" type="text"
                                                 autocomplete="off"
                                                 class="form-control radius-xs b-deep"
-                                                id="datepicker" placeholder="2021-10-01">
+                                                id="validationServer04" placeholder="2021-10-01">
                                             <a href="#"><span data-feather="calendar"></span></a>
                                         </div>
                                     </div>
@@ -321,6 +423,53 @@
 {% endblock %}
 
 {% block script %}
+<script>
+    function getTeacherDetail(id){
+        var url = `/admintion/teacher/${id}/getdata/`;
+        clearDataTeacher()
+        getSpinner(true,wrapper)
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            if(res.status==203){
+                setDataTeacher(id,res.obj)
+                getSpinner(false,wrapper)
+            }
+        })
+    }
+
+    function setDataTeacher(id,data){
+        var form = document.getElementById('updateForm');
+        form.setAttribute('action', `/admintion/courses/${id}/update/`);
+        document.getElementById('fio').value = data.full_name;
+        document.getElementById('phone_number').value = data.phone_number;
+        document.getElementById('teacher_type').querySelectorAll('option')[data.teacer_type?1:2].selected=true;
+        if(data.user__birthday != null){
+            document.getElementById('datepicker').value = change_date(data.user__birthday);
+        }
+        document.getElementById('gender').querySelectorAll('option')[data.user__gender?1:2].selected=true
+        document.getElementById('location').value = data.user__location;
+
+    }
+    
+    function clearDataTeacher(){
+        var form = document.getElementById('updateForm');
+        form.setAttribute('action', ``);
+        document.getElementById('fio').value = "";
+        document.getElementById('phone_number').value = "";
+        document.getElementById('teacher_type').querySelectorAll('option')[0].selected=true;
+        document.getElementById('datepicker').value = "";
+        document.getElementById('gender').querySelectorAll('option')[0].selected=true
+        document.getElementById('location').value = "";
+    }
+
+    function change_date(date){
+        let newDate = new Date(date);
+        let currentDate = newDate.toISOString().substring(0,10);
+        return currentDate;
+    }
+
+</script>
 <script>
     var phoneInput = document.querySelector(".phone-js")
     phoneInput.addEventListener("input",(evt)=>{

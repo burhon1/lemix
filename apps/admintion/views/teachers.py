@@ -66,3 +66,26 @@ def teacher_delete_view(request, id):
     else:
         status = 200
     return JsonResponse({}, status=status)
+
+def get_teacher_edit_view(request,id):
+    from django.db.models import Value, Count, When,Case,F,Q,Manager,Func,Subquery,CharField,TextField,Exists,OuterRef
+    from django.contrib.postgres.aggregates import ArrayAgg
+    # from django.contrib.postgres.functions import ToArray
+    from django.db.models.functions import Concat,Substr,Cast
+    teacher = Teacher.objects.filter(id=id)
+    if teacher.exists():
+        teacher=teacher.annotate(
+            full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name')),
+            phone_number=Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                )).values('id','full_name','phone_number','user__location','teacer_type','user__gender','user__birthday').first()
+        return JsonResponse({'obj':teacher,'status':203})
+    return JsonResponse({'message':'O\'qituvchi topilmadi','status':404})

@@ -97,6 +97,27 @@ def students_view(request):
     context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
     return render(request,'admintion/students.html',context) 
 
+def students_archive_view(request):
+    context = {}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
+    educenter_ids=educenter.values_list('id',flat=True)
+    context['students'] = Student.students.students_archive(educenter_ids)
+    # context['groups_list'] = GroupModel.groups.groups(educenter_ids,short_info=True)
+    context['sources'] = Sources.objects.all()
+    context['students_count'] = context['students'].count()
+    context=context|context['students'].students_by_status()
+    context['datas_of_teacher'] = list(Teacher.teachers.teacher_list(educenter_ids))
+    context['datas_of_group'] = list(GroupModel.groups.group_list(educenter_ids))
+    context['datas_of_course'] = list(Course.courses.courses(educenter_ids,True))
+    context['datas_of_status'] = get_list_of_dict(('id','title'),STUDENT_STATUS)
+    context['keys'] = ['check','title','course','teacher','days','times','total_student','course__price','action']
+    context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
+    return render(request,'admintion/students.html',context) 
+
 def student_by_filter_view(request):
     context={}
     ed_id=request.session.get('branch_id',False)
@@ -107,8 +128,7 @@ def student_by_filter_view(request):
 
     status = request.GET
     filter_keys=get_list_of_filter(status)
-
-    student = list(GroupStudents.custom_manager.student_filter(filter_keys,educenter_ids))
+    student = list(Student.students.student_filter(filter_keys,educenter_ids).values())
     return JsonResponse({'data':student,'status':200})
 
 def student_detail_view(request,id):
@@ -182,7 +202,8 @@ def student_delete_view(request, id):
         status = 302
         # for related_object in student._meta.related_objects:
         #     print(related_object.first())
-    return JsonResponse({'status': status})
+    #return JsonResponse({'status': status})
+    return redirect('admintion:students')
 
 def student_add_task_view(request, id):
     return JsonResponse({"detail":'success', 'status':201})
@@ -199,3 +220,10 @@ def student_detail_data(request, id: int):
         'groups': groups
     }
     return JsonResponse(context, safe=False)
+
+
+def student_change_status(request,id):
+    student = get_object_or_404(Student, pk=id)
+    student.status=3
+    student.save()
+    return JsonResponse({"status":203})

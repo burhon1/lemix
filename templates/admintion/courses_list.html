@@ -178,7 +178,6 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
-    
                             </div>
                         </div>
                     </div>
@@ -207,6 +206,98 @@
                         <button type="submit" class="btn btn-primary btn-sm">Ha, o'chirish</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-basic modal" id="modal-basic2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content modal-bg-white ">
+                <form method="POST" id="updateForm">{% csrf_token %}
+                    <div class="modal-header">
+                        <h6 class="modal-title"> Tahrirlash</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span data-feather="x"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Nomi</label>
+                                            <input id="courseTitle2" name="title" type="text"
+                                                class="form-control b-deep" id="a1"
+                                                placeholder="Nomi">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="duration" class="il-gray fs-14 fw-500 align-center">Kurs davomiyligi</label>
+                                            <div class="d-flex align-items-baseline ">
+                                                <input name="duration" type="number"
+                                                class="form-control radius-xs b-deep" id="duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                                placeholder="Kurs davomiyligi">
+                                                <div class="atbd-select m-0 p-0">
+                                                    <select name="duration_type" id="course_duration_type" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        {% for course_duration_type in course_duration_types %}
+                                                        <option value="{{course_duration_type.id}}">{{course_duration_type.title}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="lesson_duration" class="il-gray fs-14 fw-500 align-center">Dars davomiyligi</label>
+                                            <div class="d-flex align-items-baseline ">
+                                                <input name="lesson_duration" type="number"
+                                                class="form-control radius-xs b-deep" id="lesson_duration" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                                placeholder="Kurs davomiyligi">
+                                                <div class="atbd-select m-0 p-0">
+                                                    <select name="lesson_duration_type" id="lesson_duration_type" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        {% for lesson_duration_type in lesson_duration_types %}
+                                                        <option value="{{lesson_duration_type.id}}">{{lesson_duration_type.title}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="price" class="il-gray fs-14 fw-500 align-center">Narx</label>
+                                            <div class="d-flex align-items-baseline ">
+                                                <input name="price" type="number"
+                                                class="form-control radius-xs b-deep" id="price" style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                                                placeholder="Kurs davomiyligi">
+                                                <div class="atbd-select m-0 p-0">
+                                                    <select name="price_type" id="price_type" style="border-color:#c6d0dc;border-top-left-radius:0;border-bottom-left-radius:0;border-left: 0;"  class="form-control">
+                                                        {% for price_type in price_types %}
+                                                        <option value="{{price_type.id}}" {% if forloop.counter == 1 %} selected {% endif %}>{{price_type.title}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-md-12">
+                                        <label for="exampleFormControlTextarea1"
+                                            class="il-gray fs-14 fw-500 align-center">Izoh</label>
+                                        <textarea name="comment" class="form-control b-deep" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">O'chirish</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                    </div>
+                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -348,9 +439,6 @@
     
     <div class="overlay-dark"></div>
     <div class="overlay-dark-l2"></div>
-    
-    
-
 </div>
 <!-- ends: .atbd-page-content -->
 
@@ -373,20 +461,45 @@
     
     function getCourseDetail(id){
         var url = `/admintion/course/${id}/detail/`;
+        clearDataCourse()
+        getSpinner(true,wrapper)
         fetch(url)
-        .then(res=>{
-            if (res.status==200){
-                return res;
-            }
-        })
         .then(res=>res.json())
         .then(res=>{
-            console.log(res);
-            printCourseDetail(id, res);
+            if(res.status==203){
+                setDataCourse(id,res.obj)
+                getSpinner(false,wrapper)
+            }
+            console.log(res.obj);
         })
     }
     
+    function setDataCourse(id,data){
+        var form = document.getElementById('updateForm');
+        form.setAttribute('action', `/admintion/courses/${id}/update/`);
+        document.getElementById('courseTitle2').value = data.title;
+        document.getElementById('duration').value = data.duration;
+        document.getElementById('course_duration_type').querySelectorAll('option')[data.duration_type-1].selected=true
+        document.getElementById('lesson_duration').value = data.lesson_duration;
+        document.getElementById('lesson_duration_type').querySelectorAll('option')[data.lesson_duration_type-1].selected=true
+        document.getElementById('price').value = data.price;
+        document.getElementById('price_type').querySelectorAll('option')[data.price_type-1].selected=true;
+        document.getElementById('exampleFormControlTextarea1').value = data.comment;
+    }
     
+    function clearDataCourse(){
+        var form = document.getElementById('updateForm');
+        form.setAttribute('action', ``);
+        document.getElementById('courseTitle2').value = "";
+        document.getElementById('duration').value = "";
+        document.getElementById('course_duration_type').querySelectorAll('option')[0].selected=true
+        document.getElementById('lesson_duration').value = "";
+        document.getElementById('lesson_duration_type').querySelectorAll('option')[0].selected=true
+        document.getElementById('price').value = "";
+        document.getElementById('price_type').querySelectorAll('option')[0].selected=true;
+        document.getElementById('exampleFormControlTextarea1').value = "";
+    }
+
     function printCourseDetail(id, data){
         var form = document.getElementById('updateForm');
         form.setAttribute('action', `/admintion/courses/${id}/update/`);

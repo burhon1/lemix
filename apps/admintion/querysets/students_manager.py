@@ -16,12 +16,36 @@ class StudentQueryset(QuerySet):
         )
 
     def students(self,educenter_ids):
-        return self.get_info(educenter_ids).values(
+        return self.filter(status=1).get_info(educenter_ids).values(
             'id',
             'user__first_name',
             'user__last_name',
             'user__phone',
-            # 'groups',
+            'status'
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                ),
+            group_count = Count(F('ggroups'), distinct=True),
+            payment = Sum(F('payment__paid'), distinct=True),
+            attendace = ArrayAgg(F('ggroups__attendance'), distinct=True)
+        ).order_by('-id')
+
+    def students_archive(self,educenter_ids):
+        return self.filter(status=3).get_info(educenter_ids).values(
+            'id',
+            'user__first_name',
+            'user__last_name',
+            'user__phone',
             'status'
         ).annotate(
             full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
@@ -144,8 +168,33 @@ class StudentQueryset(QuerySet):
             'nonactive_students':self.filter(status=2).count(),
             'removed_students':self.filter(status=3).count()
         }
+    
     def student_filter(self,filters,educenter_ids):
-        return self.filter(educenter__id__in=educenter_ids).filter(**filters)    
+        return self.filter(educenter__id__in=educenter_ids).filter(**filters)\
+        \
+        .values(
+            'id',
+            'user__first_name',
+            'user__last_name',
+            'user__phone',
+            'status'
+        ).annotate(
+            full_name = Concat(F('user__last_name'),Value(' '),F('user__first_name')),
+            phone_number = Concat(
+                Value('+998'),
+                Value(' ('),
+                Substr(F('user__phone'),1,2),
+                Value(') '),
+                Substr(F('user__phone'),3,3),
+                Value(' '),
+                Substr(F('user__phone'),6,2),
+                Value(' '),
+                Substr(F('user__phone'),8,2)
+                ),
+            group_count = Count(F('ggroups'), distinct=True),
+            payment = Sum(F('payment__paid'), distinct=True),
+            attendace = ArrayAgg(F('ggroups__attendance'), distinct=True)
+        ).order_by('-id')   
 
     def studet_short_list(self,filters,educenter_ids):
         return self.filter(educenter__id__in=educenter_ids)\
@@ -161,6 +210,9 @@ class StudentManager(Manager):
     
     def students(self,educenter_ids):
         return self.get_query_set().students(educenter_ids) 
+    
+    def students_archive(self,educenter_ids):
+        return self.get_query_set().students_archive(educenter_ids) 
     
     def students_by_course(self,educenter_ids,pk):
         return self.get_query_set().students_by_course(educenter_ids,pk)
@@ -181,6 +233,9 @@ class StudentManager(Manager):
         return self.get_query_set().studet_short_list()    
 
     def student_filter(self,filters,educenter_ids):
+        return self.get_query_set().student_filter(filters,educenter_ids)
+    
+    def student_filter2(self,filters,educenter_ids):
         return self.get_query_set().student_filter(filters,educenter_ids)
 
     def students_by_status(self):

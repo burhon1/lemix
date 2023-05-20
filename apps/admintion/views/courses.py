@@ -138,7 +138,7 @@ def course_detail_view(request, pk):
     return render(request,'admintion/course_detail.html', context) 
 
 
-@permission_required('admintion.change_course')
+
 def course_update_view(request, pk):
     course = get_object_or_404(Course, pk=pk)
     form = CourseForm(request.POST, instance=course)
@@ -154,3 +154,11 @@ def get_course_list_view(request):
         courses = Course.objects.filter(educenter__id=int(educenter)).values('id','title')
         return JsonResponse({'objs':list(courses)})
     return JsonResponse({}, status=200)
+
+
+def get_course_edit_view(request,pk):
+    course = Course.objects.filter(id=pk)
+    if course.exists():
+        course=course.values('id','title','duration','duration_type','lesson_duration','lesson_duration_type','price','price_type','comment').first()
+        return JsonResponse({'obj':course,'status':203})
+    return JsonResponse({'message':'Kurs topilmadi','status':404})
