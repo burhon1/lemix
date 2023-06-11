@@ -30,6 +30,7 @@ urlpatterns = [
     path('group/change/lead-attendace/',groups.change_lead_attendace_view,name='change-lead-attendace'),
     path('group/change/get-attendace/',groups.get_attendace_view,name='get-attendace'),
     path('group/<int:id>/add/student/',groups.add_student_view,name='add-student'),
+    path('group/change-status/<int:id>/',groups.change_group_student_view,name='change-group-status'),
     path('students/',students.students_view,name='students'),
     path('students/archive/',students.students_archive_view,name='students-arxive'),
     path('students/filter/',students.student_by_filter_view,name='student-filter'),

@@ -263,7 +263,8 @@ def add_demo(request):
 def addto_group(request, pk):
     lead = get_object_or_404(FormLead, pk=pk)
     group = request.POST.get('group', None)
-    if group is None:
+    attend_date=request.POST.get('attend_date',None)
+    if group is None and attend_date is None:
         return ''
     student = Student(
         user=lead.user, 
@@ -275,7 +276,7 @@ def addto_group(request, pk):
     except Exception as e:
         raise e
     
-    group_student = GroupStudents.objects.create(student=student, group_id=int(group))
+    group_student = GroupStudents.objects.create(student=student, group_id=int(group),attend_date=attend_date)
 
     lead.activity = 3
     lead.save()

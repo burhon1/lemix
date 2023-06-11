@@ -116,7 +116,7 @@ def students_archive_view(request):
     context['datas_of_status'] = get_list_of_dict(('id','title'),STUDENT_STATUS)
     context['keys'] = ['check','title','course','teacher','days','times','total_student','course__price','action']
     context['task_responsibles'] = list(CustomUser.users.get_user_list({'groups__name__in':['Admintion','Director','Manager','Teacher']},educenter_ids))
-    return render(request,'admintion/students.html',context) 
+    return render(request,'admintion/students_archive.html',context) 
 
 def student_by_filter_view(request):
     context={}
@@ -144,7 +144,6 @@ def student_detail_view(request,id):
     educenter_ids=educenter.values_list('id',flat=True)
     context['student'] = Student.students.student_detail(id,educenter_ids)
     context['parent'] = Parents.parents.parent(id)
-    context['courses'] = get_student_courses(id)
     context['groups'] = get_student_groups(id)
     context['attendaces'], context['attendace_results'] = get_student_attendaces(id)
 
@@ -167,7 +166,7 @@ def student_add_group_view(request, id):
     if request.method == "POST":
         post = request.POST
         group = get_object_or_404(GroupModel, pk=post['group'])
-        set_student_group(student, group)
+        set_student_group(student, group,post.get('attend_date'))
     data['groups'] = list(get_student_unwritten_groups(id))
     return JsonResponse(data)
 
@@ -181,6 +180,7 @@ def student_deactivate_view(request, id):
 
 def student_remove_view(request, id):
     data = dict()
+    _,_ = GroupStudents
     if request.method == 'POST':
         post = request.POST
         set_student_group_status(id, post['group_student'], status=3)
@@ -198,11 +198,7 @@ def student_delete_view(request, id):
     status = 400
     if request.method == 'POST':
         student.delete()
-        # print(student._meta.related_objects)
         status = 302
-        # for related_object in student._meta.related_objects:
-        #     print(related_object.first())
-    #return JsonResponse({'status': status})
     return redirect('admintion:students')
 
 def student_add_task_view(request, id):

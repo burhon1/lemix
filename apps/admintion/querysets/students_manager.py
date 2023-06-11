@@ -121,7 +121,7 @@ class StudentQueryset(QuerySet):
             payment = Sum(F('payment__paid'), distinct=True),
             picture = F('user__picture'),
             source = F('source__title'),
-
+            course_titles = ArrayAgg(F('ggroups__group__course__title'))
         ).filter(id=id).first()
 
     def student_short_detail(self, id: int):
@@ -134,6 +134,7 @@ class StudentQueryset(QuerySet):
             phone_number = Concat(
                 Value('+998'), F('user__phone')),
             sgroups = ArrayAgg(F('ggroups__group__title')),
+            
         ).filter(id=id).first()
 
     def students_by_course(self,educenter_ids,pk):

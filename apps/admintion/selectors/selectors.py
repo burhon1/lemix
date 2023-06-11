@@ -30,7 +30,7 @@ def get_student_courses(student_id: int, type="iterable"):
 
 
 def get_student_groups(student_id: int):
-    student_groups = GroupStudents.objects.filter(student_id=student_id)
+    student_groups = GroupStudents.objects.filter(student_id=student_id).exclude(status=3)
     return student_groups
 
 
@@ -59,7 +59,7 @@ def get_student_attendaces(student_id: int):
 def get_student_unwritten_groups(student_id: int):
     groups = get_student_groups(student_id)
     return Group.objects.exclude(
-                Q(id__in=[group.group.id for group in groups])|
+                Q(id__in=[group.group.id for group in groups.exclude(status=3)])|
                 Q(status__gt=4)).values('id', 'title')
 
 

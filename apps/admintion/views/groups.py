@@ -252,3 +252,8 @@ def add_student_view(request,id):
             return redirect(reverse('admintion:groups')+f"?error={context['error']}")      
     return JsonResponse({'status':201,'count':0}) 
 
+def change_group_student_view(request,id):
+    group_student = GroupStudents.objects.get(id=id)
+    group_student.status=1
+    group_student.save()
+    return JsonResponse({'status':201,'count':0}) 

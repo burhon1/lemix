@@ -128,15 +128,11 @@
                                 <li class="w-100 mb-2"><span class="version-date">Holati</span><span
                                         class="version-name">{{ student.status|get_type_name:"status" }}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Kurs</span><span
-                                        class="version-name">{{ courses }}</span></li>
+                                        class="version-name">{% for course in student.course_titles %}{{course}}/{% endfor %}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Jinsi</span><span
                                         class="version-name">{{ student.gender|get_type_name:"gender"}}</span></li>
                                 <li class="w-100 mb-2"><span class="version-date">Tug'ilgan
                                         sanasi</span><span class="version-name"> {{ student.birthday|date:"d.m.Y"}}</span></li>
-                                <li class="w-100 mb-2"><span class="version-date">Bo'sh kunlari
-                                        vaqti</span><span class="version-name">Du,Pa,Sha </span></li> 
-                                <li class="w-100 mb-2"><span class="version-date">O'qishdan
-                                        maqsad</span><span class="version-name">OTM kirish</span></li>
                                 {% if parent %}
                                 <li class="w-100 mb-2"><span class="version-date">Ota-ona FIO</span><span
                                     class="version-name">{{ parent.full_name }}</span></li>
@@ -157,7 +153,7 @@
                                 </li>
                                 {% endif %}
                                 <li class="w-100 mb-2"><span class="version-date">Izoh</span>
-                                    <span class="version-name">{{ student.comment }}</span>
+                                    <span class="version-name">{{ student.comment|default:'-' }}</span>
                                 </li>
 
                             </ul>
@@ -465,8 +461,6 @@
                                             </div>
                                             {% for task in tasks %}
                                             <div class=" card-single mb-3">
-
-
                                                 <div
                                                     class="card card-default card-sm bg-normal card-bordered">
                                                     <div class="card-header" style="min-height: 34px;">
@@ -907,8 +901,13 @@
                                                                     <p> O'quvchi uchun: {{ group.group.course.price|readable_soums }} so'm</p>
                                                                     <p> Chegirma: 0 so'm</p>
                                                                     <p class="d-flex align-items-center">
-                                                                        O'quvchi holati:<span
-                                                                            class="selling-badge order-bg-opacity-{{ group.status|get_status}} color-{{ group.status|get_status}}">{{group.status|get_status_name}}</span>
+                                                                        O'quvchi holati:
+                                                                        {% if group.status == 1 %}
+                                                                        <span class="selling-badge order-bg-opacity-{{ group.status|get_status}} color-{{ group.status|get_status}}" >{{group.status|get_status_name}}</span>
+                                                                        {% else %}
+                                                                        <span class="selling-badge order-bg-opacity-{{ group.status|get_status}} color-{{ group.status|get_status}}" data-toggle="modal"
+                                                                        data-target="#modal-basic02" onclick="addModal({{group.id}},changeStudentGroupStatus)">{{group.status|get_status_name}}</span>
+                                                                        {% endif %}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -1449,9 +1448,20 @@
                     <div class="forms w-100">
                         <label for="a10" class="col-12 p-1">Guruhni tanlang</label>
                         <div class="form-group col-12 p-0">
-                            <select class="form-control  form-control-sm border-light select2-hidden-accessible get_groups"
-                                id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
-                            </select>
+                            <div class="atbd-select ">
+                                <select name="select-size-4" id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true" class="form-control  form-control-default get_groups">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 p-0">
+                            <div class="atbd-date-picker">
+                                <div class="form-group mb-0 form-group-calender">
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control form-control-default" id="datepicker8" placeholder="Qaysi sanadan" name="start_date">
+                                        <a href="#"><span data-feather="calendar"></span></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                             <p class="group_limit"> <b class="fw-bold">Guruh limiti:</b>  </p>
                             <p class="group_teacher"> <b class="fw-bold">O'qituvchi:</b>  </p>
@@ -1467,6 +1477,28 @@
         </div>
     </div>
 </div>
+
+<div class="modal-basic modal" id="modal-basic02" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+           <div class="modal-content modal-bg-white ">
+               <div class="modal-header">
+                   <h6 class="modal-title">Ushbu o'quvchini muzlatish holatidan chiqarmoqchimisiz?</h6>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span data-feather="x"></span></button>
+               </div>
+                   <div class="modal-body">
+                       <div class="forms w-100">
+                           
+                       </div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Yoq</button>
+                       <button type="button" id="btnchangestatus" class="btn btn-primary btn-sm">Ha</button>
+                   </div>
+               </form>
+           </div>
+       </div>
+   </div>
 
 <div class="modal-basic modal" id="modal-basic4" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog modal-md" role="document">
@@ -1587,9 +1619,6 @@
 <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-bg-white ">
             <div class="modal-header">
-
-
-
                 <h6 class="modal-title"> Hisobdan chiqarish</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span data-feather="x"></span></button>
@@ -1600,9 +1629,7 @@
                     <div class="form-group col-12 p-0">
                         <select class="form-control  form-control-sm border-light select2-hidden-accessible student_groups_select2"
                             id="countryOption" data-select2-id="countryOption" tabindex="-1" aria-hidden="true">
-                            
                         </select>
-
                     </div>
                     <p>Eslatma: Hisobdan chiqarishda guruh tanlanadi, ya'ni tanlangan guruhdan o'quvchi butunlay
                         chiqarib yuboriladi. Joriy vaqtgacha ta'lim olgani uchun to'lov hisoblanadi, qolgan vaqt
@@ -1897,10 +1924,10 @@
 
 {% block script %}
 <script type="text/javascript">
-    function form_submit(val){
-        document.getElementById(val).submit();
-    }
-     var forms = document.querySelectorAll('.forms-view')
+        function form_submit(val){
+            document.getElementById(val).submit();
+        }
+        var forms = document.querySelectorAll('.forms-view')
         for (let i = 0; i < forms.length; i++) {
             forms[i].style.display = 'none'
         }
@@ -1911,6 +1938,7 @@
         var array = []
         var arrayb=[]
         document.querySelectorAll('form').forEach(e => e.addEventListener('submit', j => j.preventDefault()))
+        
         function handleClickIcon(x) {
             if(array.includes(x)){
                 forms[array[array.indexOf(x)]].style.display='none';
@@ -1943,6 +1971,7 @@
             console.log(array) */
             //   forms.forEach((e)=>  console.log(e.innerHTML=''))
         }
+        
         var infoUser = document.querySelector('#infoUser')
         var editUser = document.querySelector('#editUser')
         infoUser.style.display = 'block'
@@ -1954,6 +1983,7 @@
             document.querySelector('#edit_btn').innerHTML = 'Tahrirlash'
             e.target.style.display = 'none'
         })
+
         document.querySelector('#version_hidden').addEventListener('click', e => {
             if (e.target.innerHTML == `Ko'proq`) {
                 infoUser.style.height = 'auto'
@@ -1996,11 +2026,13 @@
 
         function SetStudentGroup(id){
             var select = document.getElementsByClassName('get_groups')[0];
-            if (select.value){
+            let attend_date=document.querySelector('input[name="start_date"]')
+            if (select.value && attend_date.value){
                 console.log("SetStudentGroup: ", select.value, id);
                 var url = `/admintion/student/${id}/add-group/`;
                 let formData = new FormData();
                 formData.append('group', select.value);
+                formData.append('attend_date', attend_date.value);
                 formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
                 fetch(url, {
                     method: 'POST',
@@ -2161,6 +2193,8 @@
                 console.log(err);
             })
         }
+
+
         function deleteStudent(id){
             fetch(`/admintion/student/${id}/delete/`,{
                 method: 'POST',
@@ -2186,7 +2220,7 @@
                 formData.append('responsibles', responsibles.selectedOptions[i].value);
             }
             
-            formData.append('user_status', 4);
+            formData.append('user_status', 3);
     
             var taskType = document.getElementById('select-search');
             formData.append('task_type', taskType.value);
@@ -2214,6 +2248,7 @@
             })
     
         }
+
         function checkedStudents(){
             var leads = []
             
@@ -2243,39 +2278,57 @@
             })
         }
 
-        
-
-    var sendSMS = document.getElementById('sendSMS');
-    sendSMS.addEventListener('click', ()=>{
-        var formData = new FormData();
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
-        var input = document.getElementById('message_description');
-        formData.append('message', input.value);
-        formData.append('students', window.location.pathname.split('/')[3]);
-        
-        var url = `{% url 'admintion:send_sms_to_student' %}`
-        fetch(url, {
-            method:'post',
-            headers:{
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: formData,
+        var sendSMS = document.getElementById('sendSMS');
+            sendSMS.addEventListener('click', ()=>{
+            var formData = new FormData();
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+            var input = document.getElementById('message_description');
+            formData.append('message', input.value);
+            formData.append('students', window.location.pathname.split('/')[3]);
+            
+            var url = `{% url 'admintion:send_sms_to_student' %}`
+            fetch(url, {
+                method:'post',
+                headers:{
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData,
+            })
+            .then(res=>{
+                var status = res.status
+                return res;
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                if(status==200){
+                    alert("Xabar O'quvchilarga yuborildi.");
+                } else {
+                    alert("Ma'lumotlar to'liq kiritilmadi");;
+                } 
+            })
         })
-        .then(res=>{
-            var status = res.status
-            return res;
-        })
-        .then(res=>res.json())
-        .then(res=>{
-            if(status==200){
-                alert("Xabar O'quvchilarga yuborildi.");
-            } else {
-                alert("Ma'lumotlar to'liq kiritilmadi");;
-            } 
-        })
-    })
 
+        function changeStudentGroupStatus(_id){
+            var url = `/admintion/group/change-status/${_id}/`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                console.log(res.status)
+                if(res.status==201){
+                    window.location.reload()
+                }
+            })
+        }
 
-
+        function addModal(_id,func){
+            let modl = document.querySelector('#modal-basic02')
+            modl.querySelector("#btnchangestatus").addEventListener('click',()=>func(_id))
+        }
+    
 </script>
 {% endblock %}

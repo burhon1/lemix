@@ -67,11 +67,11 @@ def get_status2(value):
 
 
 def get_status_name(value):
-    status = "active"
+    status = "faol"
     if value == 2:
-        status = "deactivated"
+        status = "faol emas"
     elif value == 3:
-        status = "removed"
+        status = "o\chirilgan"
     return status
 
 def get_type_name(value, arg):
