@@ -132,9 +132,12 @@ def course_detail_view(request, pk):
     context['days'] = [{'id':i[0],'title':i[1]} for i in GROUPS_DAYS]
     context['group_status'] = [{'id':i[0],'title':i[1]} for i in GROUPS_STATUS] 
     context['course_id']=pk
-    
-    context['teachers_list']=Teacher.teachers.teachers_by_course(educenter_ids,pk)
+    from django.db.models.functions import JSONObject
+    from django.db.models import OuterRef
+    course_list = Course.objects.filter(group__teacher__id=OuterRef("pk")).distinct().values(json=JSONObject(title="title", id="id"))
+    context['teachers_list']=Teacher.teachers.teachers_by_course(educenter_ids,pk,course_list)
     context['student_list']=Student.students.students_by_course(educenter_ids,pk)
+    print(context['teachers_list'])
     return render(request,'admintion/course_detail.html', context) 
 
 

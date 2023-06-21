@@ -510,9 +510,14 @@
                                                                                     <span>{{teacher.phone_number}}</span>
                                                                                 </td>
                                                                                 <td>
+                                                                                    {% for teacher in teacher.groups_list %}
                                                                                     <span>
-                                                                                        {{teacher.groups_list|readable_days3|default:'Guruhlari yoq'}}
+                                                                                        <a href="{% url 'admintion:group-detail' teacher.id %}">{{teacher.title}}</a>
                                                                                     </span>
+                                                                                    {% empty %}
+                                                                                    Guruhlari yoq
+                                                                                    {% endfor %}
+                                                                                    
                                                                                 </td>
                                                                             </tr>
                                                                             {% endfor %}
