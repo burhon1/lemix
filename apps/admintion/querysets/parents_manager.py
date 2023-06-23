@@ -15,8 +15,8 @@ class ParentsQueryset(QuerySet):
             full_name=Concat(F('user__first_name'),Value(' '),F('user__last_name'))
         )
 
-    def parents(self):
-        return self.get_info().values(
+    def parents(self,educenter_ids):
+        return self.get_info().filter(educenter__id__in=educenter_ids).values(
             'id',
             'user__first_name',
             'user__last_name',
@@ -71,8 +71,8 @@ class ParentsManager(Manager):
     def get_query_set(self):
         return ParentsQueryset(self.model)
     
-    def parents(self):
-        return self.get_query_set().parents()
+    def parents(self,educenter_ids=None):
+        return self.get_query_set().parents(educenter_ids)
 
     def parent(self, student_id):
         return self.get_query_set().get_parent(student_id)

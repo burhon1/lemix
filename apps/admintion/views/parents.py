@@ -20,5 +20,5 @@ def get_data_view(request):
         context['students'] = list(GroupStudents.custom_manager.student_list({'group__id':group},educenter_ids))
         # print(GroupStudents.custom_manager.student_list({'group__id':group},educenter_ids))
     elif course and not group:
-        context['groups'] = list(Group.groups.group_filter_list({'course__id':filter_keys['course']},educenter_ids))
+        context['groups'] = list(Group.groups.group_filter_list({'course_id':int(filter_keys['course'])},educenter_ids))
     return JsonResponse({'data':context,'status':200})

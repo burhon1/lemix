@@ -370,9 +370,8 @@
                                                                             <tr>
                                                                                 <th>
                                                                                     <div class="d-flex align-items-center">
-                                                                                        <div class="custom-checkbox  check-all">
-                                                                                            <input class="checkbox" type="checkbox" id="check-3">
-                                                                                            <label for="check-3">
+                                                                                        <div class="">
+                                                                                            <label>
                                                                                                 <span class="checkbox-text userDatatable-title">Nomi</span>
                                                                                             </label>
                                                                                         </div>
@@ -394,16 +393,6 @@
                                                                             <tr>
                                                                                 <td>
                                                                                     <div class="contact-item d-flex align-items-center">
-                                                                                        <div class="contact-personal-wrap">
-                                                                                            <div class="checkbox-group-wrapper">
-                                                                                                <div class="checkbox-group d-flex">
-                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-{{group.id}}">
-                                                                                                        <label for="check-grp-c-{{group.id}}"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
                                                                                         <div class="contact-personal-info d-flex">
                                                                                             <div class="contact_title">
                                                                                                     <a href="{% url 'admintion:group-detail' id=group.id %}">{{group.title}}</a>
@@ -439,26 +428,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                         <div class="userDatatable global-shadow border-0 bg-white w-100">
-                                                            <!-- <form class="filter-form mb-4">
-                                                                <div class="row">
-                                                                    <div class="col-6">
-                                                                        <input class="form-control w-100 mr-sm-2 box-shadow-none" type="text" placeholder="Qidirish...">
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <div class="atbd-select">
-                                                                            <select name="select-courses" id="select-courses" class="form-control w-100">
-                                                                                <option value="" selected disabled>Holati</option>
-                                                                                <option value="01">Option 1</option>
-                                                                                <option value="02">Option 2</option>
-                                                                                <option value="05">Option 3</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <button class="btn w-100 btn-add btn-primary btn-sm" data-toggle="modal" data-target="#modal-teachers" type="button"> <span data-feather="plus"></span> Qo'shish</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form> -->
+                                                           
                                                         </div>
                                                         </div>
                                                         <div class="col-12 userDatatable ">
@@ -469,8 +439,7 @@
                                                                                 <th>
                                                                                     <div class="d-flex align-items-center">
                                                                                         <div class="custom-checkbox  check-all">
-                                                                                            <input class="checkbox" type="checkbox" id="check-3">
-                                                                                            <label for="check-3">
+                                                                                            <label>
                                                                                                 <span class="checkbox-text userDatatable-title">FIO</span>
                                                                                             </label>
                                                                                         </div>
@@ -489,16 +458,6 @@
                                                                             <tr>
                                                                                 <td>
                                                                                     <div class="contact-item d-flex align-items-center">
-                                                                                        <div class="contact-personal-wrap">
-                                                                                            <div class="checkbox-group-wrapper">
-                                                                                                <div class="checkbox-group d-flex">
-                                                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                        <input class="checkbox" type="checkbox" id="check-grp-c-{{teacher.id}}">
-                                                                                                        <label for="check-grp-c-{{teacher.id}}"></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
                                                                                         <div class="contact-personal-info d-flex">
                                                                                             <div class="contact_title">
                                                                                                     <a href="{% url 'admintion:teacher-detail' teacher.id %}">{{teacher.full_name}}</a>
@@ -568,12 +527,10 @@
                                                                     data-paging-position="left" data-paging-size="10">
                                                                     <thead>
                                                                         <tr class="userDatatable-header">
-                                                                            
                                                                             <th>
                                                                                 <div class="d-flex align-items-center">
                                                                                     <div class="custom-checkbox  check-all">
-                                                                                        <input class="checkbox" type="checkbox" id="check-3">
-                                                                                        <label for="check-3">
+                                                                                        <label>
                                                                                             <span class="checkbox-text userDatatable-title">Id</span>
                                                                                         </label>
                                                                                     </div>
@@ -601,8 +558,8 @@
                                                                                     <div class="checkbox-group-wrapper">
                                                                                         <div class="checkbox-group d-flex">
                                                                                             <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                                <input class="checkbox studentCheckbox" type="checkbox" id="check-grp-{{student.id}}">
-                                                                                                <label for="check-grp-{{student.id}}">
+                                                                                               
+                                                                                                <label>
                                                                                                     <span class="checkbox-text userDatatable-title">#{{forloop.counter}}</span>
                                                                                                 </label>
                                                                                             </div>

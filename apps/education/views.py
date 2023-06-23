@@ -558,6 +558,8 @@ def parents_list_view(request):
     context['groups']  = list(GroupModel.groups.group_list(educenter_ids))
     context['courses'] = list(Course.courses.courses(educenter_ids,True))
     context['keys'] = ['check','title','course','teacher','days','times','total_student','course__price','action']
+    context['parents'] = Parents.parents.parents(educenter_ids)
+
     return render(request,'education/parents_list.html',context)
 
 def finance_list_view(request):
