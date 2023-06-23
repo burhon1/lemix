@@ -39,8 +39,8 @@ class TeacherQueryset(QuerySet):
             'teacher_type'
         )
 
-    def teacher(self,id):
-        return self.teachers().filter(id=id).annotate(
+    def teacher(self,id,educenter_ids):
+        return self.teachers(educenter_ids).filter(id=id).annotate(
             first_name=F('user__first_name'),
             last_name=F('user__last_name'),
             birthday=F('user__birthday'),
@@ -125,5 +125,5 @@ class TeacherManager(Manager):
     def trainer_list(self):
         return self.get_query_set().trainer_list()    
 
-    def teacher(self,id):
-        return self.get_query_set().teacher(id)  
+    def teacher(self,id,educenter_ids):
+        return self.get_query_set().teacher(id,educenter_ids)  

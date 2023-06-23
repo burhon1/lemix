@@ -53,7 +53,13 @@ def teacher_update_view(request, id):
         'method':'get', 'message':'Method cannot be get. It must be a post.'})
 
 def teacher_detail_view(request,id):
-    context = {'obj':Teacher.teachers.teacher(id)}
+    ed_id=request.session.get('branch_id',False)
+    qury = Q(id=ed_id)
+    if int(ed_id) == 0:
+        qury=(Q(id=request.user.educenter) | Q(parent__id=request.user.educenter))
+    educenter = EduCenters.objects.filter(qury)
+    educenter_ids = educenter.values_list('id',flat=True)  
+    context = {'obj':Teacher.teachers.teacher(id,educenter_ids)}
     return render(request,'admintion/teacher_detail.html',context) 
 
 @permission_required('admintion.delete_teacher')
